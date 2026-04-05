@@ -1,63 +1,145 @@
+import { Trophy } from 'lucide-react';
+
 export default function StreakCounter({ current, best, consecutiveMisses }) {
-  const getIndicatorState = () => {
-    if (consecutiveMisses >= 2) return 'danger';
-    if (consecutiveMisses === 1) return 'warning';
-    return 'good';
+  const twoDayStatus =
+    consecutiveMisses === 0 ? 'safe' : consecutiveMisses === 1 ? 'warning' : 'danger';
+
+  const statusConfig = {
+    safe: {
+      color: 'var(--color-green)',
+      label: '2-Day Rule: Safe',
+      dotActive: 'var(--color-green)',
+    },
+    warning: {
+      color: 'var(--color-gold)',
+      label: "1 miss — don't miss tomorrow",
+      dotActive: 'var(--color-gold)',
+    },
+    danger: {
+      color: 'var(--color-red)',
+      label: '2 in a row — today matters',
+      dotActive: 'var(--color-red)',
+    },
   };
 
-  const state = getIndicatorState();
-
-  const stateColors = {
-    good: 'bg-[var(--color-complete)]',
-    warning: 'bg-[var(--color-streak)]',
-    danger: 'bg-[var(--color-missed)]',
-  };
-
-  const stateMessages = {
-    good: 'On track',
-    warning: 'Missed one. No sweat. Show up next time.',
-    danger: 'Two in a row. Today matters.',
-  };
+  const status = statusConfig[twoDayStatus];
 
   return (
-    <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-xl p-5">
-      <div className="flex items-center justify-between">
+    <div
+      className="rounded-2xl p-7 animate-fade-in"
+      style={{
+        background: 'var(--color-surface)',
+        border: '1px solid var(--color-border)',
+      }}
+    >
+      {/* Main row: streak + best */}
+      <div className="flex items-start justify-between">
+        {/* Current streak */}
         <div>
-          <p className="font-mono text-3xl font-semibold text-[var(--color-text-primary)]">
-            {current === 0 ? 'Starting fresh' : current}
+          <p
+            className="text-[10px] font-medium tracking-[0.18em] uppercase mb-3"
+            style={{ color: 'var(--color-text-3)' }}
+          >
+            Current Streak
           </p>
-          {current > 0 && (
-            <p className="text-xs text-[var(--color-text-muted)] mt-0.5">day streak</p>
+          <div className="flex items-end gap-2.5 leading-none">
+            <span
+              className="font-mono font-bold leading-none"
+              style={{
+                color: current === 0 ? 'var(--color-text-3)' : 'var(--color-gold)',
+                fontSize: current === 0 ? '2.5rem' : '4rem',
+                lineHeight: 1,
+                textShadow:
+                  current > 0
+                    ? '0 0 40px rgba(232,193,98,0.25)'
+                    : 'none',
+              }}
+            >
+              {current === 0 ? '—' : current}
+            </span>
+            {current > 0 && (
+              <span
+                className="text-base mb-1.5"
+                style={{ color: 'var(--color-text-3)' }}
+              >
+                days
+              </span>
+            )}
+          </div>
+          {current === 0 && (
+            <p
+              className="mt-2 text-xs"
+              style={{ color: 'var(--color-text-3)' }}
+            >
+              Start your streak today
+            </p>
           )}
         </div>
-        <p className="text-xs text-[var(--color-text-muted)]">Best: {best}</p>
+
+        {/* Best */}
+        <div className="text-right">
+          <p
+            className="text-[10px] font-medium tracking-[0.18em] uppercase mb-3"
+            style={{ color: 'var(--color-text-3)' }}
+          >
+            Best
+          </p>
+          <div className="flex items-center gap-2 justify-end">
+            <Trophy
+              size={15}
+              strokeWidth={1.8}
+              style={{ color: 'var(--color-gold)' }}
+            />
+            <span
+              className="font-mono text-2xl font-semibold leading-none"
+              style={{ color: 'var(--color-text-1)' }}
+            >
+              {best}
+            </span>
+          </div>
+          <p
+            className="text-[10px] mt-1.5"
+            style={{ color: 'var(--color-text-3)' }}
+          >
+            days
+          </p>
+        </div>
       </div>
 
-      <div className="mt-4">
-        <div className="flex items-center gap-2">
-          <span className="text-xs text-[var(--color-text-muted)]">2-Day Rule</span>
+      {/* 2-Day Rule indicator */}
+      <div
+        className="mt-6 pt-5"
+        style={{ borderTop: '1px solid var(--color-border)' }}
+      >
+        <div className="flex items-center gap-3">
+          {/* Two dots */}
           <div className="flex gap-1.5">
-            <div className={`w-3 h-3 rounded-full ${
-              consecutiveMisses >= 1
-                ? stateColors[state]
-                : stateColors.good
-            }`} />
-            <div className={`w-3 h-3 rounded-full ${
-              consecutiveMisses >= 2
-                ? stateColors.danger
-                : consecutiveMisses === 0
-                ? stateColors.good
-                : 'bg-[var(--color-border)]'
-            }`} />
+            <div
+              className="w-2 h-2 rounded-full transition-colors duration-300"
+              style={{
+                background:
+                  consecutiveMisses === 0
+                    ? 'var(--color-green)'
+                    : 'var(--color-border-strong)',
+              }}
+            />
+            <div
+              className="w-2 h-2 rounded-full transition-colors duration-300"
+              style={{
+                background:
+                  consecutiveMisses >= 1
+                    ? status.dotActive
+                    : 'var(--color-border-strong)',
+              }}
+            />
           </div>
+          <p
+            className="text-xs transition-colors duration-300"
+            style={{ color: status.color }}
+          >
+            {status.label}
+          </p>
         </div>
-        <p className={`text-xs mt-1 ${
-          state === 'danger' ? 'text-[var(--color-missed)]' :
-          state === 'warning' ? 'text-[var(--color-streak)]' :
-          'text-[var(--color-text-muted)]'
-        }`}>
-          {stateMessages[state]}
-        </p>
       </div>
     </div>
   );

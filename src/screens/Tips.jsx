@@ -56,32 +56,70 @@ export default function Tips() {
 
   const seenTipIds = new Set(data?.tips?.seen_tip_ids || []);
 
+  const pillBase = {
+    padding: '6px 14px',
+    borderRadius: '999px',
+    fontSize: '12px',
+    whiteSpace: 'nowrap',
+    cursor: 'pointer',
+    transition: 'all 0.15s',
+  };
+
   return (
-    <div className="min-h-dvh bg-[var(--color-bg)] pb-20">
-      <div className="border-b border-[var(--color-border)] px-4 py-3 flex items-center">
-        <button onClick={() => navigate(-1)} className="text-[var(--color-text-muted)] cursor-pointer">
-          <ArrowLeft size={20} />
-        </button>
-        <p className="font-display text-lg text-[var(--color-text-primary)] text-center flex-1">Tips</p>
-        <div className="w-5" />
+    <div className="min-h-dvh pb-28" style={{ background: 'var(--color-bg)' }}>
+      {/* Header */}
+      <div className="max-w-[480px] mx-auto px-4 pt-14 pb-6">
+        <div className="flex items-center gap-3 mb-1">
+          <button
+            onClick={() => navigate(-1)}
+            className="cursor-pointer transition-opacity hover:opacity-60 flex items-center justify-center"
+            style={{ color: 'var(--color-text-3)' }}
+          >
+            <ArrowLeft size={20} />
+          </button>
+          <p className="text-xs font-medium uppercase tracking-[0.15em]" style={{ color: 'var(--color-text-3)' }}>
+            Tips &amp; Insights
+          </p>
+        </div>
+        <h1 className="font-display text-3xl pl-8" style={{ color: 'var(--color-text-1)' }}>
+          Learn
+        </h1>
       </div>
 
-      <div className="max-w-[480px] mx-auto px-4 py-6 space-y-6">
-        {/* Today's Tip */}
+      <div className="max-w-[480px] mx-auto px-4 space-y-5">
+        {/* Today's Featured Tip */}
         {todayTip && (
-          <div className="bg-[var(--color-surface)] border border-[var(--color-streak)]/20 rounded-xl p-5">
-            <div className="flex items-start gap-3">
-              <div className="w-8 h-8 bg-[var(--color-streak)]/10 rounded-full flex items-center justify-center shrink-0">
-                <Lightbulb size={14} className="text-[var(--color-streak)]" />
+          <div
+            className="rounded-2xl p-6 animate-fade-in"
+            style={{
+              background: 'rgba(232,193,98,0.07)',
+              border: '1px solid rgba(232,193,98,0.2)',
+            }}
+          >
+            <div className="flex items-start gap-4">
+              <div
+                className="w-9 h-9 rounded-full flex items-center justify-center shrink-0 mt-0.5"
+                style={{ background: 'rgba(232,193,98,0.15)' }}
+              >
+                <Lightbulb size={15} style={{ color: 'var(--color-gold)' }} />
               </div>
-              <div>
-                <p className="text-xs font-medium uppercase tracking-wide text-[var(--color-streak)] mb-1">
+              <div className="flex-1 min-w-0">
+                <p
+                  className="text-[10px] font-medium uppercase tracking-widest mb-2"
+                  style={{ color: 'var(--color-gold)' }}
+                >
                   Today&apos;s Tip
                 </p>
-                <p className="text-sm text-[var(--color-text-primary)] leading-relaxed">
+                <p
+                  className="text-sm leading-relaxed"
+                  style={{ color: 'var(--color-text-1)' }}
+                >
                   {todayTip.text}
                 </p>
-                <p className="text-[10px] text-[var(--color-text-muted)] mt-2 capitalize">
+                <p
+                  className="text-[10px] mt-3 capitalize font-medium uppercase tracking-wider"
+                  style={{ color: 'rgba(232,193,98,0.5)' }}
+                >
                   {todayTip.category}
                 </p>
               </div>
@@ -89,54 +127,80 @@ export default function Tips() {
           </div>
         )}
 
-        {/* Category Filter */}
-        <div className="flex gap-2 overflow-x-auto">
+        {/* Category Filter Pills */}
+        <div className="flex gap-2 overflow-x-auto pb-1">
           <button
             onClick={() => setSelectedCategory(null)}
-            className={`px-3 py-1.5 rounded-full text-xs border whitespace-nowrap cursor-pointer ${
-              !selectedCategory
-                ? 'bg-[var(--color-text-primary)] text-[var(--color-surface)] border-[var(--color-text-primary)]'
-                : 'border-[var(--color-border)] text-[var(--color-text-secondary)]'
-            }`}
+            style={{
+              ...pillBase,
+              background: !selectedCategory ? 'var(--color-text-1)' : 'transparent',
+              color: !selectedCategory ? 'var(--color-bg)' : 'var(--color-text-2)',
+              border: !selectedCategory
+                ? '1px solid var(--color-text-1)'
+                : '1px solid var(--color-border-strong)',
+              fontWeight: !selectedCategory ? '600' : '400',
+            }}
           >
             All
           </button>
-          {CATEGORIES.map(cat => (
-            <button
-              key={cat}
-              onClick={() => setSelectedCategory(cat)}
-              className={`px-3 py-1.5 rounded-full text-xs border whitespace-nowrap cursor-pointer ${
-                selectedCategory === cat
-                  ? 'bg-[var(--color-text-primary)] text-[var(--color-surface)] border-[var(--color-text-primary)]'
-                  : 'border-[var(--color-border)] text-[var(--color-text-secondary)]'
-              }`}
-            >
-              {CATEGORY_LABELS[cat]}
-            </button>
-          ))}
+          {CATEGORIES.map(cat => {
+            const isActive = selectedCategory === cat;
+            return (
+              <button
+                key={cat}
+                onClick={() => setSelectedCategory(cat)}
+                style={{
+                  ...pillBase,
+                  background: isActive ? 'var(--color-text-1)' : 'transparent',
+                  color: isActive ? 'var(--color-bg)' : 'var(--color-text-2)',
+                  border: isActive
+                    ? '1px solid var(--color-text-1)'
+                    : '1px solid var(--color-border-strong)',
+                  fontWeight: isActive ? '600' : '400',
+                }}
+              >
+                {CATEGORY_LABELS[cat]}
+              </button>
+            );
+          })}
         </div>
 
-        {/* Tip List */}
-        <div className="space-y-3">
-          {filteredTips.map(tip => (
-            <div
-              key={tip.id}
-              className={`bg-[var(--color-surface)] border rounded-xl p-4 ${
-                seenTipIds.has(tip.id) ? 'border-[var(--color-border)]' : 'border-[var(--color-border)]'
-              }`}
-            >
-              <p className="text-sm text-[var(--color-text-secondary)] leading-relaxed">
-                {tip.text}
-              </p>
-              <p className="text-[10px] text-[var(--color-text-muted)] mt-2 capitalize">
-                {tip.category}
+        {/* Tips List */}
+        <div className="space-y-2">
+          {filteredTips.map(tip => {
+            const isSeen = seenTipIds.has(tip.id);
+            return (
+              <div
+                key={tip.id}
+                className="rounded-2xl px-5 py-4 transition-all"
+                style={{
+                  background: 'var(--color-surface)',
+                  border: '1px solid var(--color-border)',
+                  opacity: isSeen ? 0.7 : 1,
+                }}
+              >
+                <p
+                  className="text-sm leading-relaxed"
+                  style={{ color: 'var(--color-text-2)' }}
+                >
+                  {tip.text}
+                </p>
+                <p
+                  className="text-[10px] mt-2.5 capitalize font-medium uppercase tracking-wider"
+                  style={{ color: 'var(--color-text-3)' }}
+                >
+                  {tip.category}
+                </p>
+              </div>
+            );
+          })}
+
+          {filteredTips.length === 0 && (
+            <div className="py-16 text-center">
+              <p className="text-sm" style={{ color: 'var(--color-text-3)' }}>
+                No tips available yet.
               </p>
             </div>
-          ))}
-          {filteredTips.length === 0 && (
-            <p className="text-sm text-[var(--color-text-muted)] text-center py-8">
-              No tips available yet.
-            </p>
           )}
         </div>
       </div>

@@ -1,5 +1,5 @@
-import { Routes, Route, Navigate } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import Landing from './screens/Landing';
 import PlanBuilder from './screens/PlanBuilder';
 import Dashboard from './screens/Dashboard';
@@ -7,13 +7,24 @@ import PlanView from './screens/PlanView';
 import Profile from './screens/Profile';
 import Tips from './screens/Tips';
 import BottomNav from './components/BottomNav';
-import { isOnboardingComplete } from './utils/storage';
 
-const NAV_SCREENS = ['/dashboard', '/plan', '/profile'];
+const NAV_SCREENS = ['/dashboard', '/plan', '/profile', '/tips'];
 
 export default function App() {
   const location = useLocation();
   const showNav = NAV_SCREENS.some(path => location.pathname.startsWith(path));
+
+  // Initialize theme on first load
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem('regulr_theme') || 'dark';
+      const root = document.documentElement;
+      root.classList.remove('light', 'dark');
+      root.classList.add(stored);
+    } catch {
+      document.documentElement.classList.add('dark');
+    }
+  }, []);
 
   return (
     <>

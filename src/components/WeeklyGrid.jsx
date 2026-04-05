@@ -1,57 +1,118 @@
 import { getWeekDates, getDayName, getToday } from '../utils/dateUtils';
 
-const DAY_LABELS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+const DAY_LABELS = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+const DAY_KEYS = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
 
 export default function WeeklyGrid({ plan, checkIns }) {
   const today = getToday();
   const weekDates = getWeekDates(today);
   const scheduledDays = plan?.scheduled_days || [];
 
-  const getCellState = (date, dayName) => {
-    const isToday = date === today;
-    const isScheduled = scheduledDays.includes(dayName);
-    const isCompleted = checkIns?.some(c => c.date === date && c.completed);
-    const isPast = date < today;
+  const completedCount = weekDates.filter(date =>
+    checkIns?.some(c => c.date === date && c.completed)
+  ).length;
 
-    if (isCompleted) return 'completed';
-    if (isScheduled && isPast) return 'missed';
-    if (isScheduled && isToday) return 'today';
-    if (isScheduled) return 'upcoming';
-    return 'rest';
-  };
-
-  const cellStyles = {
-    completed: 'bg-[var(--color-complete)] border-[var(--color-complete)]',
-    missed: 'border-[var(--color-missed)] border-2 bg-transparent',
-    today: 'border-[var(--color-text-primary)] border-2 bg-transparent',
-    upcoming: 'border-[var(--color-border)] border bg-transparent',
-    rest: 'bg-[var(--color-border)]/30 border-transparent',
-  };
-
-  const completedCount = weekDates.filter((date) => {
-    return checkIns?.some(c => c.date === date && c.completed);
-  }).length;
-
-  const scheduledCount = weekDates.filter((date) => {
-    const dayName = getDayName(date);
-    return scheduledDays.includes(dayName);
-  }).length;
+  const scheduledCount = weekDates.filter((_, i) =>
+    scheduledDays.includes(DAY_KEYS[i])
+  ).length;
 
   return (
-    <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-xl p-5">
-      <div className="grid grid-cols-7 gap-2">
-        {DAY_LABELS.map((label, i) => (
-          <div key={label} className="text-center">
-            <p className="text-[10px] text-[var(--color-text-muted)] mb-2">{label}</p>
-            <div
-              className={`w-8 h-8 mx-auto rounded-lg border ${cellStyles[getCellState(weekDates[i], getDayName(weekDates[i]))]}`}
-            />
-          </div>
-        ))}
+    <div
+      className="rounded-2xl p-6 animate-fade-in"
+      style={{
+        background: 'var(--color-surface)',
+        border: '1px solid var(--color-border)',
+      }}
+    >
+      {/* Header row */}
+      <div className="flex items-center justify-between mb-5">
+        <p
+          className="text-[10px] font-medium tracking-[0.18em] uppercase"
+          style={{ color: 'var(--color-text-3)' }}
+        >
+          This Week
+        </p>
+        <p
+          className="font-mono text-[10px]"
+          style={{ color: 'var(--color-text-3)' }}
+        >
+          {completedCount}
+          <span style={{ color: 'var(--color-border-strong)' }}>/</span>
+          {scheduledCount}
+        </p>
       </div>
-      <p className="text-xs text-[var(--color-text-muted)] mt-3 text-center">
-        This week: {completedCount}/{scheduledCount} sessions done
-      </p>
+
+      {/* Day grid */}
+      <div className="grid grid-cols-7 gap-1.5">
+        {weekDates.map((date, i) => {
+          const dayKey = DAY_KEYS[i];
+          const isToday = date === today;
+          const isScheduled = scheduledDays.includes(dayKey);
+          const checkIn = checkIns?.find(c => c.date === date);
+          const isCompleted = checkIn?.completed;
+          const isPast = date < today;
+          const isMissed = isPast && isScheduled && !isCompleted;
+          const dayNum = new Date(date + 'T00:00:00').getDate();
+
+          // Derive cell styles
+          let bg = 'transparent';
+          let border = 'var(--color-border)';
+          let textColor = 'var(--color-text-3)';
+          let labelColor = 'var(--color-text-3)';
+
+          if (isCompleted) {
+            bg = 'rgba(74,222,128,0.12)';
+            border = 'rgba(74,222,128,0.35)';
+            textColor = 'var(--color-green)';
+          } else if (isMissed) {
+            bg = 'rgba(248,113,113,0.08)';
+            border = 'rgba(248,113,113,0.28)';
+            textColor = 'var(--color-red)';
+          } else if (isToday) {
+            border = 'var(--color-text-1)';
+            textColor = 'var(--color-text-1)';
+            labelColor = 'var(--color-text-2)';
+          } else if (isScheduled && !isPast) {
+            border = 'var(--color-border-strong)';
+            textColor = 'var(--color-text-2)';
+            labelColor = 'var(--color-text-2)';
+          }
+
+          return (
+            <div key={date} className="flex flex-col items-center gap-1.5">
+              {/* Day letter */}
+              <span
+                className="text-[9px] font-medium uppercase"
+                style={{ color: labelColor }}
+              >
+                {DAY_LABELS[i]}
+              </span>
+
+              {/* Cell */}
+              <div
+                className="w-full aspect-square rounded-lg flex items-center justify-center transition-all duration-300"
+                style={{
+                  background: bg,
+                  border: `1px solid ${border}`,
+                  boxShadow:
+                    isToday
+                      ? '0 0 0 2px rgba(255,255,255,0.06)'
+                      : isCompleted
+                      ? '0 0 12px rgba(74,222,128,0.1)'
+                      : 'none',
+                }}
+              >
+                <span
+                  className="font-mono text-[9px] font-semibold leading-none"
+                  style={{ color: textColor }}
+                >
+                  {isCompleted ? '✓' : dayNum}
+                </span>
+              </div>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }

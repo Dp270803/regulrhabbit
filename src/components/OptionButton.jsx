@@ -1,17 +1,13 @@
-export default function OptionButton({ label, onClick, selected, disabled }) {
+export default function OptionButton({ label, onClick, selected }) {
   return (
     <button
       onClick={onClick}
-      disabled={disabled}
-      className={`
-        px-5 py-2.5 rounded-full border text-sm font-medium
-        transition-all duration-200 ease-out
-        ${selected
-          ? 'bg-[var(--color-text-primary)] text-[var(--color-surface)] border-[var(--color-text-primary)]'
-          : 'bg-transparent text-[var(--color-text-primary)] border-[var(--color-text-primary)] hover:bg-[var(--color-text-primary)] hover:text-[var(--color-surface)]'
-        }
-        ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer active:scale-95'}
-      `}
+      className="px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 cursor-pointer"
+      style={{
+        background: selected ? 'var(--color-text-1)' : 'transparent',
+        color: selected ? 'var(--color-bg)' : 'var(--color-text-1)',
+        border: `1px solid ${selected ? 'var(--color-text-1)' : 'var(--color-border-strong)'}`,
+      }}
     >
       {label}
     </button>

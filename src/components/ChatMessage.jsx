@@ -1,43 +1,64 @@
-import { useState, useEffect } from 'react';
+export default function ChatMessage({ message, isBot, isTyping }) {
+  if (isTyping) {
+    return (
+      <div className="flex items-end gap-2 mb-4">
+        <div
+          className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold shrink-0"
+          style={{ background: 'var(--color-border-strong)', color: 'var(--color-text-1)' }}
+        >
+          R
+        </div>
+        <div
+          className="px-4 py-3 rounded-2xl rounded-bl-sm"
+          style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)' }}
+        >
+          <div className="flex gap-1 items-center h-4">
+            {[0, 1, 2].map(i => (
+              <span
+                key={i}
+                className="w-1.5 h-1.5 rounded-full animate-pulse"
+                style={{ background: 'var(--color-text-3)', animationDelay: `${i * 0.2}s` }}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
 
-export default function ChatMessage({ message, isBot, isTyping, children }) {
-  const [showDots, setShowDots] = useState(isTyping);
-  const [showContent, setShowContent] = useState(!isTyping);
-
-  useEffect(() => {
-    if (isTyping) {
-      setShowDots(true);
-      setShowContent(false);
-      const timer = setTimeout(() => {
-        setShowDots(false);
-        setShowContent(true);
-      }, 600);
-      return () => clearTimeout(timer);
-    }
-  }, [isTyping]);
+  if (isBot) {
+    return (
+      <div className="flex items-end gap-2 mb-4 animate-fade-in-up">
+        <div
+          className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold shrink-0"
+          style={{ background: 'var(--color-text-1)', color: 'var(--color-bg)' }}
+        >
+          R
+        </div>
+        <div
+          className="flex-1 px-4 py-3 rounded-2xl rounded-bl-sm text-sm leading-relaxed"
+          style={{
+            background: 'var(--color-surface)',
+            border: '1px solid var(--color-border)',
+            color: 'var(--color-text-1)',
+          }}
+        >
+          {message}
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className={`flex ${isBot ? 'justify-start' : 'justify-end'} mb-4 animate-fade-in`}>
+    <div className="flex justify-end mb-4 animate-fade-in">
       <div
-        className={`max-w-[85%] rounded-2xl px-4 py-3 ${
-          isBot
-            ? 'bg-[var(--color-surface)] border border-[var(--color-border)] text-[var(--color-text-primary)]'
-            : 'bg-[var(--color-text-primary)] text-[var(--color-surface)]'
-        }`}
+        className="px-4 py-3 rounded-2xl rounded-br-sm text-sm leading-relaxed max-w-[75%]"
+        style={{
+          background: 'var(--color-text-1)',
+          color: 'var(--color-bg)',
+        }}
       >
-        {showDots && (
-          <div className="flex gap-1 py-1">
-            <span className="w-2 h-2 bg-[var(--color-text-muted)] rounded-full animate-pulse" style={{ animationDelay: '0ms' }} />
-            <span className="w-2 h-2 bg-[var(--color-text-muted)] rounded-full animate-pulse" style={{ animationDelay: '150ms' }} />
-            <span className="w-2 h-2 bg-[var(--color-text-muted)] rounded-full animate-pulse" style={{ animationDelay: '300ms' }} />
-          </div>
-        )}
-        {showContent && (
-          <>
-            {message && <p className="text-sm leading-relaxed">{message}</p>}
-            {children}
-          </>
-        )}
+        {message}
       </div>
     </div>
   );
