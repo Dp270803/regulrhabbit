@@ -1,0 +1,82 @@
+{
+  "activity": "singing",
+  "experience_modifiers": {
+    "beginner": { "sets_multiplier": 0.7, "duration_multiplier": 0.8 },
+    "intermediate": { "sets_multiplier": 1.0, "duration_multiplier": 1.0 },
+    "advanced": { "sets_multiplier": 1.3, "duration_multiplier": 1.15 }
+  },
+  "templates": {
+    "2x": {
+      "weeks": [
+        { "week_number": 1, "sessions": [
+          { "day_index": 0, "title": "Vocal Foundations", "duration_minutes": 25, "blocks": [{ "type": "warmup", "detail": "5 min lip trills (ascending/descending), gentle humming, siren slides low to high", "duration_minutes": 5 }, { "type": "main", "detail": "10 min breath support: diaphragmatic breathing exercises, sustained 'ss' and 'sh' sounds (15s holds ×5). Pitch matching: play single notes and match them.", "duration_minutes": 15 }, { "type": "cooldown", "detail": "5 min cool-down: gentle humming, yawning stretches, neck rolls", "duration_minutes": 5 }] },
+          { "day_index": 1, "title": "Range Finding", "duration_minutes": 25, "blocks": [{ "type": "warmup", "detail": "5 min lip trills + 'ng' hums ascending scales", "duration_minutes": 5 }, { "type": "main", "detail": "Find comfortable range: sing 'ah' up the scale until strain, then down. Note your range. Sing a simple melody in your comfortable range.", "duration_minutes": 15 }, { "type": "cooldown", "detail": "Gentle humming cool-down + hydrate", "duration_minutes": 5 }] }
+        ]},
+        { "week_number": 2, "sessions": [
+          { "day_index": 0, "title": "Breath Control", "duration_minutes": 30, "blocks": [{ "type": "warmup", "detail": "Lip trills + sirens (5 min)", "duration_minutes": 5 }, { "type": "main", "detail": "Sustained notes: hold 'ah' for 10s, rest, repeat ×5. Breath phrasing: sing 4-bar phrases on one breath. Start verse 1 of a chosen song.", "duration_minutes": 20 }, { "type": "cooldown", "detail": "Cool-down humming", "duration_minutes": 5 }] },
+          { "day_index": 1, "title": "Song Practice", "duration_minutes": 30, "blocks": [{ "type": "warmup", "detail": "Lip trills + scale warm-up (5 min)", "duration_minutes": 5 }, { "type": "main", "detail": "Verse 1 of chosen song: focus on pitch accuracy. Sing along with original, then a cappella. Record and listen back.", "duration_minutes": 20 }, { "type": "cooldown", "detail": "Gentle humming", "duration_minutes": 5 }] }
+        ]},
+        { "week_number": 3, "sessions": [
+          { "day_index": 0, "title": "Dynamics & Expression", "duration_minutes": 30, "blocks": [{ "type": "warmup", "detail": "Full vocal warm-up: lip trills, sirens, scales", "duration_minutes": 5 }, { "type": "main", "detail": "Dynamic exercises: sing same phrase piano then forte. Verse 1 + chorus of chosen song. Focus on emotional delivery.", "duration_minutes": 20 }, { "type": "cooldown", "detail": "Cool-down", "duration_minutes": 5 }] },
+          { "day_index": 1, "title": "Full Song Build", "duration_minutes": 30, "blocks": [{ "type": "warmup", "detail": "Warm-up routine", "duration_minutes": 5 }, { "type": "main", "detail": "Full verse + chorus connected. Work on transitions. Add simple dynamics (softer verse, bigger chorus). Record.", "duration_minutes": 20 }, { "type": "cooldown", "detail": "Cool-down + hydrate", "duration_minutes": 5 }] }
+        ]},
+        { "week_number": 4, "sessions": [
+          { "day_index": 0, "title": "Performance Prep", "duration_minutes": 30, "blocks": [{ "type": "warmup", "detail": "Full warm-up", "duration_minutes": 5 }, { "type": "main", "detail": "Full song run-through ×3. Work on weak sections. Add personal style — riffs, holds, dynamics.", "duration_minutes": 20 }, { "type": "cooldown", "detail": "Cool-down", "duration_minutes": 5 }] },
+          { "day_index": 1, "title": "Recording Session", "duration_minutes": 30, "blocks": [{ "type": "warmup", "detail": "Full warm-up", "duration_minutes": 5 }, { "type": "main", "detail": "Record full performance ×3 takes. Listen back and note improvements from week 1. Choose best take.", "duration_minutes": 20 }, { "type": "cooldown", "detail": "Cool-down, celebrate progress", "duration_minutes": 5 }] }
+        ]}
+      ]
+    },
+    "3x": {
+      "weeks": [
+        { "week_number": 1, "sessions": [
+          { "day_index": 0, "title": "Vocal Foundations", "duration_minutes": 25, "blocks": [{ "type": "warmup", "detail": "Lip trills, humming, sirens", "duration_minutes": 5 }, { "type": "main", "detail": "Breath support exercises, diaphragmatic breathing, sustained sounds", "duration_minutes": 15 }, { "type": "cooldown", "detail": "Cool-down humming", "duration_minutes": 5 }] },
+          { "day_index": 1, "title": "Range & Pitch", "duration_minutes": 25, "blocks": [{ "type": "warmup", "detail": "Lip trills + scales", "duration_minutes": 5 }, { "type": "main", "detail": "Range mapping, pitch matching exercises, simple melody practice", "duration_minutes": 15 }, { "type": "cooldown", "detail": "Gentle humming", "duration_minutes": 5 }] },
+          { "day_index": 2, "title": "Song Intro", "duration_minutes": 25, "blocks": [{ "type": "warmup", "detail": "Full warm-up", "duration_minutes": 5 }, { "type": "main", "detail": "Choose a song. Learn verse 1 melody. Sing along then solo.", "duration_minutes": 15 }, { "type": "cooldown", "detail": "Cool-down", "duration_minutes": 5 }] }
+        ]},
+        { "week_number": 2, "sessions": [
+          { "day_index": 0, "title": "Breath & Tone", "duration_minutes": 30, "blocks": [{ "type": "warmup", "detail": "Warm-up", "duration_minutes": 5 }, { "type": "main", "detail": "Sustained notes (12s holds), breath phrasing, tone exercises (open throat, resonance placement)", "duration_minutes": 20 }, { "type": "cooldown", "detail": "Cool-down", "duration_minutes": 5 }] },
+          { "day_index": 1, "title": "Song Development", "duration_minutes": 30, "blocks": [{ "type": "warmup", "detail": "Warm-up", "duration_minutes": 5 }, { "type": "main", "detail": "Verse 1 + chorus. Focus on pitch and rhythm accuracy. A cappella practice.", "duration_minutes": 20 }, { "type": "cooldown", "detail": "Cool-down", "duration_minutes": 5 }] },
+          { "day_index": 2, "title": "Diction & Clarity", "duration_minutes": 30, "blocks": [{ "type": "warmup", "detail": "Warm-up + tongue twisters", "duration_minutes": 5 }, { "type": "main", "detail": "Vowel shaping exercises, consonant clarity drills. Apply to song lyrics.", "duration_minutes": 20 }, { "type": "cooldown", "detail": "Cool-down", "duration_minutes": 5 }] }
+        ]},
+        { "week_number": 3, "sessions": [
+          { "day_index": 0, "title": "Dynamics", "duration_minutes": 30, "blocks": [{ "type": "warmup", "detail": "Full warm-up", "duration_minutes": 5 }, { "type": "main", "detail": "Piano to forte exercises. Crescendo/decrescendo on sustained notes. Apply dynamics to song.", "duration_minutes": 20 }, { "type": "cooldown", "detail": "Cool-down", "duration_minutes": 5 }] },
+          { "day_index": 1, "title": "Full Song", "duration_minutes": 30, "blocks": [{ "type": "warmup", "detail": "Warm-up", "duration_minutes": 5 }, { "type": "main", "detail": "Full song: verse + chorus + verse 2. Focus on transitions and storytelling.", "duration_minutes": 20 }, { "type": "cooldown", "detail": "Cool-down", "duration_minutes": 5 }] },
+          { "day_index": 2, "title": "Expression & Style", "duration_minutes": 30, "blocks": [{ "type": "warmup", "detail": "Warm-up", "duration_minutes": 5 }, { "type": "main", "detail": "Add personal touches: runs, riffs, vibrato practice. Record and compare to week 1.", "duration_minutes": 20 }, { "type": "cooldown", "detail": "Cool-down", "duration_minutes": 5 }] }
+        ]},
+        { "week_number": 4, "sessions": [
+          { "day_index": 0, "title": "Technique Polish", "duration_minutes": 35, "blocks": [{ "type": "warmup", "detail": "Full warm-up", "duration_minutes": 5 }, { "type": "main", "detail": "Work on weak spots. Breath control in difficult phrases. Range extension: half-step above comfortable.", "duration_minutes": 25 }, { "type": "cooldown", "detail": "Cool-down", "duration_minutes": 5 }] },
+          { "day_index": 1, "title": "Performance Run", "duration_minutes": 35, "blocks": [{ "type": "warmup", "detail": "Full warm-up", "duration_minutes": 5 }, { "type": "main", "detail": "Full song ×3 performance takes. Standing, with movement/emotion. Record best take.", "duration_minutes": 25 }, { "type": "cooldown", "detail": "Cool-down + celebrate", "duration_minutes": 5 }] },
+          { "day_index": 2, "title": "New Material", "duration_minutes": 35, "blocks": [{ "type": "warmup", "detail": "Warm-up", "duration_minutes": 5 }, { "type": "main", "detail": "Pick next song. Learn first section. Apply all techniques learned in weeks 1-3.", "duration_minutes": 25 }, { "type": "cooldown", "detail": "Cool-down", "duration_minutes": 5 }] }
+        ]}
+      ]
+    },
+    "4x": {
+      "weeks": [
+        { "week_number": 1, "sessions": [
+          { "day_index": 0, "title": "Vocal Foundations", "duration_minutes": 25, "blocks": [{ "type": "warmup", "detail": "Lip trills, humming, sirens", "duration_minutes": 5 }, { "type": "main", "detail": "Breath support, sustained sounds, pitch matching", "duration_minutes": 15 }, { "type": "cooldown", "detail": "Cool-down", "duration_minutes": 5 }] },
+          { "day_index": 1, "title": "Range & Pitch", "duration_minutes": 25, "blocks": [{ "type": "warmup", "detail": "Scales + arpeggios", "duration_minutes": 5 }, { "type": "main", "detail": "Range mapping, interval training, melody practice", "duration_minutes": 15 }, { "type": "cooldown", "detail": "Cool-down", "duration_minutes": 5 }] },
+          { "day_index": 2, "title": "Song Start", "duration_minutes": 25, "blocks": [{ "type": "warmup", "detail": "Full warm-up", "duration_minutes": 5 }, { "type": "main", "detail": "Learn verse 1 of chosen song", "duration_minutes": 15 }, { "type": "cooldown", "detail": "Cool-down", "duration_minutes": 5 }] },
+          { "day_index": 3, "title": "Technique Drills", "duration_minutes": 25, "blocks": [{ "type": "warmup", "detail": "Warm-up", "duration_minutes": 5 }, { "type": "main", "detail": "Vowel shaping, consonant drills, tone placement exercises", "duration_minutes": 15 }, { "type": "cooldown", "detail": "Cool-down", "duration_minutes": 5 }] }
+        ]},
+        { "week_number": 2, "sessions": [
+          { "day_index": 0, "title": "Breath Mastery", "duration_minutes": 30, "blocks": [{ "type": "warmup", "detail": "Warm-up", "duration_minutes": 5 }, { "type": "main", "detail": "Sustained notes 12s, breath phrasing, support drills", "duration_minutes": 20 }, { "type": "cooldown", "detail": "Cool-down", "duration_minutes": 5 }] },
+          { "day_index": 1, "title": "Song: Verse + Chorus", "duration_minutes": 30, "blocks": [{ "type": "warmup", "detail": "Warm-up", "duration_minutes": 5 }, { "type": "main", "detail": "Connect verse and chorus. Pitch accuracy focus.", "duration_minutes": 20 }, { "type": "cooldown", "detail": "Cool-down", "duration_minutes": 5 }] },
+          { "day_index": 2, "title": "Resonance", "duration_minutes": 30, "blocks": [{ "type": "warmup", "detail": "Warm-up", "duration_minutes": 5 }, { "type": "main", "detail": "Chest vs head voice exercises. Mix voice practice. Apply to song.", "duration_minutes": 20 }, { "type": "cooldown", "detail": "Cool-down", "duration_minutes": 5 }] },
+          { "day_index": 3, "title": "Diction & Rhythm", "duration_minutes": 30, "blocks": [{ "type": "warmup", "detail": "Warm-up + tongue twisters", "duration_minutes": 5 }, { "type": "main", "detail": "Lyric clarity exercises, rhythmic accuracy in song", "duration_minutes": 20 }, { "type": "cooldown", "detail": "Cool-down", "duration_minutes": 5 }] }
+        ]},
+        { "week_number": 3, "sessions": [
+          { "day_index": 0, "title": "Dynamics & Color", "duration_minutes": 30, "blocks": [{ "type": "warmup", "detail": "Warm-up", "duration_minutes": 5 }, { "type": "main", "detail": "Dynamic exercises, vocal color changes, emotional delivery", "duration_minutes": 20 }, { "type": "cooldown", "detail": "Cool-down", "duration_minutes": 5 }] },
+          { "day_index": 1, "title": "Full Song Polish", "duration_minutes": 30, "blocks": [{ "type": "warmup", "detail": "Warm-up", "duration_minutes": 5 }, { "type": "main", "detail": "Full song with all sections. Focus on transitions and storytelling.", "duration_minutes": 20 }, { "type": "cooldown", "detail": "Cool-down", "duration_minutes": 5 }] },
+          { "day_index": 2, "title": "Style & Riffs", "duration_minutes": 30, "blocks": [{ "type": "warmup", "detail": "Warm-up", "duration_minutes": 5 }, { "type": "main", "detail": "Basic riffs and runs practice. Vibrato exercises. Personal style development.", "duration_minutes": 20 }, { "type": "cooldown", "detail": "Cool-down", "duration_minutes": 5 }] },
+          { "day_index": 3, "title": "Recording Day", "duration_minutes": 30, "blocks": [{ "type": "warmup", "detail": "Full warm-up", "duration_minutes": 5 }, { "type": "main", "detail": "Record full song ×3 takes. Listen and self-critique.", "duration_minutes": 20 }, { "type": "cooldown", "detail": "Cool-down", "duration_minutes": 5 }] }
+        ]},
+        { "week_number": 4, "sessions": [
+          { "day_index": 0, "title": "Range Extension", "duration_minutes": 35, "blocks": [{ "type": "warmup", "detail": "Extended warm-up", "duration_minutes": 7 }, { "type": "main", "detail": "Push range: half-step up/down exercises. Mixed voice strengthening.", "duration_minutes": 23 }, { "type": "cooldown", "detail": "Cool-down", "duration_minutes": 5 }] },
+          { "day_index": 1, "title": "Performance Polish", "duration_minutes": 35, "blocks": [{ "type": "warmup", "detail": "Full warm-up", "duration_minutes": 5 }, { "type": "main", "detail": "Full song with all dynamics, style, emotion. Standing with physical expression.", "duration_minutes": 25 }, { "type": "cooldown", "detail": "Cool-down", "duration_minutes": 5 }] },
+          { "day_index": 2, "title": "Final Recording", "duration_minutes": 35, "blocks": [{ "type": "warmup", "detail": "Full warm-up", "duration_minutes": 5 }, { "type": "main", "detail": "Best-take recording session. Compare to week 1. Celebrate growth.", "duration_minutes": 25 }, { "type": "cooldown", "detail": "Cool-down", "duration_minutes": 5 }] },
+          { "day_index": 3, "title": "New Song Start", "duration_minutes": 35, "blocks": [{ "type": "warmup", "detail": "Warm-up", "duration_minutes": 5 }, { "type": "main", "detail": "Pick next song. Learn first section. Apply everything from this cycle.", "duration_minutes": 25 }, { "type": "cooldown", "detail": "Cool-down", "duration_minutes": 5 }] }
+        ]}
+      ]
+    }
+  }
+}

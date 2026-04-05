@@ -1,0 +1,220 @@
+{
+  "badges": [
+    {
+      "id": "first_session",
+      "name": "Day One",
+      "description": "Complete your first session",
+      "condition": "first_session",
+      "hidden": false,
+      "activity_specific": null
+    },
+    {
+      "id": "three_day",
+      "name": "Momentum",
+      "description": "Achieve a 3-day streak",
+      "condition": "streak_3",
+      "hidden": false,
+      "activity_specific": null
+    },
+    {
+      "id": "seven_day",
+      "name": "Iron Week",
+      "description": "Achieve a 7-day streak",
+      "condition": "streak_7",
+      "hidden": false,
+      "activity_specific": null
+    },
+    {
+      "id": "fourteen_day",
+      "name": "Two Weeks Strong",
+      "description": "Achieve a 14-day streak",
+      "condition": "streak_14",
+      "hidden": false,
+      "activity_specific": null
+    },
+    {
+      "id": "thirty_day",
+      "name": "The Monthly",
+      "description": "Achieve a 30-day streak",
+      "condition": "streak_30",
+      "hidden": false,
+      "activity_specific": null
+    },
+    {
+      "id": "sixty_day",
+      "name": "The Grinder",
+      "description": "Achieve a 60-day streak",
+      "condition": "streak_60",
+      "hidden": false,
+      "activity_specific": null
+    },
+    {
+      "id": "hundred_day",
+      "name": "The Centurion",
+      "description": "Achieve a 100-day streak",
+      "condition": "streak_100",
+      "hidden": true,
+      "activity_specific": null
+    },
+    {
+      "id": "comeback_kid",
+      "name": "Comeback Kid",
+      "description": "Complete a session after missing one",
+      "condition": "comeback",
+      "hidden": false,
+      "activity_specific": null
+    },
+    {
+      "id": "comeback_3x",
+      "name": "Resilient",
+      "description": "Earn Comeback Kid 3 separate times",
+      "condition": "comeback_3x",
+      "hidden": true,
+      "activity_specific": null
+    },
+    {
+      "id": "perfect_month",
+      "name": "Perfect Month",
+      "description": "Complete every scheduled session for 4 consecutive weeks",
+      "condition": "perfect_month",
+      "hidden": true,
+      "activity_specific": null
+    },
+    {
+      "id": "early_bird",
+      "name": "Early Bird",
+      "description": "Complete 5 sessions before 8am",
+      "condition": "early_bird_5",
+      "hidden": true,
+      "activity_specific": null
+    },
+    {
+      "id": "night_owl",
+      "name": "Night Owl",
+      "description": "Complete 5 sessions after 8pm",
+      "condition": "night_owl_5",
+      "hidden": true,
+      "activity_specific": null
+    },
+    {
+      "id": "bonus_session",
+      "name": "Extra Credit",
+      "description": "Complete 3 bonus sessions",
+      "condition": "bonus_3",
+      "hidden": true,
+      "activity_specific": null
+    },
+    {
+      "id": "the_regular",
+      "name": "The Regular",
+      "description": "Reach Level 7",
+      "condition": "level_7",
+      "hidden": false,
+      "activity_specific": null
+    },
+    {
+      "id": "the_lifer",
+      "name": "The Lifer",
+      "description": "Reach Level 9",
+      "condition": "level_9",
+      "hidden": false,
+      "activity_specific": null
+    },
+    {
+      "id": "legend",
+      "name": "Legend",
+      "description": "Reach Level 10",
+      "condition": "level_10",
+      "hidden": true,
+      "activity_specific": null
+    },
+    {
+      "id": "first_splash",
+      "name": "First Splash",
+      "description": "Complete your first swimming session",
+      "condition": "first_activity_session",
+      "hidden": false,
+      "activity_specific": "swimming"
+    },
+    {
+      "id": "first_km",
+      "name": "The Kilometer",
+      "description": "Swim a cumulative 1km",
+      "condition": "cumulative_distance_1000",
+      "hidden": false,
+      "activity_specific": "swimming"
+    },
+    {
+      "id": "ten_km",
+      "name": "Ocean Ready",
+      "description": "Swim a cumulative 10km",
+      "condition": "cumulative_distance_10000",
+      "hidden": true,
+      "activity_specific": "swimming"
+    },
+    {
+      "id": "first_lift",
+      "name": "Under the Bar",
+      "description": "Complete your first gym session",
+      "condition": "first_activity_session",
+      "hidden": false,
+      "activity_specific": "gym"
+    },
+    {
+      "id": "fifty_sessions_gym",
+      "name": "Iron Regular",
+      "description": "Complete 50 gym sessions",
+      "condition": "activity_sessions_50",
+      "hidden": true,
+      "activity_specific": "gym"
+    },
+    {
+      "id": "first_step",
+      "name": "First Step",
+      "description": "Complete your first run",
+      "condition": "first_activity_session",
+      "hidden": false,
+      "activity_specific": "running"
+    },
+    {
+      "id": "first_pose",
+      "name": "First Pose",
+      "description": "Complete your first yoga session",
+      "condition": "first_activity_session",
+      "hidden": false,
+      "activity_specific": "yoga"
+    },
+    {
+      "id": "first_move",
+      "name": "First Move",
+      "description": "Complete your first dance session",
+      "condition": "first_activity_session",
+      "hidden": false,
+      "activity_specific": "dance"
+    },
+    {
+      "id": "first_note",
+      "name": "First Note",
+      "description": "Complete your first vocal session",
+      "condition": "first_activity_session",
+      "hidden": false,
+      "activity_specific": "singing"
+    },
+    {
+      "id": "vocal_rest",
+      "name": "Voice Protector",
+      "description": "Take all scheduled rest days for 4 weeks",
+      "condition": "vocal_rest_4w",
+      "hidden": true,
+      "activity_specific": "singing"
+    },
+    {
+      "id": "first_chord",
+      "name": "First Chord",
+      "description": "Complete your first instrument session",
+      "condition": "first_activity_session",
+      "hidden": false,
+      "activity_specific": "instrument"
+    }
+  ]
+}

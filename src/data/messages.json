@@ -1,0 +1,75 @@
+{
+  "return_states": {
+    "1": {
+      "name": "same_day",
+      "messages": [
+        "You already showed up today. That's the whole game.",
+        "Done for the day. Rest up — tomorrow's session is ready when you are.",
+        "Nothing left to do but recover. See you tomorrow."
+      ]
+    },
+    "2": {
+      "name": "next_day_on_track",
+      "messages": [
+        "Right on schedule. Your session is ready.",
+        "Back again. That's how streaks are built.",
+        "New day, same commitment. Let's go.",
+        "You showed up yesterday. You're showing up today. That's the pattern.",
+        "Consistency looks good on you. Here's today's session."
+      ]
+    },
+    "3": {
+      "name": "missed_one",
+      "messages": [
+        "You missed one. It happens. What matters is you're here now.",
+        "One day off doesn't erase what you've built. Pick it back up.",
+        "Yesterday didn't happen. Today can. Your session is ready.",
+        "Missed a day? Doesn't matter. You came back. That's the move.",
+        "The streak broke. The habit didn't. Let's go.",
+        "One miss doesn't make a pattern. Showing up today does."
+      ]
+    },
+    "4": {
+      "name": "missed_a_few",
+      "messages": [
+        "It's been {duration}. No judgment — just a session waiting for you.",
+        "You've been away {duration}. The plan didn't go anywhere. Neither did your progress.",
+        "A few days off. It happens to everyone. Your next session is ready.",
+        "{duration} since your last session. Let's not make it longer.",
+        "Been a minute. Your body remembers more than you think. Let's go."
+      ]
+    },
+    "5": {
+      "name": "extended_absence",
+      "messages": [
+        "It's been {days} days. You're here now. That's what counts.",
+        "{duration} is a long time. But you opened the app. That's step one.",
+        "Welcome back. {days} days away, but you didn't delete the app. That says something.",
+        "It's been {duration}. No lectures. Just your next session, whenever you're ready.",
+        "You came back after {days} days. Most people don't. Let's rebuild."
+      ]
+    }
+  },
+  "time_of_day": {
+    "early_morning": "Good timing. Morning sessions hit different.",
+    "morning": "Still early. Plenty of time to get it done.",
+    "afternoon": "Half the day left. Your session is waiting.",
+    "evening": "Evening session? Some of the best work happens now.",
+    "night": "Planning for tomorrow? Smart. Your session is set."
+  },
+  "celebrations": {
+    "session_complete": [
+      "That's {total} sessions total. You're a regular now.",
+      "Day {streak}. They can't take this from you.",
+      "Done. One more brick in the wall.",
+      "Checked in. The compound effect is working.",
+      "Another one. You're building something."
+    ],
+    "streak_3": "3 days. Momentum.",
+    "streak_7": "A full week. Iron.",
+    "streak_14": "Two weeks. This is becoming who you are.",
+    "streak_30": "30 days. You're not the same person who started.",
+    "perfect_week": "Perfect week. Every single session.",
+    "comeback": "Welcome back. That took strength."
+  }
+}

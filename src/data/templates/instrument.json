@@ -1,0 +1,82 @@
+{
+  "activity": "instrument",
+  "experience_modifiers": {
+    "beginner": { "sets_multiplier": 0.7, "duration_multiplier": 0.8 },
+    "intermediate": { "sets_multiplier": 1.0, "duration_multiplier": 1.0 },
+    "advanced": { "sets_multiplier": 1.3, "duration_multiplier": 1.15 }
+  },
+  "templates": {
+    "2x": {
+      "weeks": [
+        { "week_number": 1, "sessions": [
+          { "day_index": 0, "title": "Foundations", "duration_minutes": 25, "blocks": [{ "type": "warmup", "detail": "5 min finger stretches + chromatic exercise (slow, focus on clean notes)", "duration_minutes": 5 }, { "type": "main", "detail": "Learn C major scale (or equivalent for your instrument). Practice ascending/descending ×10. Learn 2 basic chords/patterns.", "duration_minutes": 15 }, { "type": "cooldown", "detail": "5 min: play something fun — any song, any speed. End on enjoyment.", "duration_minutes": 5 }] },
+          { "day_index": 1, "title": "Chord Practice", "duration_minutes": 25, "blocks": [{ "type": "warmup", "detail": "Chromatic exercise + C major scale review", "duration_minutes": 5 }, { "type": "main", "detail": "Practice chord transitions: 2 chords, switch every 4 beats with metronome at 60 BPM. Simple strumming/picking pattern.", "duration_minutes": 15 }, { "type": "cooldown", "detail": "Play along with a simple backing track or song", "duration_minutes": 5 }] }
+        ]},
+        { "week_number": 2, "sessions": [
+          { "day_index": 0, "title": "Scale & Chords", "duration_minutes": 30, "blocks": [{ "type": "warmup", "detail": "Chromatic + C major (5 min)", "duration_minutes": 5 }, { "type": "main", "detail": "G major scale. 3-chord progressions (C-G-Am or equivalent). Metronome at 65 BPM. Smooth transitions.", "duration_minutes": 20 }, { "type": "cooldown", "detail": "Song practice: simple tune with learned chords", "duration_minutes": 5 }] },
+          { "day_index": 1, "title": "Song Building", "duration_minutes": 30, "blocks": [{ "type": "warmup", "detail": "Scale warm-up", "duration_minutes": 5 }, { "type": "main", "detail": "Learn verse section of chosen song. Focus on rhythm accuracy. Slow practice first, build speed.", "duration_minutes": 20 }, { "type": "cooldown", "detail": "Play through what you know", "duration_minutes": 5 }] }
+        ]},
+        { "week_number": 3, "sessions": [
+          { "day_index": 0, "title": "Technique Focus", "duration_minutes": 30, "blocks": [{ "type": "warmup", "detail": "Scales: C + G major, metronome 70 BPM", "duration_minutes": 5 }, { "type": "main", "detail": "New technique: hammer-ons/pull-offs (guitar), pedaling (piano), ghost notes (drums). 4-chord progression practice.", "duration_minutes": 20 }, { "type": "cooldown", "detail": "Song practice", "duration_minutes": 5 }] },
+          { "day_index": 1, "title": "Song Development", "duration_minutes": 30, "blocks": [{ "type": "warmup", "detail": "Scale warm-up", "duration_minutes": 5 }, { "type": "main", "detail": "Verse + chorus of chosen song. Connect sections. Practice with original recording.", "duration_minutes": 20 }, { "type": "cooldown", "detail": "Record yourself, listen back", "duration_minutes": 5 }] }
+        ]},
+        { "week_number": 4, "sessions": [
+          { "day_index": 0, "title": "Speed & Clean", "duration_minutes": 30, "blocks": [{ "type": "warmup", "detail": "Scales at 75 BPM, focus on clean execution", "duration_minutes": 5 }, { "type": "main", "detail": "Increase metronome 5 BPM from comfort zone. Clean up chord transitions. New chord/pattern introduction.", "duration_minutes": 20 }, { "type": "cooldown", "detail": "Play something you enjoy", "duration_minutes": 5 }] },
+          { "day_index": 1, "title": "Performance", "duration_minutes": 30, "blocks": [{ "type": "warmup", "detail": "Full warm-up", "duration_minutes": 5 }, { "type": "main", "detail": "Full song play-through ×3. Record best take. Compare to week 1 — hear your progress.", "duration_minutes": 20 }, { "type": "cooldown", "detail": "Jam freely, celebrate", "duration_minutes": 5 }] }
+        ]}
+      ]
+    },
+    "3x": {
+      "weeks": [
+        { "week_number": 1, "sessions": [
+          { "day_index": 0, "title": "Foundations", "duration_minutes": 25, "blocks": [{ "type": "warmup", "detail": "Finger stretches + chromatic exercise", "duration_minutes": 5 }, { "type": "main", "detail": "C major scale ×10, learn 2 basic chords", "duration_minutes": 15 }, { "type": "cooldown", "detail": "Free play", "duration_minutes": 5 }] },
+          { "day_index": 1, "title": "Chord Transitions", "duration_minutes": 25, "blocks": [{ "type": "warmup", "detail": "Scale review", "duration_minutes": 5 }, { "type": "main", "detail": "2-chord transitions at 60 BPM, basic rhythm pattern", "duration_minutes": 15 }, { "type": "cooldown", "detail": "Play along with simple track", "duration_minutes": 5 }] },
+          { "day_index": 2, "title": "Song Start", "duration_minutes": 25, "blocks": [{ "type": "warmup", "detail": "Chromatic + scale", "duration_minutes": 5 }, { "type": "main", "detail": "Choose a song. Learn the first section slowly.", "duration_minutes": 15 }, { "type": "cooldown", "detail": "Repeat what you learned 3 times", "duration_minutes": 5 }] }
+        ]},
+        { "week_number": 2, "sessions": [
+          { "day_index": 0, "title": "New Scale + Chords", "duration_minutes": 30, "blocks": [{ "type": "warmup", "detail": "C + G major scales", "duration_minutes": 5 }, { "type": "main", "detail": "Learn Am and Em (or equivalent). 3-chord progressions. Metronome 65 BPM.", "duration_minutes": 20 }, { "type": "cooldown", "detail": "Free play", "duration_minutes": 5 }] },
+          { "day_index": 1, "title": "Song Building", "duration_minutes": 30, "blocks": [{ "type": "warmup", "detail": "Scales", "duration_minutes": 5 }, { "type": "main", "detail": "Verse section of song. Slow practice → half speed → full speed.", "duration_minutes": 20 }, { "type": "cooldown", "detail": "Play through everything", "duration_minutes": 5 }] },
+          { "day_index": 2, "title": "Rhythm & Timing", "duration_minutes": 30, "blocks": [{ "type": "warmup", "detail": "Scale warm-up", "duration_minutes": 5 }, { "type": "main", "detail": "Metronome exercises: play chords on beats 1 & 3, then all 4 beats. Syncopation intro.", "duration_minutes": 20 }, { "type": "cooldown", "detail": "Song review", "duration_minutes": 5 }] }
+        ]},
+        { "week_number": 3, "sessions": [
+          { "day_index": 0, "title": "Technique", "duration_minutes": 30, "blocks": [{ "type": "warmup", "detail": "Scales at 70 BPM", "duration_minutes": 5 }, { "type": "main", "detail": "New technique (barre chords/arpeggios/fills). 4-chord progression with new technique.", "duration_minutes": 20 }, { "type": "cooldown", "detail": "Free play", "duration_minutes": 5 }] },
+          { "day_index": 1, "title": "Full Song", "duration_minutes": 30, "blocks": [{ "type": "warmup", "detail": "Warm-up", "duration_minutes": 5 }, { "type": "main", "detail": "Verse + chorus connected. Transition work. Play with backing track.", "duration_minutes": 20 }, { "type": "cooldown", "detail": "Record progress", "duration_minutes": 5 }] },
+          { "day_index": 2, "title": "Ear Training", "duration_minutes": 30, "blocks": [{ "type": "warmup", "detail": "Scales", "duration_minutes": 5 }, { "type": "main", "detail": "Interval recognition. Try to figure out a simple melody by ear. Chord recognition exercises.", "duration_minutes": 20 }, { "type": "cooldown", "detail": "Play favorite song section", "duration_minutes": 5 }] }
+        ]},
+        { "week_number": 4, "sessions": [
+          { "day_index": 0, "title": "Speed Building", "duration_minutes": 35, "blocks": [{ "type": "warmup", "detail": "Scales 75 BPM", "duration_minutes": 5 }, { "type": "main", "detail": "Increase metronome 5 BPM above comfort. Clean transitions under speed.", "duration_minutes": 25 }, { "type": "cooldown", "detail": "Free play", "duration_minutes": 5 }] },
+          { "day_index": 1, "title": "Performance", "duration_minutes": 35, "blocks": [{ "type": "warmup", "detail": "Full warm-up", "duration_minutes": 5 }, { "type": "main", "detail": "Full song ×3 takes. Record best one. Compare to week 1.", "duration_minutes": 25 }, { "type": "cooldown", "detail": "Celebrate progress", "duration_minutes": 5 }] },
+          { "day_index": 2, "title": "New Material", "duration_minutes": 35, "blocks": [{ "type": "warmup", "detail": "Warm-up", "duration_minutes": 5 }, { "type": "main", "detail": "Start next song or new technique for next cycle. Brief theory: why these chords work together.", "duration_minutes": 25 }, { "type": "cooldown", "detail": "Jam session", "duration_minutes": 5 }] }
+        ]}
+      ]
+    },
+    "4x": {
+      "weeks": [
+        { "week_number": 1, "sessions": [
+          { "day_index": 0, "title": "Scales & Basics", "duration_minutes": 25, "blocks": [{ "type": "warmup", "detail": "Finger stretches + chromatic", "duration_minutes": 5 }, { "type": "main", "detail": "C major scale, basic chord forms", "duration_minutes": 15 }, { "type": "cooldown", "detail": "Free play", "duration_minutes": 5 }] },
+          { "day_index": 1, "title": "Chord Work", "duration_minutes": 25, "blocks": [{ "type": "warmup", "detail": "Scale review", "duration_minutes": 5 }, { "type": "main", "detail": "2-chord transitions at 60 BPM, rhythm patterns", "duration_minutes": 15 }, { "type": "cooldown", "detail": "Play along", "duration_minutes": 5 }] },
+          { "day_index": 2, "title": "Song Start", "duration_minutes": 25, "blocks": [{ "type": "warmup", "detail": "Warm-up", "duration_minutes": 5 }, { "type": "main", "detail": "Learn first section of chosen song", "duration_minutes": 15 }, { "type": "cooldown", "detail": "Repeat ×3", "duration_minutes": 5 }] },
+          { "day_index": 3, "title": "Ear & Rhythm", "duration_minutes": 25, "blocks": [{ "type": "warmup", "detail": "Scales", "duration_minutes": 5 }, { "type": "main", "detail": "Clap rhythms, tap along to songs, interval recognition", "duration_minutes": 15 }, { "type": "cooldown", "detail": "Free play", "duration_minutes": 5 }] }
+        ]},
+        { "week_number": 2, "sessions": [
+          { "day_index": 0, "title": "New Scale", "duration_minutes": 30, "blocks": [{ "type": "warmup", "detail": "C + G scales", "duration_minutes": 5 }, { "type": "main", "detail": "New chords, 3-chord progressions, 65 BPM", "duration_minutes": 20 }, { "type": "cooldown", "detail": "Free play", "duration_minutes": 5 }] },
+          { "day_index": 1, "title": "Song Development", "duration_minutes": 30, "blocks": [{ "type": "warmup", "detail": "Scales", "duration_minutes": 5 }, { "type": "main", "detail": "Verse of song, slow to fast practice method", "duration_minutes": 20 }, { "type": "cooldown", "detail": "Play through", "duration_minutes": 5 }] },
+          { "day_index": 2, "title": "Technique", "duration_minutes": 30, "blocks": [{ "type": "warmup", "detail": "Warm-up", "duration_minutes": 5 }, { "type": "main", "detail": "New technique introduction, exercises at slow tempo", "duration_minutes": 20 }, { "type": "cooldown", "detail": "Song review", "duration_minutes": 5 }] },
+          { "day_index": 3, "title": "Rhythm & Feel", "duration_minutes": 30, "blocks": [{ "type": "warmup", "detail": "Scales", "duration_minutes": 5 }, { "type": "main", "detail": "Metronome work, syncopation, playing with backing track", "duration_minutes": 20 }, { "type": "cooldown", "detail": "Jam", "duration_minutes": 5 }] }
+        ]},
+        { "week_number": 3, "sessions": [
+          { "day_index": 0, "title": "Advanced Technique", "duration_minutes": 30, "blocks": [{ "type": "warmup", "detail": "Scales at 70 BPM", "duration_minutes": 5 }, { "type": "main", "detail": "4-chord progressions with new technique, dynamics", "duration_minutes": 20 }, { "type": "cooldown", "detail": "Free play", "duration_minutes": 5 }] },
+          { "day_index": 1, "title": "Full Song", "duration_minutes": 30, "blocks": [{ "type": "warmup", "detail": "Warm-up", "duration_minutes": 5 }, { "type": "main", "detail": "Verse + chorus + transitions. Play with recording.", "duration_minutes": 20 }, { "type": "cooldown", "detail": "Record progress", "duration_minutes": 5 }] },
+          { "day_index": 2, "title": "Ear Training", "duration_minutes": 30, "blocks": [{ "type": "warmup", "detail": "Scales", "duration_minutes": 5 }, { "type": "main", "detail": "Learn melody by ear, chord recognition, interval identification", "duration_minutes": 20 }, { "type": "cooldown", "detail": "Play favorite piece", "duration_minutes": 5 }] },
+          { "day_index": 3, "title": "Theory & Creativity", "duration_minutes": 30, "blocks": [{ "type": "warmup", "detail": "Warm-up", "duration_minutes": 5 }, { "type": "main", "detail": "Why chords work together (key of C). Create simple chord progression. Improvise melody over it.", "duration_minutes": 20 }, { "type": "cooldown", "detail": "Jam on your creation", "duration_minutes": 5 }] }
+        ]},
+        { "week_number": 4, "sessions": [
+          { "day_index": 0, "title": "Speed & Precision", "duration_minutes": 35, "blocks": [{ "type": "warmup", "detail": "Scales 75 BPM", "duration_minutes": 5 }, { "type": "main", "detail": "Push tempo, clean execution under speed, accuracy drills", "duration_minutes": 25 }, { "type": "cooldown", "detail": "Free play", "duration_minutes": 5 }] },
+          { "day_index": 1, "title": "Performance Polish", "duration_minutes": 35, "blocks": [{ "type": "warmup", "detail": "Full warm-up", "duration_minutes": 5 }, { "type": "main", "detail": "Full song ×5, dynamics and feel. Record best take.", "duration_minutes": 25 }, { "type": "cooldown", "detail": "Listen back", "duration_minutes": 5 }] },
+          { "day_index": 2, "title": "Jam Session", "duration_minutes": 35, "blocks": [{ "type": "warmup", "detail": "Scales + arpeggios", "duration_minutes": 5 }, { "type": "main", "detail": "Improvise over backing tracks. Apply everything learned. Explore.", "duration_minutes": 25 }, { "type": "cooldown", "detail": "Record favorite improvs", "duration_minutes": 5 }] },
+          { "day_index": 3, "title": "Next Cycle Prep", "duration_minutes": 35, "blocks": [{ "type": "warmup", "detail": "Warm-up", "duration_minutes": 5 }, { "type": "main", "detail": "Pick next song, learn first section. New scale introduction for next cycle.", "duration_minutes": 25 }, { "type": "cooldown", "detail": "Celebrate your month of progress", "duration_minutes": 5 }] }
+        ]}
+      ]
+    }
+  }
+}

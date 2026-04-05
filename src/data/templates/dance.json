@@ -1,0 +1,82 @@
+{
+  "activity": "dance",
+  "experience_modifiers": {
+    "beginner": { "sets_multiplier": 0.7, "duration_multiplier": 0.8 },
+    "intermediate": { "sets_multiplier": 1.0, "duration_multiplier": 1.0 },
+    "advanced": { "sets_multiplier": 1.3, "duration_multiplier": 1.15 }
+  },
+  "templates": {
+    "2x": {
+      "weeks": [
+        { "week_number": 1, "sessions": [
+          { "day_index": 0, "title": "Foundations & Groove", "duration_minutes": 30, "blocks": [{ "type": "warmup", "detail": "10 min joint mobility: neck, shoulders, hips, ankles + bounce to music", "duration_minutes": 10 }, { "type": "main", "detail": "Basic isolations: chest (forward/back, side to side), head, shoulders. 2-count step-touch groove. Practice for 2 songs.", "duration_minutes": 15 }, { "type": "cooldown", "detail": "5 min full-body stretch — focus on hip flexors and calves", "duration_minutes": 5 }] },
+          { "day_index": 1, "title": "Rhythm & Basics", "duration_minutes": 30, "blocks": [{ "type": "warmup", "detail": "10 min groove warm-up to any track — just move", "duration_minutes": 10 }, { "type": "main", "detail": "4-count basic step patterns. Step-touch, grapevine, body roll intro. Practice 4-count combo ×10.", "duration_minutes": 15 }, { "type": "cooldown", "detail": "5 min stretching", "duration_minutes": 5 }] }
+        ]},
+        { "week_number": 2, "sessions": [
+          { "day_index": 0, "title": "Isolation Drills", "duration_minutes": 35, "blocks": [{ "type": "warmup", "detail": "10 min mobility + groove", "duration_minutes": 10 }, { "type": "main", "detail": "Advanced isolations: chest circles, hip circles, body waves. 8-count isolation combo. Practice with music.", "duration_minutes": 20 }, { "type": "cooldown", "detail": "5 min stretch", "duration_minutes": 5 }] },
+          { "day_index": 1, "title": "First Combo", "duration_minutes": 35, "blocks": [{ "type": "warmup", "detail": "10 min warm-up + review last session", "duration_minutes": 10 }, { "type": "main", "detail": "Learn 8-count combo: step-touch → body roll → step-back → groove. Practice 15 times. Record yourself.", "duration_minutes": 20 }, { "type": "cooldown", "detail": "5 min stretch", "duration_minutes": 5 }] }
+        ]},
+        { "week_number": 3, "sessions": [
+          { "day_index": 0, "title": "Technique & Speed", "duration_minutes": 35, "blocks": [{ "type": "warmup", "detail": "10 min warm-up", "duration_minutes": 10 }, { "type": "main", "detail": "Speed up week 2 combo. Add levels (high/low). Practice transitions between moves. New 8-count combo.", "duration_minutes": 20 }, { "type": "cooldown", "detail": "5 min stretch", "duration_minutes": 5 }] },
+          { "day_index": 1, "title": "Freestyle & Expression", "duration_minutes": 35, "blocks": [{ "type": "warmup", "detail": "10 min groove warm-up", "duration_minutes": 10 }, { "type": "main", "detail": "Connect both 8-counts into 16-count routine. 5 min freestyle to any song — just move. Record and review.", "duration_minutes": 20 }, { "type": "cooldown", "detail": "5 min stretch", "duration_minutes": 5 }] }
+        ]},
+        { "week_number": 4, "sessions": [
+          { "day_index": 0, "title": "Routine Build", "duration_minutes": 40, "blocks": [{ "type": "warmup", "detail": "10 min warm-up", "duration_minutes": 10 }, { "type": "main", "detail": "Add new 8-count section. Full 24-count routine. Practice transitions, add musicality (hit beats, play with tempo).", "duration_minutes": 25 }, { "type": "cooldown", "detail": "5 min stretch", "duration_minutes": 5 }] },
+          { "day_index": 1, "title": "Performance Practice", "duration_minutes": 40, "blocks": [{ "type": "warmup", "detail": "10 min warm-up + full routine walkthrough", "duration_minutes": 10 }, { "type": "main", "detail": "Full routine ×5 with music. Focus on performance quality: energy, facial expression, dynamics. Record final take.", "duration_minutes": 25 }, { "type": "cooldown", "detail": "5 min cool-down stretch", "duration_minutes": 5 }] }
+        ]}
+      ]
+    },
+    "3x": {
+      "weeks": [
+        { "week_number": 1, "sessions": [
+          { "day_index": 0, "title": "Foundations", "duration_minutes": 30, "blocks": [{ "type": "warmup", "detail": "10 min joint mobility + bounce", "duration_minutes": 10 }, { "type": "main", "detail": "Basic isolations, 2-count groove, step-touch patterns", "duration_minutes": 15 }, { "type": "cooldown", "detail": "Stretch", "duration_minutes": 5 }] },
+          { "day_index": 1, "title": "Rhythm Training", "duration_minutes": 30, "blocks": [{ "type": "warmup", "detail": "10 min groove warm-up", "duration_minutes": 10 }, { "type": "main", "detail": "Clap rhythms, step on beats, 4-count patterns, body roll intro", "duration_minutes": 15 }, { "type": "cooldown", "detail": "Stretch", "duration_minutes": 5 }] },
+          { "day_index": 2, "title": "First Combo", "duration_minutes": 30, "blocks": [{ "type": "warmup", "detail": "10 min warm-up + review", "duration_minutes": 10 }, { "type": "main", "detail": "8-count beginner combo. Practice ×10. Music: slow BPM first, then normal speed.", "duration_minutes": 15 }, { "type": "cooldown", "detail": "Stretch", "duration_minutes": 5 }] }
+        ]},
+        { "week_number": 2, "sessions": [
+          { "day_index": 0, "title": "Isolation Drills", "duration_minutes": 35, "blocks": [{ "type": "warmup", "detail": "10 min mobility", "duration_minutes": 10 }, { "type": "main", "detail": "Chest, hip, head isolations. Body wave practice. 8-count isolation sequence.", "duration_minutes": 20 }, { "type": "cooldown", "detail": "Stretch", "duration_minutes": 5 }] },
+          { "day_index": 1, "title": "Combo Building", "duration_minutes": 35, "blocks": [{ "type": "warmup", "detail": "10 min warm-up + review combo", "duration_minutes": 10 }, { "type": "main", "detail": "New 8-count section. Connect to previous. 16-count routine practice ×8.", "duration_minutes": 20 }, { "type": "cooldown", "detail": "Stretch", "duration_minutes": 5 }] },
+          { "day_index": 2, "title": "Freestyle", "duration_minutes": 35, "blocks": [{ "type": "warmup", "detail": "10 min groove", "duration_minutes": 10 }, { "type": "main", "detail": "Freestyle practice: 3 songs, just move. Focus on hearing beats. Review 16-count routine.", "duration_minutes": 20 }, { "type": "cooldown", "detail": "Stretch", "duration_minutes": 5 }] }
+        ]},
+        { "week_number": 3, "sessions": [
+          { "day_index": 0, "title": "Technique Focus", "duration_minutes": 40, "blocks": [{ "type": "warmup", "detail": "10 min warm-up", "duration_minutes": 10 }, { "type": "main", "detail": "Clean up transitions. Add levels and dynamics. Speed drills.", "duration_minutes": 25 }, { "type": "cooldown", "detail": "Stretch", "duration_minutes": 5 }] },
+          { "day_index": 1, "title": "New Choreography", "duration_minutes": 40, "blocks": [{ "type": "warmup", "detail": "10 min warm-up + routine review", "duration_minutes": 10 }, { "type": "main", "detail": "Learn new 16-count section. Total routine now 32 counts. Slow walkthrough then music.", "duration_minutes": 25 }, { "type": "cooldown", "detail": "Stretch", "duration_minutes": 5 }] },
+          { "day_index": 2, "title": "Expression & Feel", "duration_minutes": 40, "blocks": [{ "type": "warmup", "detail": "10 min groove warm-up", "duration_minutes": 10 }, { "type": "main", "detail": "Full routine with performance energy. Freestyle improv between sections. Record and review.", "duration_minutes": 25 }, { "type": "cooldown", "detail": "Stretch", "duration_minutes": 5 }] }
+        ]},
+        { "week_number": 4, "sessions": [
+          { "day_index": 0, "title": "Polish", "duration_minutes": 45, "blocks": [{ "type": "warmup", "detail": "10 min warm-up", "duration_minutes": 10 }, { "type": "main", "detail": "Full 32-count routine cleanup. Fix weak spots. Add style and character.", "duration_minutes": 28 }, { "type": "cooldown", "detail": "Stretch", "duration_minutes": 7 }] },
+          { "day_index": 1, "title": "Performance Day", "duration_minutes": 45, "blocks": [{ "type": "warmup", "detail": "10 min full warm-up", "duration_minutes": 10 }, { "type": "main", "detail": "Full routine ×5 with music. Film 2-3 takes. Focus: energy, dynamics, musicality.", "duration_minutes": 28 }, { "type": "cooldown", "detail": "Stretch + review footage", "duration_minutes": 7 }] },
+          { "day_index": 2, "title": "Freestyle Session", "duration_minutes": 45, "blocks": [{ "type": "warmup", "detail": "10 min groove", "duration_minutes": 10 }, { "type": "main", "detail": "Extended freestyle: 20 min to playlist. Focus on musicality, using learned moves naturally. Fun session.", "duration_minutes": 28 }, { "type": "cooldown", "detail": "Stretch", "duration_minutes": 7 }] }
+        ]}
+      ]
+    },
+    "4x": {
+      "weeks": [
+        { "week_number": 1, "sessions": [
+          { "day_index": 0, "title": "Foundations", "duration_minutes": 30, "blocks": [{ "type": "warmup", "detail": "Joint mobility + bounce (10 min)", "duration_minutes": 10 }, { "type": "main", "detail": "Basic isolations and groove", "duration_minutes": 15 }, { "type": "cooldown", "detail": "Stretch", "duration_minutes": 5 }] },
+          { "day_index": 1, "title": "Rhythm", "duration_minutes": 30, "blocks": [{ "type": "warmup", "detail": "Groove warm-up", "duration_minutes": 10 }, { "type": "main", "detail": "Step patterns, musicality exercises", "duration_minutes": 15 }, { "type": "cooldown", "detail": "Stretch", "duration_minutes": 5 }] },
+          { "day_index": 2, "title": "First Combo", "duration_minutes": 30, "blocks": [{ "type": "warmup", "detail": "Warm-up + review", "duration_minutes": 10 }, { "type": "main", "detail": "8-count beginner combo, practice ×10", "duration_minutes": 15 }, { "type": "cooldown", "detail": "Stretch", "duration_minutes": 5 }] },
+          { "day_index": 3, "title": "Freestyle Play", "duration_minutes": 30, "blocks": [{ "type": "warmup", "detail": "Groove warm-up", "duration_minutes": 10 }, { "type": "main", "detail": "Free movement to 3 songs + review combo", "duration_minutes": 15 }, { "type": "cooldown", "detail": "Stretch", "duration_minutes": 5 }] }
+        ]},
+        { "week_number": 2, "sessions": [
+          { "day_index": 0, "title": "Isolation Drills", "duration_minutes": 35, "blocks": [{ "type": "warmup", "detail": "Mobility (10 min)", "duration_minutes": 10 }, { "type": "main", "detail": "Advanced isolations, body waves", "duration_minutes": 20 }, { "type": "cooldown", "detail": "Stretch", "duration_minutes": 5 }] },
+          { "day_index": 1, "title": "Combo A", "duration_minutes": 35, "blocks": [{ "type": "warmup", "detail": "Warm-up + combo review", "duration_minutes": 10 }, { "type": "main", "detail": "New 8-count + connect to previous = 16 counts", "duration_minutes": 20 }, { "type": "cooldown", "detail": "Stretch", "duration_minutes": 5 }] },
+          { "day_index": 2, "title": "Technique", "duration_minutes": 35, "blocks": [{ "type": "warmup", "detail": "Warm-up", "duration_minutes": 10 }, { "type": "main", "detail": "Transition drills, level changes, footwork speed", "duration_minutes": 20 }, { "type": "cooldown", "detail": "Stretch", "duration_minutes": 5 }] },
+          { "day_index": 3, "title": "Freestyle", "duration_minutes": 35, "blocks": [{ "type": "warmup", "detail": "Groove", "duration_minutes": 10 }, { "type": "main", "detail": "Extended freestyle + routine practice", "duration_minutes": 20 }, { "type": "cooldown", "detail": "Stretch", "duration_minutes": 5 }] }
+        ]},
+        { "week_number": 3, "sessions": [
+          { "day_index": 0, "title": "Choreography Build", "duration_minutes": 40, "blocks": [{ "type": "warmup", "detail": "Warm-up", "duration_minutes": 10 }, { "type": "main", "detail": "New 16-count section, total routine now 32 counts", "duration_minutes": 25 }, { "type": "cooldown", "detail": "Stretch", "duration_minutes": 5 }] },
+          { "day_index": 1, "title": "Speed & Power", "duration_minutes": 40, "blocks": [{ "type": "warmup", "detail": "Dynamic warm-up", "duration_minutes": 10 }, { "type": "main", "detail": "Speed drills, explosive moves, clean hits", "duration_minutes": 25 }, { "type": "cooldown", "detail": "Stretch", "duration_minutes": 5 }] },
+          { "day_index": 2, "title": "Musicality", "duration_minutes": 40, "blocks": [{ "type": "warmup", "detail": "Groove", "duration_minutes": 10 }, { "type": "main", "detail": "Routine with musicality focus: hits, slides, pauses. Listen deeply.", "duration_minutes": 25 }, { "type": "cooldown", "detail": "Stretch", "duration_minutes": 5 }] },
+          { "day_index": 3, "title": "Freestyle Battle", "duration_minutes": 40, "blocks": [{ "type": "warmup", "detail": "Groove warm-up", "duration_minutes": 10 }, { "type": "main", "detail": "3×2min freestyle rounds with rest. Review routine. Record.", "duration_minutes": 25 }, { "type": "cooldown", "detail": "Stretch", "duration_minutes": 5 }] }
+        ]},
+        { "week_number": 4, "sessions": [
+          { "day_index": 0, "title": "Polish", "duration_minutes": 45, "blocks": [{ "type": "warmup", "detail": "Full warm-up", "duration_minutes": 10 }, { "type": "main", "detail": "Full 32-count routine polish, transitions, dynamics", "duration_minutes": 28 }, { "type": "cooldown", "detail": "Stretch", "duration_minutes": 7 }] },
+          { "day_index": 1, "title": "Performance", "duration_minutes": 45, "blocks": [{ "type": "warmup", "detail": "Warm-up", "duration_minutes": 10 }, { "type": "main", "detail": "Full routine ×5, record best takes", "duration_minutes": 28 }, { "type": "cooldown", "detail": "Review + stretch", "duration_minutes": 7 }] },
+          { "day_index": 2, "title": "New Moves", "duration_minutes": 45, "blocks": [{ "type": "warmup", "detail": "Warm-up", "duration_minutes": 10 }, { "type": "main", "detail": "Learn 3 new moves/concepts for next cycle. Experiment.", "duration_minutes": 28 }, { "type": "cooldown", "detail": "Stretch", "duration_minutes": 7 }] },
+          { "day_index": 3, "title": "Celebration Freestyle", "duration_minutes": 45, "blocks": [{ "type": "warmup", "detail": "Groove warm-up", "duration_minutes": 10 }, { "type": "main", "detail": "Extended freestyle session — enjoy everything you've learned. This is your art.", "duration_minutes": 28 }, { "type": "cooldown", "detail": "Stretch + celebrate", "duration_minutes": 7 }] }
+        ]}
+      ]
+    }
+  }
+}

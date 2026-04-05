@@ -1,0 +1,511 @@
+{
+  "activity": "swimming",
+  "experience_modifiers": {
+    "beginner": { "sets_multiplier": 0.7, "distance_multiplier": 0.7, "duration_multiplier": 0.8 },
+    "intermediate": { "sets_multiplier": 1.0, "distance_multiplier": 1.0, "duration_multiplier": 1.0 },
+    "advanced": { "sets_multiplier": 1.3, "distance_multiplier": 1.2, "duration_multiplier": 1.15 }
+  },
+  "templates": {
+    "2x": {
+      "label": "Freestyle Foundation",
+      "weeks": [
+        {
+          "week_number": 1,
+          "total_volume_meters": 1200,
+          "sessions": [
+            {
+              "day_index": 0,
+              "title": "Technique & Base",
+              "duration_minutes": 35,
+              "blocks": [
+                { "type": "warmup", "detail": "200m easy freestyle/backstroke mix, focus on long strokes", "duration_minutes": 5 },
+                { "type": "main", "detail": "4x50m freestyle at steady pace, 30s rest between reps", "duration_minutes": 12 },
+                { "type": "drill", "detail": "4x25m catch-up drill (focus on full arm extension before next stroke)", "duration_minutes": 8 },
+                { "type": "cooldown", "detail": "100m easy backstroke, relaxed breathing", "duration_minutes": 5 }
+              ]
+            },
+            {
+              "day_index": 1,
+              "title": "Endurance Builder",
+              "duration_minutes": 35,
+              "blocks": [
+                { "type": "warmup", "detail": "200m easy freestyle with bilateral breathing (every 3 strokes)", "duration_minutes": 5 },
+                { "type": "main", "detail": "2x100m freestyle at steady pace, 45s rest + 4x25m kick with board, 15s rest", "duration_minutes": 15 },
+                { "type": "drill", "detail": "4x25m fingertip drag drill (elbows high, drag fingers along surface)", "duration_minutes": 5 },
+                { "type": "cooldown", "detail": "100m easy choice stroke", "duration_minutes": 5 }
+              ]
+            }
+          ]
+        },
+        {
+          "week_number": 2,
+          "total_volume_meters": 1400,
+          "sessions": [
+            {
+              "day_index": 0,
+              "title": "Freestyle Intervals",
+              "duration_minutes": 40,
+              "blocks": [
+                { "type": "warmup", "detail": "250m easy mixed stroke (100 free, 100 back, 50 breast)", "duration_minutes": 6 },
+                { "type": "main", "detail": "6x50m freestyle, 25s rest — aim for consistent pace across all reps", "duration_minutes": 15 },
+                { "type": "drill", "detail": "4x25m single-arm freestyle drill (breathe to stroking side), alternate arms each 25", "duration_minutes": 6 },
+                { "type": "cooldown", "detail": "150m easy backstroke", "duration_minutes": 5 }
+              ]
+            },
+            {
+              "day_index": 1,
+              "title": "Endurance Builder 2",
+              "duration_minutes": 40,
+              "blocks": [
+                { "type": "warmup", "detail": "250m easy freestyle with focus on exhaling underwater", "duration_minutes": 6 },
+                { "type": "main", "detail": "3x100m freestyle, 40s rest — try to negative split each 100 (second 50 faster)", "duration_minutes": 15 },
+                { "type": "drill", "detail": "4x25m kick on side drill (rotate body 90 degrees, bottom arm extended)", "duration_minutes": 6 },
+                { "type": "cooldown", "detail": "150m easy choice stroke", "duration_minutes": 5 }
+              ]
+            }
+          ]
+        },
+        {
+          "week_number": 3,
+          "total_volume_meters": 1600,
+          "sessions": [
+            {
+              "day_index": 0,
+              "title": "Speed & Technique",
+              "duration_minutes": 40,
+              "blocks": [
+                { "type": "warmup", "detail": "300m easy mixed stroke with 4x25m build (increase speed each 25)", "duration_minutes": 7 },
+                { "type": "main", "detail": "8x50m freestyle descending 1-4 (each set of 4 gets faster), 20s rest", "duration_minutes": 18 },
+                { "type": "drill", "detail": "4x25m catch-up drill with pause at front", "duration_minutes": 5 },
+                { "type": "cooldown", "detail": "150m easy backstroke", "duration_minutes": 5 }
+              ]
+            },
+            {
+              "day_index": 1,
+              "title": "Distance Challenge",
+              "duration_minutes": 40,
+              "blocks": [
+                { "type": "warmup", "detail": "300m easy freestyle", "duration_minutes": 7 },
+                { "type": "main", "detail": "1x400m continuous freestyle at steady pace — focus on rhythm and breathing", "duration_minutes": 12 },
+                { "type": "drill", "detail": "4x25m sculling drill at front of stroke", "duration_minutes": 6 },
+                { "type": "cooldown", "detail": "200m easy mixed stroke", "duration_minutes": 5 }
+              ]
+            }
+          ]
+        },
+        {
+          "week_number": 4,
+          "total_volume_meters": 1800,
+          "sessions": [
+            {
+              "day_index": 0,
+              "title": "Mixed Set",
+              "duration_minutes": 45,
+              "blocks": [
+                { "type": "warmup", "detail": "300m easy mixed stroke", "duration_minutes": 7 },
+                { "type": "main", "detail": "4x100m freestyle at strong pace, 30s rest + 4x50m backstroke, 20s rest", "duration_minutes": 22 },
+                { "type": "drill", "detail": "4x25m fist drill (swim with closed fists to improve feel for the water)", "duration_minutes": 5 },
+                { "type": "cooldown", "detail": "200m easy choice stroke", "duration_minutes": 6 }
+              ]
+            },
+            {
+              "day_index": 1,
+              "title": "Endurance Test",
+              "duration_minutes": 45,
+              "blocks": [
+                { "type": "warmup", "detail": "300m easy freestyle with bilateral breathing", "duration_minutes": 7 },
+                { "type": "main", "detail": "1x500m continuous freestyle — aim for non-stop even pace", "duration_minutes": 16 },
+                { "type": "drill", "detail": "4x25m bilateral breathing drill (every 3, then every 5 strokes)", "duration_minutes": 6 },
+                { "type": "cooldown", "detail": "200m easy backstroke", "duration_minutes": 6 }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "3x": {
+      "label": "Balanced Swimmer",
+      "weeks": [
+        {
+          "week_number": 1,
+          "total_volume_meters": 1700,
+          "sessions": [
+            {
+              "day_index": 0,
+              "title": "Freestyle Foundation",
+              "duration_minutes": 35,
+              "blocks": [
+                { "type": "warmup", "detail": "200m easy mixed stroke", "duration_minutes": 5 },
+                { "type": "main", "detail": "4x50m freestyle, 30s rest — focus on stroke count consistency", "duration_minutes": 12 },
+                { "type": "drill", "detail": "4x25m catch-up drill", "duration_minutes": 5 },
+                { "type": "cooldown", "detail": "100m easy backstroke", "duration_minutes": 5 }
+              ]
+            },
+            {
+              "day_index": 1,
+              "title": "Kick & Build",
+              "duration_minutes": 35,
+              "blocks": [
+                { "type": "warmup", "detail": "200m easy freestyle", "duration_minutes": 5 },
+                { "type": "main", "detail": "4x50m kick with board, 20s rest + 2x100m freestyle, 30s rest", "duration_minutes": 15 },
+                { "type": "drill", "detail": "4x25m fingertip drag drill", "duration_minutes": 5 },
+                { "type": "cooldown", "detail": "100m easy choice stroke", "duration_minutes": 5 }
+              ]
+            },
+            {
+              "day_index": 2,
+              "title": "Endurance Intro",
+              "duration_minutes": 35,
+              "blocks": [
+                { "type": "warmup", "detail": "200m easy mixed", "duration_minutes": 5 },
+                { "type": "main", "detail": "1x200m continuous freestyle + 4x25m sprint freestyle, 30s rest", "duration_minutes": 15 },
+                { "type": "drill", "detail": "4x25m single-arm drill (alternate arms each length)", "duration_minutes": 5 },
+                { "type": "cooldown", "detail": "100m easy backstroke", "duration_minutes": 5 }
+              ]
+            }
+          ]
+        },
+        {
+          "week_number": 2,
+          "total_volume_meters": 2000,
+          "sessions": [
+            {
+              "day_index": 0,
+              "title": "Freestyle Intervals",
+              "duration_minutes": 40,
+              "blocks": [
+                { "type": "warmup", "detail": "250m easy mixed stroke", "duration_minutes": 6 },
+                { "type": "main", "detail": "6x50m freestyle, 25s rest — hold steady pace", "duration_minutes": 15 },
+                { "type": "drill", "detail": "4x25m catch-up drill with focus on rotation", "duration_minutes": 5 },
+                { "type": "cooldown", "detail": "150m easy backstroke", "duration_minutes": 5 }
+              ]
+            },
+            {
+              "day_index": 1,
+              "title": "Kick & Pull",
+              "duration_minutes": 40,
+              "blocks": [
+                { "type": "warmup", "detail": "250m easy freestyle", "duration_minutes": 6 },
+                { "type": "main", "detail": "4x50m pull with buoy (focus on catch), 20s rest + 4x50m kick with board, 20s rest", "duration_minutes": 18 },
+                { "type": "drill", "detail": "4x25m sculling at different positions (front, mid, back)", "duration_minutes": 5 },
+                { "type": "cooldown", "detail": "150m easy choice stroke", "duration_minutes": 5 }
+              ]
+            },
+            {
+              "day_index": 2,
+              "title": "Distance Build",
+              "duration_minutes": 40,
+              "blocks": [
+                { "type": "warmup", "detail": "250m easy mixed", "duration_minutes": 6 },
+                { "type": "main", "detail": "3x100m freestyle, 35s rest — try to hold same split time each 100", "duration_minutes": 15 },
+                { "type": "drill", "detail": "4x25m bilateral breathing drill", "duration_minutes": 5 },
+                { "type": "cooldown", "detail": "150m easy backstroke", "duration_minutes": 5 }
+              ]
+            }
+          ]
+        },
+        {
+          "week_number": 3,
+          "total_volume_meters": 2300,
+          "sessions": [
+            {
+              "day_index": 0,
+              "title": "Speed Work",
+              "duration_minutes": 45,
+              "blocks": [
+                { "type": "warmup", "detail": "300m easy mixed with 4x25m build sprints", "duration_minutes": 7 },
+                { "type": "main", "detail": "8x50m freestyle descending 1-4, 20s rest — last rep in each set should be near max effort", "duration_minutes": 18 },
+                { "type": "drill", "detail": "4x25m high-elbow catch drill (pause at front, emphasize vertical forearm)", "duration_minutes": 5 },
+                { "type": "cooldown", "detail": "200m easy backstroke", "duration_minutes": 5 }
+              ]
+            },
+            {
+              "day_index": 1,
+              "title": "Mixed Strokes",
+              "duration_minutes": 45,
+              "blocks": [
+                { "type": "warmup", "detail": "300m easy mixed stroke", "duration_minutes": 7 },
+                { "type": "main", "detail": "2x100m freestyle + 2x100m backstroke + 2x50m breaststroke, 25s rest between all reps", "duration_minutes": 20 },
+                { "type": "drill", "detail": "4x25m kick on side drill (alternate left/right side each length)", "duration_minutes": 5 },
+                { "type": "cooldown", "detail": "200m easy freestyle", "duration_minutes": 5 }
+              ]
+            },
+            {
+              "day_index": 2,
+              "title": "Distance Push",
+              "duration_minutes": 45,
+              "blocks": [
+                { "type": "warmup", "detail": "300m easy freestyle", "duration_minutes": 7 },
+                { "type": "main", "detail": "1x400m continuous freestyle + 4x50m at strong pace, 20s rest", "duration_minutes": 18 },
+                { "type": "drill", "detail": "4x25m fingertip drag drill", "duration_minutes": 5 },
+                { "type": "cooldown", "detail": "200m easy mixed", "duration_minutes": 5 }
+              ]
+            }
+          ]
+        },
+        {
+          "week_number": 4,
+          "total_volume_meters": 2600,
+          "sessions": [
+            {
+              "day_index": 0,
+              "title": "Threshold Set",
+              "duration_minutes": 45,
+              "blocks": [
+                { "type": "warmup", "detail": "300m easy mixed stroke with 4x25m build", "duration_minutes": 7 },
+                { "type": "main", "detail": "4x100m freestyle at strong pace, 25s rest + 4x50m sprint freestyle, 30s rest", "duration_minutes": 20 },
+                { "type": "drill", "detail": "4x25m catch-up drill", "duration_minutes": 5 },
+                { "type": "cooldown", "detail": "200m easy backstroke", "duration_minutes": 5 }
+              ]
+            },
+            {
+              "day_index": 1,
+              "title": "Technique Day",
+              "duration_minutes": 45,
+              "blocks": [
+                { "type": "warmup", "detail": "300m easy freestyle", "duration_minutes": 7 },
+                { "type": "main", "detail": "6x50m pull with buoy, 20s rest + 6x50m kick with board, 15s rest", "duration_minutes": 20 },
+                { "type": "drill", "detail": "4x25m sculling drill + 4x25m fist drill", "duration_minutes": 6 },
+                { "type": "cooldown", "detail": "200m easy backstroke", "duration_minutes": 5 }
+              ]
+            },
+            {
+              "day_index": 2,
+              "title": "Endurance Test",
+              "duration_minutes": 45,
+              "blocks": [
+                { "type": "warmup", "detail": "300m easy mixed", "duration_minutes": 7 },
+                { "type": "main", "detail": "1x600m continuous freestyle — aim for non-stop, even splits", "duration_minutes": 18 },
+                { "type": "drill", "detail": "4x25m bilateral breathing (breathe every 5 strokes)", "duration_minutes": 5 },
+                { "type": "cooldown", "detail": "200m easy choice stroke", "duration_minutes": 6 }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "4x": {
+      "label": "Performance Swimmer",
+      "weeks": [
+        {
+          "week_number": 1,
+          "total_volume_meters": 2200,
+          "sessions": [
+            {
+              "day_index": 0,
+              "title": "Freestyle Foundation",
+              "duration_minutes": 35,
+              "blocks": [
+                { "type": "warmup", "detail": "200m easy mixed stroke (alternate 50 free / 50 back)", "duration_minutes": 5 },
+                { "type": "main", "detail": "4x50m freestyle at steady pace, 30s rest + 2x100m freestyle, 35s rest", "duration_minutes": 15 },
+                { "type": "drill", "detail": "4x25m catch-up drill", "duration_minutes": 5 },
+                { "type": "cooldown", "detail": "100m easy backstroke", "duration_minutes": 5 }
+              ]
+            },
+            {
+              "day_index": 1,
+              "title": "Kick Focus",
+              "duration_minutes": 35,
+              "blocks": [
+                { "type": "warmup", "detail": "200m easy freestyle", "duration_minutes": 5 },
+                { "type": "main", "detail": "6x50m kick with board, 20s rest + 2x100m freestyle, 30s rest", "duration_minutes": 15 },
+                { "type": "drill", "detail": "4x25m fingertip drag drill", "duration_minutes": 5 },
+                { "type": "cooldown", "detail": "100m easy backstroke", "duration_minutes": 5 }
+              ]
+            },
+            {
+              "day_index": 2,
+              "title": "Pull Focus",
+              "duration_minutes": 35,
+              "blocks": [
+                { "type": "warmup", "detail": "200m easy mixed stroke", "duration_minutes": 5 },
+                { "type": "main", "detail": "4x50m pull with buoy, 20s rest + 4x50m freestyle, 25s rest", "duration_minutes": 15 },
+                { "type": "drill", "detail": "4x25m sculling at front of stroke", "duration_minutes": 5 },
+                { "type": "cooldown", "detail": "100m easy choice", "duration_minutes": 5 }
+              ]
+            },
+            {
+              "day_index": 3,
+              "title": "Endurance Build",
+              "duration_minutes": 35,
+              "blocks": [
+                { "type": "warmup", "detail": "200m easy freestyle", "duration_minutes": 5 },
+                { "type": "main", "detail": "1x200m continuous freestyle + 4x25m sprint, 30s rest", "duration_minutes": 15 },
+                { "type": "drill", "detail": "4x25m single-arm drill", "duration_minutes": 5 },
+                { "type": "cooldown", "detail": "100m easy mixed", "duration_minutes": 5 }
+              ]
+            }
+          ]
+        },
+        {
+          "week_number": 2,
+          "total_volume_meters": 2600,
+          "sessions": [
+            {
+              "day_index": 0,
+              "title": "Freestyle Intervals",
+              "duration_minutes": 40,
+              "blocks": [
+                { "type": "warmup", "detail": "250m easy mixed stroke", "duration_minutes": 6 },
+                { "type": "main", "detail": "8x50m freestyle, 25s rest — hold consistent splits", "duration_minutes": 18 },
+                { "type": "drill", "detail": "4x25m catch-up drill with pause", "duration_minutes": 5 },
+                { "type": "cooldown", "detail": "150m easy backstroke", "duration_minutes": 5 }
+              ]
+            },
+            {
+              "day_index": 1,
+              "title": "Mixed Set",
+              "duration_minutes": 40,
+              "blocks": [
+                { "type": "warmup", "detail": "250m easy mixed", "duration_minutes": 6 },
+                { "type": "main", "detail": "4x50m freestyle + 4x50m backstroke, 20s rest between all", "duration_minutes": 18 },
+                { "type": "drill", "detail": "4x25m kick on side drill", "duration_minutes": 5 },
+                { "type": "cooldown", "detail": "150m easy choice", "duration_minutes": 5 }
+              ]
+            },
+            {
+              "day_index": 2,
+              "title": "Speed Day",
+              "duration_minutes": 40,
+              "blocks": [
+                { "type": "warmup", "detail": "250m easy freestyle with 4x25m build sprints", "duration_minutes": 6 },
+                { "type": "main", "detail": "8x25m sprint freestyle, 30s rest + 4x50m steady pace, 20s rest", "duration_minutes": 18 },
+                { "type": "drill", "detail": "4x25m high-elbow catch drill", "duration_minutes": 5 },
+                { "type": "cooldown", "detail": "150m easy backstroke", "duration_minutes": 5 }
+              ]
+            },
+            {
+              "day_index": 3,
+              "title": "Distance Build",
+              "duration_minutes": 40,
+              "blocks": [
+                { "type": "warmup", "detail": "250m easy freestyle", "duration_minutes": 6 },
+                { "type": "main", "detail": "3x150m freestyle, 35s rest — aim for even pace throughout", "duration_minutes": 18 },
+                { "type": "drill", "detail": "4x25m bilateral breathing drill", "duration_minutes": 5 },
+                { "type": "cooldown", "detail": "150m easy mixed", "duration_minutes": 5 }
+              ]
+            }
+          ]
+        },
+        {
+          "week_number": 3,
+          "total_volume_meters": 3000,
+          "sessions": [
+            {
+              "day_index": 0,
+              "title": "Threshold Set",
+              "duration_minutes": 45,
+              "blocks": [
+                { "type": "warmup", "detail": "300m easy mixed with 4x25m build", "duration_minutes": 7 },
+                { "type": "main", "detail": "4x100m freestyle at strong pace, 25s rest — track your splits", "duration_minutes": 18 },
+                { "type": "drill", "detail": "4x25m catch-up drill", "duration_minutes": 5 },
+                { "type": "cooldown", "detail": "200m easy backstroke", "duration_minutes": 6 }
+              ]
+            },
+            {
+              "day_index": 1,
+              "title": "Kick & Pull Day",
+              "duration_minutes": 45,
+              "blocks": [
+                { "type": "warmup", "detail": "300m easy mixed stroke", "duration_minutes": 7 },
+                { "type": "main", "detail": "6x50m pull with paddles and buoy, 15s rest + 6x50m kick with board, 15s rest", "duration_minutes": 18 },
+                { "type": "drill", "detail": "4x25m sculling drill (front, mid, back positions)", "duration_minutes": 5 },
+                { "type": "cooldown", "detail": "200m easy freestyle", "duration_minutes": 6 }
+              ]
+            },
+            {
+              "day_index": 2,
+              "title": "Sprint Day",
+              "duration_minutes": 45,
+              "blocks": [
+                { "type": "warmup", "detail": "300m easy freestyle with 4x25m build sprints", "duration_minutes": 7 },
+                { "type": "main", "detail": "10x25m all-out sprint, 45s rest + 4x50m descending 1-4, 20s rest", "duration_minutes": 18 },
+                { "type": "drill", "detail": "4x25m streamline push-offs and underwater kicks off the wall", "duration_minutes": 5 },
+                { "type": "cooldown", "detail": "200m easy backstroke", "duration_minutes": 6 }
+              ]
+            },
+            {
+              "day_index": 3,
+              "title": "Long Swim",
+              "duration_minutes": 45,
+              "blocks": [
+                { "type": "warmup", "detail": "300m easy mixed", "duration_minutes": 7 },
+                { "type": "main", "detail": "1x500m continuous freestyle — focus on stroke efficiency and breathing rhythm", "duration_minutes": 16 },
+                { "type": "drill", "detail": "4x25m fist drill", "duration_minutes": 5 },
+                { "type": "cooldown", "detail": "200m easy choice", "duration_minutes": 6 }
+              ]
+            }
+          ]
+        },
+        {
+          "week_number": 4,
+          "total_volume_meters": 3400,
+          "sessions": [
+            {
+              "day_index": 0,
+              "title": "Race Pace",
+              "duration_minutes": 50,
+              "blocks": [
+                { "type": "warmup", "detail": "300m easy mixed with 4x50m build", "duration_minutes": 8 },
+                { "type": "main", "detail": "6x100m freestyle at race pace, 20s rest — push through the fatigue", "duration_minutes": 22 },
+                { "type": "drill", "detail": "4x25m fast turns practice (flip turns or open turns)", "duration_minutes": 5 },
+                { "type": "cooldown", "detail": "200m easy backstroke", "duration_minutes": 6 }
+              ]
+            },
+            {
+              "day_index": 1,
+              "title": "Stroke Variety",
+              "duration_minutes": 50,
+              "blocks": [
+                { "type": "warmup", "detail": "300m easy mixed stroke with rotation focus", "duration_minutes": 8 },
+                { "type": "main", "detail": "2x100m freestyle + 2x100m backstroke + 2x100m breaststroke, 25s rest between all", "duration_minutes": 22 },
+                { "type": "drill", "detail": "4x25m kick with no board (streamline position)", "duration_minutes": 5 },
+                { "type": "cooldown", "detail": "200m easy freestyle", "duration_minutes": 6 }
+              ]
+            },
+            {
+              "day_index": 2,
+              "title": "Speed & Power",
+              "duration_minutes": 50,
+              "blocks": [
+                { "type": "warmup", "detail": "300m easy freestyle with 4x25m sprint build", "duration_minutes": 8 },
+                { "type": "main", "detail": "12x25m sprint, 30s rest + 4x50m build (easy to fast within each 50), 20s rest", "duration_minutes": 22 },
+                { "type": "drill", "detail": "4x25m underwater dolphin kicks off the wall", "duration_minutes": 5 },
+                { "type": "cooldown", "detail": "200m easy backstroke", "duration_minutes": 6 }
+              ]
+            },
+            {
+              "day_index": 3,
+              "title": "Endurance Test",
+              "duration_minutes": 50,
+              "blocks": [
+                { "type": "warmup", "detail": "300m easy mixed stroke", "duration_minutes": 8 },
+                { "type": "main", "detail": "1x800m continuous freestyle — your longest swim yet, focus on even pacing", "duration_minutes": 22 },
+                { "type": "drill", "detail": "4x25m bilateral breathing (alternate every 3 and every 5 strokes)", "duration_minutes": 5 },
+                { "type": "cooldown", "detail": "200m very easy backstroke and freestyle", "duration_minutes": 6 }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "pool_variants": {
+    "25m": {
+      "description": "Standard 25-meter pool — more turns, good for beginners",
+      "adjustments": {
+        "rest_modifier": 1.0,
+        "turn_practice": "More wall push-offs; use turns for streamline practice",
+        "notes": "Count strokes per length to track efficiency. Aim to reduce stroke count over the 4 weeks."
+      }
+    },
+    "50m": {
+      "description": "Olympic-length 50-meter pool — fewer turns, more continuous swimming",
+      "adjustments": {
+        "rest_modifier": 1.15,
+        "turn_practice": "Fewer walls — focus on pacing and bilateral breathing mid-pool",
+        "notes": "Add 5-10s extra rest on interval sets. Pace yourself for the longer lengths — start conservatively."
+      }
+    }
+  }
+}

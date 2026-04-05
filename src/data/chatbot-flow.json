@@ -1,0 +1,204 @@
+{
+  "steps": {
+    "welcome": {
+      "bot_message": "Hey. I'm here to help you become a regular. What do you want to build a habit around?",
+      "options": [
+        { "label": "Physical Exercise", "value": "physical", "next": "physical_type" },
+        { "label": "Creative Practice", "value": "creative", "next": "creative_type" }
+      ],
+      "field": "category"
+    },
+    "physical_type": {
+      "bot_message": "Nice. What kind of exercise?",
+      "options": [
+        { "label": "Gym / Strength Training", "value": "gym", "next": "experience" },
+        { "label": "Swimming", "value": "swimming", "next": "experience" },
+        { "label": "Running", "value": "running", "next": "experience" },
+        { "label": "Yoga", "value": "yoga", "next": "experience" }
+      ],
+      "field": "activity"
+    },
+    "creative_type": {
+      "bot_message": "Love it. What are you practicing?",
+      "options": [
+        { "label": "Dance", "value": "dance", "next": "experience" },
+        { "label": "Singing / Vocals", "value": "singing", "next": "experience" },
+        { "label": "Musical Instrument", "value": "instrument", "next": "experience" }
+      ],
+      "field": "activity"
+    },
+    "experience": {
+      "bot_message": "How would you describe your current level with {activity}?",
+      "options": [
+        { "label": "Complete beginner", "value": "beginner", "next": "past_attempts" },
+        { "label": "I know the basics but I'm inconsistent", "value": "beginner", "next": "past_attempts" },
+        { "label": "I've been doing this on and off", "value": "intermediate", "next": "past_attempts" },
+        { "label": "I'm experienced, just need structure", "value": "advanced", "next": "past_attempts" }
+      ],
+      "field": "experience_level"
+    },
+    "past_attempts": {
+      "bot_message": "Have you tried to make this a regular thing before?",
+      "options": [
+        { "label": "No, this is my first real attempt", "value": "neutral", "next": "frequency" },
+        { "label": "Yes, but I keep falling off", "value": "restarter", "next": "frequency" },
+        { "label": "I do it sometimes, I want a system", "value": "stacker", "next": "frequency" },
+        { "label": "I have a specific goal or deadline", "value": "preparer", "next": "goal_type" }
+      ],
+      "field": "persona"
+    },
+    "goal_type": {
+      "bot_message": "What's the goal?",
+      "options": [
+        { "label": "Race or distance goal", "value": "race", "next": "frequency" },
+        { "label": "Perform or compete", "value": "performance", "next": "frequency" },
+        { "label": "Just get consistent", "value": "consistency", "next": "frequency" }
+      ],
+      "field": "goal_type"
+    },
+    "frequency": {
+      "bot_message": "How many days a week can you realistically commit? Be honest — less is more.",
+      "options": [
+        { "label": "2 days", "value": 2, "next": "duration" },
+        { "label": "3 days", "value": 3, "next": "duration" },
+        { "label": "4 days", "value": 4, "next": "duration" },
+        { "label": "5+ days", "value": 5, "next": "duration" }
+      ],
+      "field": "frequency",
+      "restarter_warning": {
+        "condition": { "persona": "restarter", "value": 5 },
+        "message": "I respect the ambition, but starting with too many days is the #1 reason people quit. Research says starting smaller builds stronger habits. Want to start with 3 days and increase after week 2?",
+        "options": [
+          { "label": "You're right, let's do 3", "value": 3, "next": "duration" },
+          { "label": "I'll stick with 5+", "value": 5, "next": "duration" }
+        ]
+      }
+    },
+    "duration": {
+      "bot_message": "How long do you want each session to be?",
+      "options": [
+        { "label": "15-20 minutes", "value": 20, "next": "schedule" },
+        { "label": "30 minutes", "value": 30, "next": "schedule" },
+        { "label": "45 minutes", "value": 45, "next": "schedule" },
+        { "label": "60+ minutes", "value": 60, "next": "schedule" }
+      ],
+      "field": "session_duration"
+    },
+    "schedule": {
+      "bot_message": "Which days work best for you?",
+      "type": "multi_select",
+      "options": [
+        { "label": "Mon", "value": "monday" },
+        { "label": "Tue", "value": "tuesday" },
+        { "label": "Wed", "value": "wednesday" },
+        { "label": "Thu", "value": "thursday" },
+        { "label": "Fri", "value": "friday" },
+        { "label": "Sat", "value": "saturday" },
+        { "label": "Sun", "value": "sunday" }
+      ],
+      "next": "activity_specific",
+      "field": "scheduled_days"
+    },
+    "activity_specific": {
+      "type": "conditional",
+      "conditions": {
+        "gym": {
+          "bot_message": "What equipment do you have access to?",
+          "options": [
+            { "label": "Full gym (machines + free weights)", "value": "full_gym", "next": "time_preference" },
+            { "label": "Home gym (dumbbells + bench)", "value": "home_dumbbells", "next": "time_preference" },
+            { "label": "Bodyweight only", "value": "bodyweight", "next": "time_preference" },
+            { "label": "Resistance bands + bodyweight", "value": "bodyweight", "next": "time_preference" }
+          ],
+          "field": "equipment"
+        },
+        "swimming": {
+          "bot_message": "What pool do you have access to?",
+          "options": [
+            { "label": "25m indoor pool", "value": "25m", "next": "time_preference" },
+            { "label": "50m pool", "value": "50m", "next": "time_preference" },
+            { "label": "Open water", "value": "25m", "next": "time_preference" },
+            { "label": "Not sure / varies", "value": "25m", "next": "time_preference" }
+          ],
+          "field": "subcategory"
+        },
+        "running": {
+          "bot_message": "Where do you usually run?",
+          "options": [
+            { "label": "Road / pavement", "value": "road", "next": "time_preference" },
+            { "label": "Trail", "value": "trail", "next": "time_preference" },
+            { "label": "Treadmill", "value": "treadmill", "next": "time_preference" },
+            { "label": "Mix of everything", "value": "road", "next": "time_preference" }
+          ],
+          "field": "subcategory"
+        },
+        "yoga": {
+          "bot_message": "What kind of yoga do you prefer?",
+          "options": [
+            { "label": "Dynamic / Vinyasa flow", "value": "vinyasa", "next": "time_preference" },
+            { "label": "Slow / Yin / Restorative", "value": "yin", "next": "time_preference" },
+            { "label": "A mix of both", "value": "vinyasa", "next": "time_preference" },
+            { "label": "Not sure yet", "value": "vinyasa", "next": "time_preference" }
+          ],
+          "field": "subcategory"
+        },
+        "dance": {
+          "bot_message": "What style?",
+          "options": [
+            { "label": "Hip-Hop", "value": "hiphop", "next": "time_preference" },
+            { "label": "Contemporary / Lyrical", "value": "contemporary", "next": "time_preference" },
+            { "label": "Bollywood", "value": "bollywood", "next": "time_preference" },
+            { "label": "Salsa / Latin", "value": "salsa", "next": "time_preference" }
+          ],
+          "field": "subcategory"
+        },
+        "singing": {
+          "bot_message": "What genre do you mostly sing?",
+          "options": [
+            { "label": "Pop / Top 40", "value": "pop", "next": "time_preference" },
+            { "label": "Classical / Musical Theatre", "value": "classical", "next": "time_preference" },
+            { "label": "R&B / Soul", "value": "rnb", "next": "time_preference" },
+            { "label": "I sing everything", "value": "pop", "next": "time_preference" }
+          ],
+          "field": "subcategory"
+        },
+        "instrument": {
+          "bot_message": "What instrument?",
+          "options": [
+            { "label": "Guitar (acoustic or electric)", "value": "guitar", "next": "time_preference" },
+            { "label": "Piano / Keyboard", "value": "piano", "next": "time_preference" },
+            { "label": "Drums", "value": "drums", "next": "time_preference" },
+            { "label": "Other", "value": "other", "next": "time_preference" }
+          ],
+          "field": "subcategory"
+        }
+      }
+    },
+    "time_preference": {
+      "bot_message": "When do you prefer to practice?",
+      "options": [
+        { "label": "Morning", "value": "morning", "next": "summary" },
+        { "label": "Afternoon", "value": "afternoon", "next": "summary" },
+        { "label": "Evening", "value": "evening", "next": "summary" },
+        { "label": "No preference", "value": "none", "next": "summary" }
+      ],
+      "field": "preferred_time"
+    },
+    "summary": {
+      "bot_message": "Perfect. Here's what I know about you:",
+      "type": "summary",
+      "next": "confirm"
+    },
+    "confirm": {
+      "bot_message": "I've built your plan. Ready to see it?",
+      "options": [
+        { "label": "Show me my plan →", "value": "confirm", "next": "complete" }
+      ]
+    },
+    "complete": {
+      "type": "complete",
+      "bot_message": "Welcome to Regulr. Your first session is {first_day}. Just show up."
+    }
+  },
+  "initial_step": "welcome"
+}

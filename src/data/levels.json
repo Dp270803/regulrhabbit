@@ -1,0 +1,14 @@
+{
+  "levels": [
+    { "level": 1, "xp_required": 0, "title": "Newcomer", "message": "Every journey starts with a single step. Welcome." },
+    { "level": 2, "xp_required": 200, "title": "Starter", "message": "You started. Most people never do." },
+    { "level": 3, "xp_required": 500, "title": "Showing Up", "message": "You're showing up. That's more than most people ever do." },
+    { "level": 4, "xp_required": 1000, "title": "Building", "message": "You're building something. Brick by brick." },
+    { "level": 5, "xp_required": 1750, "title": "Consistent", "message": "Consistent. That's not a word people use lightly." },
+    { "level": 6, "xp_required": 2750, "title": "Committed", "message": "Committed. This isn't a phase anymore." },
+    { "level": 7, "xp_required": 4000, "title": "The Regular", "message": "You're a regular now. This is who you are." },
+    { "level": 8, "xp_required": 5500, "title": "Dedicated", "message": "Dedicated. The results are speaking for themselves." },
+    { "level": 9, "xp_required": 7500, "title": "The Lifer", "message": "Lifer. There's no going back." },
+    { "level": 10, "xp_required": 10000, "title": "Legend", "message": "Legend. You've built something most people never will." }
+  ]
+}

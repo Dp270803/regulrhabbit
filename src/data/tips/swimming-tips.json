@@ -1,0 +1,305 @@
+{
+  "activity": "swimming",
+  "tips": [
+    {
+      "id": "swim_001",
+      "category": "technique",
+      "text": "Try exhaling fully underwater before your next breath. Most beginners hold their breath, which builds CO2 and causes tension and fatigue far earlier than necessary.",
+      "week_relevance": [1, 2]
+    },
+    {
+      "id": "swim_002",
+      "category": "technique",
+      "text": "Enter the water fingertips first with your hand angled at about 45 degrees, reaching forward as far as comfortable. A clean entry reduces drag and sets up a powerful catch phase.",
+      "week_relevance": [1, 2]
+    },
+    {
+      "id": "swim_003",
+      "category": "technique",
+      "text": "Keep your head neutral with eyes looking straight down at the pool bottom, not forward. Lifting your head drops your hips and legs, creating massive drag that slows you down more than any other single error.",
+      "week_relevance": [1, 2]
+    },
+    {
+      "id": "swim_004",
+      "category": "technique",
+      "text": "Rotate your body along its long axis about 30-45 degrees with each stroke. This rotation generates power from your core and lats, not just your shoulders, and reduces strain on the rotator cuff.",
+      "week_relevance": [1, 2, 3]
+    },
+    {
+      "id": "swim_005",
+      "category": "technique",
+      "text": "During the catch phase, bend your elbow to about 90 degrees and press the water backward, not downward. Think of pulling yourself over a barrel. A high elbow catch is the single biggest efficiency gain in freestyle.",
+      "week_relevance": [2, 3]
+    },
+    {
+      "id": "swim_006",
+      "category": "technique",
+      "text": "Kick from your hips, not your knees. A bicycle-style kick with bent knees creates drag and wastes energy. A flutter kick with mostly straight legs and relaxed ankles provides propulsion with minimal drag.",
+      "week_relevance": [1, 2]
+    },
+    {
+      "id": "swim_007",
+      "category": "technique",
+      "text": "For breaststroke, time your glide: arms extend, legs snap together, then hold streamline for a full second before the next pull. Rushing the cycle sacrifices the free speed you get from the kick's momentum.",
+      "week_relevance": [2, 3]
+    },
+    {
+      "id": "swim_008",
+      "category": "technique",
+      "text": "During backstroke, keep your pinky finger entering the water first. This natural rotation positions your hand for an immediately effective catch rather than slapping the water flat.",
+      "week_relevance": [2, 3]
+    },
+    {
+      "id": "swim_009",
+      "category": "technique",
+      "text": "Push off every wall in tight streamline position with arms squeezed against your ears and one hand over the other. A good push-off carries you 5 meters with zero effort. Most swimmers waste this free speed.",
+      "week_relevance": [1, 2, 3]
+    },
+    {
+      "id": "swim_010",
+      "category": "technique",
+      "text": "Breathe bilaterally (every 3 strokes) during warm-up and technique work. This balances your stroke and prevents the asymmetric body rotation that develops from always breathing to one side.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "swim_011",
+      "category": "technique",
+      "text": "On flip turns, tuck tight and fast. A loose flip with extended legs slows your rotation. Chin to chest, knees to chest, feet plant on the wall, then explode off in streamline.",
+      "week_relevance": [3, 4]
+    },
+    {
+      "id": "swim_012",
+      "category": "technique",
+      "text": "Relax your hands slightly instead of cupping them tightly. Research shows that fingers spread about 3-5mm apart actually create more propulsive surface area than a rigid, closed hand.",
+      "week_relevance": [2, 3]
+    },
+    {
+      "id": "swim_013",
+      "category": "technique",
+      "text": "Finish each freestyle stroke by pushing water past your hip, not stopping mid-thigh. The final push phase contributes significant propulsion and most swimmers cut it short, losing free speed every stroke.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "swim_014",
+      "category": "technique",
+      "text": "Use a pull buoy for 20% of your practice to isolate upper body technique. Removing the kick variable lets you focus entirely on catch, pull, and body rotation without worrying about your legs sinking.",
+      "week_relevance": [2, 3]
+    },
+    {
+      "id": "swim_015",
+      "category": "technique",
+      "text": "In butterfly, initiate the undulation from your chest, not your hips. Press your chest down slightly, and the wave will travel naturally through your core and legs. Forcing the kick from the knees kills your rhythm.",
+      "week_relevance": [3, 4]
+    },
+    {
+      "id": "swim_016",
+      "category": "recovery",
+      "text": "Swim an easy 200m cooldown after every hard session. This flushes lactate from your muscles and brings your heart rate down gradually, reducing post-swim stiffness the next day.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "swim_017",
+      "category": "recovery",
+      "text": "Stretch your pectorals and lats in the doorway after swimming. Freestyle creates chronic internal rotation of the shoulders, and counteracting it prevents the rounded posture swimmers develop.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "swim_018",
+      "category": "recovery",
+      "text": "Rinse chlorine off immediately after leaving the pool and apply moisturizer. Chlorine strips natural oils from your skin, and the drying effect compounds with daily exposure into painful cracking.",
+      "week_relevance": [1, 2]
+    },
+    {
+      "id": "swim_019",
+      "category": "recovery",
+      "text": "If your shoulders feel tight after a session, do 10 slow arm circles in each direction and 30 seconds of cross-body stretches. Swimmers shoulder develops gradually from ignoring minor tightness.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "swim_020",
+      "category": "recovery",
+      "text": "Strengthen your rotator cuff with external rotation band exercises 2-3 times per week. Swimming is overwhelmingly an internal rotation sport, and the imbalance leads to impingement without targeted prehab.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "swim_021",
+      "category": "recovery",
+      "text": "Eat a carb-protein snack within 30 minutes of finishing a swim session. Swimming suppresses appetite due to the cold water effect, but your muscles still need fuel. A banana with peanut butter works well.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "swim_022",
+      "category": "recovery",
+      "text": "Wear earplugs if you swim more than 3 times per week. Repeated water exposure causes swimmer's ear (otitis externa), which is painful enough to force days off the pool.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "swim_023",
+      "category": "recovery",
+      "text": "If you feel shoulder pain during the recovery phase of freestyle (arm coming over the water), widen your hand entry point. Crossing over the midline is the most common cause of impingement in swimmers.",
+      "week_relevance": [1, 2, 3]
+    },
+    {
+      "id": "swim_024",
+      "category": "recovery",
+      "text": "Keep a dry pair of socks and shoes at the pool. Walking home with wet feet in cold weather significantly increases your chance of getting sick, especially when your immune system is already taxed from training.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "swim_025",
+      "category": "recovery",
+      "text": "Use anti-fog goggles and replace them every 3-4 months. Constantly stopping to clear foggy goggles breaks your rhythm, raises your heart rate from frustration, and wastes training time.",
+      "week_relevance": [1, 2]
+    },
+    {
+      "id": "swim_026",
+      "category": "recovery",
+      "text": "Spend 5 minutes doing ankle mobility circles after each swim. Swimmers develop excellent plantar flexion but lose dorsiflexion, which can cause problems when walking or running.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "swim_027",
+      "category": "recovery",
+      "text": "If you swim in the morning, eat at least a light snack 30 minutes before. Your glycogen stores are depleted from overnight fasting, and swimming on empty increases cortisol and breaks down muscle.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "swim_028",
+      "category": "mindset",
+      "text": "Count your strokes per length and aim to reduce them over time. Stroke count is the simplest measure of efficiency. Elite swimmers cover 25m in 10-14 strokes. Beginners often take 22-30.",
+      "week_relevance": [1, 2, 3]
+    },
+    {
+      "id": "swim_029",
+      "category": "mindset",
+      "text": "If you feel panicked in deep water, roll onto your back and float. This is your reset button. Calm your breathing, then resume. Panic always comes from CO2 buildup, not lack of oxygen.",
+      "week_relevance": [1]
+    },
+    {
+      "id": "swim_030",
+      "category": "mindset",
+      "text": "Focus on one technical element per session. Monday is catch day, Wednesday is rotation day, Friday is kick day. Trying to fix everything at once means nothing actually improves.",
+      "week_relevance": [1, 2, 3]
+    },
+    {
+      "id": "swim_031",
+      "category": "mindset",
+      "text": "Swimming feels harder than land exercise because you cannot coast. Every second in the water requires active effort. Accept that it taxes your cardio system differently and do not compare it to running.",
+      "week_relevance": [1, 2]
+    },
+    {
+      "id": "swim_032",
+      "category": "mindset",
+      "text": "Use the pace clock on the wall to track your rest intervals. Consistent 10-15 second rest between 50m repeats builds endurance far better than casual rest-when-you-feel-like-it swimming.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "swim_033",
+      "category": "mindset",
+      "text": "Share a lane graciously and learn circle swimming etiquette (stay to the right, tap feet to pass). Pool culture matters, and being a respectful lane partner makes every session more pleasant.",
+      "week_relevance": [1, 2]
+    },
+    {
+      "id": "swim_034",
+      "category": "mindset",
+      "text": "Break your session into structured sets instead of swimming continuous laps. A set of 8x50m with 15 seconds rest builds more fitness than 400m straight because you can maintain higher quality per length.",
+      "week_relevance": [1, 2, 3]
+    },
+    {
+      "id": "swim_035",
+      "category": "mindset",
+      "text": "Embrace drill work even when it feels boring. Catch-up drill, fingertip drag, and single-arm freestyle feel silly but they isolate technical weaknesses that you cannot address at full speed.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "swim_036",
+      "category": "mindset",
+      "text": "Water resistance increases with the cube of your speed. This means swimming 10% faster requires 33% more effort. Smooth, efficient technique always beats muscling through the water.",
+      "week_relevance": [2, 3]
+    },
+    {
+      "id": "swim_037",
+      "category": "mindset",
+      "text": "If you are struggling with breathing timing, practice standing in the shallow end, face in the water, exhaling bubbles, then turning to inhale. Get the rhythm on land before adding it to the stroke.",
+      "week_relevance": [1]
+    },
+    {
+      "id": "swim_038",
+      "category": "mindset",
+      "text": "Visualize yourself swimming with perfect form for 30 seconds before you push off the wall. Mental rehearsal activates the same neural pathways as physical practice and primes your motor patterns.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "swim_039",
+      "category": "mindset",
+      "text": "Swimming is a feel sport. Some days the water feels heavy and uncooperative. Instead of forcing intensity, use those sessions for technique drills. Save hard efforts for days when you feel connected to the water.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "swim_040",
+      "category": "progress",
+      "text": "Track your time per 100m as your primary progress metric. Unlike running, swimming speed is mostly determined by technique, so getting faster means your form is genuinely improving.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "swim_041",
+      "category": "progress",
+      "text": "Aim to reduce your stroke count per 25m by one stroke every two weeks. Going from 22 to 18 strokes per length represents a massive efficiency gain that directly translates to speed and endurance.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "swim_042",
+      "category": "progress",
+      "text": "Add 100m to your total session distance each week. If you swam 1000m this week, aim for 1100m next week. Gradual volume increases build aerobic capacity without overwhelming your shoulders.",
+      "week_relevance": [1, 2, 3]
+    },
+    {
+      "id": "swim_043",
+      "category": "progress",
+      "text": "Once you can swim 200m freestyle continuously, introduce interval training. 4x50m at 80% effort with 20 seconds rest builds speed more effectively than grinding out slow continuous laps.",
+      "week_relevance": [2, 3]
+    },
+    {
+      "id": "swim_044",
+      "category": "progress",
+      "text": "Learn a second stroke once your freestyle is comfortable. Backstroke is the easiest transition because it uses a similar flutter kick and alternating arm pattern but removes the breathing timing challenge.",
+      "week_relevance": [3, 4]
+    },
+    {
+      "id": "swim_045",
+      "category": "progress",
+      "text": "Use a tempo trainer (beeping metronome that clips to your goggle strap) to lock in your stroke rate. Consistent tempo eliminates the speed variation that wastes energy over longer distances.",
+      "week_relevance": [3, 4]
+    },
+    {
+      "id": "swim_046",
+      "category": "progress",
+      "text": "Test yourself with a timed 200m every two weeks under the same conditions. This is your benchmark swim. Improvements in this time reflect real fitness and technique gains better than any daily workout metric.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "swim_047",
+      "category": "progress",
+      "text": "Introduce fins for 10-15% of your session to develop ankle flexibility and experience what faster swimming feels like. But always do your main sets without equipment so you build real propulsion.",
+      "week_relevance": [2, 3]
+    },
+    {
+      "id": "swim_048",
+      "category": "progress",
+      "text": "When your 50m time plateaus, focus on your underwater phase. A strong push-off and 3-5 dolphin kicks off every wall can take 1-2 seconds off your time without any change to your swimming speed.",
+      "week_relevance": [3, 4]
+    },
+    {
+      "id": "swim_049",
+      "category": "progress",
+      "text": "Record yourself swimming with an underwater camera or a phone in a waterproof case. Watching your catch and pull pattern underwater reveals flaws you will never feel from inside your own body.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "swim_050",
+      "category": "progress",
+      "text": "Set a SWOLF score target (time in seconds + stroke count for a length). This single number captures both speed and efficiency. Lowering your SWOLF means you are swimming smarter, not just harder.",
+      "week_relevance": [3, 4]
+    }
+  ]
+}

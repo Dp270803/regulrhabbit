@@ -1,0 +1,305 @@
+{
+  "activity": "yoga",
+  "tips": [
+    {
+      "id": "yoga_001",
+      "category": "technique",
+      "text": "In downward dog, press through the base of your index finger and thumb, not the heel of your palm. This distributes weight correctly and prevents the wrist compression that makes new yogis quit.",
+      "week_relevance": [1, 2]
+    },
+    {
+      "id": "yoga_002",
+      "category": "technique",
+      "text": "Micro-bend your knees in forward folds if your hamstrings are tight. Locking your knees to reach the floor rounds your lower back and loads the spinal discs instead of stretching the intended muscles.",
+      "week_relevance": [1, 2]
+    },
+    {
+      "id": "yoga_003",
+      "category": "technique",
+      "text": "In warrior poses, stack your front knee directly over your ankle, not past your toes. Check by looking down — you should see your big toe. This protects your ACL and keeps the load in your glutes.",
+      "week_relevance": [1, 2, 3]
+    },
+    {
+      "id": "yoga_004",
+      "category": "technique",
+      "text": "Activate hasta bandha (hand lock) by lifting the center of your palm like a suction cup while pressing all four corners of the hand down. This engages your forearm muscles and protects your wrists in planks and arm balances.",
+      "week_relevance": [1, 2, 3]
+    },
+    {
+      "id": "yoga_005",
+      "category": "technique",
+      "text": "In tree pose, press your foot into your inner thigh AND your thigh back into your foot with equal force. This co-contraction creates the stability. Avoid placing your foot on your knee joint — above or below only.",
+      "week_relevance": [1, 2]
+    },
+    {
+      "id": "yoga_006",
+      "category": "technique",
+      "text": "Engage uddiyana bandha (lower belly lock) by drawing your navel in and slightly up during standing poses. This is not sucking in your stomach — it is activating your transverse abdominis to stabilize your spine.",
+      "week_relevance": [2, 3]
+    },
+    {
+      "id": "yoga_007",
+      "category": "technique",
+      "text": "In chaturanga, lower your body as one plank unit until your upper arms are parallel to the floor. Most people dump into their shoulders. Squeeze your elbows tight to your ribs — they should brush your sides.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "yoga_008",
+      "category": "technique",
+      "text": "Breathe through your nose exclusively during practice using ujjayi breath — a slight constriction at the back of your throat that creates an audible ocean sound. This warms the air, slows your breath rate, and activates the parasympathetic nervous system.",
+      "week_relevance": [1, 2]
+    },
+    {
+      "id": "yoga_009",
+      "category": "technique",
+      "text": "In seated twists, lengthen your spine on the inhale and deepen the rotation on the exhale. Never force a twist — the rotation should come from your thoracic spine, not your lumbar spine which only has 5 degrees of rotational range.",
+      "week_relevance": [2, 3]
+    },
+    {
+      "id": "yoga_010",
+      "category": "technique",
+      "text": "Root your big toe mound, little toe mound, and heel in all standing poses — this is tripod foot. Lifting your toes briefly helps you find these three points. Grounded feet create the stable foundation everything else depends on.",
+      "week_relevance": [1, 2]
+    },
+    {
+      "id": "yoga_011",
+      "category": "technique",
+      "text": "In pigeon pose, flex your front foot to protect your knee. A relaxed front foot allows the knee to take rotational forces it is not designed for. The flexion engages muscles that stabilize the joint.",
+      "week_relevance": [2, 3]
+    },
+    {
+      "id": "yoga_012",
+      "category": "technique",
+      "text": "During sun salutations, synchronize one breath per movement. Inhale arms up, exhale fold down, inhale halfway lift, exhale step back. The breath-movement link is what distinguishes yoga from stretching.",
+      "week_relevance": [1, 2, 3]
+    },
+    {
+      "id": "yoga_013",
+      "category": "technique",
+      "text": "In cobra pose, lift your chest using your back muscles, not by pressing hard with your hands. Test this by briefly hovering your palms off the mat. If you collapse, you are using arm strength instead of spinal extension.",
+      "week_relevance": [1, 2, 3]
+    },
+    {
+      "id": "yoga_014",
+      "category": "technique",
+      "text": "Externally rotate your upper arms in downward dog so your elbow creases face forward. This creates space in your shoulder joint, engages your rotator cuff, and prevents the impingement that comes from repeated overhead loading.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "yoga_015",
+      "category": "technique",
+      "text": "Use blocks under your hands in triangle pose rather than reaching for the floor with a rounded spine. Props are not a sign of weakness — they are tools that let you maintain proper alignment while your flexibility develops.",
+      "week_relevance": [1, 2]
+    },
+    {
+      "id": "yoga_016",
+      "category": "recovery",
+      "text": "Hold yin poses (deep passive stretches) for 3-5 minutes to target fascia and connective tissue. Muscles release in 30 seconds, but fascia requires sustained tension over minutes to create lasting change.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "yoga_017",
+      "category": "recovery",
+      "text": "If your wrists hurt after practice, do wrist circles and prayer stretches (pressing palms together and lowering toward your waist) for 60 seconds. Wrist pain is the most common reason beginners quit yoga.",
+      "week_relevance": [1, 2, 3]
+    },
+    {
+      "id": "yoga_018",
+      "category": "recovery",
+      "text": "Never skip savasana. Lying still for 5-10 minutes at the end integrates the neuromuscular changes from practice. Studies show the nervous system consolidates motor learning during this rest period.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "yoga_019",
+      "category": "recovery",
+      "text": "Soreness after yoga usually means you went too deep too fast in a stretch, not that you got a good workout. Unlike gym soreness, yoga soreness often indicates tissue strain. Ease back 20% next session.",
+      "week_relevance": [1, 2]
+    },
+    {
+      "id": "yoga_020",
+      "category": "recovery",
+      "text": "Alternate between dynamic vinyasa sessions and gentle restorative sessions. Doing intense flow every day overtaxes your wrists, shoulders, and hip flexors. Restorative days let those tissues recover while maintaining your practice habit.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "yoga_021",
+      "category": "recovery",
+      "text": "If your lower back aches after backbends, lie on your back and hug your knees to your chest gently for 10 breaths. This decompresses the lumbar vertebrae that backbends load. Never go straight to forward folding after deep backbends.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "yoga_022",
+      "category": "recovery",
+      "text": "Hydrate well before practice but avoid drinking large amounts during class. A full stomach in forward folds and twists causes nausea. Sip water if needed, but proper pre-hydration eliminates the need.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "yoga_023",
+      "category": "recovery",
+      "text": "Practice on an empty stomach or 2-3 hours after a meal. Twists compress the abdomen, inversions reverse your digestive tract, and forward folds fold you in half — none of these are pleasant with food in your stomach.",
+      "week_relevance": [1, 2]
+    },
+    {
+      "id": "yoga_024",
+      "category": "recovery",
+      "text": "Take an Epsom salt bath after particularly intense practices. Magnesium absorbs through the skin and helps relax muscles that have been held in sustained contraction during challenging poses.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "yoga_025",
+      "category": "recovery",
+      "text": "Strengthen your serratus anterior with wall push-ups plus (pushing extra at the top until your shoulder blades spread apart). This muscle stabilizes your shoulder blades and prevents winging during planks and arm balances.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "yoga_026",
+      "category": "recovery",
+      "text": "If a hip-opening pose causes pain in your knee rather than a stretch in your hip, back off immediately. Knee pain during hip stretches means the rotation is being forced into the knee joint instead of the hip socket.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "yoga_027",
+      "category": "recovery",
+      "text": "Use a bolster or folded blanket under your hips in seated forward folds. Elevating your pelvis tilts it forward, making the hamstring stretch more accessible without rounding your spine to compensate for tight hips.",
+      "week_relevance": [1, 2]
+    },
+    {
+      "id": "yoga_028",
+      "category": "mindset",
+      "text": "Close your eyes in balancing poses once you feel stable with eyes open. Removing visual input forces your proprioceptive system to develop. This is where real balance improvement happens.",
+      "week_relevance": [3, 4]
+    },
+    {
+      "id": "yoga_029",
+      "category": "mindset",
+      "text": "Focus on your breath when your mind wanders. Counting inhale for 4, exhale for 4 gives your brain a job and prevents the mental chatter that turns practice into just another exercise class.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "yoga_030",
+      "category": "mindset",
+      "text": "Do not look at what the person next to you is doing. Hypermobility is not the same as yoga skill. The person in the deepest split may have zero body awareness, while your modified pose with full engagement is the real practice.",
+      "week_relevance": [1, 2]
+    },
+    {
+      "id": "yoga_031",
+      "category": "mindset",
+      "text": "When a pose feels unbearable, distinguish between compression (bone on bone, sharp, unavoidable) and tension (muscular, stretchy, improvable). Compression means you have reached your structural limit. Tension means you can breathe into it.",
+      "week_relevance": [2, 3]
+    },
+    {
+      "id": "yoga_032",
+      "category": "mindset",
+      "text": "Set an intention at the start of each practice beyond physical goals. Dedicating your practice to patience, gratitude, or someone you care about transforms repetitive movement into meaningful ritual.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "yoga_033",
+      "category": "mindset",
+      "text": "Your body is different every single day. Hormones, sleep, stress, and temperature all affect your flexibility. A pose that was easy on Monday may feel impossible on Wednesday. This is normal, not regression.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "yoga_034",
+      "category": "mindset",
+      "text": "If you are intimidated by a yoga studio, start with online classes at home for 2 weeks. But commit to trying a studio class by week 3. A teacher's hands-on adjustments accelerate progress faster than months of solo practice.",
+      "week_relevance": [1, 2, 3]
+    },
+    {
+      "id": "yoga_035",
+      "category": "mindset",
+      "text": "Treat discomfort in a pose as information, not punishment. The sensation is telling you where your body holds tension. Breathe into that area, soften, and observe. Fighting the discomfort only creates more tension.",
+      "week_relevance": [1, 2, 3]
+    },
+    {
+      "id": "yoga_036",
+      "category": "mindset",
+      "text": "Commit to a consistent practice time. Your body develops a circadian readiness for movement at your regular practice time. Morning practitioners find they become naturally limber at that hour over weeks.",
+      "week_relevance": [1, 2]
+    },
+    {
+      "id": "yoga_037",
+      "category": "mindset",
+      "text": "A 15-minute focused daily practice builds more flexibility and strength than a weekly 90-minute class. Frequency beats duration in yoga because connective tissue responds to consistent, moderate stimulus over time.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "yoga_038",
+      "category": "mindset",
+      "text": "When you fall out of a balance pose, notice your reaction. Do you laugh or get frustrated? Your response on the mat mirrors your response to failure off the mat. This self-awareness is the deeper practice.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "yoga_039",
+      "category": "mindset",
+      "text": "Inversions like headstand and shoulderstand are not goals you need to achieve to be a real yogi. They require years of shoulder stability and core strength. Legs up the wall gives 90% of the same benefits safely.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "yoga_040",
+      "category": "progress",
+      "text": "Photograph yourself in 5 key poses (forward fold, downward dog, warrior 2, pigeon, seated twist) every 2 weeks. Flexibility changes are invisible day-to-day but dramatic over months.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "yoga_041",
+      "category": "progress",
+      "text": "Once you can hold plank for 60 seconds with good form, start working on chaturanga. Dropping into chaturanga without plank endurance strains the shoulders and teaches poor motor patterns that are hard to unlearn.",
+      "week_relevance": [2, 3]
+    },
+    {
+      "id": "yoga_042",
+      "category": "progress",
+      "text": "Practice crow pose by placing your knees on the backs of your upper arms and lifting one foot at a time. The balance point is further forward than you expect. Most people fail because they do not lean forward enough, not because they lack strength.",
+      "week_relevance": [3, 4]
+    },
+    {
+      "id": "yoga_043",
+      "category": "progress",
+      "text": "Add 5 breaths to your hold time in each pose every week. Going from 3 breaths to 8 breaths in warrior 2 over a month builds muscular endurance and teaches your nervous system to tolerate discomfort.",
+      "week_relevance": [1, 2, 3]
+    },
+    {
+      "id": "yoga_044",
+      "category": "progress",
+      "text": "Measure hamstring flexibility by sitting with legs straight and noting where your fingers reach on your legs or feet. Progress from shins to ankles to toes to palms-past-feet happens over months and is completely achievable.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "yoga_045",
+      "category": "progress",
+      "text": "Once basic sun salutations feel smooth, try sun salutation B which adds chair pose and warrior 1. This progression increases both the cardiovascular and strength demands while building on patterns you already know.",
+      "week_relevance": [3, 4]
+    },
+    {
+      "id": "yoga_046",
+      "category": "progress",
+      "text": "Track how many breaths you can sustain in challenging poses. When warrior 3 goes from 2 shaky breaths to 8 steady breaths, that represents enormous gains in strength, balance, and focus that no photo can capture.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "yoga_047",
+      "category": "progress",
+      "text": "Work on hip flexibility systematically: start with reclined figure-four, progress to seated pigeon, then to full pigeon with back knee bent. Jumping ahead skips the preparatory tissue adaptation and risks knee injury.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "yoga_048",
+      "category": "progress",
+      "text": "Introduce a 5-minute meditation at the end of your practice after savasana. Starting at 2 minutes and adding 30 seconds per week builds a meditation habit using yoga as the on-ramp.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "yoga_049",
+      "category": "progress",
+      "text": "Once you are comfortable in basic poses, try a flow class where poses are linked continuously. The transition between poses is where real coordination and body awareness develop — not in the static holds.",
+      "week_relevance": [3, 4]
+    },
+    {
+      "id": "yoga_050",
+      "category": "progress",
+      "text": "Test your shoulder flexibility monthly by reaching one arm overhead and the other behind your back. Measure the gap between your fingertips. Closing this gap by 1 cm per month means your thoracic mobility is genuinely improving.",
+      "week_relevance": [2, 3, 4]
+    }
+  ]
+}

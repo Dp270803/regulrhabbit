@@ -1,0 +1,305 @@
+{
+  "activity": "gym",
+  "tips": [
+    {
+      "id": "gym_001",
+      "category": "technique",
+      "text": "Initiate every pressing movement by retracting and depressing your shoulder blades first. This locks your shoulders into a stable shelf and protects the rotator cuff under load.",
+      "week_relevance": [1, 2]
+    },
+    {
+      "id": "gym_002",
+      "category": "technique",
+      "text": "On squats, think about spreading the floor apart with your feet. This external rotation cue activates your glute medius and prevents knee cave without you having to consciously track your knees.",
+      "week_relevance": [1, 2]
+    },
+    {
+      "id": "gym_003",
+      "category": "technique",
+      "text": "Control the eccentric (lowering) phase for at least 2-3 seconds. Slow eccentrics recruit more muscle fibers and build tendon resilience far better than dropping the weight.",
+      "week_relevance": [1, 2, 3]
+    },
+    {
+      "id": "gym_004",
+      "category": "technique",
+      "text": "Brace your core by taking a deep belly breath and pushing your abs outward against an imaginary belt before every compound lift. A Valsalva brace can increase spinal stability by up to 40%.",
+      "week_relevance": [1, 2]
+    },
+    {
+      "id": "gym_005",
+      "category": "technique",
+      "text": "On deadlifts, pull the slack out of the bar before you initiate the lift. You should hear the plates click and feel tension in your lats before your hips drive forward.",
+      "week_relevance": [1, 2, 3]
+    },
+    {
+      "id": "gym_006",
+      "category": "technique",
+      "text": "Use a thumbless (suicide) grip on lat pulldowns and rows to reduce forearm dominance. When your thumb wraps around the bar, your biceps tend to take over from your back.",
+      "week_relevance": [2, 3]
+    },
+    {
+      "id": "gym_007",
+      "category": "technique",
+      "text": "For bicep curls, start with your palms facing your thighs and supinate (rotate outward) as you curl up. This engages both heads of the bicep through a fuller range of motion.",
+      "week_relevance": [2, 3]
+    },
+    {
+      "id": "gym_008",
+      "category": "technique",
+      "text": "During bench press, tuck your elbows to about 45 degrees rather than flaring them to 90. This shifts load off the anterior deltoid and onto the pec while protecting your shoulder joint.",
+      "week_relevance": [1, 2]
+    },
+    {
+      "id": "gym_009",
+      "category": "technique",
+      "text": "On cable exercises, pause for a full second at peak contraction. Cables maintain constant tension throughout the range of motion, so the squeeze at the top is where the real stimulus happens.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "gym_010",
+      "category": "technique",
+      "text": "Keep your wrists neutral and stacked over your elbows during overhead presses. A bent wrist leaks force and increases injury risk at higher loads.",
+      "week_relevance": [1, 2, 3]
+    },
+    {
+      "id": "gym_011",
+      "category": "technique",
+      "text": "When doing Romanian deadlifts, think about pushing your hips back toward the wall behind you rather than bending forward. This hip-hinge cue keeps the load on your hamstrings instead of your lower back.",
+      "week_relevance": [1, 2]
+    },
+    {
+      "id": "gym_012",
+      "category": "technique",
+      "text": "For lateral raises, lead with your pinky finger slightly higher than your thumb. This internally rotates the humerus just enough to bias the medial delt head over the front delt.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "gym_013",
+      "category": "technique",
+      "text": "On leg press, place your feet high and wide on the platform to target glutes and hamstrings, or low and narrow to emphasize quads. Foot placement completely changes which muscles do the work.",
+      "week_relevance": [2, 3]
+    },
+    {
+      "id": "gym_014",
+      "category": "technique",
+      "text": "Use a mixed grip or hook grip on heavy deadlifts only when your double-overhand grip fails. Training with double overhand as long as possible builds grip strength that carries over to every other lift.",
+      "week_relevance": [3, 4]
+    },
+    {
+      "id": "gym_015",
+      "category": "technique",
+      "text": "On dips, lean your torso forward about 30 degrees to load your chest, or stay upright to target triceps. The same movement hits completely different muscles depending on your lean angle.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "gym_016",
+      "category": "recovery",
+      "text": "Eat 20-40g of protein within 2 hours after training. The anabolic window is wider than bro-science suggests, but muscle protein synthesis peaks when amino acids are available post-session.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "gym_017",
+      "category": "recovery",
+      "text": "If you are sore from yesterday's session, do 10-15 minutes of light movement targeting the same muscle group. Active recovery increases blood flow and clears metabolic waste faster than complete rest.",
+      "week_relevance": [1, 2]
+    },
+    {
+      "id": "gym_018",
+      "category": "recovery",
+      "text": "Prioritize 7-9 hours of sleep, especially on training days. Growth hormone is released in pulses during deep sleep, and most muscle repair happens in the first 3-4 hours of the night.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "gym_019",
+      "category": "recovery",
+      "text": "Foam roll your thoracic spine (upper back) for 2 minutes before pressing days. This restores extension and overhead mobility that sitting all day compromises.",
+      "week_relevance": [1, 2, 3]
+    },
+    {
+      "id": "gym_020",
+      "category": "recovery",
+      "text": "Space out training the same muscle group by at least 48 hours. Research shows muscle protein synthesis stays elevated for 24-48 hours post-training, and training during that window blunts the response.",
+      "week_relevance": [1, 2]
+    },
+    {
+      "id": "gym_021",
+      "category": "recovery",
+      "text": "Take a full deload week every 4-6 weeks where you reduce volume by 40-50%. Connective tissue adapts slower than muscle, and accumulated fatigue masks your true strength gains.",
+      "week_relevance": [4]
+    },
+    {
+      "id": "gym_022",
+      "category": "recovery",
+      "text": "If a joint feels sharp or pinching pain (not muscle soreness), stop that exercise immediately. Muscle soreness is dull and bilateral; joint pain is sharp and localized. Learn the difference early.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "gym_023",
+      "category": "recovery",
+      "text": "Consume 0.7-1g of protein per pound of bodyweight daily, spread across 3-5 meals. Total daily protein matters more than timing, but distribution keeps muscle protein synthesis elevated throughout the day.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "gym_024",
+      "category": "recovery",
+      "text": "Stretch your hip flexors for 60 seconds per side after every leg session. Tight hip flexors from sitting inhibit glute activation, which cascades into lower back compensation and eventual pain.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "gym_025",
+      "category": "recovery",
+      "text": "Cold exposure (cold shower for 2-3 minutes) after training can reduce perceived soreness, but avoid it if hypertrophy is your primary goal. Cold blunts the inflammatory response that drives muscle growth.",
+      "week_relevance": [3, 4]
+    },
+    {
+      "id": "gym_026",
+      "category": "recovery",
+      "text": "If you missed a session, do not try to make it up by doubling volume next time. Excessive volume in a single session causes more damage than adaptation. Just continue your normal schedule.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "gym_027",
+      "category": "recovery",
+      "text": "Keep a water bottle and aim for at least 500ml during your session. Even 2% dehydration reduces strength output by up to 10% and impairs your ability to sustain effort across sets.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "gym_028",
+      "category": "mindset",
+      "text": "Treat your first two weeks as a technique investment, not a strength test. Using lighter loads with perfect form now builds motor patterns that let you safely load heavy later.",
+      "week_relevance": [1]
+    },
+    {
+      "id": "gym_029",
+      "category": "mindset",
+      "text": "Track your rest periods with a timer. Most people rest either too long (losing the pump) or too short (compromising the next set). For hypertrophy, 60-90 seconds is the sweet spot.",
+      "week_relevance": [1, 2, 3]
+    },
+    {
+      "id": "gym_030",
+      "category": "mindset",
+      "text": "If the gym feels intimidating, remember that 99% of experienced lifters respect beginners who show up consistently. Everyone started somewhere, and regulars notice dedication, not weight on the bar.",
+      "week_relevance": [1]
+    },
+    {
+      "id": "gym_031",
+      "category": "mindset",
+      "text": "Record yourself lifting from the side angle occasionally. Your mental image of your form is often very different from reality, and video feedback accelerates correction faster than any cue.",
+      "week_relevance": [1, 2, 3]
+    },
+    {
+      "id": "gym_032",
+      "category": "mindset",
+      "text": "Do not compare your week 2 to someone else's year 5. Beginner gains are real and fast — you will likely add 2-5 kg to your main lifts every week for the first few months.",
+      "week_relevance": [1, 2]
+    },
+    {
+      "id": "gym_033",
+      "category": "mindset",
+      "text": "When motivation drops, commit to just showing up and doing your warm-up sets. Most of the time you will finish the session once you start. The hardest part is always the door.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "gym_034",
+      "category": "mindset",
+      "text": "Focus on one cue per exercise, not five. Trying to think about grip, elbows, breathing, bracing, and tempo simultaneously causes paralysis. Pick the weakest link and master it before adding another.",
+      "week_relevance": [1, 2]
+    },
+    {
+      "id": "gym_035",
+      "category": "mindset",
+      "text": "A bad session where you showed up is infinitely better than a skipped session. Consistency over intensity is what separates people who transform their bodies from those who burn out in a month.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "gym_036",
+      "category": "mindset",
+      "text": "Leave your phone in your locker or use airplane mode. Scrolling between sets extends rest periods unpredictably and breaks the mind-muscle connection that makes each set count.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "gym_037",
+      "category": "mindset",
+      "text": "Warming up is not optional. 5 minutes on a rower or bike plus 2 light sets of your first exercise raises your core temperature, lubricates joints, and primes your nervous system for heavy loads.",
+      "week_relevance": [1, 2]
+    },
+    {
+      "id": "gym_038",
+      "category": "mindset",
+      "text": "Accept that progress is non-linear. You will have weeks where the weight feels heavier than last time. Sleep quality, stress, and nutrition all fluctuate, and your performance reflects that.",
+      "week_relevance": [3, 4]
+    },
+    {
+      "id": "gym_039",
+      "category": "mindset",
+      "text": "Write down your workout before you arrive. Having a plan eliminates decision fatigue and prevents you from wandering between machines doing random exercises with no progression strategy.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "gym_040",
+      "category": "progress",
+      "text": "Add weight only when you can complete all prescribed sets and reps with clean form. If your last rep looks nothing like your first, the weight is too heavy for productive training.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "gym_041",
+      "category": "progress",
+      "text": "Log every session with exercise, weight, sets, and reps. Without a training log, you are guessing whether you are actually progressing. Data removes emotion from the equation.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "gym_042",
+      "category": "progress",
+      "text": "Use microplates (0.5-1.25 kg) for upper body lifts. Trying to jump 2.5 kg on overhead press every week stalls quickly. Fractional loading keeps linear progression alive for months longer.",
+      "week_relevance": [3, 4]
+    },
+    {
+      "id": "gym_043",
+      "category": "progress",
+      "text": "Take progress photos every 2 weeks in the same lighting and pose. The mirror lies daily, but side-by-side photos over weeks reveal changes your eyes adapt to and miss.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "gym_044",
+      "category": "progress",
+      "text": "When a lift stalls, add one extra set at the same weight before increasing load. Volume is the primary driver of hypertrophy, and adding sets is a less risky progression than adding weight.",
+      "week_relevance": [3, 4]
+    },
+    {
+      "id": "gym_045",
+      "category": "progress",
+      "text": "Test your estimated one-rep max every 4 weeks using a calculator based on a heavy set of 3-5 reps. Actually maxing out weekly accumulates fatigue and injury risk with minimal training benefit.",
+      "week_relevance": [4]
+    },
+    {
+      "id": "gym_046",
+      "category": "progress",
+      "text": "Measure progress in multiple dimensions: strength (weight lifted), volume (total sets x reps x weight), body measurements, and how you feel. Scale weight alone tells you almost nothing useful.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "gym_047",
+      "category": "progress",
+      "text": "If you have been stuck on the same weight for 3 sessions, try a different rep range. Drop the weight 10% and do sets of 12 instead of 5. Novel stimulus often breaks through plateaus.",
+      "week_relevance": [3, 4]
+    },
+    {
+      "id": "gym_048",
+      "category": "progress",
+      "text": "In your first month, expect to gain strength mostly from neural adaptations, not muscle growth. Your brain is learning to recruit existing fibers more efficiently. Visible muscle changes come around week 6-8.",
+      "week_relevance": [1, 2]
+    },
+    {
+      "id": "gym_049",
+      "category": "progress",
+      "text": "Track your rate of perceived exertion (RPE) on a 1-10 scale for each working set. Training at RPE 7-8 (2-3 reps in reserve) builds strength with less fatigue than grinding to failure every set.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "gym_050",
+      "category": "progress",
+      "text": "Reassess your program every 4 weeks. If an exercise consistently causes discomfort or shows zero progression, swap it for a variation that targets the same muscle group from a different angle.",
+      "week_relevance": [4]
+    }
+  ]
+}

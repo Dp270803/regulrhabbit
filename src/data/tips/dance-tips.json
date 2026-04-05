@@ -1,0 +1,305 @@
+{
+  "activity": "dance",
+  "tips": [
+    {
+      "id": "dance_001",
+      "category": "technique",
+      "text": "Initiate all movement from your core, not your limbs. Your arms and legs follow your center of gravity. A strong plié with a centered torso looks 10x better than flashy arms with a wobbly middle.",
+      "week_relevance": [1, 2]
+    },
+    {
+      "id": "dance_002",
+      "category": "technique",
+      "text": "Spot your turns by fixing your eyes on a single point and whipping your head around to find it again. Your head should be the last thing to leave and the first to arrive. Without spotting, dizziness limits you to one rotation.",
+      "week_relevance": [2, 3]
+    },
+    {
+      "id": "dance_003",
+      "category": "technique",
+      "text": "Dance on the balls of your feet, not flat-footed. Weight forward gives you the ability to change direction instantly. Flat feet create a visible delay between hearing the beat and executing the movement.",
+      "week_relevance": [1, 2]
+    },
+    {
+      "id": "dance_004",
+      "category": "technique",
+      "text": "Isolate your body parts by practicing moving only your head while everything else stays still, then only your chest, then only your hips. Isolation is what separates a dancer from someone just moving around.",
+      "week_relevance": [1, 2, 3]
+    },
+    {
+      "id": "dance_005",
+      "category": "technique",
+      "text": "Use your plié (bent knees) as the engine for everything. Turns, jumps, level changes, and direction shifts all start and end in plié. Straight-legged dancing looks stiff and limits your movement vocabulary.",
+      "week_relevance": [1, 2]
+    },
+    {
+      "id": "dance_006",
+      "category": "technique",
+      "text": "Extend your movements to their full range. If the choreography says reach right, reach as far as possible with energy through your fingertips. Under-extended movements make everything look tentative and half-committed.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "dance_007",
+      "category": "technique",
+      "text": "Count music in 8-counts and identify the downbeat (beat 1). Clap along to songs and find where the 1 falls. If you cannot find the 1 consistently, you will always be slightly off time no matter how good your moves are.",
+      "week_relevance": [1, 2]
+    },
+    {
+      "id": "dance_008",
+      "category": "technique",
+      "text": "Use your breath to add dynamics. Exhale sharply on accented movements and inhale during transitions. Breath control creates the contrast between sharp and fluid that makes movement look professional.",
+      "week_relevance": [2, 3]
+    },
+    {
+      "id": "dance_009",
+      "category": "technique",
+      "text": "Practice weight transfers by stepping side to side and feeling your full weight commit to each foot. Many beginners hover between feet. Clean weight shifts are the foundation of partner dancing and traveling steps.",
+      "week_relevance": [1, 2]
+    },
+    {
+      "id": "dance_010",
+      "category": "technique",
+      "text": "Control your descents. Going down fast and coming up slow looks powerful. Going down slow and coming up fast looks weak. Play with the speed contrast in your level changes to create visual impact.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "dance_011",
+      "category": "technique",
+      "text": "In partner dancing, maintain frame by keeping slight outward tension in your arms without rigidity. Your frame is how your partner reads your body. A spaghetti frame sends no signal; a rigid frame sends the wrong one.",
+      "week_relevance": [2, 3]
+    },
+    {
+      "id": "dance_012",
+      "category": "technique",
+      "text": "Use the and-counts (the half beats between main beats) for preparation movements. Step on the and to land on the beat. This makes your movement look effortless because the effort happens between the beats the audience is tracking.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "dance_013",
+      "category": "technique",
+      "text": "Point your feet whenever they leave the floor. An unpointed foot looks like a mistake. A pointed foot looks intentional. This single habit transforms amateur movement into something that looks trained.",
+      "week_relevance": [1, 2, 3]
+    },
+    {
+      "id": "dance_014",
+      "category": "technique",
+      "text": "Practice transitions between moves more than the moves themselves. Audiences see the connections, not the poses. A smooth transition between two simple moves looks better than two impressive moves with an awkward gap.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "dance_015",
+      "category": "technique",
+      "text": "Dance in front of a mirror only 50% of the time. Mirror-dependence trains you to watch yourself instead of feeling your body in space. Practice without the mirror to develop proprioception and stage presence.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "dance_016",
+      "category": "recovery",
+      "text": "Roll out your calves and the balls of your feet with a tennis ball after every session. Dance loads the foot and calf complex heavily, and tight calves pull on your Achilles tendon and limit your plié depth.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "dance_017",
+      "category": "recovery",
+      "text": "Ice your knees for 10 minutes if they feel warm or swollen after a session with heavy jumping or floorwork. Chronic low-grade swelling in the knee builds up over weeks if you ignore it.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "dance_018",
+      "category": "recovery",
+      "text": "Stretch your hip flexors daily, not just after class. Dance requires constant hip flexion, and shortened hip flexors tilt your pelvis forward, compressing your lower back during every backbend and arch.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "dance_019",
+      "category": "recovery",
+      "text": "Strengthen your ankles with single-leg balance on an unstable surface for 30 seconds each side. Dance ankle sprains usually happen from rolling out during lateral movement, and stability training is the best prevention.",
+      "week_relevance": [1, 2, 3]
+    },
+    {
+      "id": "dance_020",
+      "category": "recovery",
+      "text": "If your lower back hurts after back bends or drops, your core is not engaging before the movement. Strengthen your transverse abdominis with dead bugs and hollow body holds to build the support your spine needs.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "dance_021",
+      "category": "recovery",
+      "text": "Wear proper dance shoes or go barefoot on a sprung floor. Dancing in socks on a hard floor removes all grip and exposes your knees to torque injuries. Dancing in running shoes adds grip that prevents necessary pivoting.",
+      "week_relevance": [1, 2]
+    },
+    {
+      "id": "dance_022",
+      "category": "recovery",
+      "text": "Do 10 minutes of gentle floor stretching after class while your muscles are still warm. Dancers who skip post-class stretching develop the muscle tightness that makes tomorrow's class feel twice as hard.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "dance_023",
+      "category": "recovery",
+      "text": "Take care of your feet by keeping toenails short, using tape on blister-prone areas, and moisturizing calluses so they stay flexible. Cracked calluses can split during turns and take you out for a week.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "dance_024",
+      "category": "recovery",
+      "text": "Cross-train with yoga or Pilates once a week. Dance builds explosive power but rarely addresses the slow, sustained muscle engagement that prevents injury. Yoga's long holds complement dance's quick movements perfectly.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "dance_025",
+      "category": "recovery",
+      "text": "Tape your big toe joint if you do any relevé-heavy work. The first metatarsophalangeal joint takes enormous pressure during rises and turns, and early taping prevents the bunion development common in dancers.",
+      "week_relevance": [3, 4]
+    },
+    {
+      "id": "dance_026",
+      "category": "recovery",
+      "text": "If your shoulders are creeping up toward your ears during class, consciously drop them between exercises. Shoulder tension is the body's stress response, and it wastes energy while restricting arm movement quality.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "dance_027",
+      "category": "recovery",
+      "text": "Eat enough carbohydrates on dance days. A 60-minute dance class burns 300-600 calories depending on intensity, and glycogen-depleted muscles fatigue quickly and are more injury-prone. Do not under-fuel to stay lean.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "dance_028",
+      "category": "mindset",
+      "text": "Record yourself from the front and watch it on mute. What you feel internally rarely matches what looks good externally. Movements that feel huge to you often look small on camera. Adjust accordingly.",
+      "week_relevance": [1, 2, 3]
+    },
+    {
+      "id": "dance_029",
+      "category": "mindset",
+      "text": "Learn choreography in chunks of 2-3 eight-counts, not the whole piece at once. Master each chunk before connecting them. Trying to learn a full routine in one pass creates shallow memory that breaks down under pressure.",
+      "week_relevance": [1, 2]
+    },
+    {
+      "id": "dance_030",
+      "category": "mindset",
+      "text": "Dance at 50% speed when learning new choreography. Speed masks mistakes and builds sloppy muscle memory. Once the movement is clean at half speed, gradually increase to performance tempo.",
+      "week_relevance": [1, 2, 3]
+    },
+    {
+      "id": "dance_031",
+      "category": "mindset",
+      "text": "Watch the choreography from behind the teacher, matching their direction, not mirroring them. Mirror-learning causes left-right confusion that breaks down the moment you turn away from the mirror.",
+      "week_relevance": [1, 2]
+    },
+    {
+      "id": "dance_032",
+      "category": "mindset",
+      "text": "Freestyle for 5 minutes at the start of each practice, even if it feels awkward. Freestyle develops your personal movement vocabulary and connection to music that choreography alone cannot build.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "dance_033",
+      "category": "mindset",
+      "text": "Your face is part of your dancing. A blank face during an emotional piece looks disconnected. Practice performing with facial expressions that match the music's energy. This is called performance quality and it separates dancers from movers.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "dance_034",
+      "category": "mindset",
+      "text": "When you make a mistake in class, keep going. Stopping signals to your brain that mistakes are catastrophic. In performance, the audience does not know the choreography. A confident mistake looks like an intentional choice.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "dance_035",
+      "category": "mindset",
+      "text": "Listen to your practice music outside of class. Knowing the song intimately — every accent, break, and build — lets you anticipate rather than react. The best dancers look like they are creating the music with their bodies.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "dance_036",
+      "category": "mindset",
+      "text": "Take classes in styles outside your comfort zone. A hip-hop dancer benefits enormously from a contemporary class, and vice versa. Cross-style training develops versatility that makes you better at your primary style.",
+      "week_relevance": [3, 4]
+    },
+    {
+      "id": "dance_037",
+      "category": "mindset",
+      "text": "Use the back of the room to watch experienced dancers and learn from their movement quality, not just their steps. Positioning yourself in front tempts you to lead instead of learning from those ahead of you.",
+      "week_relevance": [1, 2]
+    },
+    {
+      "id": "dance_038",
+      "category": "mindset",
+      "text": "Commit fully to every movement even in practice. Half-marking builds half-effort habits. Your performance energy should feel like an amplified version of your practice energy, not a completely different mode.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "dance_039",
+      "category": "mindset",
+      "text": "Everyone looks uncoordinated for the first 2-3 weeks. Your brain is building new neural pathways for movement patterns it has never executed. The awkward phase is required. Trust the process.",
+      "week_relevance": [1]
+    },
+    {
+      "id": "dance_040",
+      "category": "progress",
+      "text": "Film yourself performing the same 8-count combination every two weeks. Comparing videos shows improvements in timing, extension, and quality that you cannot perceive in real time.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "dance_041",
+      "category": "progress",
+      "text": "Practice musicality by dancing to the same song three different ways: once hitting the lyrics, once hitting the bass, once hitting the hi-hats. This trains your ear to hear layers in music that most people miss.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "dance_042",
+      "category": "progress",
+      "text": "Work on your flexibility systematically: front splits, middle splits, and back flexibility each need their own targeted stretching routine 3-4 times per week. General stretching does not produce the specific results dance requires.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "dance_043",
+      "category": "progress",
+      "text": "Once basic choreography retention is easy, challenge yourself by learning longer pieces. Aim to learn and retain 32 counts by week 2, 64 counts by week 3, and a full routine by week 4.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "dance_044",
+      "category": "progress",
+      "text": "Time how long you can maintain a controlled relevé (rise onto the balls of your feet) on one leg. Progression from 5 seconds to 30 seconds over a month indicates serious ankle stability and balance improvement.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "dance_045",
+      "category": "progress",
+      "text": "Add dynamics to learned choreography by varying energy levels: light vs. heavy, sharp vs. smooth, big vs. small. The same steps performed with different dynamics create completely different visual experiences.",
+      "week_relevance": [3, 4]
+    },
+    {
+      "id": "dance_046",
+      "category": "progress",
+      "text": "Train your pirouettes incrementally. Master a clean half turn before attempting a single, and a clean single before attempting a double. Most people fail doubles because their single is not actually clean.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "dance_047",
+      "category": "progress",
+      "text": "Count how many 8-counts of choreography you can learn in a single class. This number directly reflects your processing speed and movement memory. It should increase measurably each week.",
+      "week_relevance": [1, 2, 3]
+    },
+    {
+      "id": "dance_048",
+      "category": "progress",
+      "text": "Perform in front of someone — a friend, a camera for social media, or an open floor at a social dance. Training without performance is like studying without exams. The pressure reveals what you truly know.",
+      "week_relevance": [3, 4]
+    },
+    {
+      "id": "dance_049",
+      "category": "progress",
+      "text": "Start creating your own short combinations (16-32 counts) to music you love. Choreography creation forces you to think about movement choices rather than just copying, which deepens your understanding enormously.",
+      "week_relevance": [3, 4]
+    },
+    {
+      "id": "dance_050",
+      "category": "progress",
+      "text": "Attend a social dance event (salsa night, hip-hop jam, swing dance) once a month. Dancing in a social context builds confidence, musicality, and adaptability that studio classes alone cannot provide.",
+      "week_relevance": [3, 4]
+    }
+  ]
+}

@@ -1,0 +1,305 @@
+{
+  "activity": "instrument",
+  "tips": [
+    {
+      "id": "inst_001",
+      "category": "technique",
+      "text": "Practice with a metronome from day one, starting at a tempo where you can play every note cleanly. Speed is a byproduct of accuracy. Musicians who practice fast and sloppy build errors into their muscle memory that take months to unlearn.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "inst_002",
+      "category": "technique",
+      "text": "Keep your hands, wrists, and shoulders relaxed while playing. Tension is the number one enemy of both speed and endurance. If you notice your shoulders creeping toward your ears, stop and reset. Tension builds gradually and invisibly.",
+      "week_relevance": [1, 2, 3]
+    },
+    {
+      "id": "inst_003",
+      "category": "technique",
+      "text": "Use minimal finger motion — press keys or frets from just above the surface, not from inches away. Economy of motion reduces fatigue and increases accuracy. Watch a concert pianist's hands; they barely move.",
+      "week_relevance": [1, 2, 3]
+    },
+    {
+      "id": "inst_004",
+      "category": "technique",
+      "text": "Practice difficult passages in isolation, not by playing through the whole piece and stumbling at the same spot. Extract the 2-4 bars that cause problems and loop them 20 times slowly before reintegrating into the full piece.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "inst_005",
+      "category": "technique",
+      "text": "For string instruments, press the strings with the tips of your curved fingers, not the pads of flat fingers. Curved fingers give you precision on individual strings and prevent accidentally muting adjacent strings.",
+      "week_relevance": [1, 2]
+    },
+    {
+      "id": "inst_006",
+      "category": "technique",
+      "text": "Breathe with the musical phrase, even on non-wind instruments. Holding your breath while concentrating creates full-body tension that transfers to your hands. Exhale through difficult passages.",
+      "week_relevance": [1, 2, 3]
+    },
+    {
+      "id": "inst_007",
+      "category": "technique",
+      "text": "For wind instruments, support your airstream from your diaphragm, not your throat. Blow as if fogging a mirror from 30 cm away — warm, steady, and open. Throat constriction kills tone quality and limits endurance.",
+      "week_relevance": [1, 2]
+    },
+    {
+      "id": "inst_008",
+      "category": "technique",
+      "text": "Practice scales in every key, not just the easy ones. Scales build the finger patterns and muscle memory that are the building blocks of every melody and solo. 15 minutes of scales daily is worth more than an hour of noodling.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "inst_009",
+      "category": "technique",
+      "text": "Use a tuner continuously when practicing to train your intonation. On fretless strings and wind instruments especially, playing slightly sharp or flat becomes a habit if you never check. Your ears calibrate to your own errors over time.",
+      "week_relevance": [1, 2, 3]
+    },
+    {
+      "id": "inst_010",
+      "category": "technique",
+      "text": "For piano, practice hands separately until each hand is automatic before combining them. If you cannot play the left hand part while having a conversation, it is not automatic enough to add the right hand.",
+      "week_relevance": [1, 2, 3]
+    },
+    {
+      "id": "inst_011",
+      "category": "technique",
+      "text": "Pay attention to dynamics from the start. Playing everything at the same volume is the hallmark of a beginner. Even simple exercises become musical when you add crescendos, decrescendos, and accents.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "inst_012",
+      "category": "technique",
+      "text": "For guitar, angle your pick slightly (about 10-15 degrees) rather than hitting the string flat. A slightly angled pick glides across the string with less resistance, producing a warmer tone and faster alternate picking.",
+      "week_relevance": [1, 2, 3]
+    },
+    {
+      "id": "inst_013",
+      "category": "technique",
+      "text": "Practice your instrument standing up occasionally if it is portable. Standing changes your posture, breathing, and the angle of your arms. If you only ever practice sitting, performing while standing will feel completely foreign.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "inst_014",
+      "category": "technique",
+      "text": "When sight-reading, keep your eyes one or two beats ahead of what you are playing. Your fingers handle the current note; your eyes prepare the next one. This lookahead is what makes fluent reading possible.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "inst_015",
+      "category": "technique",
+      "text": "For drums, match your stick heights. If your left hand rises 6 inches and your right rises 10, your dynamics will be uneven and your groove will feel lopsided. Mirror practice helps calibrate this.",
+      "week_relevance": [1, 2, 3]
+    },
+    {
+      "id": "inst_016",
+      "category": "recovery",
+      "text": "Take a 5-minute break every 25 minutes of practice. Shake out your hands, roll your wrists, and stretch your forearms. Repetitive strain injuries like tendinitis develop gradually, and breaks prevent the microdamage from accumulating.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "inst_017",
+      "category": "recovery",
+      "text": "If you feel any numbness, tingling, or sharp pain in your fingers, hands, or wrists, stop immediately. These are early signs of nerve compression or tendinitis. Pushing through these signals can cause chronic conditions that take months to heal.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "inst_018",
+      "category": "recovery",
+      "text": "Stretch your forearm extensors after practice by extending your arm, palm down, and gently pulling your fingers toward your body with your other hand. Hold for 30 seconds each arm. This prevents the tightness that leads to elbow pain.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "inst_019",
+      "category": "recovery",
+      "text": "For guitar and bass players, build calluses gradually. Play until your fingertips feel tender, then stop. Pushing through to blisters tears the skin and sets your callus development back. Calluses solidify in about 2-3 weeks of consistent playing.",
+      "week_relevance": [1, 2]
+    },
+    {
+      "id": "inst_020",
+      "category": "recovery",
+      "text": "For brass and woodwind players, let your embouchure (lip muscles) rest between practice segments. Lip fatigue causes you to compensate with jaw pressure, which damages the delicate tissues and creates a ceiling on your endurance.",
+      "week_relevance": [1, 2, 3]
+    },
+    {
+      "id": "inst_021",
+      "category": "recovery",
+      "text": "Check your posture with your instrument in a mirror. Most players hunch forward over time, compressing their spine and restricting their breathing. Adjust your music stand height so you look slightly upward, not down.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "inst_022",
+      "category": "recovery",
+      "text": "Use a wrist rest or ergonomic support if your instrument requires prolonged wrist extension (keyboards especially). Sustained wrist angles greater than 20 degrees compress the carpal tunnel and cause the numbness that sidelines musicians.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "inst_023",
+      "category": "recovery",
+      "text": "Warm up with easy, slow exercises for the first 5 minutes. Do not jump into your hardest piece immediately. Cold muscles and tendons are less elastic and more prone to strain. A gentle warm-up prepares your body for precision work.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "inst_024",
+      "category": "recovery",
+      "text": "Do hand and finger strengthening exercises away from your instrument, like squeezing a stress ball or using a grip trainer. Stronger intrinsic hand muscles fatigue less during long practice sessions.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "inst_025",
+      "category": "recovery",
+      "text": "Protect your hearing by using musician's earplugs (which reduce volume evenly across frequencies) when practicing loud instruments. Hearing damage is cumulative, irreversible, and the most common occupational hazard for musicians.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "inst_026",
+      "category": "recovery",
+      "text": "Sleep after learning new material. Research shows that motor skill consolidation happens during sleep. Passages that feel impossible at the end of a practice session often feel smoother the next morning without additional practice.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "inst_027",
+      "category": "recovery",
+      "text": "Avoid practicing for more than 90 minutes without a substantial break. After 60-90 minutes, your concentration drops sharply and you start reinforcing mistakes rather than correcting them. Quality always beats quantity.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "inst_028",
+      "category": "mindset",
+      "text": "Slow practice is not boring practice — it is smart practice. Playing at half speed gives your brain time to encode the correct finger positions, timing, and dynamics. Speed comes automatically once the pattern is clean.",
+      "week_relevance": [1, 2, 3]
+    },
+    {
+      "id": "inst_029",
+      "category": "mindset",
+      "text": "Set a specific goal for every practice session before you start. Not I will practice for 30 minutes but I will get bars 17-24 clean at 80 bpm. Specific goals create focused practice that produces 5x the improvement of aimless playing.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "inst_030",
+      "category": "mindset",
+      "text": "When you hit a plateau, change one variable: play the passage in a different rhythm, different articulation, or backward. Novel neural challenges break the plateau by forcing your brain out of its autopilot loop.",
+      "week_relevance": [3, 4]
+    },
+    {
+      "id": "inst_031",
+      "category": "mindset",
+      "text": "Record your practice sessions and listen back critically. You cannot simultaneously play and objectively evaluate your playing. Recording separates the performer from the listener, and the listener catches mistakes the performer misses.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "inst_032",
+      "category": "mindset",
+      "text": "Practice performing, not just practicing. Play through a piece without stopping, even if you make mistakes. In performance, you cannot go back. Training your brain to continue past errors is a separate and critical skill.",
+      "week_relevance": [3, 4]
+    },
+    {
+      "id": "inst_033",
+      "category": "mindset",
+      "text": "Learn music theory alongside your instrument, even 10 minutes a day. Understanding why notes sound good together transforms you from someone who reproduces patterns to someone who understands and creates music.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "inst_034",
+      "category": "mindset",
+      "text": "Do not skip pieces that are below your level. Playing easy music with great tone, dynamics, and expression is harder than playing difficult music badly. Musicality develops when technique is not consuming all your attention.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "inst_035",
+      "category": "mindset",
+      "text": "Play with other musicians as soon as possible, even informally. Ensemble playing develops listening, timing, and adaptability that solo practice cannot. Even playing along with a backing track is better than always playing alone.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "inst_036",
+      "category": "mindset",
+      "text": "Embrace the frustration of the learning curve. Your ear develops faster than your fingers. Hearing that you sound bad is actually a sign that your musical ear is ahead of your technical ability — that gap drives improvement.",
+      "week_relevance": [1, 2]
+    },
+    {
+      "id": "inst_037",
+      "category": "mindset",
+      "text": "15 minutes of focused daily practice outperforms 2 hours once a week. Muscle memory and neural pathways consolidate through frequency of exposure. Daily contact with your instrument keeps the neural connections active.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "inst_038",
+      "category": "mindset",
+      "text": "Listen actively to professional recordings of your instrument. Not as background music, but sitting still and focusing on tone, phrasing, dynamics, and timing. This listening shapes your internal model of what good playing sounds like.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "inst_039",
+      "category": "mindset",
+      "text": "Treat your instrument with care. Keep it clean, properly stored, and maintained. A well-maintained instrument responds better, sounds better, and creates less physical friction. It also reinforces that this is something you take seriously.",
+      "week_relevance": [1, 2]
+    },
+    {
+      "id": "inst_040",
+      "category": "progress",
+      "text": "Track your metronome tempo for key exercises weekly. Going from 60 bpm to 80 bpm on a scale in clean sixteenth notes over a month is concrete, measurable progress that proves your practice is working.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "inst_041",
+      "category": "progress",
+      "text": "Learn your first complete song within the first two weeks, even if it is simple. Playing a recognizable piece from start to finish provides a massive psychological reward that sustains motivation through the difficult early weeks.",
+      "week_relevance": [1, 2]
+    },
+    {
+      "id": "inst_042",
+      "category": "progress",
+      "text": "Add one new key signature to your scale repertoire each week. By week 4, you will know 4-5 major scales and their relative minors. This foundation unlocks the ability to play in most common song keys.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "inst_043",
+      "category": "progress",
+      "text": "Record yourself playing the same piece at week 1 and week 4. The improvement will be dramatic and obvious. Keep these recordings permanently — they become powerful motivation during future plateaus.",
+      "week_relevance": [1, 4]
+    },
+    {
+      "id": "inst_044",
+      "category": "progress",
+      "text": "Once basic technique is comfortable, start learning to play by ear. Pick a simple melody, find the first note on your instrument, then figure out the rest. This skill connects your ear to your fingers and frees you from sheet music dependence.",
+      "week_relevance": [3, 4]
+    },
+    {
+      "id": "inst_045",
+      "category": "progress",
+      "text": "Build a repertoire of 3-5 pieces you can play confidently from memory. Having a small performance-ready repertoire lets you play for others at any time. Add one new piece per month and retire older ones into a review cycle.",
+      "week_relevance": [3, 4]
+    },
+    {
+      "id": "inst_046",
+      "category": "progress",
+      "text": "Challenge yourself with sight-reading new material 2-3 times per week. Sight-reading exercises a different skill set than polished performance. Start with music one or two levels below your playing ability and work up.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "inst_047",
+      "category": "progress",
+      "text": "Once you can play melodies, start learning basic chord progressions (I-IV-V-I is the foundation of most Western music). Understanding harmony lets you accompany yourself or others and opens the door to improvisation.",
+      "week_relevance": [3, 4]
+    },
+    {
+      "id": "inst_048",
+      "category": "progress",
+      "text": "Measure your practice consistency, not just your practice duration. Practicing 5 days out of 7 every week for a month produces dramatically better results than sporadic 3-day bursts followed by 4-day gaps.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "inst_049",
+      "category": "progress",
+      "text": "Set a performance goal for the end of the month — play a piece for a friend, record a video, or join an open mic. Deadlines focus your practice and simulate the productive pressure that accelerates growth.",
+      "week_relevance": [3, 4]
+    },
+    {
+      "id": "inst_050",
+      "category": "progress",
+      "text": "Diversify your material: practice one technical exercise, one piece you are polishing, and one new piece you are learning each session. This three-bucket approach ensures you are building fundamentals, refining artistry, and expanding your range simultaneously.",
+      "week_relevance": [2, 3, 4]
+    }
+  ]
+}

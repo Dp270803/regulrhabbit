@@ -1,0 +1,82 @@
+{
+  "activity": "yoga",
+  "experience_modifiers": {
+    "beginner": { "sets_multiplier": 0.7, "duration_multiplier": 0.8 },
+    "intermediate": { "sets_multiplier": 1.0, "duration_multiplier": 1.0 },
+    "advanced": { "sets_multiplier": 1.3, "duration_multiplier": 1.15 }
+  },
+  "templates": {
+    "2x": {
+      "weeks": [
+        { "week_number": 1, "sessions": [
+          { "day_index": 0, "title": "Foundation Flow", "duration_minutes": 30, "blocks": [{ "type": "warmup", "detail": "Cat-Cow, gentle twists, neck rolls — 5 min", "duration_minutes": 5 }, { "type": "main", "detail": "Sun Salutation A ×3, Warrior I & II holds (30s each side), Triangle Pose, Tree Pose", "duration_minutes": 20 }, { "type": "cooldown", "detail": "Seated forward fold, Savasana — 5 min", "duration_minutes": 5 }] },
+          { "day_index": 1, "title": "Flexibility Flow", "duration_minutes": 30, "blocks": [{ "type": "warmup", "detail": "Child's Pose, Cat-Cow, gentle hip circles", "duration_minutes": 5 }, { "type": "main", "detail": "Low Lunge holds (45s each), Pigeon Pose (60s each), Seated Straddle, Butterfly Pose", "duration_minutes": 20 }, { "type": "cooldown", "detail": "Supine twist, Savasana", "duration_minutes": 5 }] }
+        ]},
+        { "week_number": 2, "sessions": [
+          { "day_index": 0, "title": "Strength Flow", "duration_minutes": 35, "blocks": [{ "type": "warmup", "detail": "Sun Salutation A ×2", "duration_minutes": 5 }, { "type": "main", "detail": "Sun Salutation B ×2, Chair Pose holds, Warrior III (each side), Plank → Chaturanga flow ×3, Boat Pose", "duration_minutes": 25 }, { "type": "cooldown", "detail": "Pigeon Pose, Savasana", "duration_minutes": 5 }] },
+          { "day_index": 1, "title": "Hip Openers", "duration_minutes": 35, "blocks": [{ "type": "warmup", "detail": "Cat-Cow, gentle twists", "duration_minutes": 5 }, { "type": "main", "detail": "Lizard Pose (60s each), Frog Pose (90s), Figure-Four stretch, Happy Baby, Fire Log Pose", "duration_minutes": 25 }, { "type": "cooldown", "detail": "Legs up the wall, Savasana", "duration_minutes": 5 }] }
+        ]},
+        { "week_number": 3, "sessions": [
+          { "day_index": 0, "title": "Balance & Flow", "duration_minutes": 35, "blocks": [{ "type": "warmup", "detail": "Sun Salutation A ×3", "duration_minutes": 7 }, { "type": "main", "detail": "Eagle Pose, Dancer Pose, Half Moon, Warrior III to Standing Split flow, Tree Pose with eyes closed", "duration_minutes": 23 }, { "type": "cooldown", "detail": "Seated forward fold, Savasana", "duration_minutes": 5 }] },
+          { "day_index": 1, "title": "Deep Stretch", "duration_minutes": 35, "blocks": [{ "type": "warmup", "detail": "Gentle twists and side bends", "duration_minutes": 5 }, { "type": "main", "detail": "Yin-style holds: Butterfly 3min, Dragon Pose 2min each, Sphinx 3min, Sleeping Swan 2min each", "duration_minutes": 25 }, { "type": "cooldown", "detail": "Savasana 5 min", "duration_minutes": 5 }] }
+        ]},
+        { "week_number": 4, "sessions": [
+          { "day_index": 0, "title": "Power Flow", "duration_minutes": 40, "blocks": [{ "type": "warmup", "detail": "Sun Salutation A ×2 + B ×2", "duration_minutes": 8 }, { "type": "main", "detail": "Extended flows: Warrior I → Warrior II → Reverse Warrior → Side Angle → Triangle, Crow Pose practice, Core sequence (Boat, Bicycle, Plank)", "duration_minutes": 27 }, { "type": "cooldown", "detail": "Pigeon Pose, Supine twist, Savasana", "duration_minutes": 5 }] },
+          { "day_index": 1, "title": "Restorative", "duration_minutes": 40, "blocks": [{ "type": "warmup", "detail": "Gentle breathing exercises (3 min)", "duration_minutes": 3 }, { "type": "main", "detail": "Supported Child's Pose 3min, Supported Bridge 3min, Reclined Bound Angle 5min, Legs Up Wall 5min, Supported Twist 3min each side", "duration_minutes": 30 }, { "type": "cooldown", "detail": "Extended Savasana with body scan", "duration_minutes": 7 }] }
+        ]}
+      ]
+    },
+    "3x": {
+      "weeks": [
+        { "week_number": 1, "sessions": [
+          { "day_index": 0, "title": "Foundation Flow", "duration_minutes": 30, "blocks": [{ "type": "warmup", "detail": "Cat-Cow, neck rolls, gentle twists", "duration_minutes": 5 }, { "type": "main", "detail": "Sun Salutation A ×3, Warrior I & II, Triangle, Tree Pose, Bridge Pose", "duration_minutes": 20 }, { "type": "cooldown", "detail": "Seated forward fold, Savasana", "duration_minutes": 5 }] },
+          { "day_index": 1, "title": "Flexibility Focus", "duration_minutes": 30, "blocks": [{ "type": "warmup", "detail": "Child's Pose, gentle hip circles", "duration_minutes": 5 }, { "type": "main", "detail": "Low Lunge (45s each), Pigeon (60s each), Seated Straddle, Butterfly, Supine Hamstring Stretch", "duration_minutes": 20 }, { "type": "cooldown", "detail": "Supine twist, Savasana", "duration_minutes": 5 }] },
+          { "day_index": 2, "title": "Strength Intro", "duration_minutes": 30, "blocks": [{ "type": "warmup", "detail": "Sun Salutation A ×2", "duration_minutes": 5 }, { "type": "main", "detail": "Chair Pose holds, Plank ×3 (20s), Chaturanga practice, Boat Pose, Locust Pose", "duration_minutes": 20 }, { "type": "cooldown", "detail": "Child's Pose, Savasana", "duration_minutes": 5 }] }
+        ]},
+        { "week_number": 2, "sessions": [
+          { "day_index": 0, "title": "Vinyasa Flow", "duration_minutes": 35, "blocks": [{ "type": "warmup", "detail": "Sun Salutation A ×2 + B ×1", "duration_minutes": 7 }, { "type": "main", "detail": "Standing flow: Warrior sequence, Extended Side Angle, Revolved Triangle, Half Moon", "duration_minutes": 23 }, { "type": "cooldown", "detail": "Hip openers, Savasana", "duration_minutes": 5 }] },
+          { "day_index": 1, "title": "Hip & Hamstrings", "duration_minutes": 35, "blocks": [{ "type": "warmup", "detail": "Cat-Cow, gentle flow", "duration_minutes": 5 }, { "type": "main", "detail": "Lizard Pose, Frog Pose, Head-to-Knee forward bend, Wide-Leg Forward Fold, Happy Baby", "duration_minutes": 25 }, { "type": "cooldown", "detail": "Legs up wall, Savasana", "duration_minutes": 5 }] },
+          { "day_index": 2, "title": "Core & Balance", "duration_minutes": 35, "blocks": [{ "type": "warmup", "detail": "Sun Salutation A ×3", "duration_minutes": 7 }, { "type": "main", "detail": "Eagle Pose, Warrior III, Tree Pose eyes closed, Boat Pose variations, Plank sequence, Side Plank", "duration_minutes": 23 }, { "type": "cooldown", "detail": "Supine twist, Savasana", "duration_minutes": 5 }] }
+        ]},
+        { "week_number": 3, "sessions": [
+          { "day_index": 0, "title": "Dynamic Flow", "duration_minutes": 40, "blocks": [{ "type": "warmup", "detail": "Sun Salutation A ×2 + B ×2", "duration_minutes": 8 }, { "type": "main", "detail": "Dancing Warrior flow, Crescent Lunge → Warrior III transitions, Chaturanga push-up flow ×5", "duration_minutes": 27 }, { "type": "cooldown", "detail": "Pigeon, Savasana", "duration_minutes": 5 }] },
+          { "day_index": 1, "title": "Backbends", "duration_minutes": 40, "blocks": [{ "type": "warmup", "detail": "Cat-Cow, Cobra progressions", "duration_minutes": 5 }, { "type": "main", "detail": "Sphinx, Upward Dog, Camel Pose, Bridge Pose, Wheel Pose prep (or full wheel)", "duration_minutes": 28 }, { "type": "cooldown", "detail": "Knees to chest, Supine twist, Savasana", "duration_minutes": 7 }] },
+          { "day_index": 2, "title": "Yin Session", "duration_minutes": 40, "blocks": [{ "type": "warmup", "detail": "Gentle breathing (3 min)", "duration_minutes": 3 }, { "type": "main", "detail": "Butterfly 3min, Dragon 2min each, Caterpillar 3min, Sphinx 3min, Banana 2min each, Supported Fish 3min", "duration_minutes": 30 }, { "type": "cooldown", "detail": "Savasana with body scan", "duration_minutes": 7 }] }
+        ]},
+        { "week_number": 4, "sessions": [
+          { "day_index": 0, "title": "Power Flow", "duration_minutes": 45, "blocks": [{ "type": "warmup", "detail": "Sun Salutation A ×2 + B ×3", "duration_minutes": 10 }, { "type": "main", "detail": "Crow Pose practice, Side Crow prep, Handstand prep at wall, Arm balance flow, Core circuit", "duration_minutes": 28 }, { "type": "cooldown", "detail": "Hip openers, Savasana", "duration_minutes": 7 }] },
+          { "day_index": 1, "title": "Full Body Flow", "duration_minutes": 45, "blocks": [{ "type": "warmup", "detail": "Sun Salutation sequence ×4", "duration_minutes": 10 }, { "type": "main", "detail": "Standing series → Balancing series → Floor series → Inversions (supported shoulderstand or legs up wall)", "duration_minutes": 28 }, { "type": "cooldown", "detail": "Extended Savasana", "duration_minutes": 7 }] },
+          { "day_index": 2, "title": "Restorative", "duration_minutes": 45, "blocks": [{ "type": "warmup", "detail": "Pranayama breathing (5 min)", "duration_minutes": 5 }, { "type": "main", "detail": "Supported Child's Pose 4min, Supported Bridge 4min, Reclined Butterfly 5min, Supported Twist 3min each, Legs Up Wall 5min", "duration_minutes": 32 }, { "type": "cooldown", "detail": "Extended Savasana with guided relaxation", "duration_minutes": 8 }] }
+        ]}
+      ]
+    },
+    "4x": {
+      "weeks": [
+        { "week_number": 1, "sessions": [
+          { "day_index": 0, "title": "Foundation Flow", "duration_minutes": 30, "blocks": [{ "type": "warmup", "detail": "Cat-Cow, neck rolls", "duration_minutes": 5 }, { "type": "main", "detail": "Sun Salutation A ×3, Warrior I & II, Triangle, Tree, Bridge", "duration_minutes": 20 }, { "type": "cooldown", "detail": "Savasana", "duration_minutes": 5 }] },
+          { "day_index": 1, "title": "Hip Openers", "duration_minutes": 30, "blocks": [{ "type": "warmup", "detail": "Gentle flow", "duration_minutes": 5 }, { "type": "main", "detail": "Low Lunge, Pigeon, Frog, Butterfly, Happy Baby", "duration_minutes": 20 }, { "type": "cooldown", "detail": "Supine twist, Savasana", "duration_minutes": 5 }] },
+          { "day_index": 2, "title": "Strength", "duration_minutes": 30, "blocks": [{ "type": "warmup", "detail": "Sun Sal A ×2", "duration_minutes": 5 }, { "type": "main", "detail": "Chair, Plank series, Chaturanga, Boat, Locust, Bridge", "duration_minutes": 20 }, { "type": "cooldown", "detail": "Child's Pose, Savasana", "duration_minutes": 5 }] },
+          { "day_index": 3, "title": "Gentle Stretch", "duration_minutes": 30, "blocks": [{ "type": "warmup", "detail": "Breathing exercises", "duration_minutes": 5 }, { "type": "main", "detail": "Seated forward fold, Head-to-Knee, Straddle, Supine twists, Figure-Four", "duration_minutes": 20 }, { "type": "cooldown", "detail": "Extended Savasana", "duration_minutes": 5 }] }
+        ]},
+        { "week_number": 2, "sessions": [
+          { "day_index": 0, "title": "Vinyasa Flow", "duration_minutes": 35, "blocks": [{ "type": "warmup", "detail": "Sun Sal A ×2 + B ×1", "duration_minutes": 7 }, { "type": "main", "detail": "Full standing flow with Warrior series, Side Angle, Half Moon", "duration_minutes": 23 }, { "type": "cooldown", "detail": "Hip openers, Savasana", "duration_minutes": 5 }] },
+          { "day_index": 1, "title": "Deep Flexibility", "duration_minutes": 35, "blocks": [{ "type": "warmup", "detail": "Gentle flow", "duration_minutes": 5 }, { "type": "main", "detail": "Lizard, King Pigeon prep, Hanumanasana prep, Seated twists, Wide-Leg Forward Fold", "duration_minutes": 25 }, { "type": "cooldown", "detail": "Savasana", "duration_minutes": 5 }] },
+          { "day_index": 2, "title": "Core & Arms", "duration_minutes": 35, "blocks": [{ "type": "warmup", "detail": "Sun Sal A ×3", "duration_minutes": 7 }, { "type": "main", "detail": "Plank variations, Side Plank, Crow prep, L-sit prep, Boat variations, Dolphin", "duration_minutes": 23 }, { "type": "cooldown", "detail": "Child's Pose, Savasana", "duration_minutes": 5 }] },
+          { "day_index": 3, "title": "Yin", "duration_minutes": 35, "blocks": [{ "type": "warmup", "detail": "Breathing (3 min)", "duration_minutes": 3 }, { "type": "main", "detail": "Butterfly 3min, Dragon 2min each, Caterpillar 3min, Sphinx 3min, Supported Fish 3min", "duration_minutes": 27 }, { "type": "cooldown", "detail": "Savasana with body scan", "duration_minutes": 5 }] }
+        ]},
+        { "week_number": 3, "sessions": [
+          { "day_index": 0, "title": "Power Vinyasa", "duration_minutes": 40, "blocks": [{ "type": "warmup", "detail": "Sun Sal A ×2 + B ×2", "duration_minutes": 8 }, { "type": "main", "detail": "Dynamic Warrior flows, jump-throughs, Chaturanga push-ups, Chair Pose pulses", "duration_minutes": 27 }, { "type": "cooldown", "detail": "Pigeon, Savasana", "duration_minutes": 5 }] },
+          { "day_index": 1, "title": "Backbends", "duration_minutes": 40, "blocks": [{ "type": "warmup", "detail": "Cobra progressions", "duration_minutes": 5 }, { "type": "main", "detail": "Camel, Bridge, Wheel prep/full, Dancer Pose, Bow Pose", "duration_minutes": 28 }, { "type": "cooldown", "detail": "Knees to chest, twists, Savasana", "duration_minutes": 7 }] },
+          { "day_index": 2, "title": "Balance Practice", "duration_minutes": 40, "blocks": [{ "type": "warmup", "detail": "Sun Sal A ×3", "duration_minutes": 7 }, { "type": "main", "detail": "Eagle, Warrior III, Half Moon, Tree (eyes closed), Standing Hand-to-Big-Toe, Dancer", "duration_minutes": 28 }, { "type": "cooldown", "detail": "Seated forward fold, Savasana", "duration_minutes": 5 }] },
+          { "day_index": 3, "title": "Restorative", "duration_minutes": 40, "blocks": [{ "type": "warmup", "detail": "Pranayama (5 min)", "duration_minutes": 5 }, { "type": "main", "detail": "Supported poses: Child's, Bridge, Butterfly, Twist, Legs Up Wall (3-5 min each)", "duration_minutes": 28 }, { "type": "cooldown", "detail": "Extended Savasana", "duration_minutes": 7 }] }
+        ]},
+        { "week_number": 4, "sessions": [
+          { "day_index": 0, "title": "Full Flow", "duration_minutes": 45, "blocks": [{ "type": "warmup", "detail": "Sun Sal sequence ×4", "duration_minutes": 10 }, { "type": "main", "detail": "Complete standing → balancing → floor → inversions sequence", "duration_minutes": 28 }, { "type": "cooldown", "detail": "Extended Savasana", "duration_minutes": 7 }] },
+          { "day_index": 1, "title": "Arm Balances", "duration_minutes": 45, "blocks": [{ "type": "warmup", "detail": "Wrist warm-up, Sun Sal B ×2", "duration_minutes": 8 }, { "type": "main", "detail": "Crow, Side Crow prep, Handstand at wall, Forearm Stand prep, Flying Pigeon prep", "duration_minutes": 30 }, { "type": "cooldown", "detail": "Wrist stretches, Savasana", "duration_minutes": 7 }] },
+          { "day_index": 2, "title": "Deep Stretch", "duration_minutes": 45, "blocks": [{ "type": "warmup", "detail": "Gentle movement", "duration_minutes": 5 }, { "type": "main", "detail": "Extended yin holds: Butterfly 4min, Dragon 3min each, Caterpillar 4min, Saddle 3min, Sleeping Swan 3min each", "duration_minutes": 33 }, { "type": "cooldown", "detail": "Savasana", "duration_minutes": 7 }] },
+          { "day_index": 3, "title": "Restorative & Meditation", "duration_minutes": 45, "blocks": [{ "type": "warmup", "detail": "Pranayama: alternate nostril breathing (5 min)", "duration_minutes": 5 }, { "type": "main", "detail": "Supported poses 3-5 min each, progressive relaxation, body scan meditation", "duration_minutes": 32 }, { "type": "cooldown", "detail": "Seated meditation, Savasana", "duration_minutes": 8 }] }
+        ]}
+      ]
+    }
+  }
+}

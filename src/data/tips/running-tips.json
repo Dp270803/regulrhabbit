@@ -1,0 +1,305 @@
+{
+  "activity": "running",
+  "tips": [
+    {
+      "id": "run_001",
+      "category": "technique",
+      "text": "Land with your foot underneath your center of mass, not out in front. Overstriding acts as a brake with every step and sends 2-3x your body weight through your knees and shins.",
+      "week_relevance": [1, 2]
+    },
+    {
+      "id": "run_002",
+      "category": "technique",
+      "text": "Aim for a cadence of 170-180 steps per minute. Higher cadence naturally shortens your stride, reduces ground contact time, and decreases impact forces. Use a metronome app to calibrate.",
+      "week_relevance": [1, 2, 3]
+    },
+    {
+      "id": "run_003",
+      "category": "technique",
+      "text": "Keep your arms swinging forward and back, never crossing your midline. Each time your arm crosses your chest, your torso counter-rotates, wasting energy on lateral movement instead of forward propulsion.",
+      "week_relevance": [1, 2]
+    },
+    {
+      "id": "run_004",
+      "category": "technique",
+      "text": "Run with a slight forward lean from your ankles, not your waist. Bending at the waist compresses your diaphragm and restricts breathing. A 5-degree ankle lean lets gravity assist your forward motion.",
+      "week_relevance": [1, 2, 3]
+    },
+    {
+      "id": "run_005",
+      "category": "technique",
+      "text": "Relax your hands into a loose fist as if holding a crisp you do not want to crush. Clenched fists create tension that travels up through your forearms and shoulders, wasting energy and causing tightness.",
+      "week_relevance": [1, 2]
+    },
+    {
+      "id": "run_006",
+      "category": "technique",
+      "text": "Breathe with a 3:2 or 2:1 inhale-to-exhale rhythm synced with your steps. Rhythmic breathing distributes impact stress across both sides of your body and prevents the side stitch that comes from always landing on the same exhale foot.",
+      "week_relevance": [1, 2, 3]
+    },
+    {
+      "id": "run_007",
+      "category": "technique",
+      "text": "On uphills, shorten your stride by 20-30%, increase your cadence slightly, and drive your knees forward rather than up. This maintains your effort level without the cardiac spike that makes hills feel impossible.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "run_008",
+      "category": "technique",
+      "text": "On downhills, resist the urge to brake by leaning back. Instead, lean slightly forward, increase your cadence, and let gravity do the work. Your quads will thank you the next day.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "run_009",
+      "category": "technique",
+      "text": "Keep your shoulders down and away from your ears. Every 10 minutes during a run, do a quick body scan: drop your shoulders, unclench your jaw, and shake out your hands. Accumulated tension costs you minutes over a long run.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "run_010",
+      "category": "technique",
+      "text": "Your eyes should look 10-15 meters ahead, not at your feet. Head position determines spinal alignment. Looking down rounds your upper back and compresses your chest, restricting lung capacity.",
+      "week_relevance": [1, 2]
+    },
+    {
+      "id": "run_011",
+      "category": "technique",
+      "text": "Practice running on varied surfaces — grass, trails, pavement. Different surfaces load different stabilizer muscles and tendons. Runners who only train on pavement develop overuse injuries faster.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "run_012",
+      "category": "technique",
+      "text": "When turning corners, lean your whole body into the turn like a bicycle. Planting and twisting puts lateral stress on your ankles and knees that they are not designed to handle at running speeds.",
+      "week_relevance": [2, 3]
+    },
+    {
+      "id": "run_013",
+      "category": "technique",
+      "text": "Drive your elbows backward rather than pumping your fists forward. The backswing generates forward momentum through Newton's third law. Think elbows back, not hands forward.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "run_014",
+      "category": "technique",
+      "text": "Engage your glutes consciously during the push-off phase. Many runners are quad-dominant from sitting all day. Squeezing your glutes at toe-off generates more power and protects your hamstrings.",
+      "week_relevance": [2, 3]
+    },
+    {
+      "id": "run_015",
+      "category": "technique",
+      "text": "If you get a side stitch, exhale forcefully when the foot opposite to the stitch strikes the ground. This releases tension in the diaphragmatic ligaments that are likely causing the cramp.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "run_016",
+      "category": "recovery",
+      "text": "Follow the 10% rule: never increase your weekly mileage by more than 10%. Your cardiovascular system adapts faster than your bones and tendons, so you feel ready before your body truly is.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "run_017",
+      "category": "recovery",
+      "text": "Walk for 5 minutes after every run before sitting down. This gradual cooldown prevents blood pooling in your legs and reduces the delayed onset muscle soreness that hits 24-48 hours later.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "run_018",
+      "category": "recovery",
+      "text": "Roll your plantar fascia on a frozen water bottle for 5 minutes after runs. This simultaneously stretches the fascia and reduces inflammation in the tissue that takes the most impact during running.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "run_019",
+      "category": "recovery",
+      "text": "Take at least one full rest day between running days in your first month. Your tendons need 48-72 hours to recover and adapt. Runners who skip rest days in the first weeks often get shin splints by week 3.",
+      "week_relevance": [1, 2]
+    },
+    {
+      "id": "run_020",
+      "category": "recovery",
+      "text": "Foam roll your IT band, quads, and calves for 60 seconds each after every run. The IT band in particular cannot be effectively stretched — it must be manually released through pressure.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "run_021",
+      "category": "recovery",
+      "text": "Replace your running shoes every 500-800 km. The midsole cushioning breaks down invisibly, and running on dead shoes transfers impact forces directly to your joints. Track mileage in a log or app.",
+      "week_relevance": [3, 4]
+    },
+    {
+      "id": "run_022",
+      "category": "recovery",
+      "text": "If your shins ache after running, trace the alphabet with each foot in the air 2-3 times daily. This strengthens the tibialis anterior, the muscle that prevents shin splints, without any impact.",
+      "week_relevance": [1, 2]
+    },
+    {
+      "id": "run_023",
+      "category": "recovery",
+      "text": "Elevate your legs against a wall for 10 minutes after long runs. This simple inversion reduces swelling in the lower legs and speeds the return of blood to the heart for faster recovery.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "run_024",
+      "category": "recovery",
+      "text": "Strengthen your calves with single-leg calf raises (3 sets of 15) three times per week. The calf-Achilles complex absorbs 6-8x your body weight per stride and is the most common failure point in new runners.",
+      "week_relevance": [1, 2, 3]
+    },
+    {
+      "id": "run_025",
+      "category": "recovery",
+      "text": "Alternate between two pairs of running shoes if possible. Different shoes load tissues differently, and the foam needs 24-48 hours to fully decompress between uses.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "run_026",
+      "category": "recovery",
+      "text": "After a hard run, consume a 3:1 ratio of carbs to protein within 30 minutes. Glycogen resynthesis is 50% faster in this window. Chocolate milk happens to have nearly the perfect ratio.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "run_027",
+      "category": "recovery",
+      "text": "If knee pain develops on the outside of your knee, strengthen your hip abductors with clamshell exercises. Weak glute medius muscles cause the knee to collapse inward, loading the IT band excessively.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "run_028",
+      "category": "mindset",
+      "text": "Run at a conversational pace for 80% of your runs. If you cannot hold a full sentence, you are going too fast. Easy running builds your aerobic base without the recovery cost of hard efforts.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "run_029",
+      "category": "mindset",
+      "text": "Your first 10 minutes will almost always feel terrible. This is not a sign you should stop. It takes about 10-12 minutes for your cardiovascular system to fully warm up and match oxygen supply to demand.",
+      "week_relevance": [1, 2]
+    },
+    {
+      "id": "run_030",
+      "category": "mindset",
+      "text": "Use the walk-run method without shame. Run 3 minutes, walk 1 minute, repeat. Jeff Galloway's research shows this method reduces injury rates by 50% while achieving nearly identical finish times in beginners.",
+      "week_relevance": [1, 2]
+    },
+    {
+      "id": "run_031",
+      "category": "mindset",
+      "text": "Run by time, not distance, in your first month. Saying I will run for 20 minutes removes the pressure to hit a pace and lets your body find its natural rhythm. Distance goals can come later.",
+      "week_relevance": [1, 2]
+    },
+    {
+      "id": "run_032",
+      "category": "mindset",
+      "text": "Break long runs into mental segments. Instead of dreading 5 km, think of it as five 1 km blocks. Focus only on the current block. Elite marathoners use this exact dissociation strategy.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "run_033",
+      "category": "mindset",
+      "text": "Choose your running route the night before and lay out your kit. Removing morning decisions eliminates the negotiation with yourself that causes most skipped runs. Automate the process.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "run_034",
+      "category": "mindset",
+      "text": "Accept that some runs will feel awful for no identifiable reason. Sleep, stress, hydration, temperature, and digestion all affect performance. A bad run does not erase your fitness — it is just data.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "run_035",
+      "category": "mindset",
+      "text": "Find a running buddy or group for at least one run per week. Research shows social accountability increases adherence by 65% over the first 6 months. The social run does not need to be your hardest session.",
+      "week_relevance": [1, 2, 3]
+    },
+    {
+      "id": "run_036",
+      "category": "mindset",
+      "text": "Do not race every run. Most beginners run too fast too often and burn out within weeks. Save hard efforts for 1-2 sessions per week maximum. The rest should feel almost too easy.",
+      "week_relevance": [1, 2, 3]
+    },
+    {
+      "id": "run_037",
+      "category": "mindset",
+      "text": "When you hit a mental wall mid-run, focus on just reaching the next landmark — that tree, that bench, that corner. Micro-goals prevent the overwhelm that makes you stop.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "run_038",
+      "category": "mindset",
+      "text": "Use a podcast or music playlist that you only allow yourself to listen to while running. This creates a positive association and a reward system that makes the habit stick beyond willpower.",
+      "week_relevance": [1, 2]
+    },
+    {
+      "id": "run_039",
+      "category": "mindset",
+      "text": "Smile during hard efforts. Research from Ulster University showed that smiling while running reduces perceived effort by 2.8% and improves running economy. Your brain interprets the smile as a sign that things are okay.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "run_040",
+      "category": "progress",
+      "text": "Track your resting heart rate every morning before getting out of bed. As your aerobic fitness improves, your resting heart rate will drop 1-2 bpm per week. This is the most reliable indicator of cardiovascular adaptation.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "run_041",
+      "category": "progress",
+      "text": "Run a timed 1.5 km or 1 mile every two weeks at the same location. This is your benchmark run. Improvements of 10-30 seconds per month are normal for beginners and prove your training is working.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "run_042",
+      "category": "progress",
+      "text": "Once you can run 20 minutes continuously, introduce one interval session per week: 6x 1-minute hard efforts with 2-minute easy jog recovery. This develops speed and VO2max that steady running alone cannot.",
+      "week_relevance": [3, 4]
+    },
+    {
+      "id": "run_043",
+      "category": "progress",
+      "text": "Increase your long run by 5 minutes every two weeks. Your long run should be 30-50% of your weekly volume and always at an easy pace. This builds capillary density and mitochondrial volume in your muscles.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "run_044",
+      "category": "progress",
+      "text": "Add strides after two easy runs per week: 4-6 accelerations over 80-100 meters, building to 90% effort, with full recovery between. Strides improve neuromuscular coordination and running economy at zero fatigue cost.",
+      "week_relevance": [3, 4]
+    },
+    {
+      "id": "run_045",
+      "category": "progress",
+      "text": "Monitor your pace at the same heart rate over time. If you used to run 6:30/km at 150 bpm and now run 6:00/km at 150 bpm, your aerobic engine has genuinely improved regardless of what any race time says.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "run_046",
+      "category": "progress",
+      "text": "Add a weekly hill repeat session once your base is established: find a 200m hill and run up at hard effort 4-6 times, jogging down for recovery. Hill repeats build leg strength equivalent to gym work.",
+      "week_relevance": [3, 4]
+    },
+    {
+      "id": "run_047",
+      "category": "progress",
+      "text": "Include one cross-training day per week — cycling, swimming, or elliptical. This maintains aerobic fitness while giving your running-specific tissues a break from impact forces.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "run_048",
+      "category": "progress",
+      "text": "Every 4th week, reduce your volume by 30% for active recovery. This is not laziness — it is periodization. Your body supercompensates during rest weeks, and you will often PR the week after a down week.",
+      "week_relevance": [4]
+    },
+    {
+      "id": "run_049",
+      "category": "progress",
+      "text": "Sign up for a 5K race 6-8 weeks out, even if you plan to walk parts of it. Having a concrete date creates urgency that internal motivation alone cannot match. The race itself teaches you about pacing.",
+      "week_relevance": [1, 2]
+    },
+    {
+      "id": "run_050",
+      "category": "progress",
+      "text": "Log not just distance and pace but also how you felt (1-10 effort scale) and conditions (weather, sleep quality, meals). Patterns in this data reveal what makes your good runs good and your bad runs bad.",
+      "week_relevance": [1, 2, 3, 4]
+    }
+  ]
+}

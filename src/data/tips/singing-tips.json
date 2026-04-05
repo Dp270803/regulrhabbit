@@ -1,0 +1,305 @@
+{
+  "activity": "singing",
+  "tips": [
+    {
+      "id": "sing_001",
+      "category": "technique",
+      "text": "Breathe into your belly and lower ribs, not your chest. Place your hands on your sides above your hips and feel them expand outward. Chest breathing raises your shoulders and creates the tight, thin sound that limits beginners.",
+      "week_relevance": [1, 2]
+    },
+    {
+      "id": "sing_002",
+      "category": "technique",
+      "text": "Support your sound by maintaining outward pressure in your lower ribs as you sing, resisting the urge to collapse. This is appoggio — the controlled release of air that gives your voice power without strain.",
+      "week_relevance": [1, 2, 3]
+    },
+    {
+      "id": "sing_003",
+      "category": "technique",
+      "text": "Keep your larynx in a neutral, relaxed position. Swallow and feel where your larynx goes up, then yawn and feel it drop. The singing position is in between. A high larynx creates strain; an artificially low one sounds woofy.",
+      "week_relevance": [1, 2, 3]
+    },
+    {
+      "id": "sing_004",
+      "category": "technique",
+      "text": "Sing your vowels tall and narrow, not wide. Think of an oval mouth shape rather than a smiley face. Wide vowels spread the tone thin and make it impossible to project without pushing. Tall vowels resonate naturally.",
+      "week_relevance": [1, 2]
+    },
+    {
+      "id": "sing_005",
+      "category": "technique",
+      "text": "Place consonants forward on your lips and teeth, but sing vowels with space in the back of your mouth. The vowel is where the tone lives. Consonants that are too heavy chop up your legato and kill your resonance.",
+      "week_relevance": [2, 3]
+    },
+    {
+      "id": "sing_006",
+      "category": "technique",
+      "text": "Practice lip trills (blowing air through loosely closed lips while humming) as your primary warm-up. Lip trills create back-pressure that gently stretches your vocal folds and coordinates airflow without any strain.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "sing_007",
+      "category": "technique",
+      "text": "Think of singing high notes as leaning into a head voice resonance rather than reaching up. Physically, your vocal folds thin and stretch for high notes. If you push chest voice up, you are fighting this natural mechanism.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "sing_008",
+      "category": "technique",
+      "text": "Lift your soft palate (the back of the roof of your mouth) when singing. The sensation is similar to the beginning of a yawn. This opens your resonating chamber and adds richness without requiring more air pressure.",
+      "week_relevance": [1, 2, 3]
+    },
+    {
+      "id": "sing_009",
+      "category": "technique",
+      "text": "Sing scales on a narrow ee vowel to find your mix voice — the blend between chest and head register. The ee vowel naturally narrows the vocal tract and makes the transition between registers smoother.",
+      "week_relevance": [2, 3]
+    },
+    {
+      "id": "sing_010",
+      "category": "technique",
+      "text": "Drop your jaw on open vowels like ah and oh. Use two fingers stacked vertically between your teeth to calibrate. Most singers do not open their mouths enough, which bottlenecks the sound before it even leaves their body.",
+      "week_relevance": [1, 2]
+    },
+    {
+      "id": "sing_011",
+      "category": "technique",
+      "text": "Use a straw phonation exercise: sing through a small cocktail straw into a glass of water, creating bubbles. This provides optimal back-pressure that balances airflow and vocal fold closure, making it the most evidence-backed vocal warm-up.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "sing_012",
+      "category": "technique",
+      "text": "Anchor your tongue tip behind your lower front teeth during vowels. A retracted tongue blocks your throat and muddies your tone. The tongue should be relaxed and forward with its tip gently touching the teeth ridge.",
+      "week_relevance": [2, 3]
+    },
+    {
+      "id": "sing_013",
+      "category": "technique",
+      "text": "Practice onsets (how you start a note) in three ways: breathy (air before sound), hard (glottal attack), and balanced (simultaneous). A balanced onset is what you want 90% of the time. Hard onsets damage folds; breathy onsets waste air.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "sing_014",
+      "category": "technique",
+      "text": "When singing intervals (jumping between notes), hear the target note in your head before you sing it. Pre-hearing activates the motor planning centers that position your vocal folds precisely. Guessing and correcting mid-note trains bad pitch habits.",
+      "week_relevance": [1, 2, 3]
+    },
+    {
+      "id": "sing_015",
+      "category": "technique",
+      "text": "Record yourself singing a single sustained note and listen for wobble, breathiness, or inconsistent volume. A steady, clear tone on one note is the foundation everything else builds on. Most singers skip this fundamental.",
+      "week_relevance": [1, 2]
+    },
+    {
+      "id": "sing_016",
+      "category": "recovery",
+      "text": "Drink room temperature water throughout the day, not just before singing. Your vocal folds need systemic hydration — water takes 4 hours to reach the laryngeal tissues. Sipping before a session hydrates your mouth, not your folds.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "sing_017",
+      "category": "recovery",
+      "text": "After a heavy singing session, observe 30-60 minutes of vocal rest. No talking, whispering (whispering is actually harder on your folds than soft speaking), or throat clearing. Let the tissues recover from the vibration.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "sing_018",
+      "category": "recovery",
+      "text": "Inhale steam for 10 minutes after singing by breathing over a bowl of hot water with a towel over your head. Steam directly hydrates the mucosal surface of your vocal folds and reduces post-singing inflammation.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "sing_019",
+      "category": "recovery",
+      "text": "Avoid dairy before singing. Milk, cheese, and yogurt increase mucus production on the vocal folds for many people, creating the sensation of needing to clear your throat constantly, which itself is harmful to the folds.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "sing_020",
+      "category": "recovery",
+      "text": "If your voice feels tired or scratchy, do gentle humming on a comfortable pitch for 5 minutes instead of full singing. This brings blood flow to the folds and promotes healing without the impact of full-voice singing.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "sing_021",
+      "category": "recovery",
+      "text": "Sleep with a humidifier, especially in winter or air-conditioned rooms. Your vocal folds dry out overnight, and singing on dehydrated folds in the morning is like bending dry leather — it cracks rather than flexing.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "sing_022",
+      "category": "recovery",
+      "text": "Warm up for at least 10 minutes before singing full voice. Start with humming, move to lip trills, then gentle scales. Singing cold is the vocal equivalent of sprinting without stretching — your folds are muscles that need warming.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "sing_023",
+      "category": "recovery",
+      "text": "Cool down after intense singing with descending gentle scales and sighs, ending on comfortable low notes. This gradually relaxes the cricothyroid muscle that has been stretching your folds for high notes.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "sing_024",
+      "category": "recovery",
+      "text": "Avoid throat clearing — instead, swallow hard or take a sip of water. Throat clearing slams your vocal folds together violently and creates a cycle: clear, irritate, need to clear again. Break the habit early.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "sing_025",
+      "category": "recovery",
+      "text": "Limit caffeine on singing days. Caffeine is a diuretic that dehydrates your vocal fold tissue and also increases acid reflux, which can silently burn the delicate mucosal lining of the folds overnight.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "sing_026",
+      "category": "recovery",
+      "text": "Do neck and shoulder stretches before and after practice. Tension in the sternocleidomastoid and trapezius muscles directly restricts laryngeal movement and creates the squeezed sound that causes vocal fatigue.",
+      "week_relevance": [1, 2, 3]
+    },
+    {
+      "id": "sing_027",
+      "category": "recovery",
+      "text": "If you lose your voice after a practice session, you pushed too hard. A well-trained voice should feel slightly tired but clear after singing. Hoarseness means vocal fold swelling, which needs 24-48 hours of vocal rest to resolve.",
+      "week_relevance": [1, 2]
+    },
+    {
+      "id": "sing_028",
+      "category": "mindset",
+      "text": "Record every practice session, even if you hate listening back. Your internal perception of your voice (conducted through your skull bones) sounds completely different from what others hear. The recording is the truth.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "sing_029",
+      "category": "mindset",
+      "text": "Sing songs in a key that suits your current range, not the original key. There is no honor in straining for notes that are too high. Transposing a song down 2-3 semitones lets you focus on technique and expression.",
+      "week_relevance": [1, 2]
+    },
+    {
+      "id": "sing_030",
+      "category": "mindset",
+      "text": "Separate technical practice from performance practice. When drilling scales and exercises, focus on mechanics. When singing songs, focus on emotion and storytelling. Trying to do both simultaneously does neither well.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "sing_031",
+      "category": "mindset",
+      "text": "Your voice is an instrument you cannot see or physically adjust with your hands. This makes singing harder to learn than most instruments. Be patient with yourself — visible progress takes 4-8 weeks of consistent practice.",
+      "week_relevance": [1, 2]
+    },
+    {
+      "id": "sing_032",
+      "category": "mindset",
+      "text": "Sing in front of one trusted person before you sing in front of many. Performance anxiety is normal, and graduating your exposure from private to semi-private to public prevents the shutdown that comes from jumping to stage too fast.",
+      "week_relevance": [2, 3]
+    },
+    {
+      "id": "sing_033",
+      "category": "mindset",
+      "text": "Do not judge your voice by comparing it to studio recordings. Those vocals are pitch-corrected, compressed, layered, and reverb-treated. Comparing your raw practice voice to a produced track is comparing a sketch to a painting.",
+      "week_relevance": [1, 2]
+    },
+    {
+      "id": "sing_034",
+      "category": "mindset",
+      "text": "Approach difficult passages by singing them on a single vowel first, removing the lyrical complexity. If you can sing the melody cleanly on ah, adding words back is straightforward. If you cannot, the issue is vocal, not lyrical.",
+      "week_relevance": [2, 3]
+    },
+    {
+      "id": "sing_035",
+      "category": "mindset",
+      "text": "Focus on the meaning of the lyrics, not the sound of your voice, when performing songs. Audiences connect with emotion and storytelling. A technically imperfect but emotionally honest performance moves people more than a sterile perfect one.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "sing_036",
+      "category": "mindset",
+      "text": "Practice in short bursts of 20-30 minutes with breaks rather than marathon 2-hour sessions. Vocal folds fatigue faster than you realize, and singing on fatigued folds teaches your body compensatory tension patterns.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "sing_037",
+      "category": "mindset",
+      "text": "Singing in the car is excellent practice. The road noise masks your sound, reducing self-consciousness, and the seated position naturally encourages diaphragmatic breathing. Use drive time as bonus practice time.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "sing_038",
+      "category": "mindset",
+      "text": "Learn to distinguish between your head voice, chest voice, and mix. Place your hand on your chest and sing low — you will feel vibration. Sing high — the vibration moves to your face. The blend in between is your most versatile tool.",
+      "week_relevance": [1, 2, 3]
+    },
+    {
+      "id": "sing_039",
+      "category": "mindset",
+      "text": "When nerves hit before singing, breathe in for 4 counts, hold for 4, exhale for 8. This activates your vagus nerve and shifts your nervous system from fight-or-flight to rest-and-sing within about 60 seconds.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "sing_040",
+      "category": "progress",
+      "text": "Test your range monthly by singing a chromatic scale from your lowest comfortable note to your highest. Record the range in semitones. Beginners typically gain 2-4 semitones of usable range in the first month of training.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "sing_041",
+      "category": "progress",
+      "text": "Practice pitch accuracy with a tuner app. Sing a note and hold it, watching the tuner needle. Aim for the needle to stay within 10 cents of center. This develops the micro-muscle control that makes you sound in tune.",
+      "week_relevance": [1, 2, 3]
+    },
+    {
+      "id": "sing_042",
+      "category": "progress",
+      "text": "Increase your breath capacity by practicing sustained hisses (ssss sound) and timing them. Start around 15-20 seconds and aim for 30-40 seconds over a month. Longer breath support means longer phrases without gasping.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "sing_043",
+      "category": "progress",
+      "text": "Learn one new song every two weeks that challenges a specific weakness — a song with long phrases for breath control, wide intervals for pitch accuracy, or high passages for range extension.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "sing_044",
+      "category": "progress",
+      "text": "Record yourself singing the same song at week 1 and week 4. The comparison reveals improvements in pitch stability, breath control, and tone quality that daily practice makes invisible to your own ears.",
+      "week_relevance": [1, 4]
+    },
+    {
+      "id": "sing_045",
+      "category": "progress",
+      "text": "Once your basic technique is stable, start training vocal agility with pentatonic scale runs at increasing speeds. Start at 80 bpm and increase by 5 bpm when you can execute the pattern cleanly three times in a row.",
+      "week_relevance": [3, 4]
+    },
+    {
+      "id": "sing_046",
+      "category": "progress",
+      "text": "Practice sight-singing or interval recognition with an app for 5 minutes daily. Ear training is the fastest way to improve pitch accuracy because it trains the connection between hearing a note and reproducing it.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "sing_047",
+      "category": "progress",
+      "text": "Work on your bridge (passaggio) by singing 5-note scales that cross between chest and head voice. Start piano (soft) and gradually increase volume over weeks. The break between registers smooths out with patient, consistent work.",
+      "week_relevance": [2, 3, 4]
+    },
+    {
+      "id": "sing_048",
+      "category": "progress",
+      "text": "Add simple harmonies to songs you know well. Sing a third above or below the melody. Harmony singing develops relative pitch, independence from the melody, and an awareness of chords that transforms your musicianship.",
+      "week_relevance": [3, 4]
+    },
+    {
+      "id": "sing_049",
+      "category": "progress",
+      "text": "Sing along with recordings at first, then try singing with just a piano accompaniment, then eventually a cappella. Each step removes a crutch and builds your confidence in your own pitch and timing.",
+      "week_relevance": [1, 2, 3, 4]
+    },
+    {
+      "id": "sing_050",
+      "category": "progress",
+      "text": "Join a choir or vocal ensemble once you have 4-6 weeks of solo practice. Group singing trains blend, dynamic sensitivity, and rhythmic precision in ways that solo practice cannot replicate. It also normalizes performing.",
+      "week_relevance": [4]
+    }
+  ]
+}
