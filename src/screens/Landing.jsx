@@ -20,7 +20,7 @@ function Stat({ value, label }) {
 
 function getStreakMessage(streak) {
   if (streak === 0) return 'Ready to begin.';
-  if (streak <= 2) return 'You started. That's everything.';
+  if (streak <= 2) return "You started. That's everything.";
   if (streak <= 6) return 'The habit is forming.';
   if (streak <= 13) return 'One week in. Keep going.';
   if (streak <= 29) return 'This is becoming who you are.';
