@@ -8,14 +8,18 @@ import { getData, updateData } from '../utils/storage';
 import { trackOnboardingStarted, trackOnboardingStep, trackPlanCreated } from '../utils/analytics';
 import chatbotFlow from '../data/chatbot-flow.json';
 
-const ACTIVITY_LABELS = {
-  gym: 'Gym / Strength Training',
-  swimming: 'Swimming',
-  running: 'Running',
-  yoga: 'Yoga',
-  dance: 'Dance',
-  singing: 'Singing / Vocals',
-  instrument: 'Musical Instrument',
+const GOAL_LABELS = {
+  muscle: 'Build muscle & strength',
+  fat_loss: 'Lose fat & get lean',
+  strength: 'Get stronger (powerlifting)',
+  general: 'General fitness',
+};
+
+const EQUIPMENT_LABELS = {
+  full_gym: 'Full gym',
+  dumbbells_cables: 'Dumbbells & cables',
+  home_dumbbells: 'Home gym',
+  bodyweight: 'Bodyweight only',
 };
 
 export default function PlanBuilder() {
@@ -52,8 +56,10 @@ export default function PlanBuilder() {
 
     let botMsg = step.bot_message || '';
     const ans = updatedAnswers || answers;
-    botMsg = botMsg.replace(/\{activity\}/g, ACTIVITY_LABELS[ans.activity] || ans.activity || 'this');
-    botMsg = botMsg.replace(/\{first_day\}/g, ans.scheduled_days?.[0] || 'Monday');
+    botMsg = botMsg.replace(/\{activity\}/g, 'gym');
+    botMsg = botMsg.replace(/\{first_day\}/g, ans.scheduled_days?.[0]
+      ? ans.scheduled_days[0].charAt(0).toUpperCase() + ans.scheduled_days[0].slice(1)
+      : 'Monday');
 
     setTimeout(() => {
       setIsTyping(false);
@@ -107,26 +113,7 @@ export default function PlanBuilder() {
       }
     }
 
-    let nextStep = option.next;
-    if (nextStep === 'activity_specific') {
-      const activity = newAnswers.activity;
-      const conditional = chatbotFlow.steps.activity_specific;
-      if (conditional?.conditions?.[activity]) {
-        const actStep = conditional.conditions[activity];
-        setCurrentStep('activity_specific');
-
-        setIsTyping(true);
-        setTimeout(() => {
-          setIsTyping(false);
-          setMessages(prev => [...prev, { type: 'bot', text: actStep.bot_message }]);
-          setCurrentStep(`activity_specific_${activity}`);
-          setTimeout(() => setShowOptions(true), 200);
-        }, 600);
-        return;
-      }
-      nextStep = 'time_preference';
-    }
-
+    const nextStep = option.next;
     setCurrentStep(nextStep);
     showBotMessage(nextStep, newAnswers);
   }
@@ -149,64 +136,48 @@ export default function PlanBuilder() {
     setAnswers(newAnswers);
     setMultiSelect([]);
 
+    const nextStep = stepData.next || 'equipment';
+
     if (multiSelect.length > (newAnswers.frequency || 3)) {
       setIsTyping(true);
       setTimeout(() => {
         setIsTyping(false);
         setMessages(prev => [...prev, {
           type: 'bot',
-          text: `You picked ${multiSelect.length} days but said ${newAnswers.frequency} days/week. I'll use these ${multiSelect.length} days and build rest days around them.`,
+          text: `You picked ${multiSelect.length} days but said ${newAnswers.frequency} days/week — I'll build around all ${multiSelect.length} days.`,
         }]);
-        advanceFromSchedule(stepData.next || 'activity_specific', newAnswers);
+        setCurrentStep(nextStep);
+        setTimeout(() => showBotMessage(nextStep, newAnswers), 600);
       }, 600);
       return;
     }
 
-    advanceFromSchedule(stepData.next || 'activity_specific', newAnswers);
-  }
-
-  // Shared routing helper — handles the activity_specific conditional branch
-  function advanceFromSchedule(nextStep, newAnswers) {
-    if (nextStep === 'activity_specific') {
-      const activity = newAnswers.activity;
-      const conditional = chatbotFlow.steps.activity_specific;
-      if (conditional?.conditions?.[activity]) {
-        const actStep = conditional.conditions[activity];
-        setIsTyping(true);
-        setTimeout(() => {
-          setIsTyping(false);
-          setMessages(prev => [...prev, { type: 'bot', text: actStep.bot_message, step: 'activity_specific' }]);
-          setCurrentStep(`activity_specific_${activity}`);
-          setTimeout(() => setShowOptions(true), 200);
-        }, 600);
-        return;
-      }
-      nextStep = 'time_preference';
-    }
     setCurrentStep(nextStep);
     showBotMessage(nextStep, newAnswers);
   }
 
   async function handleComplete(finalAnswers) {
     setIsGenerating(true);
+    // Gym is the only activity for now
+    const enrichedAnswers = { ...finalAnswers, activity: 'gym' };
     try {
-      const plan = await generatePlan(finalAnswers);
+      const plan = await generatePlan(enrichedAnswers);
       setShowConfetti(true);
 
       updateData(data => {
         data.onboarding_complete = true;
-        data.user.persona = finalAnswers.persona || 'neutral';
-        data.user.preferred_time = finalAnswers.preferred_time || 'none';
+        data.user.persona = enrichedAnswers.persona || 'neutral';
+        data.user.preferred_time = enrichedAnswers.preferred_time || 'none';
         data.plans.push(plan);
         return data;
       });
 
       trackPlanCreated({
-        activity: finalAnswers.activity,
-        experience_level: finalAnswers.experience_level,
-        frequency: finalAnswers.frequency,
-        persona: finalAnswers.persona,
-        session_duration: finalAnswers.session_duration,
+        activity: 'gym',
+        experience_level: enrichedAnswers.experience_level,
+        frequency: enrichedAnswers.frequency,
+        persona: enrichedAnswers.persona,
+        session_duration: enrichedAnswers.session_duration,
       });
 
       setTimeout(() => navigate('/dashboard'), 2000);
@@ -247,28 +218,6 @@ export default function PlanBuilder() {
             setMessages(prev => [...prev, { type: 'user', text: opt.label }]);
             setShowOptions(false);
             const newAnswers = { ...answers, frequency: opt.value };
-            setAnswers(newAnswers);
-            setCurrentStep(opt.next);
-            showBotMessage(opt.next, newAnswers);
-          }}
-        />
-      ));
-    }
-
-    if (currentStep.startsWith('activity_specific_')) {
-      const activity = answers.activity;
-      const actStep = chatbotFlow.steps.activity_specific.conditions[activity];
-      if (!actStep) return null;
-      return actStep.options.map(opt => (
-        <OptionButton
-          key={opt.label}
-          label={opt.label}
-          onClick={() => {
-            setMessages(prev => [...prev, { type: 'user', text: opt.label }]);
-            setShowOptions(false);
-            setHistory(prev => [...prev, { step: currentStep, answers: { ...answers } }]);
-            const newAnswers = { ...answers };
-            if (actStep.field) newAnswers[actStep.field] = opt.value;
             setAnswers(newAnswers);
             setCurrentStep(opt.next);
             showBotMessage(opt.next, newAnswers);
@@ -365,11 +314,12 @@ export default function PlanBuilder() {
                   </p>
                   <div className="space-y-2">
                     {[
-                      ['Activity', ACTIVITY_LABELS[msg.answers.activity] || msg.answers.activity],
-                      ['Level', msg.answers.experience_level],
+                      ['Goal', GOAL_LABELS[msg.answers.gym_goal] || msg.answers.gym_goal],
+                      ['Experience', msg.answers.experience_level],
                       ['Frequency', `${msg.answers.frequency} days/week`],
-                      ['Duration', `${msg.answers.session_duration} min`],
+                      ['Session length', `${msg.answers.session_duration} min`],
                       ['Days', msg.answers.scheduled_days?.map(d => d.charAt(0).toUpperCase() + d.slice(1, 3)).join(', ')],
+                      ['Equipment', EQUIPMENT_LABELS[msg.answers.equipment] || msg.answers.equipment],
                     ].map(([label, value]) => value && (
                       <div key={label} className="flex items-center justify-between text-sm">
                         <span style={{ color: 'var(--color-text-3)' }}>{label}</span>

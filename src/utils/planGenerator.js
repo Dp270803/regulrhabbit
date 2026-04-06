@@ -2,17 +2,11 @@ import { addDays, getDayName } from './dateUtils.js';
 
 const templateModules = {
   gym: () => import('../data/templates/gym.json'),
-  swimming: () => import('../data/templates/swimming.json'),
-  running: () => import('../data/templates/running.json'),
-  yoga: () => import('../data/templates/yoga.json'),
-  dance: () => import('../data/templates/dance.json'),
-  singing: () => import('../data/templates/singing.json'),
-  instrument: () => import('../data/templates/instrument.json'),
 };
 
 export async function generatePlan(answers) {
   const {
-    activity,
+    activity = 'gym',
     experience_level,
     frequency,
     session_duration,
