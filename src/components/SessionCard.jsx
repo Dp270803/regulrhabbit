@@ -8,7 +8,7 @@ const BLOCK_LABELS = {
 };
 
 export default function SessionCard({ session, onComplete, isCompleted, isRestDay }) {
-  const [expanded, setExpanded] = useState(false);
+  const [expanded, setExpanded] = useState(!isCompleted);
 
   if (isRestDay) {
     return (

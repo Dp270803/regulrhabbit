@@ -163,21 +163,7 @@ export default function PlanBuilder() {
   }
 
   function handleBack() {
-    if (history.length === 0) {
-      navigate('/');
-      return;
-    }
-    const prev = history[history.length - 1];
-    setHistory(h => h.slice(0, -1));
-    setAnswers(prev.answers);
-    setCurrentStep(prev.step);
-    setMessages(msgs => {
-      let cutIdx = msgs.length - 1;
-      while (cutIdx >= 0 && msgs[cutIdx].step !== prev.step) cutIdx--;
-      return cutIdx > 0 ? msgs.slice(0, cutIdx) : msgs.slice(0, 1);
-    });
-    setShowOptions(false);
-    setTimeout(() => showBotMessage(prev.step, prev.answers), 100);
+    navigate('/');
   }
 
   function getCurrentOptions() {
