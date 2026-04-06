@@ -9,17 +9,23 @@ import { trackOnboardingStarted, trackOnboardingStep, trackPlanCreated } from '.
 import chatbotFlow from '../data/chatbot-flow.json';
 
 const GOAL_LABELS = {
-  muscle: 'Build muscle & strength',
-  fat_loss: 'Lose fat & get lean',
+  muscle: 'Build muscle & get bigger',
+  fat_loss: 'Lose fat and get lean',
   strength: 'Get stronger (powerlifting)',
-  general: 'General fitness',
+  general: 'General fitness and health',
 };
 
 const EQUIPMENT_LABELS = {
   full_gym: 'Full gym',
-  dumbbells_cables: 'Dumbbells & cables',
-  home_dumbbells: 'Home gym',
+  home_dumbbells: 'Home gym (dumbbells)',
   bodyweight: 'Bodyweight only',
+};
+
+const PLAN_TYPE_LABELS = {
+  2: 'Full Body A/B Split',
+  3: 'Push / Pull / Legs',
+  4: 'Upper / Lower Split',
+  5: 'Upper / Lower Split',
 };
 
 export default function PlanBuilder() {
@@ -54,9 +60,8 @@ export default function PlanBuilder() {
     setIsTyping(true);
     setShowOptions(false);
 
-    let botMsg = step.bot_message || '';
     const ans = updatedAnswers || answers;
-    botMsg = botMsg.replace(/\{activity\}/g, 'gym');
+    let botMsg = step.bot_message || '';
     botMsg = botMsg.replace(/\{first_day\}/g, ans.scheduled_days?.[0]
       ? ans.scheduled_days[0].charAt(0).toUpperCase() + ans.scheduled_days[0].slice(1)
       : 'Monday');
@@ -67,9 +72,7 @@ export default function PlanBuilder() {
 
       if (step.type === 'summary') {
         setMessages(prev => [...prev, { type: 'summary', answers: ans }]);
-        setTimeout(() => {
-          showBotMessage('confirm', ans);
-        }, 800);
+        setTimeout(() => showBotMessage('confirm', ans), 800);
         return;
       }
 
@@ -82,7 +85,7 @@ export default function PlanBuilder() {
     }, 600);
   }
 
-  function handleOptionSelect(option, step) {
+  function handleOptionSelect(option) {
     const stepData = chatbotFlow.steps[currentStep];
 
     setMessages(prev => [...prev, { type: 'user', text: option.label }]);
@@ -98,21 +101,6 @@ export default function PlanBuilder() {
     setStepIndex(prev => prev + 1);
     setAnswers(newAnswers);
 
-    // Restarter warning check
-    if (currentStep === 'frequency' && stepData.restarter_warning) {
-      const warn = stepData.restarter_warning;
-      if (newAnswers.persona === warn.condition.persona && option.value === warn.condition.value) {
-        setIsTyping(true);
-        setTimeout(() => {
-          setIsTyping(false);
-          setMessages(prev => [...prev, { type: 'bot', text: warn.message }]);
-          setCurrentStep('frequency_warning');
-          setTimeout(() => setShowOptions(true), 200);
-        }, 600);
-        return;
-      }
-    }
-
     const nextStep = option.next;
     setCurrentStep(nextStep);
     showBotMessage(nextStep, newAnswers);
@@ -122,7 +110,10 @@ export default function PlanBuilder() {
     if (multiSelect.length === 0) return;
 
     const stepData = chatbotFlow.steps[currentStep];
-    setMessages(prev => [...prev, { type: 'user', text: multiSelect.map(d => d.charAt(0).toUpperCase() + d.slice(1, 3)).join(', ') }]);
+    setMessages(prev => [...prev, {
+      type: 'user',
+      text: multiSelect.map(d => d.charAt(0).toUpperCase() + d.slice(1, 3)).join(', '),
+    }]);
     setShowOptions(false);
     setHistory(prev => [...prev, { step: currentStep, answers: { ...answers } }]);
 
@@ -137,28 +128,12 @@ export default function PlanBuilder() {
     setMultiSelect([]);
 
     const nextStep = stepData.next || 'equipment';
-
-    if (multiSelect.length > (newAnswers.frequency || 3)) {
-      setIsTyping(true);
-      setTimeout(() => {
-        setIsTyping(false);
-        setMessages(prev => [...prev, {
-          type: 'bot',
-          text: `You picked ${multiSelect.length} days but said ${newAnswers.frequency} days/week — I'll build around all ${multiSelect.length} days.`,
-        }]);
-        setCurrentStep(nextStep);
-        setTimeout(() => showBotMessage(nextStep, newAnswers), 600);
-      }, 600);
-      return;
-    }
-
     setCurrentStep(nextStep);
     showBotMessage(nextStep, newAnswers);
   }
 
   async function handleComplete(finalAnswers) {
     setIsGenerating(true);
-    // Gym is the only activity for now
     const enrichedAnswers = { ...finalAnswers, activity: 'gym' };
     try {
       const plan = await generatePlan(enrichedAnswers);
@@ -166,8 +141,7 @@ export default function PlanBuilder() {
 
       updateData(data => {
         data.onboarding_complete = true;
-        data.user.persona = enrichedAnswers.persona || 'neutral';
-        data.user.preferred_time = enrichedAnswers.preferred_time || 'none';
+        data.user.persona = 'neutral';
         data.plans.push(plan);
         return data;
       });
@@ -176,14 +150,14 @@ export default function PlanBuilder() {
         activity: 'gym',
         experience_level: enrichedAnswers.experience_level,
         frequency: enrichedAnswers.frequency,
-        persona: enrichedAnswers.persona,
+        persona: 'neutral',
         session_duration: enrichedAnswers.session_duration,
       });
 
       setTimeout(() => navigate('/dashboard'), 2000);
     } catch (err) {
       console.error('Plan generation failed:', err);
-      setMessages(prev => [...prev, { type: 'bot', text: 'Something went wrong generating your plan. Let me try again...' }]);
+      setMessages(prev => [...prev, { type: 'bot', text: 'Something went wrong. Let me try again…' }]);
       setIsGenerating(false);
     }
   }
@@ -200,7 +174,6 @@ export default function PlanBuilder() {
     setMessages(msgs => {
       let cutIdx = msgs.length - 1;
       while (cutIdx >= 0 && msgs[cutIdx].step !== prev.step) cutIdx--;
-      // cutIdx is now the bot message for prev.step — slice everything from that point
       return cutIdx > 0 ? msgs.slice(0, cutIdx) : msgs.slice(0, 1);
     });
     setShowOptions(false);
@@ -208,24 +181,6 @@ export default function PlanBuilder() {
   }
 
   function getCurrentOptions() {
-    if (currentStep === 'frequency_warning') {
-      const warn = chatbotFlow.steps.frequency.restarter_warning;
-      return warn.options.map(opt => (
-        <OptionButton
-          key={opt.label}
-          label={opt.label}
-          onClick={() => {
-            setMessages(prev => [...prev, { type: 'user', text: opt.label }]);
-            setShowOptions(false);
-            const newAnswers = { ...answers, frequency: opt.value };
-            setAnswers(newAnswers);
-            setCurrentStep(opt.next);
-            showBotMessage(opt.next, newAnswers);
-          }}
-        />
-      ));
-    }
-
     const step = chatbotFlow.steps[currentStep];
     if (!step) return null;
 
@@ -254,7 +209,7 @@ export default function PlanBuilder() {
               className="w-full py-2.5 rounded-full text-sm font-medium cursor-pointer transition-opacity hover:opacity-90"
               style={{ background: 'var(--color-text-1)', color: 'var(--color-bg)' }}
             >
-              Confirm ({multiSelect.length} days)
+              Confirm ({multiSelect.length} days selected)
             </button>
           )}
         </div>
@@ -267,7 +222,7 @@ export default function PlanBuilder() {
       <OptionButton
         key={opt.label}
         label={opt.label}
-        onClick={() => handleOptionSelect(opt, step)}
+        onClick={() => handleOptionSelect(opt)}
       />
     ));
   }
@@ -292,7 +247,7 @@ export default function PlanBuilder() {
         <div className="w-12" />
       </div>
 
-      {/* Chat messages area */}
+      {/* Chat messages */}
       <div
         ref={scrollRef}
         className="flex-1 overflow-y-auto px-4 py-6"
@@ -300,6 +255,8 @@ export default function PlanBuilder() {
       >
         {messages.map((msg, i) => {
           if (msg.type === 'summary') {
+            const freq = msg.answers.frequency;
+            const planType = PLAN_TYPE_LABELS[freq] || 'Full Body';
             return (
               <div key={i} className="mb-4 animate-fade-in">
                 <div
@@ -310,20 +267,20 @@ export default function PlanBuilder() {
                   }}
                 >
                   <p className="text-xs font-medium uppercase tracking-widest mb-3" style={{ color: 'var(--color-text-3)' }}>
-                    Your Plan Summary
+                    Your Plan
                   </p>
-                  <div className="space-y-2">
+                  <div className="space-y-2.5">
                     {[
+                      ['Plan type', planType],
                       ['Goal', GOAL_LABELS[msg.answers.gym_goal] || msg.answers.gym_goal],
-                      ['Experience', msg.answers.experience_level],
-                      ['Frequency', `${msg.answers.frequency} days/week`],
-                      ['Session length', `${msg.answers.session_duration} min`],
+                      ['Level', msg.answers.experience_level ? msg.answers.experience_level.charAt(0).toUpperCase() + msg.answers.experience_level.slice(1) : null],
+                      ['Frequency', `${freq} day${freq > 1 ? 's' : ''}/week`],
                       ['Days', msg.answers.scheduled_days?.map(d => d.charAt(0).toUpperCase() + d.slice(1, 3)).join(', ')],
                       ['Equipment', EQUIPMENT_LABELS[msg.answers.equipment] || msg.answers.equipment],
                     ].map(([label, value]) => value && (
                       <div key={label} className="flex items-center justify-between text-sm">
                         <span style={{ color: 'var(--color-text-3)' }}>{label}</span>
-                        <span style={{ color: 'var(--color-text-1)' }}>{value}</span>
+                        <span className="font-medium" style={{ color: 'var(--color-text-1)' }}>{value}</span>
                       </div>
                     ))}
                   </div>

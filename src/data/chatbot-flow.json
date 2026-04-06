@@ -1,71 +1,34 @@
 {
   "steps": {
     "welcome": {
-      "bot_message": "Hey. I'm going to help you build a gym habit that actually sticks. First — what's your main goal?",
+      "bot_message": "Hey. Let's build your gym plan. What's your main goal?",
       "options": [
-        { "label": "Build muscle and strength", "value": "muscle", "next": "experience" },
+        { "label": "Build muscle and get bigger", "value": "muscle", "next": "experience" },
         { "label": "Lose fat and get lean", "value": "fat_loss", "next": "experience" },
-        { "label": "Get stronger (powerlifting focus)", "value": "strength", "next": "experience" },
-        { "label": "General fitness and stay active", "value": "general", "next": "experience" }
+        { "label": "Get stronger (powerlifting)", "value": "strength", "next": "experience" },
+        { "label": "General fitness and health", "value": "general", "next": "experience" }
       ],
       "field": "gym_goal"
     },
     "experience": {
-      "bot_message": "How long have you been training?",
+      "bot_message": "How long have you been lifting consistently?",
       "options": [
-        { "label": "Never really trained before", "value": "beginner", "next": "past_attempts" },
-        { "label": "A few months, still learning the basics", "value": "beginner", "next": "past_attempts" },
-        { "label": "1–2 years, but inconsistent", "value": "intermediate", "next": "past_attempts" },
-        { "label": "Training consistently for 2+ years", "value": "advanced", "next": "past_attempts" }
+        { "label": "Brand new — never trained before", "value": "beginner", "next": "days" },
+        { "label": "Less than a year, still learning", "value": "beginner", "next": "days" },
+        { "label": "1–3 years, decent base", "value": "intermediate", "next": "days" },
+        { "label": "3+ years, advanced lifter", "value": "advanced", "next": "days" }
       ],
       "field": "experience_level"
     },
-    "past_attempts": {
-      "bot_message": "Have you tried building a gym habit before?",
+    "days": {
+      "bot_message": "How many days a week can you realistically commit?",
       "options": [
-        { "label": "No, this is my first real attempt", "value": "neutral", "next": "frequency" },
-        { "label": "Yes, but I keep falling off", "value": "restarter", "next": "frequency" },
-        { "label": "I go sometimes — I just need a proper system", "value": "stacker", "next": "frequency" },
-        { "label": "I have a specific goal or deadline", "value": "preparer", "next": "goal_type" }
+        { "label": "2 days — minimum effective dose", "value": 2, "next": "schedule" },
+        { "label": "3 days — ideal for most people", "value": 3, "next": "schedule" },
+        { "label": "4 days — solid upper/lower split", "value": 4, "next": "schedule" },
+        { "label": "5–6 days — high commitment", "value": 5, "next": "schedule" }
       ],
-      "field": "persona"
-    },
-    "goal_type": {
-      "bot_message": "What's the goal you're training for?",
-      "options": [
-        { "label": "Body transformation (12-week program)", "value": "transformation", "next": "frequency" },
-        { "label": "Competition or photoshoot", "value": "performance", "next": "frequency" },
-        { "label": "Just get consistent by a target date", "value": "consistency", "next": "frequency" }
-      ],
-      "field": "goal_type"
-    },
-    "frequency": {
-      "bot_message": "How many days a week can you realistically commit? Be honest — less is more.",
-      "options": [
-        { "label": "2 days", "value": 2, "next": "duration" },
-        { "label": "3 days", "value": 3, "next": "duration" },
-        { "label": "4 days", "value": 4, "next": "duration" },
-        { "label": "5+ days", "value": 5, "next": "duration" }
-      ],
-      "field": "frequency",
-      "restarter_warning": {
-        "condition": { "persona": "restarter", "value": 5 },
-        "message": "I respect the ambition — but starting with 5 days is the #1 reason people burn out and quit. Research says starting smaller builds stronger habits. Want to start with 3 days and add more after week 2?",
-        "options": [
-          { "label": "You're right, let's do 3", "value": 3, "next": "duration" },
-          { "label": "I'll stick with 5+", "value": 5, "next": "duration" }
-        ]
-      }
-    },
-    "duration": {
-      "bot_message": "How long do you want each session to be?",
-      "options": [
-        { "label": "30 minutes (quick and focused)", "value": 30, "next": "schedule" },
-        { "label": "45 minutes", "value": 45, "next": "schedule" },
-        { "label": "60 minutes", "value": 60, "next": "schedule" },
-        { "label": "75+ minutes (full sessions)", "value": 75, "next": "schedule" }
-      ],
-      "field": "session_duration"
+      "field": "frequency"
     },
     "schedule": {
       "bot_message": "Which days work best for you?",
@@ -85,37 +48,26 @@
     "equipment": {
       "bot_message": "What equipment do you have access to?",
       "options": [
-        { "label": "Full gym (machines + barbells + free weights)", "value": "full_gym", "next": "time_preference" },
-        { "label": "Gym with mostly dumbbells and cables", "value": "dumbbells_cables", "next": "time_preference" },
-        { "label": "Home gym (dumbbells + bench)", "value": "home_dumbbells", "next": "time_preference" },
-        { "label": "Bodyweight only", "value": "bodyweight", "next": "time_preference" }
+        { "label": "Full gym — barbells, dumbbells, machines", "value": "full_gym", "next": "summary" },
+        { "label": "Home gym — dumbbells and a bench", "value": "home_dumbbells", "next": "summary" },
+        { "label": "Bodyweight only", "value": "bodyweight", "next": "summary" }
       ],
       "field": "equipment"
     },
-    "time_preference": {
-      "bot_message": "When do you usually go to the gym?",
-      "options": [
-        { "label": "Morning (before work/school)", "value": "morning", "next": "summary" },
-        { "label": "Afternoon / lunch break", "value": "afternoon", "next": "summary" },
-        { "label": "Evening (after work)", "value": "evening", "next": "summary" },
-        { "label": "No set time, it varies", "value": "none", "next": "summary" }
-      ],
-      "field": "preferred_time"
-    },
     "summary": {
-      "bot_message": "Perfect. Here's what I've got:",
+      "bot_message": "Perfect. Here's your plan:",
       "type": "summary",
       "next": "confirm"
     },
     "confirm": {
-      "bot_message": "Your 4-week gym plan is ready. It starts on {first_day}.",
+      "bot_message": "Your 4-week gym plan is ready. First session: {first_day}.",
       "options": [
-        { "label": "Show me my plan →", "value": "confirm", "next": "complete" }
+        { "label": "Let's go →", "value": "confirm", "next": "complete" }
       ]
     },
     "complete": {
       "type": "complete",
-      "bot_message": "Welcome to Regulr. Your first session is {first_day}. Just show up."
+      "bot_message": "You're in. First session: {first_day}. Just show up."
     }
   },
   "initial_step": "welcome"

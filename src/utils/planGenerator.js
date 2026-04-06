@@ -1,7 +1,9 @@
 import { addDays, getDayName } from './dateUtils.js';
 
-const templateModules = {
-  gym: () => import('../data/templates/gym.json'),
+const PLAN_LABELS = {
+  '2x': 'Full Body A/B Split',
+  '3x': 'Push / Pull / Legs',
+  '4x': 'Upper / Lower Split',
 };
 
 export async function generatePlan(answers) {
@@ -11,26 +13,26 @@ export async function generatePlan(answers) {
     frequency,
     session_duration,
     scheduled_days,
-    persona,
-    preferred_time,
-    subcategory,
     equipment,
+    gym_goal,
   } = answers;
 
-  const loader = templateModules[activity];
-  if (!loader) throw new Error(`Unknown activity: ${activity}`);
-
-  const mod = await loader();
+  const mod = await import('../data/templates/gym.json');
   const templateData = mod.default || mod;
 
-  const freqKey = frequency >= 5 ? '4x' : `${Math.min(frequency, 4)}x`;
+  const freqKey = frequency >= 4 ? '4x' : `${frequency}x`;
   const template = templateData.templates[freqKey];
   if (!template) throw new Error(`No template for frequency: ${freqKey}`);
 
   const modifiers = templateData.experience_modifiers?.[experience_level] || {
     sets_multiplier: 1.0,
+    reps_multiplier: 1.0,
     duration_multiplier: 1.0,
   };
+
+  const substitutions = equipment && templateData.equipment_variants?.[equipment]?.substitutions
+    ? templateData.equipment_variants[equipment].substitutions
+    : null;
 
   const today = new Date();
   const dayOfWeek = today.getDay();
@@ -38,24 +40,24 @@ export async function generatePlan(answers) {
   const startDate = addDays(today.toISOString().split('T')[0], dayOfWeek === 1 ? 0 : daysUntilNextMonday);
 
   const sortedDays = sortScheduledDays(scheduled_days);
-  const planWeeks = buildWeeks(template, sortedDays, startDate, modifiers, session_duration, persona);
+  const planWeeks = buildWeeks(template, sortedDays, startDate, modifiers, session_duration, substitutions);
 
   const planId = `plan_${Date.now()}`;
 
   return {
     id: planId,
     activity,
-    subcategory: subcategory || equipment || null,
     experience_level,
     frequency: Math.min(frequency, sortedDays.length),
-    session_duration,
+    session_duration: session_duration || null,
     scheduled_days: sortedDays,
-    template_id: `${activity}_${experience_level}_${freqKey}`,
+    template_id: `gym_${experience_level}_${freqKey}`,
+    plan_label: PLAN_LABELS[freqKey] || template.label,
     start_date: startDate,
     current_week: 1,
     status: 'active',
-    persona,
-    preferred_time,
+    gym_goal: gym_goal || null,
+    equipment: equipment || 'full_gym',
     weeks: planWeeks,
   };
 }
@@ -65,7 +67,16 @@ function sortScheduledDays(days) {
   return [...days].sort((a, b) => order.indexOf(a) - order.indexOf(b));
 }
 
-function buildWeeks(template, scheduledDays, startDate, modifiers, targetDuration, persona) {
+function applySubstitutions(text, subs) {
+  if (!subs) return text;
+  let result = text;
+  for (const [original, replacement] of Object.entries(subs)) {
+    result = result.split(original).join(replacement);
+  }
+  return result;
+}
+
+function buildWeeks(template, scheduledDays, startDate, modifiers, targetDuration, substitutions) {
   const weeks = [];
 
   for (const weekData of template.weeks) {
@@ -82,10 +93,10 @@ function buildWeeks(template, scheduledDays, startDate, modifiers, targetDuratio
       if (!templateSession) continue;
 
       const adjustedDuration = Math.round(
-        (templateSession.duration_minutes || targetDuration) * modifiers.duration_multiplier
+        (templateSession.duration_minutes || targetDuration || 50) * modifiers.duration_multiplier
       );
 
-      let session = {
+      const session = {
         id: `session_w${weekNum}_${dayName.slice(0, 3)}`,
         day: dayName,
         date: sessionDate,
@@ -94,6 +105,7 @@ function buildWeeks(template, scheduledDays, startDate, modifiers, targetDuratio
         type: 'scheduled',
         blocks: templateSession.blocks.map(block => ({
           ...block,
+          detail: applySubstitutions(block.detail, substitutions),
           duration_minutes: block.duration_minutes
             ? Math.round(block.duration_minutes * modifiers.duration_multiplier)
             : undefined,
@@ -102,22 +114,7 @@ function buildWeeks(template, scheduledDays, startDate, modifiers, targetDuratio
         completed_at: null,
       };
 
-      if (persona === 'restarter' && weekNum === 1) {
-        session.duration_minutes = Math.round(session.duration_minutes * 0.7);
-        session.blocks = session.blocks.map(b => ({
-          ...b,
-          duration_minutes: b.duration_minutes ? Math.round(b.duration_minutes * 0.7) : undefined,
-        }));
-        session.restarter_note = "This is designed so you can't fail.";
-      }
-
       sessions.push(session);
-    }
-
-    if (persona === 'restarter' && weekNum === 1 && sessions.length > 2) {
-      const last = sessions[sessions.length - 1];
-      last.type = 'optional';
-      last.title = `${last.title} (Optional)`;
     }
 
     weeks.push({
