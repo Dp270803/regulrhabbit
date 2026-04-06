@@ -140,3 +140,16 @@
 .delay-300 { animation-delay: 0.3s; }
 .delay-400 { animation-delay: 0.4s; }
 .delay-500 { animation-delay: 0.5s; }
+
+/* Landing responsive: collapse two-column grids on mobile */
+@media (max-width: 768px) {
+  .landing-grid-2col {
+    grid-template-columns: 1fr !important;
+  }
+  .landing-hide-mobile {
+    display: none !important;
+  }
+  .landing-cards-3col {
+    grid-template-columns: 1fr !important;
+  }
+}
