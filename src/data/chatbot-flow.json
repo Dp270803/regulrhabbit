@@ -62,7 +62,7 @@
     "confirm": {
       "bot_message": "Your 4-week gym plan is ready. First session: {first_day}.",
       "options": [
-        { "label": "Let's go →", "value": "confirm", "next": "complete" }
+        { "label": "Create my dashboard →", "value": "confirm", "next": "complete" }
       ]
     },
     "complete": {
