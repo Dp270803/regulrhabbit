@@ -72,7 +72,7 @@ export default function PlanBuilder() {
 
       if (step.type === 'summary') {
         setMessages(prev => [...prev, { type: 'summary', answers: ans }]);
-        setTimeout(() => showBotMessage('confirm', ans), 800);
+        setTimeout(() => { setCurrentStep('confirm'); showBotMessage('confirm', ans); }, 800);
         return;
       }
 
