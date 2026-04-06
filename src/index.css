@@ -23,7 +23,7 @@
   --color-surface-elevated: #1C1C1C;
 
   --font-display: 'Instrument Serif', serif;
-  --font-body: 'DM Sans', sans-serif;
+  --font-body: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 }
 

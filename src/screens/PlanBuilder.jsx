@@ -157,16 +157,34 @@ export default function PlanBuilder() {
           type: 'bot',
           text: `You picked ${multiSelect.length} days but said ${newAnswers.frequency} days/week. I'll use these ${multiSelect.length} days and build rest days around them.`,
         }]);
-        const next = stepData.next || 'activity_specific';
-        setCurrentStep(next);
-        setTimeout(() => showBotMessage(next, newAnswers), 800);
+        advanceFromSchedule(stepData.next || 'activity_specific', newAnswers);
       }, 600);
       return;
     }
 
-    const next = stepData.next || 'activity_specific';
-    setCurrentStep(next);
-    showBotMessage(next, newAnswers);
+    advanceFromSchedule(stepData.next || 'activity_specific', newAnswers);
+  }
+
+  // Shared routing helper — handles the activity_specific conditional branch
+  function advanceFromSchedule(nextStep, newAnswers) {
+    if (nextStep === 'activity_specific') {
+      const activity = newAnswers.activity;
+      const conditional = chatbotFlow.steps.activity_specific;
+      if (conditional?.conditions?.[activity]) {
+        const actStep = conditional.conditions[activity];
+        setIsTyping(true);
+        setTimeout(() => {
+          setIsTyping(false);
+          setMessages(prev => [...prev, { type: 'bot', text: actStep.bot_message, step: 'activity_specific' }]);
+          setCurrentStep(`activity_specific_${activity}`);
+          setTimeout(() => setShowOptions(true), 200);
+        }, 600);
+        return;
+      }
+      nextStep = 'time_preference';
+    }
+    setCurrentStep(nextStep);
+    showBotMessage(nextStep, newAnswers);
   }
 
   async function handleComplete(finalAnswers) {
@@ -200,16 +218,19 @@ export default function PlanBuilder() {
   }
 
   function handleBack() {
-    if (history.length === 0) return;
+    if (history.length === 0) {
+      navigate('/');
+      return;
+    }
     const prev = history[history.length - 1];
     setHistory(h => h.slice(0, -1));
     setAnswers(prev.answers);
     setCurrentStep(prev.step);
     setMessages(msgs => {
-      const lastBotIdx = msgs.length - 1;
-      let cutIdx = lastBotIdx;
+      let cutIdx = msgs.length - 1;
       while (cutIdx >= 0 && msgs[cutIdx].step !== prev.step) cutIdx--;
-      return msgs.slice(0, Math.max(cutIdx, 0));
+      // cutIdx is now the bot message for prev.step — slice everything from that point
+      return cutIdx > 0 ? msgs.slice(0, cutIdx) : msgs.slice(0, 1);
     });
     setShowOptions(false);
     setTimeout(() => showBotMessage(prev.step, prev.answers), 100);
@@ -313,8 +334,7 @@ export default function PlanBuilder() {
       >
         <button
           onClick={handleBack}
-          disabled={history.length === 0}
-          className="text-sm transition-opacity disabled:opacity-20 cursor-pointer disabled:cursor-default"
+          className="text-sm transition-opacity cursor-pointer hover:opacity-70"
           style={{ color: 'var(--color-text-2)' }}
         >
           ← Back
