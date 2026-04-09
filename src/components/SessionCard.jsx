@@ -51,7 +51,7 @@ function CollapsibleBlock({ label, duration, text }) {
   );
 }
 
-export default function SessionCard({ session, onComplete, isCompleted, isRestDay, equipment }) {
+export default function SessionCard({ session, onComplete, isCompleted, isRestDay, equipment, isNextSession, nextLabel }) {
   const [checked, setChecked] = useState({});
   const [alts, setAlts] = useState({});
 
@@ -110,7 +110,7 @@ export default function SessionCard({ session, onComplete, isCompleted, isRestDa
       {/* ── Header ── */}
       <div style={{ padding: '28px 28px 20px', display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '16px' }}>
         <div>
-          <p style={{ fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--color-text-3)', marginBottom: '8px' }}>Today</p>
+          <p style={{ fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', color: isNextSession ? 'var(--color-gold)' : 'var(--color-text-3)', marginBottom: '8px' }}>{nextLabel || 'Today'}</p>
           <h3 className="font-display" style={{ fontSize: 'clamp(1.3rem, 2.5vw, 1.9rem)', color: 'var(--color-text-1)', lineHeight: 1.1, marginBottom: '8px' }}>{session.title}</h3>
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'var(--color-text-3)' }}>
             <Clock size={12} strokeWidth={1.8} />
@@ -163,7 +163,7 @@ export default function SessionCard({ session, onComplete, isCompleted, isRestDa
               return (
                 <div
                   key={i}
-                  onClick={() => !isCompleted && toggle(ex.name)}
+                  onClick={() => !isCompleted && !isNextSession && toggle(ex.name)}
                   style={{
                     display: 'grid',
                     gridTemplateColumns: showAlts ? '24px 1fr 72px 1fr' : '24px 1fr 72px',
@@ -171,17 +171,17 @@ export default function SessionCard({ session, onComplete, isCompleted, isRestDa
                     alignItems: 'center',
                     padding: '11px 0',
                     borderBottom: i < exercises.length - 1 ? '1px solid rgba(255,255,255,0.04)' : 'none',
-                    cursor: isCompleted ? 'default' : 'pointer',
+                    cursor: isCompleted || isNextSession ? 'default' : 'pointer',
                     transition: 'opacity 0.15s',
                     opacity: isDone ? 0.5 : 1,
                   }}
-                  onMouseEnter={e => { if (!isCompleted) e.currentTarget.style.opacity = isDone ? '0.4' : '0.85'; }}
+                  onMouseEnter={e => { if (!isCompleted && !isNextSession) e.currentTarget.style.opacity = isDone ? '0.4' : '0.85'; }}
                   onMouseLeave={e => { e.currentTarget.style.opacity = isDone ? '0.5' : '1'; }}
                 >
-                  {/* Checkbox */}
+                  {/* Checkbox — hidden for next session preview */}
                   <div style={{
                     width: '18px', height: '18px', borderRadius: '5px', flexShrink: 0,
-                    border: isDone ? 'none' : '1.5px solid rgba(255,255,255,0.22)',
+                    border: isNextSession ? '1.5px solid rgba(255,255,255,0.08)' : isDone ? 'none' : '1.5px solid rgba(255,255,255,0.22)',
                     background: isDone ? 'var(--color-green)' : 'transparent',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                     transition: 'all 0.15s',
@@ -237,7 +237,7 @@ export default function SessionCard({ session, onComplete, isCompleted, isRestDa
       {cooldown && <CollapsibleBlock label="Cool Down" duration={cooldown.duration_minutes} text={cooldown.detail} />}
 
       {/* ── Complete button ── */}
-      {!isCompleted && (
+      {!isCompleted && !isNextSession && (
         <div style={{ padding: '20px 28px 28px', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
           <button
             onClick={onComplete}
