@@ -26,10 +26,13 @@ export default function StreakCounter({ current, best, consecutiveMisses }) {
 
   return (
     <div
-      className="rounded-2xl p-7 animate-fade-in"
+      className="animate-fade-in"
       style={{
-        background: 'var(--color-surface)',
-        border: '1px solid var(--color-border)',
+        background: 'linear-gradient(145deg, #1c1c1c 0%, #121212 100%)',
+        border: '1px solid rgba(255,255,255,0.07)',
+        borderRadius: '20px',
+        boxShadow: '0 4px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04)',
+        padding: '28px',
       }}
     >
       {/* Main row: streak + best */}

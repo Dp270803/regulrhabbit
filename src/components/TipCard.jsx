@@ -5,11 +5,13 @@ export default function TipCard({ tip, onSeeMore }) {
 
   return (
     <div
-      className="rounded-2xl p-6 animate-fade-in"
+      className="animate-fade-in"
       style={{
-        background:
-          'linear-gradient(135deg, rgba(232,193,98,0.05) 0%, var(--color-surface) 55%)',
-        border: '1px solid rgba(232,193,98,0.13)',
+        background: 'linear-gradient(145deg, rgba(232,193,98,0.06) 0%, #121212 55%)',
+        border: '1px solid rgba(232,193,98,0.14)',
+        borderRadius: '20px',
+        boxShadow: '0 4px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04)',
+        padding: '24px',
       }}
     >
       {/* Category label */}

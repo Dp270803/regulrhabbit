@@ -21,6 +21,13 @@ import { getToday } from '../utils/dateUtils';
 import { trackPageView, trackSessionCompleted, trackReturnState, trackBadgeEarned, trackLevelUp } from '../utils/analytics';
 import messagesData from '../data/messages.json';
 
+function getTimeGreeting() {
+  const h = new Date().getHours();
+  if (h < 12) return 'Good morning';
+  if (h < 17) return 'Good afternoon';
+  return 'Good evening';
+}
+
 export default function Dashboard() {
   const navigate = useNavigate();
   const [data, setData] = useState(null);
@@ -37,10 +44,7 @@ export default function Dashboard() {
 
   const loadDashboard = useCallback(async () => {
     const d = getData();
-    if (!d.onboarding_complete) {
-      navigate('/');
-      return;
-    }
+    if (!d.onboarding_complete) { navigate('/'); return; }
     setData(d);
 
     const { state, missedCount } = detectReturnState(d);
@@ -83,7 +87,6 @@ export default function Dashboard() {
   const today = getToday();
   const isCompleted = data.check_ins.some(c => c.date === today && c.completed);
   const missedCount = getConsecutiveMisses(data);
-
   const displaySession = todaySession && returnStateNum >= 4 && !isCompleted
     ? getReducedSession(todaySession, returnStateNum)
     : todaySession;
@@ -109,7 +112,6 @@ export default function Dashboard() {
       data.streaks = newStreaks;
       data.user.total_xp += xpResult.total;
       data.check_ins.push(checkIn);
-
       if (activePlan) {
         const plan = data.plans.find(p => p.id === activePlan.id);
         if (plan) {
@@ -123,22 +125,14 @@ export default function Dashboard() {
           }
         }
       }
-
       const newBadges = checkBadges(data);
       for (const badge of newBadges) {
         const existing = data.badges.findIndex(b => b.id === badge.id);
-        if (existing >= 0) {
-          data.badges[existing] = badge;
-        } else {
-          data.badges.push(badge);
-        }
+        if (existing >= 0) data.badges[existing] = badge;
+        else data.badges.push(badge);
       }
-
       const levelInfo = checkLevelUp(oldXP, data.user.total_xp);
-      if (levelInfo) {
-        data.user.level = levelInfo.level;
-      }
-
+      if (levelInfo) data.user.level = levelInfo.level;
       return data;
     });
 
@@ -146,21 +140,12 @@ export default function Dashboard() {
     setRecentXP(xpResult.total);
 
     const levelInfo = checkLevelUp(oldXP, updated.user.total_xp);
-    if (levelInfo) {
-      setLevelUpInfo(levelInfo);
-      trackLevelUp(levelInfo.level, updated.user.total_xp);
-    }
+    if (levelInfo) { setLevelUpInfo(levelInfo); trackLevelUp(levelInfo.level, updated.user.total_xp); }
 
     const newBadges = checkBadges(updated);
-    if (newBadges.length > 0) {
-      setNewBadge(newBadges[0]);
-      trackBadgeEarned(newBadges[0].id, newBadges[0].name);
-    }
+    if (newBadges.length > 0) { setNewBadge(newBadges[0]); trackBadgeEarned(newBadges[0].id, newBadges[0].name); }
 
-    const streakMilestone = getStreakMilestone(updated.streaks.current);
-    if (streakMilestone && streakMilestone >= 7) {
-      setShowConfetti(true);
-    }
+    if (getStreakMilestone(updated.streaks.current) >= 7) setShowConfetti(true);
 
     const celMsg = getCelebrationMessage(messagesData, {
       totalSessions: updated.check_ins.filter(c => c.completed).length,
@@ -177,33 +162,23 @@ export default function Dashboard() {
       streakCount: updated.streaks.current,
     });
 
-    setTimeout(() => {
-      setCelebrationMsg(null);
-      setRecentXP(0);
-    }, 4000);
+    setTimeout(() => { setCelebrationMsg(null); setRecentXP(0); }, 4000);
   }
 
   function handleBonusSession() {
     const d = getData();
     const newStreaks = updateStreak(d);
     const xpResult = calculateSessionXP(newStreaks.current, true, false);
-
     updateData(data => {
       data.streaks = newStreaks;
       data.user.total_xp += xpResult.total;
       data.check_ins.push({
-        date: today,
-        plan_id: activePlan?.id,
-        session_id: 'bonus',
-        completed: true,
-        completed_at: new Date().toISOString(),
-        xp_earned: xpResult.total,
-        bonus_xp: 0,
-        is_bonus: true,
+        date: today, plan_id: activePlan?.id, session_id: 'bonus',
+        completed: true, completed_at: new Date().toISOString(),
+        xp_earned: xpResult.total, bonus_xp: 0, is_bonus: true,
       });
       return data;
     });
-
     setRecentXP(xpResult.total);
     setData(getData());
     setTimeout(() => setRecentXP(0), 4000);
@@ -211,20 +186,14 @@ export default function Dashboard() {
 
   const recentBadges = data.badges.filter(b => b.earned).slice(-3).reverse();
 
-  function getTimeGreeting() {
-    const h = new Date().getHours();
-    if (h < 12) return 'Good morning';
-    if (h < 17) return 'Good afternoon';
-    return 'Good evening';
-  }
+  const CONTENT = { maxWidth: '900px', margin: '0 auto', padding: '0 5vw' };
 
   return (
-    <div className="min-h-dvh pb-28" style={{ background: 'var(--color-bg)' }}>
+    <div className="min-h-dvh pb-32" style={{ background: 'var(--color-bg)' }}>
       <ConfettiEffect trigger={showConfetti} />
       {levelUpInfo && <LevelUpModal level={levelUpInfo} onClose={() => setLevelUpInfo(null)} />}
       {newBadge && <BadgeModal badge={newBadge} onClose={() => setNewBadge(null)} />}
 
-      {/* Return Banner */}
       {showBanner && returnMessage && (
         <ReturnBanner
           message={returnMessage}
@@ -234,78 +203,76 @@ export default function Dashboard() {
         />
       )}
 
-      {/* Header */}
-      <div className="px-4 pt-12 pb-8 max-w-[480px] mx-auto">
-        <div className="flex items-start justify-between">
+      {/* ── Header ── */}
+      <div style={{ ...CONTENT, paddingTop: '56px', paddingBottom: '28px' }}>
+        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '1rem' }}>
           <div>
-            <p className="text-xs font-medium uppercase tracking-[0.15em] mb-1" style={{ color: 'var(--color-text-3)' }}>
+            <p style={{ fontSize: '0.72rem', fontWeight: 500, letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--color-text-3)', marginBottom: '6px' }}>
               {getTimeGreeting()}
             </p>
-            <h1 className="font-display text-3xl" style={{ color: 'var(--color-text-1)' }}>
-              {activePlan ? `Week ${todayInfo?.weekNumber || 1}` : 'Dashboard'}
+            <h1 className="font-display" style={{ fontSize: 'clamp(1.6rem, 3vw, 2.4rem)', color: 'var(--color-text-1)', lineHeight: 1.1, marginBottom: '4px' }}>
+              {activePlan?.plan_label || 'Dashboard'}
             </h1>
+            <p style={{ fontSize: '0.82rem', color: 'var(--color-text-3)' }}>
+              Week {todayInfo?.weekNumber || 1} of 4
+              {activePlan?.frequency ? ` · ${activePlan.frequency} days/week` : ''}
+            </p>
           </div>
-          <div className="text-right">
-            <p className="font-mono text-sm font-semibold" style={{ color: 'var(--color-gold)' }}>
+          <div style={{ textAlign: 'right', flexShrink: 0 }}>
+            <p className="font-mono" style={{ fontSize: '2.5rem', fontWeight: 700, lineHeight: 1, color: 'var(--color-gold)', textShadow: '0 0 24px rgba(232,193,98,0.3)' }}>
               {data.streaks.current}
             </p>
-            <p className="text-xs" style={{ color: 'var(--color-text-3)' }}>day streak</p>
+            <p style={{ fontSize: '0.75rem', color: 'var(--color-text-3)', marginTop: '4px' }}>day streak</p>
           </div>
         </div>
 
         {celebrationMsg && (
-          <div
-            className="mt-4 px-4 py-2 rounded-xl text-sm font-medium text-center animate-fade-in"
-            style={{ background: 'rgba(74,222,128,0.1)', color: 'var(--color-green)' }}
-          >
+          <div style={{ marginTop: '16px', padding: '10px 16px', borderRadius: '12px', background: 'rgba(74,222,128,0.08)', border: '1px solid rgba(74,222,128,0.2)', color: 'var(--color-green)', fontSize: '0.875rem', fontWeight: 500, textAlign: 'center' }}>
             {celebrationMsg}
           </div>
         )}
       </div>
 
-      <div className="max-w-[480px] mx-auto px-4 space-y-3">
+      {/* ── Content ── */}
+      <div style={{ ...CONTENT, display: 'flex', flexDirection: 'column', gap: '16px' }}>
+
         {/* Today's Session */}
         <SessionCard
           session={displaySession}
           onComplete={handleComplete}
           isCompleted={isCompleted}
           isRestDay={rest && !todaySession}
+          equipment={activePlan?.equipment}
         />
 
         {/* Bonus session */}
         {!todaySession && !rest && !isCompleted && (
           <button
             onClick={handleBonusSession}
-            className="w-full py-3 text-sm rounded-2xl border-dashed transition-all cursor-pointer"
             style={{
-              border: '1px dashed var(--color-border-strong)',
-              color: 'var(--color-text-3)',
-              background: 'transparent',
+              width: '100%', padding: '14px', fontSize: '0.875rem',
+              borderRadius: '16px', border: '1px dashed rgba(255,255,255,0.15)',
+              color: 'var(--color-text-3)', background: 'transparent', cursor: 'pointer',
+              transition: 'all 0.2s',
             }}
-            onMouseEnter={e => {
-              e.currentTarget.style.borderColor = 'var(--color-text-1)';
-              e.currentTarget.style.color = 'var(--color-text-1)';
-            }}
-            onMouseLeave={e => {
-              e.currentTarget.style.borderColor = 'var(--color-border-strong)';
-              e.currentTarget.style.color = 'var(--color-text-3)';
-            }}
+            onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.3)'; e.currentTarget.style.color = 'var(--color-text-1)'; }}
+            onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.15)'; e.currentTarget.style.color = 'var(--color-text-3)'; }}
           >
             + Bonus session · +50 XP
           </button>
         )}
 
-        {/* Stats row: Streak + XP */}
-        <StreakCounter
-          current={data.streaks.current}
-          best={data.streaks.best}
-          consecutiveMisses={missedCount}
-        />
+        {/* Stats row — 2 columns */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '16px' }}>
+          <StreakCounter
+            current={data.streaks.current}
+            best={data.streaks.best}
+            consecutiveMisses={missedCount}
+          />
+          <WeeklyGrid plan={activePlan} checkIns={data.check_ins} />
+        </div>
 
-        {/* Weekly Grid */}
-        <WeeklyGrid plan={activePlan} checkIns={data.check_ins} />
-
-        {/* XP Bar */}
+        {/* XP */}
         <XPBar totalXP={data.user.total_xp} recentXP={recentXP} />
 
         {/* Tip */}
@@ -313,25 +280,23 @@ export default function Dashboard() {
 
         {/* Recent Badges */}
         {recentBadges.length > 0 && (
-          <div
-            className="rounded-2xl p-6"
-            style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)' }}
-          >
-            <div className="flex items-center justify-between mb-4">
-              <p className="text-xs font-medium uppercase tracking-widest" style={{ color: 'var(--color-text-3)' }}>
+          <div style={{
+            borderRadius: '20px', padding: '24px',
+            background: 'linear-gradient(145deg, #1c1c1c 0%, #121212 100%)',
+            border: '1px solid rgba(255,255,255,0.07)',
+            boxShadow: '0 4px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04)',
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
+              <p style={{ fontSize: '0.65rem', fontWeight: 600, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--color-text-3)' }}>
                 Recent Badges
               </p>
-              <button
-                onClick={() => navigate('/profile')}
-                className="text-xs cursor-pointer transition-opacity hover:opacity-70"
-                style={{ color: 'var(--color-text-3)' }}
-              >
+              <button onClick={() => navigate('/profile')} style={{ fontSize: '0.75rem', color: 'var(--color-text-3)', background: 'none', border: 'none', cursor: 'pointer' }}>
                 View all →
               </button>
             </div>
-            <div className="flex gap-2">
+            <div style={{ display: 'flex', gap: '8px' }}>
               {recentBadges.map(badge => (
-                <div key={badge.id} className="flex-1">
+                <div key={badge.id} style={{ flex: 1 }}>
                   <BadgeCard badge={badge} />
                 </div>
               ))}
