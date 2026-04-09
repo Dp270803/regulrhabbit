@@ -1,7 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SessionCard from '../components/SessionCard';
-import StreakCounter from '../components/StreakCounter';
 import WeeklyGrid from '../components/WeeklyGrid';
 import XPBar from '../components/XPBar';
 import TipCard from '../components/TipCard';
@@ -14,12 +13,14 @@ import { getData, updateData } from '../utils/storage';
 import { getTodaySession, isRestDay } from '../utils/planGenerator';
 import { detectReturnState, getReturnMessage, getTimeMessage, getReducedSession, getCelebrationMessage } from '../utils/returnState';
 import { updateStreak, getConsecutiveMisses, getStreakMilestone } from '../utils/streakTracker';
-import { calculateSessionXP, checkLevelUp } from '../utils/xpCalculator';
+import { calculateSessionXP, checkLevelUp, getLevelFromXP } from '../utils/xpCalculator';
 import { checkBadges } from '../utils/badgeChecker';
 import { selectTip, markTipSeen } from '../utils/tipSelector';
-import { getToday, formatDate } from '../utils/dateUtils';
+import { getToday, formatDate, getWeekDates } from '../utils/dateUtils';
 import { trackPageView, trackSessionCompleted, trackReturnState, trackBadgeEarned, trackLevelUp } from '../utils/analytics';
 import messagesData from '../data/messages.json';
+
+const DAY_KEYS = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
 
 function getTimeGreeting() {
   const h = new Date().getHours();
@@ -39,6 +40,22 @@ function getNextSession(plan) {
     }
   }
   return null;
+}
+
+function StatTile({ label, value, sub, valueColor, accent }) {
+  return (
+    <div style={{
+      background: 'linear-gradient(145deg, #1a1a1a 0%, #111111 100%)',
+      border: accent ? `1px solid ${accent}22` : '1px solid rgba(255,255,255,0.07)',
+      borderRadius: '16px',
+      padding: '18px 20px 16px',
+      boxShadow: '0 2px 20px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.04)',
+    }}>
+      <p style={{ fontSize: '0.55rem', fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.28)', marginBottom: '10px' }}>{label}</p>
+      <p className="font-mono" style={{ fontSize: '2rem', fontWeight: 700, lineHeight: 1, color: valueColor || 'var(--color-text-1)', marginBottom: '5px' }}>{value}</p>
+      {sub && <p style={{ fontSize: '0.67rem', color: 'rgba(255,255,255,0.28)', marginTop: '2px', lineHeight: 1.3 }}>{sub}</p>}
+    </div>
+  );
 }
 
 export default function Dashboard() {
@@ -88,11 +105,18 @@ export default function Dashboard() {
   const displaySession = todaySession && returnStateNum >= 4 && !isCompleted
     ? getReducedSession(todaySession, returnStateNum) : todaySession;
 
-  // Always show something — fallback to next upcoming session
   const nextInfo = !displaySession && activePlan ? getNextSession(activePlan) : null;
   const sessionForCard = displaySession || nextInfo?.session;
   const isNextSession = !displaySession && !!nextInfo;
   const nextLabel = nextInfo ? `Up Next — ${formatDate(nextInfo.session.date)}` : null;
+
+  // Weekly stats for stat tiles
+  const weekDates = getWeekDates(today);
+  const scheduledDays = activePlan?.scheduled_days || [];
+  const completedThisWeek = weekDates.filter(date => data.check_ins.some(c => c.date === date && c.completed)).length;
+  const scheduledThisWeek = weekDates.filter((_, i) => scheduledDays.includes(DAY_KEYS[i])).length;
+
+  const level = getLevelFromXP(data.user.total_xp);
 
   function handleComplete() {
     const d = getData();
@@ -144,27 +168,17 @@ export default function Dashboard() {
       {newBadge && <BadgeModal badge={newBadge} onClose={() => setNewBadge(null)} />}
       {showBanner && returnMessage && <ReturnBanner message={returnMessage} state={returnStateNum} timeMessage={timeMessage} onDismiss={() => setShowBanner(false)} />}
 
-      {/* Header */}
+      {/* ── Header ── */}
       <div style={{ ...W, paddingTop: '52px', paddingBottom: '28px' }}>
-        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '1rem' }}>
-          <div>
-            <p style={{ fontSize: '0.68rem', letterSpacing: '0.16em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.35)', marginBottom: '6px' }}>
-              {getTimeGreeting()}
-            </p>
-            <h1 className="font-display" style={{ fontSize: 'clamp(1.8rem, 3.5vw, 2.6rem)', lineHeight: 1.05, marginBottom: '6px', letterSpacing: '-0.01em' }}>
-              {activePlan?.plan_label || 'Dashboard'}
-            </h1>
-            <p style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.35)' }}>
-              Week {todayInfo?.weekNumber || 1} of 4{activePlan?.frequency ? ` · ${activePlan.frequency} days/week` : ''}
-            </p>
-          </div>
-          <div style={{ textAlign: 'right', flexShrink: 0, paddingTop: '4px' }}>
-            <p className="font-mono" style={{ fontSize: '2.6rem', fontWeight: 700, lineHeight: 1, color: '#E8C162', textShadow: '0 0 32px rgba(232,193,98,0.35)' }}>
-              {data.streaks.current}
-            </p>
-            <p style={{ fontSize: '0.7rem', color: 'rgba(255,255,255,0.35)', marginTop: '4px', letterSpacing: '0.06em' }}>day streak</p>
-          </div>
-        </div>
+        <p style={{ fontSize: '0.68rem', letterSpacing: '0.16em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.3)', marginBottom: '6px' }}>
+          {getTimeGreeting()}
+        </p>
+        <h1 className="font-display" style={{ fontSize: 'clamp(1.8rem, 3.5vw, 2.6rem)', lineHeight: 1.05, letterSpacing: '-0.01em', marginBottom: '6px' }}>
+          {activePlan?.plan_label || 'Dashboard'}
+        </h1>
+        <p style={{ fontSize: '0.78rem', color: 'rgba(255,255,255,0.3)' }}>
+          Week {todayInfo?.weekNumber || nextInfo?.weekNumber || 1} of 4{activePlan?.frequency ? ` · ${activePlan.frequency} days/week` : ''}
+        </p>
         {celebrationMsg && (
           <div style={{ marginTop: '16px', padding: '10px 18px', borderRadius: '10px', background: 'rgba(74,222,128,0.06)', border: '1px solid rgba(74,222,128,0.18)', color: '#4ADE80', fontSize: '0.85rem', textAlign: 'center' }}>
             {celebrationMsg}
@@ -172,8 +186,36 @@ export default function Dashboard() {
         )}
       </div>
 
-      {/* Content */}
-      <div style={{ ...W, display: 'flex', flexDirection: 'column', gap: '14px' }}>
+      {/* ── Content ── */}
+      <div style={{ ...W, display: 'flex', flexDirection: 'column', gap: '12px' }}>
+
+        {/* ── Stat tiles (3 across) ── */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px' }}>
+          <StatTile
+            label="Streak"
+            value={data.streaks.current === 0 ? '—' : data.streaks.current}
+            sub={data.streaks.current > 0 ? `best · ${data.streaks.best}` : 'Start today'}
+            valueColor={data.streaks.current > 0 ? '#E8C162' : 'rgba(255,255,255,0.25)'}
+            accent={data.streaks.current > 0 ? '#E8C162' : null}
+          />
+          <StatTile
+            label="This Week"
+            value={`${completedThisWeek}/${scheduledThisWeek}`}
+            sub="sessions done"
+          />
+          <StatTile
+            label="Level"
+            value={level.level}
+            sub={level.title}
+            valueColor="#E8C162"
+            accent="#E8C162"
+          />
+        </div>
+
+        {/* ── Weekly calendar ── */}
+        <WeeklyGrid plan={activePlan} checkIns={data.check_ins} />
+
+        {/* ── Session card ── */}
         <SessionCard
           session={sessionForCard}
           isNextSession={isNextSession}
@@ -195,18 +237,17 @@ export default function Dashboard() {
           </button>
         )}
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '14px' }}>
-          <StreakCounter current={data.streaks.current} best={data.streaks.best} consecutiveMisses={missedCount} />
-          <WeeklyGrid plan={activePlan} checkIns={data.check_ins} />
+        {/* ── XP bar + Tip side by side ── */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', alignItems: 'start' }}>
+          <XPBar totalXP={data.user.total_xp} recentXP={recentXP} />
+          {tip && <TipCard tip={tip} onSeeMore={() => navigate('/tips')} />}
         </div>
 
-        <XPBar totalXP={data.user.total_xp} recentXP={recentXP} />
-        <TipCard tip={tip} onSeeMore={() => navigate('/tips')} />
-
+        {/* ── Recent badges ── */}
         {recentBadges.length > 0 && (
-          <div style={{ borderRadius: '16px', padding: '22px 24px', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)', boxShadow: '0 2px 24px rgba(0,0,0,0.35)' }}>
+          <div style={{ borderRadius: '16px', padding: '22px 24px', background: 'linear-gradient(145deg, #1a1a1a 0%, #111111 100%)', border: '1px solid rgba(255,255,255,0.07)', boxShadow: '0 2px 20px rgba(0,0,0,0.4)' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px' }}>
-              <p style={{ fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.3)' }}>Recent Badges</p>
+              <p style={{ fontSize: '0.55rem', fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.28)' }}>Recent Badges</p>
               <button onClick={() => navigate('/profile')} style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.3)', background: 'none', border: 'none', cursor: 'pointer' }}>View all →</button>
             </div>
             <div style={{ display: 'flex', gap: '8px' }}>
