@@ -219,7 +219,7 @@ export default function Landing() {
 
       {/* ── Hero ── */}
       <section style={{
-        minHeight: '100dvh',
+        minHeight: 'calc(100dvh - 130px)',
         display: 'flex', flexDirection: 'column',
         alignItems: 'center', justifyContent: 'center',
         textAlign: 'center', padding: '72px 5vw 3rem',
