@@ -219,7 +219,7 @@ export default function Landing() {
 
       {/* ── Hero ── */}
       <section style={{
-        minHeight: 'calc(100dvh - 130px)',
+        minHeight: 'calc(100dvh - 280px)',
         display: 'flex', flexDirection: 'column',
         alignItems: 'center', justifyContent: 'center',
         textAlign: 'center', padding: '72px 5vw 3rem',
@@ -311,7 +311,7 @@ export default function Landing() {
       </section>
 
       {/* ── Section 1: The Science ── */}
-      <section style={{ borderTop: '1px solid var(--color-border)', padding: '7rem 5vw' }}>
+      <section style={{ borderTop: '1px solid var(--color-border)', padding: '3rem 5vw 7rem' }}>
         <div className="landing-grid-2col" style={{ maxWidth: '1200px', margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6rem', alignItems: 'center' }}>
           <div>
             <p className="font-mono" style={{ fontSize: '0.72rem', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--color-text-3)', marginBottom: '1.5rem' }}>
