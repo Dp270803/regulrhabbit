@@ -171,31 +171,62 @@ export default function PlanBuilder() {
     if (!step) return null;
 
     if (step.type === 'multi_select') {
+      const limit = answers.frequency || 7;
       return (
-        <div>
+        <div style={{ width: '100%' }}>
+          <p style={{ fontSize: '0.75rem', color: 'var(--color-text-3)', marginBottom: '10px' }}>
+            Select <strong style={{ color: 'var(--color-text-1)' }}>{limit}</strong> day{limit > 1 ? 's' : ''}
+            {multiSelect.length > 0 && <span style={{ color: multiSelect.length === limit ? 'var(--color-green)' : 'var(--color-gold)' }}> · {multiSelect.length}/{limit} chosen</span>}
+          </p>
           <div className="flex flex-wrap gap-2 mb-3">
-            {step.options.map(opt => (
-              <OptionButton
-                key={opt.value}
-                label={opt.label}
-                selected={multiSelect.includes(opt.value)}
-                onClick={() => {
-                  setMultiSelect(prev =>
-                    prev.includes(opt.value)
-                      ? prev.filter(v => v !== opt.value)
-                      : [...prev, opt.value]
-                  );
-                }}
-              />
-            ))}
+            {step.options.map(opt => {
+              const isSelected = multiSelect.includes(opt.value);
+              const isDisabled = !isSelected && multiSelect.length >= limit;
+              return (
+                <button
+                  key={opt.value}
+                  onClick={() => {
+                    if (isDisabled) return;
+                    setMultiSelect(prev =>
+                      prev.includes(opt.value)
+                        ? prev.filter(v => v !== opt.value)
+                        : [...prev, opt.value]
+                    );
+                  }}
+                  style={{
+                    padding: '8px 16px',
+                    borderRadius: '100px',
+                    fontSize: '0.875rem',
+                    fontWeight: 500,
+                    cursor: isDisabled ? 'not-allowed' : 'pointer',
+                    transition: 'all 0.15s',
+                    background: isSelected ? 'var(--color-text-1)' : 'transparent',
+                    color: isSelected ? 'var(--color-bg)' : isDisabled ? 'rgba(255,255,255,0.2)' : 'var(--color-text-1)',
+                    border: `1px solid ${isSelected ? 'var(--color-text-1)' : isDisabled ? 'rgba(255,255,255,0.1)' : 'var(--color-border-strong)'}`,
+                    opacity: isDisabled ? 0.4 : 1,
+                  }}
+                >
+                  {opt.label}
+                </button>
+              );
+            })}
           </div>
           {multiSelect.length > 0 && (
             <button
               onClick={handleMultiSelectConfirm}
-              className="w-full py-2.5 rounded-full text-sm font-medium cursor-pointer transition-opacity hover:opacity-90"
-              style={{ background: 'var(--color-text-1)', color: 'var(--color-bg)' }}
+              disabled={multiSelect.length !== limit}
+              style={{
+                width: '100%', padding: '12px',
+                borderRadius: '100px', fontSize: '0.95rem', fontWeight: 600,
+                cursor: multiSelect.length === limit ? 'pointer' : 'not-allowed',
+                transition: 'opacity 0.2s',
+                background: multiSelect.length === limit ? 'var(--color-text-1)' : 'rgba(255,255,255,0.1)',
+                color: multiSelect.length === limit ? 'var(--color-bg)' : 'rgba(255,255,255,0.3)',
+                border: 'none',
+                opacity: multiSelect.length === limit ? 1 : 0.6,
+              }}
             >
-              Confirm ({multiSelect.length} days selected)
+              {multiSelect.length === limit ? `Confirm — ${multiSelect.map(d => d.charAt(0).toUpperCase() + d.slice(1, 3)).join(', ')}` : `Pick ${limit - multiSelect.length} more`}
             </button>
           )}
         </div>
@@ -203,6 +234,29 @@ export default function PlanBuilder() {
     }
 
     if (!step.options) return null;
+
+    // Confirm step: single prominent CTA
+    if (currentStep === 'confirm') {
+      const opt = step.options[0];
+      return (
+        <button
+          onClick={() => handleOptionSelect(opt)}
+          style={{
+            width: '100%', padding: '1rem 2rem',
+            borderRadius: '100px',
+            background: '#ffffff', color: '#000000',
+            border: 'none', fontSize: '1.05rem', fontWeight: 700,
+            cursor: 'pointer', transition: 'opacity 0.2s',
+            letterSpacing: '0.01em',
+            boxShadow: '0 0 24px rgba(255,255,255,0.12)',
+          }}
+          onMouseEnter={e => e.currentTarget.style.opacity = '0.88'}
+          onMouseLeave={e => e.currentTarget.style.opacity = '1'}
+        >
+          {opt.label}
+        </button>
+      );
+    }
 
     return step.options.map(opt => (
       <OptionButton
