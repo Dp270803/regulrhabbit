@@ -22,6 +22,16 @@ import messagesData from '../data/messages.json';
 
 const DAY_KEYS = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
 
+function getMotivationalNote(streak, sessionsLeft, isCompleted) {
+  if (isCompleted) return 'Session done. Recovery starts now.';
+  if (streak >= 14) return `${streak}-day streak — elite consistency.`;
+  if (streak >= 7) return `${streak} days straight — momentum is everything.`;
+  if (streak >= 3) return `${streak} days in a row — the habit is forming.`;
+  if (sessionsLeft === 1) return 'One session left this week — finish strong.';
+  if (sessionsLeft > 1) return `${sessionsLeft} sessions remaining this week.`;
+  return 'New day, new opportunity to build.';
+}
+
 function getTimeGreeting() {
   const h = new Date().getHours();
   if (h < 12) return 'Good morning';
@@ -172,16 +182,31 @@ export default function Dashboard() {
       {showBanner && returnMessage && <ReturnBanner message={returnMessage} state={returnStateNum} timeMessage={timeMessage} onDismiss={() => setShowBanner(false)} />}
 
       {/* ── Header ── */}
-      <div style={{ ...W, paddingTop: '52px', paddingBottom: '28px' }}>
-        <p style={{ fontSize: '0.68rem', letterSpacing: '0.16em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.3)', marginBottom: '6px' }}>
-          {getTimeGreeting()}
-        </p>
-        <h1 className="font-display" style={{ fontSize: 'clamp(1.8rem, 3.5vw, 2.6rem)', lineHeight: 1.05, letterSpacing: '-0.01em', marginBottom: '6px' }}>
-          {activePlan?.plan_label || 'Dashboard'}
-        </h1>
-        <p style={{ fontSize: '0.78rem', color: 'rgba(255,255,255,0.3)' }}>
-          Week {todayInfo?.weekNumber || nextInfo?.weekNumber || 1} of 4{activePlan?.frequency ? ` · ${activePlan.frequency} days/week` : ''}
-        </p>
+      <div style={{ ...W, paddingTop: '48px', paddingBottom: '24px' }}>
+        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '24px', flexWrap: 'wrap' }}>
+          <div>
+            <p style={{ fontSize: '0.65rem', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.25)', marginBottom: '8px' }}>
+              {getTimeGreeting()} · Week {todayInfo?.weekNumber || nextInfo?.weekNumber || 1} of 4
+            </p>
+            <h1 className="font-display" style={{ fontSize: 'clamp(2rem, 4vw, 3.2rem)', lineHeight: 1.02, letterSpacing: '-0.02em', marginBottom: '0' }}>
+              {activePlan?.plan_label || 'Dashboard'}
+            </h1>
+          </div>
+          {/* Motivational note pill */}
+          <div style={{
+            alignSelf: 'flex-end',
+            padding: '8px 16px',
+            borderRadius: '100px',
+            background: 'rgba(232,193,98,0.07)',
+            border: '1px solid rgba(232,193,98,0.18)',
+            fontSize: '0.78rem',
+            color: 'rgba(232,193,98,0.8)',
+            whiteSpace: 'nowrap',
+            flexShrink: 0,
+          }}>
+            {getMotivationalNote(data.streaks.current, scheduledThisWeek - completedThisWeek, isCompleted)}
+          </div>
+        </div>
         {celebrationMsg && (
           <div style={{ marginTop: '16px', padding: '10px 18px', borderRadius: '10px', background: 'rgba(74,222,128,0.06)', border: '1px solid rgba(74,222,128,0.18)', color: '#4ADE80', fontSize: '0.85rem', textAlign: 'center' }}>
             {celebrationMsg}
