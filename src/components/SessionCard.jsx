@@ -51,7 +51,7 @@ function CollapsibleBlock({ label, duration, text }) {
   );
 }
 
-export default function SessionCard({ session, onComplete, isCompleted, isRestDay, equipment, isNextSession, nextLabel }) {
+export default function SessionCard({ session, onComplete, isCompleted, isCooldown, isRestDay, equipment, isNextSession, nextLabel }) {
   const [checked, setChecked] = useState({});
   const [alts, setAlts] = useState({});
 
@@ -255,29 +255,37 @@ export default function SessionCard({ session, onComplete, isCompleted, isRestDa
       {/* ── Complete button ── */}
       {!isCompleted && !isNextSession && (
         <div style={{ padding: '24px 32px 32px', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
-          <button
-            onClick={onComplete}
-            style={{
-              width: '100%', padding: '18px',
-              background: allDone
-                ? 'linear-gradient(135deg, #4ade80 0%, #22c55e 100%)'
-                : 'var(--color-text-1)',
-              color: allDone ? '#000' : 'var(--color-bg)',
-              border: 'none', borderRadius: '12px',
-              fontSize: '1rem', fontWeight: 600, cursor: 'pointer',
-              letterSpacing: '0.02em',
-              transition: 'all 0.25s ease',
-              boxShadow: allDone ? '0 0 28px rgba(74,222,128,0.35)' : 'none',
-            }}
-            onMouseEnter={e => e.currentTarget.style.opacity = '0.9'}
-            onMouseLeave={e => e.currentTarget.style.opacity = '1'}
-          >
-            {allDone
-              ? '✓ All done — Mark Complete'
-              : doneCount > 0
-              ? `Mark Complete (${doneCount}/${exercises.length} done)`
-              : 'Mark Complete'}
-          </button>
+          {isCooldown ? (
+            <div style={{ padding: '16px', borderRadius: '12px', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', textAlign: 'center' }}>
+              <p style={{ fontSize: '0.9rem', color: 'rgba(255,255,255,0.4)', letterSpacing: '0.02em' }}>
+                Session logged — come back tomorrow
+              </p>
+            </div>
+          ) : (
+            <button
+              onClick={onComplete}
+              style={{
+                width: '100%', padding: '18px',
+                background: allDone
+                  ? 'linear-gradient(135deg, #4ade80 0%, #22c55e 100%)'
+                  : '#fff',
+                color: allDone ? '#000' : '#000',
+                border: 'none', borderRadius: '12px',
+                fontSize: '1rem', fontWeight: 600, cursor: 'pointer',
+                letterSpacing: '0.02em',
+                transition: 'all 0.25s ease',
+                boxShadow: allDone ? '0 0 28px rgba(74,222,128,0.35)' : 'none',
+              }}
+              onMouseEnter={e => e.currentTarget.style.opacity = '0.9'}
+              onMouseLeave={e => e.currentTarget.style.opacity = '1'}
+            >
+              {allDone
+                ? '✓ All done — Mark Complete'
+                : doneCount > 0
+                ? `Mark Complete (${doneCount}/${exercises.length} done)`
+                : 'Mark Complete'}
+            </button>
+          )}
         </div>
       )}
     </div>

@@ -169,6 +169,10 @@ export default function Dashboard() {
   }
 
   const recentBadges = data.badges.filter(b => b.earned).slice(-3).reverse();
+  // Cooldown: block logging if already completed today (any check-in in the last 6h)
+  const sixHoursAgo = new Date(Date.now() - 6 * 60 * 60 * 1000).toISOString();
+  const recentCompletedToday = data.check_ins.some(c => c.date === today && c.completed && c.completed_at && c.completed_at > sixHoursAgo);
+
   const W = { maxWidth: '1100px', margin: '0 auto', padding: '0 clamp(16px, 4vw, 60px)' };
 
   return (
@@ -254,14 +258,15 @@ export default function Dashboard() {
           nextLabel={nextLabel}
           onComplete={handleComplete}
           isCompleted={isCompleted}
+          isCooldown={recentCompletedToday}
           isRestDay={rest && !todaySession && !nextInfo}
           equipment={activePlan?.equipment}
         />
 
-        {!todaySession && !rest && !isCompleted && (
+        {!todaySession && !rest && !isCompleted && !recentCompletedToday && (
           <button
             onClick={handleBonusSession}
-            style={{ width: '100%', padding: '13px', fontSize: '0.85rem', borderRadius: '12px', border: '1px dashed rgba(255,255,255,0.12)', color: 'rgba(255,255,255,0.3)', background: 'transparent', cursor: 'pointer', transition: 'all 0.2s', letterSpacing: '0.03em' }}
+            style={{ width: '100%', padding: '13px', fontSize: '0.9rem', borderRadius: '12px', border: '1px dashed rgba(255,255,255,0.12)', color: 'rgba(255,255,255,0.3)', background: 'transparent', cursor: 'pointer', transition: 'all 0.2s', letterSpacing: '0.03em' }}
             onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.25)'; e.currentTarget.style.color = 'rgba(255,255,255,0.6)'; }}
             onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.12)'; e.currentTarget.style.color = 'rgba(255,255,255,0.3)'; }}
           >

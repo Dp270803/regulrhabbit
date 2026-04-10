@@ -1,9 +1,20 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ChevronDown, ChevronUp, Check, Clock } from 'lucide-react';
+import { Check, Clock, ChevronDown, ChevronUp } from 'lucide-react';
 import { getData } from '../utils/storage';
 import { formatDate } from '../utils/dateUtils';
 import { trackPageView } from '../utils/analytics';
+
+const W = { maxWidth: '900px', margin: '0 auto', padding: '0 clamp(16px, 4vw, 40px)' };
+
+function parseExercises(detail) {
+  if (!detail) return [];
+  return detail.split(',').map(s => s.trim()).map(item => {
+    const match = item.match(/^(.+?)\s+(\d+x\d+)(\s+.*)?$/);
+    if (match) return { name: match[1].trim(), sets: match[2], note: match[3]?.trim() || '' };
+    return { name: item, sets: '', note: '' };
+  }).filter(e => e.name.length > 1);
+}
 
 export default function PlanView() {
   const navigate = useNavigate();
@@ -15,33 +26,19 @@ export default function PlanView() {
   useEffect(() => {
     trackPageView('plan');
     const d = getData();
-    if (!d.onboarding_complete) {
-      navigate('/');
-      return;
-    }
+    if (!d.onboarding_complete) { navigate('/'); return; }
     setData(d);
     const active = d.plans.find(p => p.status === 'active');
-    if (active) {
-      setSelectedPlan(active);
-      setSelectedWeek(active.current_week || 1);
-    }
+    if (active) { setSelectedPlan(active); setSelectedWeek(active.current_week || 1); }
   }, [navigate]);
 
   if (!data || !selectedPlan) {
     return (
-      <div className="min-h-dvh pb-28" style={{ background: 'var(--color-bg)' }}>
-        <div
-          className="px-4 pt-14 pb-6 max-w-[480px] mx-auto"
-        >
-          <h1 className="font-display text-3xl" style={{ color: 'var(--color-text-1)' }}>Plan</h1>
-        </div>
-        <div className="max-w-[480px] mx-auto px-4 py-12 text-center">
-          <p className="text-sm" style={{ color: 'var(--color-text-3)' }}>No active plan.</p>
-          <button
-            onClick={() => navigate('/onboarding')}
-            className="mt-6 px-8 py-3 rounded-2xl text-sm font-medium cursor-pointer transition-opacity hover:opacity-80"
-            style={{ background: 'var(--color-text-1)', color: 'var(--color-bg)' }}
-          >
+      <div style={{ minHeight: '100dvh', background: 'var(--color-bg)', paddingBottom: '7rem' }}>
+        <div style={{ ...W, paddingTop: '3.5rem' }}>
+          <h1 style={{ fontFamily: 'var(--font-display)', fontSize: '2rem', color: '#fff' }}>Plan</h1>
+          <p style={{ marginTop: '3rem', fontSize: '0.95rem', color: 'rgba(255,255,255,0.35)', textAlign: 'center' }}>No active plan.</p>
+          <button onClick={() => navigate('/onboarding')} style={{ marginTop: '1.5rem', display: 'block', marginLeft: 'auto', marginRight: 'auto', padding: '0.75rem 2rem', borderRadius: '100px', background: '#fff', color: '#000', border: 'none', fontSize: '0.9rem', fontWeight: 600, cursor: 'pointer' }}>
             Create a Plan
           </button>
         </div>
@@ -49,91 +46,64 @@ export default function PlanView() {
     );
   }
 
-  const ACTIVITY_ICONS = { gym: 'Gym', swimming: 'Swimming', running: 'Running', yoga: 'Yoga', dance: 'Dance', singing: 'Singing', instrument: 'Instrument' };
-
   const currentWeekData = selectedPlan.weeks.find(w => w.week_number === selectedWeek);
   const totalWeeks = selectedPlan.weeks.length;
-  const progress = ((selectedWeek - 1) / totalWeeks) * 100;
+  const weekProgress = ((selectedWeek - 1) / totalWeeks) * 100;
 
   return (
-    <div className="min-h-dvh pb-28" style={{ background: 'var(--color-bg)' }}>
-      {/* Header */}
-      <div className="px-4 pt-14 pb-6 max-w-[480px] mx-auto">
-        <div className="flex items-end justify-between">
-          <div>
-            <p className="text-xs font-medium uppercase tracking-[0.15em] mb-1" style={{ color: 'var(--color-text-3)' }}>
-              Your Plan
-            </p>
-            <h1 className="font-display text-3xl" style={{ color: 'var(--color-text-1)' }}>
-              {ACTIVITY_ICONS[selectedPlan.activity] || selectedPlan.activity}
-            </h1>
-          </div>
-          <p className="text-xs pb-1" style={{ color: 'var(--color-text-3)' }}>
-            Week {selectedWeek} of {totalWeeks}
+    <div style={{ minHeight: '100dvh', background: 'radial-gradient(ellipse 60% 30% at 50% 0%, rgba(232,193,98,0.04) 0%, transparent 100%), #080808', color: '#fff', paddingBottom: '7rem' }}>
+
+      {/* ── Header ── */}
+      <div style={{ ...W, paddingTop: '3rem', paddingBottom: '2rem' }}>
+        <p style={{ fontSize: '0.62rem', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.28)', marginBottom: '8px' }}>
+          Your Plan
+        </p>
+        <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: '1rem', flexWrap: 'wrap' }}>
+          <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(1.8rem, 3.5vw, 2.8rem)', lineHeight: 1.05, letterSpacing: '-0.01em' }}>
+            {selectedPlan.plan_label || selectedPlan.activity}
+          </h1>
+          <p style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.35)', paddingBottom: '4px' }}>
+            {selectedPlan.frequency} days/week · {totalWeeks} weeks
           </p>
         </div>
 
-        {/* Progress bar */}
-        <div
-          className="w-full h-px mt-5 rounded-full overflow-hidden"
-          style={{ background: 'var(--color-border)' }}
-        >
-          <div
-            className="h-full rounded-full transition-all duration-500"
-            style={{ width: `${progress}%`, background: 'var(--color-gold)' }}
-          />
+        {/* Plan progress bar */}
+        <div style={{ marginTop: '16px', height: '2px', background: 'rgba(255,255,255,0.06)', borderRadius: '2px', overflow: 'hidden' }}>
+          <div style={{ height: '100%', background: '#E8C162', borderRadius: '2px', width: `${weekProgress}%`, transition: 'width 0.5s ease' }} />
         </div>
       </div>
 
-      <div className="max-w-[480px] mx-auto px-4 space-y-6">
-        {/* Plan selector if multiple plans */}
-        {data.plans.filter(p => p.status === 'active').length > 1 && (
-          <div className="flex gap-2 overflow-x-auto pb-1">
-            {data.plans.filter(p => p.status === 'active').map(plan => {
-              const isActive = selectedPlan.id === plan.id;
-              return (
-                <button
-                  key={plan.id}
-                  onClick={() => { setSelectedPlan(plan); setSelectedWeek(plan.current_week || 1); }}
-                  className="px-4 py-1.5 rounded-full text-xs whitespace-nowrap cursor-pointer transition-all"
-                  style={{
-                    background: isActive ? 'var(--color-text-1)' : 'transparent',
-                    color: isActive ? 'var(--color-bg)' : 'var(--color-text-2)',
-                    border: isActive ? '1px solid var(--color-text-1)' : '1px solid var(--color-border-strong)',
-                  }}
-                >
-                  {ACTIVITY_ICONS[plan.activity] || plan.activity}
-                </button>
-              );
-            })}
-          </div>
-        )}
-
-        {/* Week Tabs */}
-        <div className="flex gap-2 overflow-x-auto pb-1">
+      <div style={{ ...W }}>
+        {/* ── Week Tabs ── */}
+        <div style={{ display: 'flex', gap: '8px', overflowX: 'auto', paddingBottom: '4px', marginBottom: '20px' }}>
           {selectedPlan.weeks.map(week => {
             const completedCount = week.sessions.filter(s => s.status === 'completed').length;
-            const totalCount = week.sessions.filter(s => s.type === 'scheduled').length;
+            const scheduledCount = week.sessions.filter(s => !s.type || s.type === 'scheduled').length;
             const isActive = selectedWeek === week.week_number;
             return (
               <button
                 key={week.week_number}
                 onClick={() => setSelectedWeek(week.week_number)}
-                className="flex items-center gap-1.5 px-4 py-2 rounded-full text-sm whitespace-nowrap cursor-pointer transition-all"
                 style={{
-                  background: isActive ? 'var(--color-text-1)' : 'transparent',
-                  color: isActive ? 'var(--color-bg)' : 'var(--color-text-2)',
-                  border: isActive ? '1px solid var(--color-text-1)' : '1px solid var(--color-border-strong)',
-                  fontWeight: isActive ? '600' : '400',
+                  padding: '8px 18px',
+                  borderRadius: '100px',
+                  fontSize: '0.85rem',
+                  fontWeight: isActive ? 600 : 400,
+                  whiteSpace: 'nowrap',
+                  cursor: 'pointer',
+                  border: isActive ? '1px solid #fff' : '1px solid rgba(255,255,255,0.15)',
+                  background: isActive ? '#fff' : 'transparent',
+                  color: isActive ? '#000' : 'rgba(255,255,255,0.5)',
+                  transition: 'all 0.15s',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px',
                 }}
               >
-                <span>Week {week.week_number}</span>
-                {totalCount > 0 && (
-                  <span
-                    className="text-[10px]"
-                    style={{ opacity: 0.6 }}
-                  >
-                    {completedCount}/{totalCount}
+                Week {week.week_number}
+                {completedCount > 0 && (
+                  <span style={{ fontSize: '0.72rem', opacity: 0.65 }}>
+                    {completedCount}/{scheduledCount}
                   </span>
                 )}
               </button>
@@ -141,100 +111,119 @@ export default function PlanView() {
           })}
         </div>
 
-        {/* Sessions */}
-        <div className="space-y-2">
-          {currentWeekData?.sessions.map(session => {
+        {/* ── Session Table ── */}
+        <div style={{
+          background: 'linear-gradient(145deg, #1a1a1a, #111)',
+          border: '1px solid rgba(255,255,255,0.07)',
+          borderRadius: '20px',
+          overflow: 'hidden',
+          boxShadow: '0 4px 28px rgba(0,0,0,0.45)',
+        }}>
+          {/* Table header */}
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: '100px 1fr 80px 70px 36px',
+            gap: '0 16px',
+            padding: '14px 24px',
+            borderBottom: '1px solid rgba(255,255,255,0.08)',
+            alignItems: 'center',
+          }}>
+            {['Day', 'Session', 'Duration', 'Status', ''].map(h => (
+              <p key={h} style={{ fontSize: '0.68rem', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.3)' }}>{h}</p>
+            ))}
+          </div>
+
+          {/* Session rows */}
+          {currentWeekData?.sessions.map((session, idx) => {
             const isCompleted = session.status === 'completed';
             const isMissed = session.status === 'missed';
+            const isExpanded = expandedSession === session.id;
+            const exercises = session.blocks?.find(b => b.type === 'main') ? parseExercises(session.blocks.find(b => b.type === 'main').detail) : [];
+
             return (
-              <div
-                key={session.id}
-                className="rounded-2xl overflow-hidden transition-all"
-                style={{
-                  background: isCompleted
-                    ? 'rgba(74,222,128,0.05)'
-                    : 'var(--color-surface)',
-                  border: isCompleted
-                    ? '1px solid rgba(74,222,128,0.2)'
-                    : isMissed
-                    ? '1px solid rgba(248,113,113,0.2)'
-                    : '1px solid var(--color-border)',
-                }}
-              >
-                <div className="flex items-center justify-between px-5 py-4">
-                  <div className="flex-1 min-w-0">
-                    <p
-                      className="text-[10px] font-medium uppercase tracking-wider mb-1 capitalize"
-                      style={{
-                        color: isCompleted
-                          ? 'var(--color-green)'
-                          : isMissed
-                          ? 'var(--color-red)'
-                          : 'var(--color-text-3)',
-                      }}
-                    >
-                      {session.day}{session.date && ` · ${formatDate(session.date)}`}
-                    </p>
-                    <p
-                      className="text-sm font-medium truncate"
-                      style={{ color: 'var(--color-text-1)' }}
-                    >
-                      {session.title}
-                    </p>
-                    <div
-                      className="flex items-center gap-1.5 mt-1.5"
-                      style={{ color: 'var(--color-text-3)' }}
-                    >
-                      <Clock size={11} />
-                      <span className="text-xs">{session.duration_minutes} min</span>
-                    </div>
+              <div key={session.id} style={{ borderBottom: idx < currentWeekData.sessions.length - 1 ? '1px solid rgba(255,255,255,0.05)' : 'none' }}>
+                {/* Main row */}
+                <div
+                  style={{
+                    display: 'grid',
+                    gridTemplateColumns: '100px 1fr 80px 70px 36px',
+                    gap: '0 16px',
+                    padding: '18px 24px',
+                    alignItems: 'center',
+                    cursor: session.blocks ? 'pointer' : 'default',
+                    background: isCompleted ? 'rgba(74,222,128,0.03)' : isMissed ? 'rgba(248,113,113,0.02)' : 'transparent',
+                    transition: 'background 0.15s',
+                  }}
+                  onClick={() => session.blocks && setExpandedSession(isExpanded ? null : session.id)}
+                  onMouseEnter={e => { if (session.blocks && !isExpanded) e.currentTarget.style.background = 'rgba(255,255,255,0.02)'; }}
+                  onMouseLeave={e => { e.currentTarget.style.background = isCompleted ? 'rgba(74,222,128,0.03)' : isMissed ? 'rgba(248,113,113,0.02)' : 'transparent'; }}
+                >
+                  {/* Day + date */}
+                  <div>
+                    <p style={{ fontSize: '0.85rem', fontWeight: 600, color: '#fff', textTransform: 'capitalize' }}>{session.day}</p>
+                    {session.date && <p style={{ fontSize: '0.68rem', color: 'rgba(255,255,255,0.3)', marginTop: '2px' }}>{formatDate(session.date)}</p>}
                   </div>
 
-                  <div className="flex items-center gap-3 ml-3 shrink-0">
+                  {/* Session title */}
+                  <div>
+                    <p style={{ fontSize: '0.95rem', color: isCompleted ? 'rgba(255,255,255,0.7)' : '#fff', fontWeight: 500 }}>{session.title}</p>
+                    {exercises.length > 0 && (
+                      <p style={{ fontSize: '0.68rem', color: 'rgba(255,255,255,0.3)', marginTop: '2px' }}>{exercises.length} exercises</p>
+                    )}
+                  </div>
+
+                  {/* Duration */}
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '5px', color: 'rgba(255,255,255,0.35)' }}>
+                    <Clock size={12} strokeWidth={1.8} />
+                    <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.82rem' }}>{session.duration_minutes}m</span>
+                  </div>
+
+                  {/* Status badge */}
+                  <div>
                     {isCompleted && (
-                      <div
-                        className="w-6 h-6 rounded-full flex items-center justify-center"
-                        style={{ background: 'var(--color-green)' }}
-                      >
-                        <Check size={13} color="#000" strokeWidth={3} />
-                      </div>
+                      <span style={{ fontSize: '0.65rem', fontWeight: 600, color: '#4ADE80', background: 'rgba(74,222,128,0.1)', border: '1px solid rgba(74,222,128,0.25)', borderRadius: '100px', padding: '3px 8px' }}>Done</span>
                     )}
-                    {session.blocks && (
-                      <button
-                        onClick={() => setExpandedSession(expandedSession === session.id ? null : session.id)}
-                        className="cursor-pointer transition-opacity hover:opacity-60"
-                        style={{ color: 'var(--color-text-3)' }}
-                      >
-                        {expandedSession === session.id ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
-                      </button>
+                    {isMissed && (
+                      <span style={{ fontSize: '0.65rem', fontWeight: 600, color: '#F87171', background: 'rgba(248,113,113,0.08)', border: '1px solid rgba(248,113,113,0.2)', borderRadius: '100px', padding: '3px 8px' }}>Missed</span>
                     )}
+                    {!isCompleted && !isMissed && (
+                      <span style={{ fontSize: '0.65rem', color: 'rgba(255,255,255,0.28)', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '100px', padding: '3px 8px' }}>Upcoming</span>
+                    )}
+                  </div>
+
+                  {/* Expand toggle */}
+                  <div style={{ color: 'rgba(255,255,255,0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    {session.blocks && (isExpanded ? <ChevronUp size={15} /> : <ChevronDown size={15} />)}
                   </div>
                 </div>
 
-                {expandedSession === session.id && session.blocks && (
-                  <div
-                    className="px-5 pb-4 space-y-3 animate-fade-in"
-                    style={{ borderTop: '1px solid var(--color-border)' }}
-                  >
-                    <div className="pt-3 space-y-3">
-                      {session.blocks.map((block, i) => (
-                        <div
-                          key={i}
-                          className="pl-3"
-                          style={{ borderLeft: '2px solid var(--color-border-strong)' }}
-                        >
-                          <p
-                            className="text-[10px] font-medium uppercase tracking-widest mb-0.5"
-                            style={{ color: 'var(--color-text-3)' }}
-                          >
-                            {block.type}
-                          </p>
-                          <p className="text-xs" style={{ color: 'var(--color-text-2)' }}>
-                            {block.detail}
-                          </p>
+                {/* Expanded exercise list */}
+                {isExpanded && session.blocks && (
+                  <div style={{ padding: '0 24px 20px', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+                    {exercises.length > 0 && (
+                      <div style={{ marginTop: '16px' }}>
+                        <p style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.28)', marginBottom: '12px' }}>
+                          Exercises
+                        </p>
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 60px', gap: '0 16px' }}>
+                          {exercises.map((ex, i) => (
+                            <div key={i} style={{ display: 'contents' }}>
+                              <p style={{ fontSize: '0.88rem', color: '#fff', padding: '8px 0', borderBottom: i < exercises.length - 1 ? '1px solid rgba(255,255,255,0.04)' : 'none' }}>{ex.name}</p>
+                              <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.85rem', color: '#E8C162', fontWeight: 600, padding: '8px 0', borderBottom: i < exercises.length - 1 ? '1px solid rgba(255,255,255,0.04)' : 'none', textAlign: 'center' }}>{ex.sets || '—'}</p>
+                            </div>
+                          ))}
                         </div>
-                      ))}
-                    </div>
+                      </div>
+                    )}
+                    {/* Warmup / Cooldown blocks */}
+                    {session.blocks.filter(b => b.type !== 'main').map((block, i) => (
+                      <div key={i} style={{ marginTop: '12px', paddingTop: '12px', borderTop: i === 0 && exercises.length > 0 ? '1px solid rgba(255,255,255,0.06)' : 'none' }}>
+                        <p style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.28)', marginBottom: '6px' }}>
+                          {block.type}
+                        </p>
+                        <p style={{ fontSize: '0.85rem', color: 'rgba(255,255,255,0.5)', lineHeight: 1.65 }}>{block.detail}</p>
+                      </div>
+                    ))}
                   </div>
                 )}
               </div>
@@ -242,24 +231,13 @@ export default function PlanView() {
           })}
         </div>
 
-        {/* Plan Actions */}
-        <div className="pt-2 pb-4">
+        {/* New plan button */}
+        <div style={{ marginTop: '24px', paddingBottom: '1rem' }}>
           <button
             onClick={() => navigate('/onboarding')}
-            className="w-full py-3 rounded-2xl text-sm cursor-pointer transition-all"
-            style={{
-              border: '1px solid var(--color-border-strong)',
-              color: 'var(--color-text-2)',
-              background: 'transparent',
-            }}
-            onMouseEnter={e => {
-              e.currentTarget.style.borderColor = 'var(--color-text-1)';
-              e.currentTarget.style.color = 'var(--color-text-1)';
-            }}
-            onMouseLeave={e => {
-              e.currentTarget.style.borderColor = 'var(--color-border-strong)';
-              e.currentTarget.style.color = 'var(--color-text-2)';
-            }}
+            style={{ width: '100%', padding: '14px', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.12)', background: 'transparent', color: 'rgba(255,255,255,0.4)', fontSize: '0.9rem', cursor: 'pointer', transition: 'all 0.2s' }}
+            onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.3)'; e.currentTarget.style.color = '#fff'; }}
+            onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.12)'; e.currentTarget.style.color = 'rgba(255,255,255,0.4)'; }}
           >
             Start New Plan
           </button>

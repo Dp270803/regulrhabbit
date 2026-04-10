@@ -1,32 +1,36 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Lightbulb } from 'lucide-react';
+import { ArrowLeft, Lightbulb, ChevronRight } from 'lucide-react';
 import { getData } from '../utils/storage';
 import { selectTip } from '../utils/tipSelector';
 import { trackPageView } from '../utils/analytics';
 
 const CATEGORIES = ['technique', 'recovery', 'mindset', 'progress'];
-const CATEGORY_LABELS = { technique: 'Technique', recovery: 'Recovery', mindset: 'Mindset', progress: 'Progress' };
+const CATEGORY_CONFIG = {
+  technique: { label: 'Technique', desc: 'Form, movement, and execution', color: '#60A5FA', bg: 'rgba(96,165,250,0.08)', border: 'rgba(96,165,250,0.2)' },
+  recovery: { label: 'Recovery', desc: 'Sleep, rest, and adaptation', color: '#4ADE80', bg: 'rgba(74,222,128,0.08)', border: 'rgba(74,222,128,0.2)' },
+  mindset: { label: 'Mindset', desc: 'Motivation and mental edge', color: '#E8C162', bg: 'rgba(232,193,98,0.08)', border: 'rgba(232,193,98,0.2)' },
+  progress: { label: 'Progress', desc: 'Gains, tracking, and plateaus', color: '#C084FC', bg: 'rgba(192,132,252,0.08)', border: 'rgba(192,132,252,0.2)' },
+};
+
+const W = { maxWidth: '860px', margin: '0 auto', padding: '0 clamp(16px, 4vw, 40px)' };
 
 export default function Tips() {
   const navigate = useNavigate();
   const [todayTip, setTodayTip] = useState(null);
   const [allTips, setAllTips] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
-  const [data, setData] = useState(null);
+  const [showMore, setShowMore] = useState(false);
 
   useEffect(() => {
     trackPageView('tips');
     const d = getData();
-    setData(d);
-
     const loadTips = async () => {
       const tip = await selectTip(d);
       setTodayTip(tip);
-
       const activePlan = d.plans.find(p => p.status === 'active');
       if (activePlan) {
-        const tipModules = {
+        const loaders = {
           gym: () => import('../data/tips/gym-tips.json'),
           swimming: () => import('../data/tips/swimming-tips.json'),
           running: () => import('../data/tips/running-tips.json'),
@@ -36,90 +40,63 @@ export default function Tips() {
           instrument: () => import('../data/tips/instrument-tips.json'),
         };
         try {
-          const loader = tipModules[activePlan.activity];
-          if (loader) {
-            const mod = await loader();
-            const tipData = mod.default || mod;
-            setAllTips(tipData.tips || []);
-          }
-        } catch {
-          // Tips not available
-        }
+          const loader = loaders[activePlan.activity];
+          if (loader) { const mod = await loader(); setAllTips((mod.default || mod).tips || []); }
+        } catch { /* ok */ }
       }
     };
     loadTips();
   }, []);
 
-  const filteredTips = selectedCategory
-    ? allTips.filter(t => t.category === selectedCategory)
-    : allTips;
+  const tipsByCategory = {};
+  for (const cat of CATEGORIES) {
+    tipsByCategory[cat] = allTips.filter(t => t.category === cat);
+  }
 
-  const seenTipIds = new Set(data?.tips?.seen_tip_ids || []);
-
-  const pillBase = {
-    padding: '6px 14px',
-    borderRadius: '999px',
-    fontSize: '12px',
-    whiteSpace: 'nowrap',
-    cursor: 'pointer',
-    transition: 'all 0.15s',
-  };
+  const displayedTips = selectedCategory
+    ? (showMore ? tipsByCategory[selectedCategory] : tipsByCategory[selectedCategory].slice(0, 5))
+    : [];
 
   return (
-    <div className="min-h-dvh pb-28" style={{ background: 'var(--color-bg)' }}>
+    <div style={{ minHeight: '100dvh', background: '#080808', color: '#fff', paddingBottom: '7rem' }}>
+
       {/* Header */}
-      <div className="max-w-[480px] mx-auto px-4 pt-14 pb-6">
-        <div className="flex items-center gap-3 mb-1">
-          <button
-            onClick={() => navigate(-1)}
-            className="cursor-pointer transition-opacity hover:opacity-60 flex items-center justify-center"
-            style={{ color: 'var(--color-text-3)' }}
-          >
-            <ArrowLeft size={20} />
+      <div style={{ ...W, paddingTop: '3rem', paddingBottom: '1.5rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '4px' }}>
+          <button onClick={() => navigate(-1)} style={{ color: 'rgba(255,255,255,0.35)', background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
+            <ArrowLeft size={20} strokeWidth={1.8} />
           </button>
-          <p className="text-xs font-medium uppercase tracking-[0.15em]" style={{ color: 'var(--color-text-3)' }}>
-            Tips &amp; Insights
+          <p style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.28)' }}>
+            Tips & Insights
           </p>
         </div>
-        <h1 className="font-display text-3xl pl-8" style={{ color: 'var(--color-text-1)' }}>
-          Learn
+        <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(1.8rem, 3vw, 2.4rem)', letterSpacing: '-0.01em', paddingLeft: '32px' }}>
+          {selectedCategory ? CATEGORY_CONFIG[selectedCategory]?.label : 'Learn'}
         </h1>
       </div>
 
-      <div className="max-w-[480px] mx-auto px-4 space-y-5">
-        {/* Today's Featured Tip */}
-        {todayTip && (
-          <div
-            className="rounded-2xl p-6 animate-fade-in"
-            style={{
-              background: 'rgba(232,193,98,0.07)',
-              border: '1px solid rgba(232,193,98,0.2)',
-            }}
-          >
-            <div className="flex items-start gap-4">
-              <div
-                className="w-9 h-9 rounded-full flex items-center justify-center shrink-0 mt-0.5"
-                style={{ background: 'rgba(232,193,98,0.15)' }}
-              >
-                <Lightbulb size={15} style={{ color: 'var(--color-gold)' }} />
+      <div style={{ ...W, display: 'flex', flexDirection: 'column', gap: '16px' }}>
+
+        {/* Today's featured tip */}
+        {todayTip && !selectedCategory && (
+          <div style={{
+            padding: '24px',
+            borderRadius: '20px',
+            background: 'rgba(232,193,98,0.06)',
+            border: '1px solid rgba(232,193,98,0.18)',
+          }}>
+            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '14px' }}>
+              <div style={{ width: '36px', height: '36px', borderRadius: '10px', background: 'rgba(232,193,98,0.12)', border: '1px solid rgba(232,193,98,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                <Lightbulb size={15} style={{ color: '#E8C162' }} />
               </div>
-              <div className="flex-1 min-w-0">
-                <p
-                  className="text-[10px] font-medium uppercase tracking-widest mb-2"
-                  style={{ color: 'var(--color-gold)' }}
-                >
-                  Today&apos;s Tip
+              <div style={{ flex: 1 }}>
+                <p style={{ fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', color: '#E8C162', marginBottom: '8px' }}>
+                  Today's Tip
                 </p>
-                <p
-                  className="text-sm leading-relaxed"
-                  style={{ color: 'var(--color-text-1)' }}
-                >
-                  {todayTip.text}
+                <p style={{ fontSize: '1rem', lineHeight: 1.7, color: 'rgba(255,255,255,0.85)' }}>
+                  {todayTip.text || todayTip.tip}
                 </p>
-                <p
-                  className="text-[10px] mt-3 capitalize font-medium uppercase tracking-wider"
-                  style={{ color: 'rgba(232,193,98,0.5)' }}
-                >
+                <p style={{ fontSize: '0.65rem', marginTop: '10px', textTransform: 'uppercase', letterSpacing: '0.1em', color: 'rgba(232,193,98,0.5)', fontWeight: 600 }}>
                   {todayTip.category}
                 </p>
               </div>
@@ -127,82 +104,94 @@ export default function Tips() {
           </div>
         )}
 
-        {/* Category Filter Pills */}
-        <div className="flex gap-2 overflow-x-auto pb-1">
-          <button
-            onClick={() => setSelectedCategory(null)}
-            style={{
-              ...pillBase,
-              background: !selectedCategory ? 'var(--color-text-1)' : 'transparent',
-              color: !selectedCategory ? 'var(--color-bg)' : 'var(--color-text-2)',
-              border: !selectedCategory
-                ? '1px solid var(--color-text-1)'
-                : '1px solid var(--color-border-strong)',
-              fontWeight: !selectedCategory ? '600' : '400',
-            }}
-          >
-            All
-          </button>
-          {CATEGORIES.map(cat => {
-            const isActive = selectedCategory === cat;
-            return (
-              <button
-                key={cat}
-                onClick={() => setSelectedCategory(cat)}
-                style={{
-                  ...pillBase,
-                  background: isActive ? 'var(--color-text-1)' : 'transparent',
-                  color: isActive ? 'var(--color-bg)' : 'var(--color-text-2)',
-                  border: isActive
-                    ? '1px solid var(--color-text-1)'
-                    : '1px solid var(--color-border-strong)',
-                  fontWeight: isActive ? '600' : '400',
-                }}
-              >
-                {CATEGORY_LABELS[cat]}
-              </button>
-            );
-          })}
-        </div>
-
-        {/* Tips List */}
-        <div className="space-y-2">
-          {filteredTips.map(tip => {
-            const isSeen = seenTipIds.has(tip.id);
-            return (
-              <div
-                key={tip.id}
-                className="rounded-2xl px-5 py-4 transition-all"
-                style={{
-                  background: 'var(--color-surface)',
-                  border: '1px solid var(--color-border)',
-                  opacity: isSeen ? 0.7 : 1,
-                }}
-              >
-                <p
-                  className="text-sm leading-relaxed"
-                  style={{ color: 'var(--color-text-2)' }}
+        {/* Category grid — shown when no category selected */}
+        {!selectedCategory && (
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '12px' }}>
+            {CATEGORIES.map(cat => {
+              const cfg = CATEGORY_CONFIG[cat];
+              const tips = tipsByCategory[cat];
+              return (
+                <button
+                  key={cat}
+                  onClick={() => { setSelectedCategory(cat); setShowMore(false); }}
+                  style={{
+                    padding: '20px',
+                    borderRadius: '16px',
+                    background: cfg.bg,
+                    border: `1px solid ${cfg.border}`,
+                    textAlign: 'left',
+                    cursor: 'pointer',
+                    transition: 'all 0.15s',
+                    boxShadow: '0 2px 16px rgba(0,0,0,0.3)',
+                  }}
+                  onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-1px)'; e.currentTarget.style.boxShadow = '0 4px 24px rgba(0,0,0,0.4)'; }}
+                  onMouseLeave={e => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '0 2px 16px rgba(0,0,0,0.3)'; }}
                 >
-                  {tip.text}
-                </p>
-                <p
-                  className="text-[10px] mt-2.5 capitalize font-medium uppercase tracking-wider"
-                  style={{ color: 'var(--color-text-3)' }}
-                >
-                  {tip.category}
-                </p>
-              </div>
-            );
-          })}
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
+                    <span style={{ fontSize: '0.95rem', fontWeight: 700, color: cfg.color }}>{cfg.label}</span>
+                    <ChevronRight size={14} style={{ color: cfg.color, opacity: 0.6 }} />
+                  </div>
+                  <p style={{ fontSize: '0.78rem', color: 'rgba(255,255,255,0.45)', lineHeight: 1.5, marginBottom: '12px' }}>{cfg.desc}</p>
+                  <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.65rem', color: cfg.color, opacity: 0.7 }}>
+                    {tips.length} tips
+                  </p>
+                </button>
+              );
+            })}
+          </div>
+        )}
 
-          {filteredTips.length === 0 && (
-            <div className="py-16 text-center">
-              <p className="text-sm" style={{ color: 'var(--color-text-3)' }}>
-                No tips available yet.
-              </p>
+        {/* Selected category tips */}
+        {selectedCategory && (
+          <>
+            {/* Back button */}
+            <button
+              onClick={() => setSelectedCategory(null)}
+              style={{ alignSelf: 'flex-start', display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.82rem', color: 'rgba(255,255,255,0.4)', background: 'none', border: 'none', cursor: 'pointer', padding: '0' }}
+            >
+              <ArrowLeft size={14} />
+              All categories
+            </button>
+
+            {/* Tips list */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+              {displayedTips.map((tip, i) => {
+                const cfg = CATEGORY_CONFIG[selectedCategory];
+                return (
+                  <div key={tip.id || i} style={{
+                    padding: '20px 22px',
+                    borderRadius: '16px',
+                    background: 'linear-gradient(145deg, #1a1a1a, #111)',
+                    border: '1px solid rgba(255,255,255,0.07)',
+                    boxShadow: '0 2px 16px rgba(0,0,0,0.3)',
+                  }}>
+                    <p style={{ fontSize: '0.95rem', lineHeight: 1.75, color: 'rgba(255,255,255,0.82)' }}>
+                      {tip.text || tip.tip}
+                    </p>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginTop: '10px' }}>
+                      <div style={{ width: '5px', height: '5px', borderRadius: '50%', background: cfg.color, opacity: 0.7 }} />
+                      <span style={{ fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: cfg.color, opacity: 0.6 }}>
+                        {cfg.label}
+                      </span>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
-          )}
-        </div>
+
+            {/* Show more */}
+            {!showMore && tipsByCategory[selectedCategory].length > 5 && (
+              <button
+                onClick={() => setShowMore(true)}
+                style={{ padding: '13px', borderRadius: '12px', border: '1px dashed rgba(255,255,255,0.12)', background: 'transparent', color: 'rgba(255,255,255,0.35)', fontSize: '0.85rem', cursor: 'pointer', transition: 'all 0.2s' }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.28)'; e.currentTarget.style.color = '#fff'; }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.12)'; e.currentTarget.style.color = 'rgba(255,255,255,0.35)'; }}
+              >
+                Show {tipsByCategory[selectedCategory].length - 5} more tips
+              </button>
+            )}
+          </>
+        )}
       </div>
     </div>
   );

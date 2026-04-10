@@ -1,15 +1,17 @@
 import { getLevelFromXP, getXPToNextLevel } from '../utils/xpCalculator';
 import { useState, useEffect } from 'react';
+import levelsData from '../data/levels.json';
+
+const ALL_LEVELS = levelsData.levels;
 
 export default function XPBar({ totalXP, recentXP }) {
   const level = getLevelFromXP(totalXP);
-  const { current, needed, percentage, progress } = getXPToNextLevel(totalXP);
+  const { current, needed, percentage } = getXPToNextLevel(totalXP);
   const [flash, setFlash] = useState(false);
 
-  // Support both {current, needed, percentage} and {progress, nextLevel} API shapes
   const xpCurrent = current ?? 0;
-  const xpNeeded = needed ?? (level?.nextLevel?.xp_required ?? 0);
-  const xpPct = percentage ?? (progress != null ? progress * 100 : 0);
+  const xpNeeded = needed ?? 0;
+  const xpPct = percentage ?? 0;
 
   useEffect(() => {
     if (recentXP > 0) {
@@ -20,87 +22,132 @@ export default function XPBar({ totalXP, recentXP }) {
   }, [recentXP]);
 
   return (
-    <div
-      className="animate-fade-in"
-      style={{
-        background: 'linear-gradient(145deg, #1c1c1c 0%, #121212 100%)',
-        border: '1px solid rgba(255,255,255,0.07)',
-        borderRadius: '20px',
-        boxShadow: '0 4px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04)',
-        padding: '24px',
-      }}
-    >
+    <div style={{
+      background: 'linear-gradient(145deg, #1a1a1a 0%, #111111 100%)',
+      border: '1px solid rgba(255,255,255,0.07)',
+      borderRadius: '20px',
+      boxShadow: '0 4px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04)',
+      padding: '24px',
+    }}>
       {/* Top row */}
-      <div className="flex items-start justify-between mb-5">
-        {/* Level + title */}
+      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '22px' }}>
         <div>
-          <p
-            className="text-[10px] font-medium tracking-[0.18em] uppercase mb-1.5"
-            style={{ color: 'var(--color-text-3)' }}
-          >
-            Level {level.level}
+          <p style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.28)', marginBottom: '6px' }}>
+            Your Progress
           </p>
-          <p
-            className="font-display text-xl leading-tight"
-            style={{ color: 'var(--color-text-1)' }}
-          >
+          <p style={{ fontFamily: 'var(--font-display)', fontSize: '1.4rem', color: '#fff', lineHeight: 1.1 }}>
             {level.title}
           </p>
+          <p style={{ fontSize: '0.72rem', color: 'rgba(255,255,255,0.3)', marginTop: '3px' }}>
+            Level {level.level} of {ALL_LEVELS.length}
+          </p>
         </div>
-
-        {/* Total XP + flash */}
-        <div className="text-right relative">
-          <p
-            className="font-mono text-2xl font-semibold leading-none"
-            style={{ color: 'var(--color-gold)' }}
-          >
+        <div style={{ textAlign: 'right', position: 'relative' }}>
+          <p style={{ fontFamily: 'var(--font-mono, monospace)', fontSize: '1.8rem', fontWeight: 700, lineHeight: 1, color: '#E8C162' }}>
             {totalXP.toLocaleString()}
           </p>
-          <p
-            className="text-[10px] mt-1"
-            style={{ color: 'var(--color-text-3)' }}
-          >
-            XP total
-          </p>
-
-          {/* Gain flash */}
+          <p style={{ fontSize: '0.65rem', color: 'rgba(255,255,255,0.3)', marginTop: '3px' }}>XP total</p>
           {flash && recentXP > 0 && (
-            <span
-              className="absolute -top-6 right-0 font-mono text-sm font-bold animate-fade-in-up"
-              style={{ color: 'var(--color-gold)' }}
-            >
+            <span className="animate-fade-in-up" style={{ position: 'absolute', top: '-22px', right: 0, fontFamily: 'var(--font-mono)', fontSize: '0.9rem', fontWeight: 700, color: '#E8C162' }}>
               +{recentXP}
             </span>
           )}
         </div>
       </div>
 
-      {/* Progress bar */}
-      <div
-        className="h-1 rounded-full overflow-hidden"
-        style={{ background: 'var(--color-border-strong)' }}
-      >
-        <div
-          className="h-full rounded-full transition-all duration-700 ease-out"
-          style={{
-            width: `${Math.min(xpPct, 100)}%`,
-            background: 'linear-gradient(90deg, var(--color-gold) 0%, #F0D070 100%)',
-            boxShadow: '0 0 8px rgba(232,193,98,0.4)',
-          }}
-        />
+      {/* Visual level track — all 10 levels as connected dots */}
+      <div style={{ position: 'relative', marginBottom: '22px', paddingTop: '4px' }}>
+        {/* Background line */}
+        <div style={{ position: 'absolute', top: '18px', left: '7px', right: '7px', height: '2px', background: 'rgba(255,255,255,0.07)', borderRadius: '2px' }}>
+          {/* Progress fill */}
+          <div style={{
+            height: '100%', borderRadius: '2px',
+            background: 'linear-gradient(90deg, #E8C162, #F0D070)',
+            width: `${Math.max(0, ((level.level - 1) / (ALL_LEVELS.length - 1)) * 100)}%`,
+            transition: 'width 0.8s ease',
+            boxShadow: '0 0 6px rgba(232,193,98,0.3)',
+          }} />
+        </div>
+
+        {/* Dots row */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', position: 'relative', zIndex: 1 }}>
+          {ALL_LEVELS.map(l => {
+            const isReached = totalXP >= l.xp_required;
+            const isCurrent = l.level === level.level;
+            return (
+              <div key={l.level} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '7px' }}>
+                <div title={`Level ${l.level}: ${l.title} (${l.xp_required} XP)`} style={{
+                  width: isCurrent ? '30px' : '14px',
+                  height: isCurrent ? '30px' : '14px',
+                  borderRadius: '50%',
+                  background: isCurrent ? '#E8C162' : isReached ? 'rgba(232,193,98,0.3)' : 'rgba(255,255,255,0.07)',
+                  border: isCurrent ? '2px solid #F5DC88' : isReached ? '1.5px solid rgba(232,193,98,0.4)' : '1.5px solid rgba(255,255,255,0.1)',
+                  boxShadow: isCurrent ? '0 0 18px rgba(232,193,98,0.55)' : 'none',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  transition: 'all 0.3s ease',
+                  cursor: 'default',
+                }}>
+                  {isCurrent && (
+                    <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.58rem', fontWeight: 800, color: '#000', lineHeight: 1 }}>
+                      {l.level}
+                    </span>
+                  )}
+                </div>
+                <span style={{
+                  fontSize: '0.5rem',
+                  fontFamily: 'var(--font-mono)',
+                  color: isCurrent ? '#E8C162' : isReached ? 'rgba(232,193,98,0.35)' : 'rgba(255,255,255,0.12)',
+                  fontWeight: isCurrent ? 700 : 400,
+                  lineHeight: 1,
+                }}>
+                  {l.level}
+                </span>
+              </div>
+            );
+          })}
+        </div>
       </div>
 
-      {/* Sub-row */}
-      <div className="flex items-center justify-between mt-2.5">
-        <p className="font-mono text-[10px]" style={{ color: 'var(--color-text-3)' }}>
-          {xpCurrent.toLocaleString()}
-          <span style={{ color: 'var(--color-border-strong)' }}> / </span>
-          {xpNeeded.toLocaleString()} XP
-        </p>
-        <p className="text-[10px]" style={{ color: 'var(--color-text-3)' }}>
-          to Level {level.level + 1}
-        </p>
+      {/* Level name labels — current and neighbors */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
+        <span style={{ fontSize: '0.65rem', color: 'rgba(255,255,255,0.22)' }}>
+          {ALL_LEVELS[0].title}
+        </span>
+        <span style={{ fontSize: '0.65rem', color: '#E8C162', fontWeight: 600 }}>
+          {level.title}
+        </span>
+        <span style={{ fontSize: '0.65rem', color: 'rgba(255,255,255,0.22)' }}>
+          {ALL_LEVELS[ALL_LEVELS.length - 1].title}
+        </span>
       </div>
+
+      {/* Progress bar to next level */}
+      {level.level < ALL_LEVELS.length && (
+        <>
+          <div style={{ height: '3px', background: 'rgba(255,255,255,0.06)', borderRadius: '3px', overflow: 'hidden', marginBottom: '8px' }}>
+            <div style={{
+              height: '100%', borderRadius: '3px',
+              background: 'linear-gradient(90deg, #E8C162, #F0D070)',
+              width: `${Math.min(xpPct, 100)}%`,
+              boxShadow: '0 0 8px rgba(232,193,98,0.35)',
+              transition: 'width 0.7s ease',
+            }} />
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.68rem', color: 'rgba(255,255,255,0.28)' }}>
+              {xpCurrent.toLocaleString()} / {xpNeeded.toLocaleString()} XP
+            </p>
+            <p style={{ fontSize: '0.68rem', color: 'rgba(255,255,255,0.28)' }}>
+              Next: {ALL_LEVELS[level.level]?.title}
+            </p>
+          </div>
+        </>
+      )}
+      {level.level === ALL_LEVELS.length && (
+        <p style={{ fontSize: '0.75rem', color: '#E8C162', textAlign: 'center', letterSpacing: '0.06em', fontWeight: 600 }}>
+          Max level — Legend
+        </p>
+      )}
     </div>
   );
 }

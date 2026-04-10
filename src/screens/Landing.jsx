@@ -283,7 +283,7 @@ export default function Landing() {
         </div>
 
         {/* Stats row */}
-        <div className="animate-fade-in-up delay-300" style={{
+        <div className="animate-fade-in-up delay-300 landing-stats-row" style={{
           display: 'flex', gap: '4rem', marginTop: '6rem',
           padding: '2.5rem 4rem', borderRadius: '16px',
           background: 'var(--color-surface)', border: '1px solid var(--color-border)',
@@ -291,18 +291,18 @@ export default function Landing() {
           opacity: 0, animationFillMode: 'forwards',
         }}>
           <Stat value="4wk" label="Progressive Plan" />
-          <div style={{ width: '1px', background: 'var(--color-border)', alignSelf: 'stretch' }} />
+          <div className="landing-hide-divider" style={{ width: '1px', background: 'var(--color-border)', alignSelf: 'stretch' }} />
           <Stat value="2-Day" label="Rule — never lose a streak" />
-          <div style={{ width: '1px', background: 'var(--color-border)', alignSelf: 'stretch' }} />
+          <div className="landing-hide-divider" style={{ width: '1px', background: 'var(--color-border)', alignSelf: 'stretch' }} />
           <Stat value="0" label="Signups required" />
-          <div style={{ width: '1px', background: 'var(--color-border)', alignSelf: 'stretch' }} />
+          <div className="landing-hide-divider" style={{ width: '1px', background: 'var(--color-border)', alignSelf: 'stretch' }} />
           <Stat value="50+" label="Expert tips included" />
         </div>
       </section>
 
       {/* ── Section 1: The Science ── */}
       <section style={{ borderTop: '1px solid var(--color-border)', padding: '7rem 5vw' }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6rem', alignItems: 'center' }}>
+        <div className="landing-grid-2col" style={{ maxWidth: '1200px', margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6rem', alignItems: 'center' }}>
           <div>
             <p className="font-mono" style={{ fontSize: '0.72rem', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--color-text-3)', marginBottom: '1.5rem' }}>
               The Science
@@ -358,7 +358,7 @@ export default function Landing() {
 
       {/* ── Section 2: Identity ── */}
       <section style={{ borderTop: '1px solid var(--color-border)', padding: '7rem 5vw' }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6rem', alignItems: 'center' }}>
+        <div className="landing-grid-2col" style={{ maxWidth: '1200px', margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6rem', alignItems: 'center' }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
             <p style={{ fontSize: '0.75rem', color: 'var(--color-text-3)', marginBottom: '0.5rem', letterSpacing: '0.05em' }}>Your identity evolves</p>
             {[
@@ -413,7 +413,7 @@ export default function Landing() {
       {/* ── Section 3: How it works ── */}
       <section style={{ borderTop: '1px solid var(--color-border)', padding: '7rem 5vw' }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '4rem' }}>
+          <div className="landing-section-hdr" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '4rem' }}>
             <h2 className="font-display" style={{ fontSize: 'clamp(2rem, 3.5vw, 2.8rem)', lineHeight: 1.1, color: 'var(--color-text-1)' }}>
               Simple to start.<br />Hard to quit.
             </h2>
@@ -426,7 +426,7 @@ export default function Landing() {
               Try it now →
             </button>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.5rem' }}>
+          <div className="landing-cards-3col" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.5rem' }}>
             {[
               {
                 num: '01',
@@ -498,7 +498,7 @@ export default function Landing() {
 
       {/* ── Footer ── */}
       <footer style={{ borderTop: '1px solid var(--color-border)', padding: '2rem 5vw' }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div className="landing-footer-row" style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <span className="font-display" style={{ color: 'var(--color-text-3)', fontSize: '0.95rem' }}>Regulr</span>
           <p style={{ fontSize: '0.78rem', color: 'var(--color-text-3)' }}>
             Your data stays on your device. Always.
