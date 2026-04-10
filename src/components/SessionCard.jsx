@@ -149,7 +149,7 @@ export default function SessionCard({ session, onComplete, isCompleted, isRestDa
             <p style={{ fontSize: '0.58rem', fontWeight: 700, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.2)', textAlign: 'center' }}>Sets</p>
             {Object.keys(alts).length > 0 && (
               <p style={{ fontSize: '0.58rem', fontWeight: 700, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.2)' }}>
-                {equipment === 'home_dumbbells' ? 'Bodyweight Alt' : 'Home Alt'}
+                Alternative
               </p>
             )}
           </div>
@@ -163,25 +163,25 @@ export default function SessionCard({ session, onComplete, isCompleted, isRestDa
               return (
                 <div
                   key={i}
-                  onClick={() => !isCompleted && !isNextSession && toggle(ex.name)}
+                  onClick={() => !isCompleted && toggle(ex.name)}
                   style={{
                     display: 'grid',
                     gridTemplateColumns: showAlts ? '24px 1fr 72px 1fr' : '24px 1fr 72px',
                     gap: '0 8px',
                     alignItems: 'center',
-                    padding: '11px 0',
+                    padding: '13px 0',
                     borderBottom: i < exercises.length - 1 ? '1px solid rgba(255,255,255,0.04)' : 'none',
-                    cursor: isCompleted || isNextSession ? 'default' : 'pointer',
+                    cursor: isCompleted ? 'default' : 'pointer',
                     transition: 'opacity 0.15s',
                     opacity: isDone ? 0.5 : 1,
                   }}
-                  onMouseEnter={e => { if (!isCompleted && !isNextSession) e.currentTarget.style.opacity = isDone ? '0.4' : '0.85'; }}
+                  onMouseEnter={e => { if (!isCompleted) e.currentTarget.style.opacity = isDone ? '0.4' : '0.85'; }}
                   onMouseLeave={e => { e.currentTarget.style.opacity = isDone ? '0.5' : '1'; }}
                 >
-                  {/* Checkbox — hidden for next session preview */}
+                  {/* Checkbox */}
                   <div style={{
                     width: '18px', height: '18px', borderRadius: '5px', flexShrink: 0,
-                    border: isNextSession ? '1.5px solid rgba(255,255,255,0.08)' : isDone ? 'none' : '1.5px solid rgba(255,255,255,0.22)',
+                    border: isDone ? 'none' : '1.5px solid rgba(255,255,255,0.22)',
                     background: isDone ? 'var(--color-green)' : 'transparent',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                     transition: 'all 0.15s',

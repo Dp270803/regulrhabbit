@@ -42,18 +42,21 @@ function getNextSession(plan) {
   return null;
 }
 
-function StatTile({ label, value, sub, valueColor, accent }) {
+function StatTile({ label, value, sub, valueColor, accent, unit }) {
   return (
     <div style={{
       background: 'linear-gradient(145deg, #1a1a1a 0%, #111111 100%)',
-      border: accent ? `1px solid ${accent}22` : '1px solid rgba(255,255,255,0.07)',
-      borderRadius: '16px',
-      padding: '18px 20px 16px',
-      boxShadow: '0 2px 20px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.04)',
+      border: accent ? `1px solid ${accent}28` : '1px solid rgba(255,255,255,0.07)',
+      borderRadius: '18px',
+      padding: '24px 22px 20px',
+      boxShadow: '0 4px 28px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.04)',
     }}>
-      <p style={{ fontSize: '0.55rem', fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.28)', marginBottom: '10px' }}>{label}</p>
-      <p className="font-mono" style={{ fontSize: '2rem', fontWeight: 700, lineHeight: 1, color: valueColor || 'var(--color-text-1)', marginBottom: '5px' }}>{value}</p>
-      {sub && <p style={{ fontSize: '0.67rem', color: 'rgba(255,255,255,0.28)', marginTop: '2px', lineHeight: 1.3 }}>{sub}</p>}
+      <p style={{ fontSize: '0.55rem', fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.28)', marginBottom: '14px' }}>{label}</p>
+      <div style={{ display: 'flex', alignItems: 'baseline', gap: '5px' }}>
+        <p className="font-mono" style={{ fontSize: '2.4rem', fontWeight: 700, lineHeight: 1, color: valueColor || 'var(--color-text-1)' }}>{value}</p>
+        {unit && <span style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.3)', fontWeight: 500 }}>{unit}</span>}
+      </div>
+      {sub && <p style={{ fontSize: '0.68rem', color: 'rgba(255,255,255,0.28)', marginTop: '6px', lineHeight: 1.4 }}>{sub}</p>}
     </div>
   );
 }
@@ -187,26 +190,30 @@ export default function Dashboard() {
       </div>
 
       {/* ── Content ── */}
-      <div style={{ ...W, display: 'flex', flexDirection: 'column', gap: '12px' }}>
+      <div style={{ ...W, display: 'flex', flexDirection: 'column', gap: '16px' }}>
 
         {/* ── Stat tiles (3 across) ── */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px' }}>
           <StatTile
             label="Streak"
             value={data.streaks.current === 0 ? '—' : data.streaks.current}
-            sub={data.streaks.current > 0 ? `best · ${data.streaks.best}` : 'Start today'}
+            unit={data.streaks.current > 0 ? 'days' : undefined}
+            sub={data.streaks.current > 0 ? `Personal best · ${data.streaks.best} days` : 'Complete a session to start'}
             valueColor={data.streaks.current > 0 ? '#E8C162' : 'rgba(255,255,255,0.25)'}
             accent={data.streaks.current > 0 ? '#E8C162' : null}
           />
           <StatTile
             label="This Week"
             value={`${completedThisWeek}/${scheduledThisWeek}`}
-            sub="sessions done"
+            sub={completedThisWeek === scheduledThisWeek && scheduledThisWeek > 0 ? 'All done — great week!' : `${scheduledThisWeek - completedThisWeek} session${scheduledThisWeek - completedThisWeek !== 1 ? 's' : ''} remaining`}
+            valueColor={completedThisWeek === scheduledThisWeek && scheduledThisWeek > 0 ? '#4ADE80' : 'var(--color-text-1)'}
+            accent={completedThisWeek === scheduledThisWeek && scheduledThisWeek > 0 ? '#4ADE80' : null}
           />
           <StatTile
-            label="Level"
-            value={level.level}
-            sub={level.title}
+            label="Total XP"
+            value={data.user.total_xp.toLocaleString()}
+            unit="xp"
+            sub={`${level.title} · Level ${level.level}`}
             valueColor="#E8C162"
             accent="#E8C162"
           />
@@ -237,7 +244,7 @@ export default function Dashboard() {
           </button>
         )}
 
-        {/* ── XP bar + Tip side by side ── */}
+        {/* ── XP progress + Tip side by side ── */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', alignItems: 'start' }}>
           <XPBar totalXP={data.user.total_xp} recentXP={recentXP} />
           {tip && <TipCard tip={tip} onSeeMore={() => navigate('/tips')} />}
@@ -245,12 +252,12 @@ export default function Dashboard() {
 
         {/* ── Recent badges ── */}
         {recentBadges.length > 0 && (
-          <div style={{ borderRadius: '16px', padding: '22px 24px', background: 'linear-gradient(145deg, #1a1a1a 0%, #111111 100%)', border: '1px solid rgba(255,255,255,0.07)', boxShadow: '0 2px 20px rgba(0,0,0,0.4)' }}>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px' }}>
+          <div style={{ borderRadius: '18px', padding: '24px', background: 'linear-gradient(145deg, #1a1a1a 0%, #111111 100%)', border: '1px solid rgba(255,255,255,0.07)', boxShadow: '0 4px 28px rgba(0,0,0,0.4)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
               <p style={{ fontSize: '0.55rem', fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.28)' }}>Recent Badges</p>
               <button onClick={() => navigate('/profile')} style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.3)', background: 'none', border: 'none', cursor: 'pointer' }}>View all →</button>
             </div>
-            <div style={{ display: 'flex', gap: '8px' }}>
+            <div style={{ display: 'flex', gap: '10px' }}>
               {recentBadges.map(badge => <div key={badge.id} style={{ flex: 1 }}><BadgeCard badge={badge} /></div>)}
             </div>
           </div>
