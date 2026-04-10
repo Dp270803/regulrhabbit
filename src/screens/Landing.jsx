@@ -222,7 +222,7 @@ export default function Landing() {
         minHeight: '100dvh',
         display: 'flex', flexDirection: 'column',
         alignItems: 'center', justifyContent: 'center',
-        textAlign: 'center', padding: '80px 5vw 60px',
+        textAlign: 'center', padding: '72px 5vw 3rem',
         position: 'relative', overflow: 'hidden',
       }}>
         {/* background glow */}
@@ -236,15 +236,15 @@ export default function Landing() {
 
         <p className="font-mono animate-fade-in" style={{
           fontSize: '0.72rem', letterSpacing: '0.18em',
-          textTransform: 'uppercase', color: 'var(--color-text-3)', marginBottom: '2rem',
+          textTransform: 'uppercase', color: 'var(--color-text-3)', marginBottom: '1.25rem',
         }}>
           Science-backed habit formation
         </p>
 
         <h1 className="font-display animate-fade-in-up" style={{
-          fontSize: 'clamp(3.5rem, 9vw, 8rem)',
+          fontSize: 'clamp(3rem, 7vw, 6.5rem)',
           lineHeight: 1.0, letterSpacing: '-0.02em',
-          marginBottom: '2rem', maxWidth: '18ch',
+          marginBottom: '1.25rem', maxWidth: '18ch',
           color: 'var(--color-text-1)', position: 'relative',
         }}>
           Become a<br />
@@ -252,9 +252,9 @@ export default function Landing() {
         </h1>
 
         <p className="animate-fade-in-up delay-100" style={{
-          fontSize: '1.15rem', lineHeight: 1.7,
+          fontSize: '1.1rem', lineHeight: 1.7,
           maxWidth: '46ch', color: 'var(--color-text-2)',
-          marginBottom: '3rem', opacity: 0, animationFillMode: 'forwards',
+          marginBottom: '2rem', opacity: 0, animationFillMode: 'forwards',
         }}>
           No login. No guilt. No excuses. Build a gym habit
           using the same science elite athletes use — right on your phone.
@@ -284,8 +284,8 @@ export default function Landing() {
 
         {/* Stats row */}
         <div className="animate-fade-in-up delay-300 landing-stats-row" style={{
-          display: 'flex', gap: '4rem', marginTop: '6rem',
-          padding: '2.5rem 4rem', borderRadius: '16px',
+          display: 'flex', gap: '4rem', marginTop: '2.5rem',
+          padding: '2rem 3.5rem', borderRadius: '16px',
           background: 'var(--color-surface)', border: '1px solid var(--color-border)',
           flexWrap: 'wrap', justifyContent: 'center',
           opacity: 0, animationFillMode: 'forwards',
@@ -301,13 +301,12 @@ export default function Landing() {
 
         {/* Scroll indicator */}
         <div aria-hidden="true" style={{
-          position: 'absolute', bottom: '2rem', left: '50%', transform: 'translateX(-50%)',
+          marginTop: '2rem',
           display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px',
           color: 'rgba(255,255,255,0.22)',
           animation: 'scrollBounce 2s ease-in-out infinite',
         }}>
-          <span style={{ fontSize: '0.6rem', letterSpacing: '0.14em', textTransform: 'uppercase', fontFamily: 'var(--font-mono)' }}>scroll</span>
-          <ChevronDown size={16} strokeWidth={1.5} />
+          <ChevronDown size={18} strokeWidth={1.5} />
         </div>
       </section>
 
