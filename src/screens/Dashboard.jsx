@@ -159,7 +159,7 @@ export default function Dashboard() {
   }
 
   const recentBadges = data.badges.filter(b => b.earned).slice(-3).reverse();
-  const W = { maxWidth: '860px', margin: '0 auto', padding: '0 5vw' };
+  const W = { maxWidth: '1100px', margin: '0 auto', padding: '0 clamp(16px, 4vw, 60px)' };
 
   return (
     <div className="min-h-dvh pb-32" style={{
