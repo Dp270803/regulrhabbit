@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ChevronDown } from 'lucide-react';
 import { isOnboardingComplete, getData } from '../utils/storage';
 import { trackPageView } from '../utils/analytics';
 
@@ -260,8 +261,7 @@ export default function Landing() {
         </p>
 
         <div className="animate-fade-in-up delay-200" style={{
-          display: 'flex', gap: '1rem', alignItems: 'center',
-          flexWrap: 'wrap', justifyContent: 'center',
+          display: 'flex', flexDirection: 'column', gap: '0.75rem', alignItems: 'center',
           opacity: 0, animationFillMode: 'forwards',
         }}>
           <button
@@ -297,6 +297,17 @@ export default function Landing() {
           <Stat value="0" label="Signups required" />
           <div className="landing-hide-divider" style={{ width: '1px', background: 'var(--color-border)', alignSelf: 'stretch' }} />
           <Stat value="50+" label="Expert tips included" />
+        </div>
+
+        {/* Scroll indicator */}
+        <div aria-hidden="true" style={{
+          position: 'absolute', bottom: '2rem', left: '50%', transform: 'translateX(-50%)',
+          display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px',
+          color: 'rgba(255,255,255,0.22)',
+          animation: 'scrollBounce 2s ease-in-out infinite',
+        }}>
+          <span style={{ fontSize: '0.6rem', letterSpacing: '0.14em', textTransform: 'uppercase', fontFamily: 'var(--font-mono)' }}>scroll</span>
+          <ChevronDown size={16} strokeWidth={1.5} />
         </div>
       </section>
 
