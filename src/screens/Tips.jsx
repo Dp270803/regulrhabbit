@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, ChevronRight } from 'lucide-react';
+import { Crosshair, Zap, Lightbulb, TrendingUp } from 'lucide-react';
 import { getData } from '../utils/storage';
 import { selectTip } from '../utils/tipSelector';
 import { trackPageView } from '../utils/analytics';
@@ -12,220 +12,220 @@ const C = {
   text: '#e5e2e1', muted: '#c4c7c7', faint: '#7b7c7c',
 };
 
-const CATEGORIES = ['technique', 'recovery', 'mindset', 'progress'];
+const W = { maxWidth: '1000px', margin: '0 auto', padding: '0 clamp(16px, 4vw, 48px)' };
+
 const CATEGORY_CONFIG = {
-  technique: {
-    label: 'Technique',
-    desc: 'Form, movement, and execution',
-    color: C.primary,
-    bg: `rgba(233,195,73,0.06)`,
-    icon: '◎',
-  },
-  recovery: {
-    label: 'Recovery',
-    desc: 'Sleep, rest, and adaptation',
-    color: C.green,
-    bg: `rgba(47,248,1,0.06)`,
-    icon: '◑',
-  },
-  mindset: {
-    label: 'Mindset',
-    desc: 'Motivation and mental edge',
-    color: C.muted,
-    bg: `rgba(196,199,199,0.06)`,
-    icon: '◐',
-  },
-  progress: {
-    label: 'Progress',
-    desc: 'Gains, tracking, and plateaus',
-    color: C.primary,
-    bg: `rgba(233,195,73,0.06)`,
-    icon: '●',
-  },
+  technique: { label: 'Technique', color: C.primary, Icon: Crosshair },
+  recovery:  { label: 'Recovery',  color: C.green,   Icon: Zap       },
+  mindset:   { label: 'Mindset',   color: C.muted,   Icon: Lightbulb },
+  progress:  { label: 'Progress',  color: C.primary, Icon: TrendingUp },
 };
 
-const W = { maxWidth: '860px', margin: '0 auto', padding: '0 clamp(16px, 4vw, 48px)' };
+// Left col then right col — matches screenshot layout
+const COLUMN_LAYOUT = [
+  ['technique', 'mindset'],
+  ['recovery',  'progress'],
+];
+
+function extractTitle(text) {
+  // First clause before first comma, dash, or period — capped at 38 chars
+  const chunk = text.split(/[,\.—]/)[0].trim();
+  return chunk.length > 38 ? chunk.slice(0, 36) + '…' : chunk;
+}
+
+function extractBody(text) {
+  // First full sentence
+  const m = text.match(/^[^.!?]+[.!?]/);
+  const s = m ? m[0] : text;
+  return s.length > 120 ? s.slice(0, 118) + '…' : s;
+}
+
+function TipCard({ tip, category }) {
+  const cfg = CATEGORY_CONFIG[category];
+  return (
+    <div style={{
+      background: C.low, borderRadius: '12px',
+      padding: '20px 22px', marginBottom: '8px',
+    }}>
+      <p style={{
+        fontSize: '0.58rem', fontWeight: 700, letterSpacing: '0.14em',
+        textTransform: 'uppercase', color: cfg.color, marginBottom: '8px', opacity: 0.85,
+      }}>
+        {cfg.label}
+      </p>
+      <p className="font-headline" style={{
+        fontSize: '1.05rem', fontWeight: 700, letterSpacing: '-0.01em',
+        color: C.text, lineHeight: 1.25, marginBottom: '8px',
+      }}>
+        {extractTitle(tip.text)}
+      </p>
+      <p style={{ fontSize: '0.82rem', color: C.faint, lineHeight: 1.65 }}>
+        {extractBody(tip.text)}
+      </p>
+    </div>
+  );
+}
 
 export default function Tips() {
   const navigate = useNavigate();
   const [todayTip, setTodayTip] = useState(null);
-  const [allTips, setAllTips] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState(null);
-  const [showMore, setShowMore] = useState(false);
+  const [tipsByCategory, setTipsByCategory] = useState({});
 
   useEffect(() => {
     trackPageView('tips');
     const d = getData();
+    if (!d.onboarding_complete) { navigate('/'); return; }
+
     const loadTips = async () => {
       const tip = await selectTip(d);
       setTodayTip(tip);
       const activePlan = d.plans.find(p => p.status === 'active');
-      if (activePlan) {
-        const loaders = {
-          gym: () => import('../data/tips/gym-tips.json'),
-          swimming: () => import('../data/tips/swimming-tips.json'),
-          running: () => import('../data/tips/running-tips.json'),
-          yoga: () => import('../data/tips/yoga-tips.json'),
-          dance: () => import('../data/tips/dance-tips.json'),
-          singing: () => import('../data/tips/singing-tips.json'),
-          instrument: () => import('../data/tips/instrument-tips.json'),
-        };
-        try {
-          const loader = loaders[activePlan.activity];
-          if (loader) { const mod = await loader(); setAllTips((mod.default || mod).tips || []); }
-        } catch { /* ok */ }
-      }
+      if (!activePlan) return;
+      const loaders = {
+        gym:        () => import('../data/tips/gym-tips.json'),
+        swimming:   () => import('../data/tips/swimming-tips.json'),
+        running:    () => import('../data/tips/running-tips.json'),
+        yoga:       () => import('../data/tips/yoga-tips.json'),
+        dance:      () => import('../data/tips/dance-tips.json'),
+        singing:    () => import('../data/tips/singing-tips.json'),
+        instrument: () => import('../data/tips/instrument-tips.json'),
+      };
+      try {
+        const loader = loaders[activePlan.activity];
+        if (!loader) return;
+        const mod = await loader();
+        const allTips = (mod.default || mod).tips || [];
+        const byCat = {};
+        for (const key of Object.keys(CATEGORY_CONFIG)) {
+          byCat[key] = allTips.filter(t => t.category === key);
+        }
+        setTipsByCategory(byCat);
+      } catch { /* ok */ }
     };
     loadTips();
-  }, []);
+  }, [navigate]);
 
-  const tipsByCategory = {};
-  for (const cat of CATEGORIES) {
-    tipsByCategory[cat] = allTips.filter(t => t.category === cat);
-  }
-
-  const displayedTips = selectedCategory
-    ? (showMore ? tipsByCategory[selectedCategory] : tipsByCategory[selectedCategory].slice(0, 5))
-    : [];
+  const featuredCfg = todayTip ? CATEGORY_CONFIG[todayTip.category] : null;
 
   return (
     <div style={{ minHeight: '100dvh', background: C.bg, color: C.text, paddingBottom: '7rem' }}>
 
-      {/* ── Header ── */}
-      <div style={{ ...W, paddingTop: '3rem', paddingBottom: '1.5rem' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '4px' }}>
-          {selectedCategory && (
-            <button onClick={() => setSelectedCategory(null)} style={{ color: C.faint, background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
-              <ArrowLeft size={20} strokeWidth={1.8} />
-            </button>
-          )}
-          <p style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', color: C.faint }}>
-            {selectedCategory ? CATEGORY_CONFIG[selectedCategory]?.label : 'Tips & Insights'}
-          </p>
-        </div>
-        <h1 className="font-headline" style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.05, paddingLeft: selectedCategory ? '32px' : '0' }}>
-          {selectedCategory ? CATEGORY_CONFIG[selectedCategory]?.label : 'Learn'}
-        </h1>
-      </div>
-
-      <div style={{ ...W, display: 'flex', flexDirection: 'column', gap: '16px' }}>
-
-        {/* ── Featured tip (masterclass card) ── */}
-        {todayTip && !selectedCategory && (
+      {/* ── Featured tip hero ── */}
+      <div style={{ ...W, paddingTop: '3rem' }}>
+        {todayTip && (
           <div style={{
-            position: 'relative',
-            borderRadius: '16px',
-            overflow: 'hidden',
-            minHeight: '280px',
-            display: 'flex',
-            alignItems: 'flex-end',
-            background: `linear-gradient(135deg, ${C.low} 0%, ${C.lowest} 100%)`,
+            position: 'relative', overflow: 'hidden',
+            borderRadius: '20px', minHeight: '320px',
+            background: C.lowest,
+            display: 'flex', alignItems: 'flex-end',
+            marginBottom: '2.5rem',
           }}>
-            {/* Decorative glow blob */}
-            <div style={{ position: 'absolute', top: '-40px', right: '-40px', width: '200px', height: '200px', background: `rgba(233,195,73,0.08)`, borderRadius: '50%', filter: 'blur(60px)', pointerEvents: 'none' }} />
-            <div style={{ position: 'absolute', bottom: '-40px', left: '-20px', width: '160px', height: '160px', background: `rgba(47,248,1,0.05)`, borderRadius: '50%', filter: 'blur(60px)', pointerEvents: 'none' }} />
+            {/* Glow blobs */}
+            <div style={{ position: 'absolute', top: '-60px', right: '-60px', width: '320px', height: '320px', background: `rgba(233,195,73,0.12)`, borderRadius: '50%', filter: 'blur(80px)', pointerEvents: 'none' }} />
+            <div style={{ position: 'absolute', bottom: '-40px', left: '-30px', width: '220px', height: '220px', background: `rgba(47,248,1,0.06)`, borderRadius: '50%', filter: 'blur(70px)', pointerEvents: 'none' }} />
+            {/* Radial vignette */}
+            <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at 70% 30%, rgba(233,195,73,0.07) 0%, transparent 65%)', pointerEvents: 'none' }} />
 
-            {/* Content */}
-            <div style={{ position: 'relative', zIndex: 1, padding: '36px 32px' }}>
-              <p style={{ fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: C.primary, marginBottom: '12px' }}>
+            <div style={{ position: 'relative', zIndex: 1, padding: '2.5rem 2.5rem 2.75rem' }}>
+              <p style={{
+                fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.2em',
+                textTransform: 'uppercase', color: C.primary, marginBottom: '1.25rem', opacity: 0.85,
+              }}>
                 Featured Tip of the Day
               </p>
-              <h2 className="font-headline" style={{ fontSize: 'clamp(1.4rem, 3vw, 2rem)', fontWeight: 800, letterSpacing: '-0.02em', lineHeight: 1.2, marginBottom: '16px', maxWidth: '560px' }}>
-                {todayTip.title || 'Today\'s Insight'}
+              <h2 className="font-headline" style={{
+                fontSize: 'clamp(1.8rem, 3.5vw, 2.6rem)', fontWeight: 800,
+                letterSpacing: '-0.03em', lineHeight: 1.15,
+                marginBottom: '1.2rem', maxWidth: '580px',
+              }}>
+                {featuredCfg ? (
+                  <>
+                    <span style={{ color: C.text }}>The Science of </span>
+                    <span style={{ color: C.primary }}>{featuredCfg.label}</span>
+                  </>
+                ) : 'Today\'s Insight'}
               </h2>
-              <p style={{ fontSize: '1rem', lineHeight: 1.75, color: C.muted, maxWidth: '520px', marginBottom: '20px' }}>
-                {todayTip.text || todayTip.tip}
+              <p style={{
+                fontSize: '0.95rem', lineHeight: 1.75, color: C.muted,
+                maxWidth: '540px', marginBottom: '1.75rem',
+              }}>
+                {todayTip.text}
               </p>
-              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '0.65rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: C.primary, opacity: 0.7 }}>
-                {todayTip.category}
-              </span>
+              <button
+                style={{
+                  padding: '12px 24px', borderRadius: '8px',
+                  background: 'transparent',
+                  border: `1.5px solid ${C.primary}`,
+                  color: C.primary,
+                  fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.12em',
+                  textTransform: 'uppercase', cursor: 'pointer',
+                  transition: 'all 0.15s',
+                  display: 'inline-flex', alignItems: 'center', gap: '6px',
+                  fontFamily: 'Manrope, sans-serif',
+                }}
+                onMouseEnter={e => { e.currentTarget.style.background = `rgba(233,195,73,0.1)`; }}
+                onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; }}
+              >
+                Read Masterclass →
+              </button>
             </div>
           </div>
         )}
 
-        {/* ── Category grid ── */}
-        {!selectedCategory && (
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '8px' }}>
-            {CATEGORIES.map(cat => {
-              const cfg = CATEGORY_CONFIG[cat];
-              const tips = tipsByCategory[cat];
-              return (
-                <button
-                  key={cat}
-                  onClick={() => { setSelectedCategory(cat); setShowMore(false); }}
-                  style={{
-                    padding: '24px 20px',
-                    borderRadius: '12px',
-                    background: C.low,
-                    border: 'none',
-                    textAlign: 'left',
-                    cursor: 'pointer',
-                    transition: 'background 0.15s',
-                  }}
-                  onMouseEnter={e => e.currentTarget.style.background = C.container}
-                  onMouseLeave={e => e.currentTarget.style.background = C.low}
-                >
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
-                    <span className="font-headline" style={{ fontSize: '1.1rem', fontWeight: 700, color: cfg.color }}>{cfg.label}</span>
-                    <ChevronRight size={16} style={{ color: cfg.color, opacity: 0.5 }} />
-                  </div>
-                  <p style={{ fontSize: '0.8rem', color: C.faint, lineHeight: 1.5, marginBottom: '14px' }}>{cfg.desc}</p>
-                  <p style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: cfg.color, opacity: 0.6 }}>
-                    {tips.length} tips
-                  </p>
-                </button>
-              );
-            })}
-          </div>
-        )}
-
-        {/* ── Selected category tips ── */}
-        {selectedCategory && (
-          <>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              {displayedTips.map((tip, i) => {
-                const cfg = CATEGORY_CONFIG[selectedCategory];
+        {/* ── 2-column category grid ── */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(2, 1fr)',
+          gap: '32px',
+        }}>
+          {COLUMN_LAYOUT.map((colKeys, ci) => (
+            <div key={ci} style={{ display: 'flex', flexDirection: 'column', gap: '36px' }}>
+              {colKeys.map(catKey => {
+                const cfg = CATEGORY_CONFIG[catKey];
+                const tips = (tipsByCategory[catKey] || []).slice(0, 2);
                 return (
-                  <div key={tip.id || i} style={{
-                    padding: '24px',
-                    borderRadius: '12px',
-                    background: C.low,
-                  }}>
-                    <p style={{ fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.16em', textTransform: 'uppercase', color: cfg.color, marginBottom: '10px', opacity: 0.8 }}>
-                      {cfg.label}
-                    </p>
-                    <p style={{ fontSize: '1rem', lineHeight: 1.75, color: C.muted }}>
-                      {tip.text || tip.tip}
-                    </p>
+                  <div key={catKey}>
+                    {/* Category heading */}
+                    <div style={{
+                      display: 'flex', alignItems: 'center',
+                      justifyContent: 'space-between', marginBottom: '16px',
+                    }}>
+                      <h2 className="font-headline" style={{
+                        fontSize: '1.4rem', fontWeight: 700,
+                        letterSpacing: '-0.02em', color: C.text,
+                      }}>
+                        {cfg.label}
+                      </h2>
+                      <cfg.Icon size={18} strokeWidth={1.8} style={{ color: cfg.color, opacity: 0.7 }} />
+                    </div>
+
+                    {/* Tip cards */}
+                    {tips.length > 0 ? (
+                      tips.map((tip, i) => <TipCard key={tip.id || i} tip={tip} category={catKey} />)
+                    ) : (
+                      /* Skeleton placeholders while loading */
+                      [0, 1].map(i => (
+                        <div key={i} style={{ background: C.low, borderRadius: '12px', padding: '20px 22px', marginBottom: '8px', height: '100px', opacity: 0.3 }} />
+                      ))
+                    )}
                   </div>
                 );
               })}
             </div>
+          ))}
+        </div>
 
-            {!showMore && tipsByCategory[selectedCategory].length > 5 && (
-              <button
-                onClick={() => setShowMore(true)}
-                style={{ padding: '13px', borderRadius: '12px', border: `1px dashed rgba(255,255,255,0.12)`, background: 'transparent', color: C.faint, fontSize: '0.85rem', cursor: 'pointer', transition: 'all 0.2s' }}
-                onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.28)'; e.currentTarget.style.color = C.text; }}
-                onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.12)'; e.currentTarget.style.color = C.faint; }}
-              >
-                Show {tipsByCategory[selectedCategory].length - 5} more tips
-              </button>
-            )}
-          </>
-        )}
-
-        {/* ── Dot decoration ── */}
-        {!selectedCategory && (
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', padding: '24px 0 8px' }}>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(10, 1fr)', gap: '6px' }}>
-              {[C.primary, C.primary, C.green, C.highest, C.highest, C.primary, C.primary, C.green, C.primary, C.highest].map((col, i) => (
-                <div key={i} style={{ width: '8px', height: '8px', borderRadius: '2px', background: col }} />
-              ))}
-            </div>
-            <p style={{ fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: C.faint }}>Growth Is Nonlinear</p>
+        {/* ── Footer dots ── */}
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', padding: '3rem 0 1rem' }}>
+          <div style={{ display: 'flex', gap: '6px' }}>
+            {[C.primary, C.primary, C.green, C.highest, C.highest, C.primary, C.green, C.primary, C.highest].map((col, i) => (
+              <div key={i} style={{ width: '8px', height: '8px', borderRadius: '2px', background: col }} />
+            ))}
           </div>
-        )}
+          <p style={{ fontSize: '0.58rem', fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: C.faint }}>
+            Growth Is Nonlinear
+          </p>
+        </div>
       </div>
     </div>
   );
