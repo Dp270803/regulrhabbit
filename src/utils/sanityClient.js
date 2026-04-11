@@ -7,7 +7,7 @@ const token     = import.meta.env.VITE_SANITY_TOKEN;
 export const isConfigured = Boolean(projectId && projectId !== 'PASTE_YOUR_PROJECT_ID_HERE');
 
 export const sanity = isConfigured
-  ? createClient({ projectId, dataset, token, useCdn: true, apiVersion: '2024-01-01' })
+  ? createClient({ projectId, dataset, token, useCdn: false, apiVersion: '2024-01-01' })
   : null;
 
 /**
