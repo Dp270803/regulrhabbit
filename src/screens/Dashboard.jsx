@@ -263,6 +263,21 @@ export default function Dashboard() {
       {/* ── Content ── */}
       <div style={{ ...W, display: 'flex', flexDirection: 'column', gap: '12px' }}>
 
+        {/* ── Session card ── */}
+        <SessionCard
+          session={sessionForCard}
+          isNextSession={isNextSession}
+          nextLabel={nextLabel}
+          onComplete={handleComplete}
+          isCompleted={isCompleted}
+          isCooldown={recentCompletedToday}
+          isRestDay={rest && !todaySession && !nextInfo}
+          equipment={activePlan?.equipment}
+        />
+
+        {/* ── Weekly calendar ── */}
+        <WeeklyGrid plan={activePlan} checkIns={data.check_ins} />
+
         {/* ── Stat tiles (3 across) ── */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px' }}>
           {[
@@ -296,21 +311,6 @@ export default function Dashboard() {
             </div>
           ))}
         </div>
-
-        {/* ── Weekly calendar ── */}
-        <WeeklyGrid plan={activePlan} checkIns={data.check_ins} />
-
-        {/* ── Session card ── */}
-        <SessionCard
-          session={sessionForCard}
-          isNextSession={isNextSession}
-          nextLabel={nextLabel}
-          onComplete={handleComplete}
-          isCompleted={isCompleted}
-          isCooldown={recentCompletedToday}
-          isRestDay={rest && !todaySession && !nextInfo}
-          equipment={activePlan?.equipment}
-        />
 
         {!todaySession && !rest && !isCompleted && !recentCompletedToday && (
           <button
