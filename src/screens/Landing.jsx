@@ -1,47 +1,28 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ChevronDown } from 'lucide-react';
 import { isOnboardingComplete, getData } from '../utils/storage';
 import { trackPageView } from '../utils/analytics';
 
-/* ─── tiny reusable stat block ─── */
-function Stat({ value, label }) {
-  return (
-    <div>
-      <p
-        className="font-mono"
-        style={{ fontSize: '2.8rem', fontWeight: 700, lineHeight: 1, color: 'var(--color-text-1)', letterSpacing: '-0.02em' }}
-      >
-        {value}
-      </p>
-      <p style={{ fontSize: '0.8rem', marginTop: '0.4rem', color: 'var(--color-text-3)', letterSpacing: '0.04em' }}>{label}</p>
-    </div>
-  );
-}
+const C = {
+  bg: '#131313',
+  low: '#1c1b1b',
+  container: '#201f1f',
+  high: '#2a2a2a',
+  highest: '#353534',
+  lowest: '#0e0e0e',
+  primary: '#e9c349',
+  onPrimary: '#3c2f00',
+  green: '#2ff801',
+  text: '#e5e2e1',
+  muted: '#c4c7c7',
+  faint: '#7b7c7c',
+};
 
-function getStreakMessage(streak) {
-  if (streak === 0) return 'Ready to begin.';
-  if (streak <= 2) return "You started. That's everything.";
-  if (streak <= 6) return 'The habit is forming.';
-  if (streak <= 13) return 'One week in. Keep going.';
-  if (streak <= 29) return 'This is becoming who you are.';
-  return 'You\'re a regular.';
-}
-
-function getTimeGreeting() {
-  const h = new Date().getHours();
-  if (h < 12) return 'Good morning';
-  if (h < 17) return 'Good afternoon';
-  return 'Good evening';
-}
-
-/* ─── Returning user motivational screen ─── */
 function WelcomeBack({ onContinue }) {
   const d = getData();
   const activePlan = d?.plans?.find(p => p.status === 'active');
   const streak = d?.streaks?.current || 0;
-  const week = activePlan?.current_week || 1;
-  const planLabel = activePlan?.plan_label || 'Gym Plan';
+  const planLabel = activePlan?.plan_label || 'Your Plan';
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -51,125 +32,40 @@ function WelcomeBack({ onContinue }) {
   }, []);
 
   return (
-    <div style={{ background: 'var(--color-bg)', color: 'var(--color-text-1)', minHeight: '100dvh' }}>
-      {/* Nav */}
+    <div style={{ background: C.bg, color: C.text, minHeight: '100dvh' }}>
       <nav style={{
         position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100,
-        padding: '0 5vw', height: '60px',
+        padding: '0 5vw', height: '64px',
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        background: scrolled ? 'rgba(10,10,10,0.85)' : 'transparent',
+        background: scrolled ? 'rgba(19,19,19,0.9)' : 'transparent',
         backdropFilter: scrolled ? 'blur(20px)' : 'none',
-        WebkitBackdropFilter: scrolled ? 'blur(20px)' : 'none',
-        borderBottom: scrolled ? '1px solid var(--color-border)' : '1px solid transparent',
-        transition: 'background 0.3s, border-color 0.3s',
+        transition: 'background 0.3s',
       }}>
-        <span className="font-display" style={{ fontSize: '1.15rem', color: 'var(--color-text-1)' }}>Regulr</span>
-        <button
-          onClick={onContinue}
-          style={{
-            background: 'var(--color-text-1)', color: 'var(--color-bg)',
-            border: 'none', borderRadius: '100px',
-            padding: '0.5rem 1.3rem', fontSize: '0.875rem', fontWeight: 500, cursor: 'pointer',
-          }}
-        >
+        <span className="font-headline" style={{ fontSize: '1.4rem', fontWeight: 800, color: C.primary, letterSpacing: '-0.03em', textTransform: 'uppercase' }}>Regular</span>
+        <button onClick={onContinue} style={{ background: C.primary, color: C.onPrimary, border: 'none', borderRadius: '4px', padding: '0.5rem 1.4rem', fontSize: '0.85rem', fontWeight: 700, cursor: 'pointer', fontFamily: 'Manrope, sans-serif' }}>
           My Plan →
         </button>
       </nav>
 
-      {/* Hero — full viewport motivational */}
-      <section style={{
-        minHeight: '100dvh',
-        display: 'flex', flexDirection: 'column',
-        alignItems: 'center', justifyContent: 'center',
-        textAlign: 'center', padding: '80px 5vw 60px',
-        position: 'relative', overflow: 'hidden',
-      }}>
-        {/* gold glow */}
-        <div aria-hidden="true" style={{
-          position: 'absolute', top: '35%', left: '50%',
-          transform: 'translate(-50%, -50%)',
-          width: '60vw', height: '35vw', borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(232,193,98,0.09) 0%, transparent 65%)',
-          pointerEvents: 'none', filter: 'blur(60px)',
-        }} />
-
-        <p className="font-mono animate-fade-in" style={{
-          fontSize: '0.72rem', letterSpacing: '0.18em',
-          textTransform: 'uppercase', color: 'var(--color-text-3)', marginBottom: '1.5rem',
-        }}>
-          {getTimeGreeting()}
+      <section style={{ minHeight: '100dvh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '80px 5vw 60px', position: 'relative' }}>
+        <div style={{ position: 'absolute', top: '30%', left: '50%', transform: 'translate(-50%,-50%)', width: '60vw', height: '35vw', borderRadius: '50%', background: 'radial-gradient(circle, rgba(233,195,73,0.08) 0%, transparent 65%)', filter: 'blur(80px)', pointerEvents: 'none' }} />
+        <p className="font-headline" style={{ fontSize: '0.72rem', letterSpacing: '0.18em', textTransform: 'uppercase', color: C.faint, marginBottom: '1.5rem' }}>
+          {streak > 0 ? `${streak}-Day Streak` : 'Welcome back'}
         </p>
-
-        <h1 className="font-display animate-fade-in-up" style={{
-          fontSize: 'clamp(3rem, 8vw, 7rem)',
-          lineHeight: 1.0, letterSpacing: '-0.02em',
-          marginBottom: '1.5rem', color: 'var(--color-text-1)',
-        }}>
-          {getStreakMessage(streak)}
+        <h1 className="font-headline" style={{ fontSize: 'clamp(3rem, 8vw, 6rem)', fontWeight: 800, lineHeight: 1, letterSpacing: '-0.03em', marginBottom: '1.5rem' }}>
+          Keep going,<br /><span style={{ color: C.primary }}>regular.</span>
         </h1>
-
-        {/* Streak / plan info row */}
-        <div className="animate-fade-in-up delay-100" style={{
-          display: 'flex', gap: '2.5rem', alignItems: 'center',
-          marginBottom: '3rem', opacity: 0, animationFillMode: 'forwards',
-          flexWrap: 'wrap', justifyContent: 'center',
-        }}>
-          <div style={{ textAlign: 'center' }}>
-            <p className="font-mono" style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--color-gold)', lineHeight: 1 }}>
-              {streak}
-            </p>
-            <p style={{ fontSize: '0.78rem', color: 'var(--color-text-3)', marginTop: '0.3rem' }}>day streak</p>
-          </div>
-          <div style={{ width: '1px', height: '40px', background: 'var(--color-border)' }} />
-          <div style={{ textAlign: 'center' }}>
-            <p className="font-mono" style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--color-text-1)', lineHeight: 1 }}>
-              {week}
-            </p>
-            <p style={{ fontSize: '0.78rem', color: 'var(--color-text-3)', marginTop: '0.3rem' }}>of 4 weeks</p>
-          </div>
-          <div style={{ width: '1px', height: '40px', background: 'var(--color-border)' }} />
-          <div style={{ textAlign: 'center' }}>
-            <p style={{ fontSize: '0.95rem', fontWeight: 600, color: 'var(--color-text-1)', lineHeight: 1 }}>
-              {planLabel}
-            </p>
-            <p style={{ fontSize: '0.78rem', color: 'var(--color-text-3)', marginTop: '0.3rem' }}>your program</p>
-          </div>
-        </div>
-
-        <div className="animate-fade-in-up delay-200" style={{ opacity: 0, animationFillMode: 'forwards', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}>
-          <button
-            onClick={onContinue}
-            style={{
-              background: 'var(--color-text-1)', color: 'var(--color-bg)',
-              border: 'none', borderRadius: '100px',
-              padding: '1rem 2.8rem', fontSize: '1rem', fontWeight: 600, cursor: 'pointer',
-              transition: 'opacity 0.2s',
-            }}
-            onMouseEnter={e => e.currentTarget.style.opacity = '0.88'}
-            onMouseLeave={e => e.currentTarget.style.opacity = '1'}
-          >
-            Go to today's session →
-          </button>
-          <p style={{ fontSize: '0.82rem', color: 'var(--color-text-3)' }}>
-            Your data is saved on this device
-          </p>
-        </div>
-      </section>
-
-      {/* Mini info section */}
-      <section style={{ borderTop: '1px solid var(--color-border)', padding: '4rem 5vw', textAlign: 'center' }}>
-        <div style={{ maxWidth: '480px', margin: '0 auto' }}>
-          <p style={{ fontSize: '0.88rem', lineHeight: 1.8, color: 'var(--color-text-3)' }}>
-            No account. No login. Your plan lives on this device — private, fast, and always available.
-            <br />Miss a day? The 2-Day Rule keeps your streak alive.
-          </p>
-        </div>
+        <p style={{ fontSize: '1.1rem', color: C.muted, marginBottom: '3rem', maxWidth: '40ch', lineHeight: 1.7 }}>
+          {planLabel} is waiting. The habit only counts if you show up.
+        </p>
+        <button onClick={onContinue} style={{ background: C.primary, color: C.onPrimary, border: 'none', borderRadius: '4px', padding: '1rem 2.8rem', fontSize: '1.05rem', fontWeight: 700, cursor: 'pointer', fontFamily: 'Manrope, sans-serif', letterSpacing: '0.01em' }}>
+          Continue training
+        </button>
       </section>
     </div>
   );
 }
 
-/* ─── Main landing (new users) ─── */
 export default function Landing() {
   const navigate = useNavigate();
   const [scrolled, setScrolled] = useState(false);
@@ -183,297 +79,139 @@ export default function Landing() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const goToDashboard = () => navigate('/dashboard');
   const goToOnboarding = () => navigate('/onboarding');
+  const goToDashboard = () => navigate('/dashboard');
 
-  if (isReturning) {
-    return <WelcomeBack onContinue={goToDashboard} />;
-  }
+  if (isReturning) return <WelcomeBack onContinue={goToDashboard} />;
 
   return (
-    <div style={{ background: 'var(--color-bg)', color: 'var(--color-text-1)', minHeight: '100dvh' }}>
+    <div style={{ background: C.bg, color: C.text, minHeight: '100dvh', fontFamily: 'Inter, sans-serif' }}>
 
-      {/* ── Sticky Nav ── */}
+      {/* Nav */}
       <nav style={{
         position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100,
-        padding: '0 5vw', height: '60px',
+        padding: '0 clamp(1.5rem, 5vw, 3rem)', height: '64px',
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        background: scrolled ? 'rgba(10,10,10,0.85)' : 'transparent',
+        background: scrolled ? 'rgba(19,19,19,0.85)' : 'transparent',
         backdropFilter: scrolled ? 'blur(20px)' : 'none',
-        WebkitBackdropFilter: scrolled ? 'blur(20px)' : 'none',
-        borderBottom: scrolled ? '1px solid var(--color-border)' : '1px solid transparent',
-        transition: 'background 0.3s, border-color 0.3s',
+        transition: 'background 0.3s',
       }}>
-        <span className="font-display" style={{ fontSize: '1.15rem', color: 'var(--color-text-1)' }}>Regulr</span>
-        <button
-          onClick={goToOnboarding}
-          style={{
-            background: 'var(--color-text-1)', color: 'var(--color-bg)',
-            border: 'none', borderRadius: '100px',
-            padding: '0.5rem 1.3rem', fontSize: '0.875rem', fontWeight: 500, cursor: 'pointer',
-          }}
-        >
+        <span className="font-headline" style={{ fontSize: '1.4rem', fontWeight: 800, color: C.primary, letterSpacing: '-0.03em', textTransform: 'uppercase' }}>Regular</span>
+        <button onClick={goToOnboarding} style={{ background: C.primary, color: C.onPrimary, border: 'none', borderRadius: '4px', padding: '0.5rem 1.4rem', fontSize: '0.82rem', fontWeight: 700, cursor: 'pointer', fontFamily: 'Manrope, sans-serif' }}>
           Get Started
         </button>
       </nav>
 
       {/* ── Hero ── */}
-      <section style={{
-        minHeight: 'calc(100dvh - 280px)',
-        display: 'flex', flexDirection: 'column',
-        alignItems: 'center', justifyContent: 'center',
-        textAlign: 'center', padding: '72px 5vw 3rem',
-        position: 'relative', overflow: 'hidden',
-      }}>
-        {/* background glow */}
-        <div aria-hidden="true" style={{
-          position: 'absolute', top: '30%', left: '50%',
-          transform: 'translate(-50%, -50%)',
-          width: '70vw', height: '40vw', borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(232,193,98,0.07) 0%, transparent 65%)',
-          pointerEvents: 'none', filter: 'blur(60px)',
-        }} />
-
-        <p className="font-mono animate-fade-in" style={{
-          fontSize: '0.72rem', letterSpacing: '0.18em',
-          textTransform: 'uppercase', color: 'var(--color-text-3)', marginBottom: '1.25rem',
-        }}>
-          Science-backed habit formation
-        </p>
-
-        <h1 className="font-display animate-fade-in-up" style={{
-          fontSize: 'clamp(3rem, 7vw, 6.5rem)',
-          lineHeight: 1.0, letterSpacing: '-0.02em',
-          marginBottom: '1.25rem', maxWidth: '18ch',
-          color: 'var(--color-text-1)', position: 'relative',
-        }}>
-          Become a<br />
-          <em style={{ color: 'var(--color-text-1)' }}>regular.</em>
-        </h1>
-
-        <p className="animate-fade-in-up delay-100" style={{
-          fontSize: '1.1rem', lineHeight: 1.7,
-          maxWidth: '46ch', color: 'var(--color-text-2)',
-          marginBottom: '2rem', opacity: 0, animationFillMode: 'forwards',
-        }}>
-          No login. No guilt. No excuses. Build a gym habit
-          using the same science elite athletes use — right on your phone.
-        </p>
-
-        <div className="animate-fade-in-up delay-200" style={{
-          display: 'flex', flexDirection: 'column', gap: '0.75rem', alignItems: 'center',
-          opacity: 0, animationFillMode: 'forwards',
-        }}>
-          <button
-            onClick={goToOnboarding}
-            style={{
-              background: 'var(--color-text-1)', color: 'var(--color-bg)',
-              border: 'none', borderRadius: '100px',
-              padding: '0.9rem 2.4rem', fontSize: '1rem', fontWeight: 600,
-              cursor: 'pointer', transition: 'opacity 0.2s, transform 0.15s',
-            }}
-            onMouseEnter={e => e.currentTarget.style.opacity = '0.88'}
-            onMouseLeave={e => e.currentTarget.style.opacity = '1'}
-          >
-            Start for free
-          </button>
-          <span style={{ fontSize: '0.82rem', color: 'var(--color-text-3)' }}>
-            No account · 2 minutes
-          </span>
-        </div>
-
-        {/* Stats row */}
-        <div className="animate-fade-in-up delay-300 landing-stats-row" style={{
-          display: 'flex', gap: '4rem', marginTop: '2.5rem',
-          padding: '2rem 3.5rem', borderRadius: '16px',
-          background: 'var(--color-surface)', border: '1px solid var(--color-border)',
-          flexWrap: 'wrap', justifyContent: 'center',
-          opacity: 0, animationFillMode: 'forwards',
-        }}>
-          <Stat value="4wk" label="Progressive Plan" />
-          <div className="landing-hide-divider" style={{ width: '1px', background: 'var(--color-border)', alignSelf: 'stretch' }} />
-          <Stat value="2-Day" label="Rule — never lose a streak" />
-          <div className="landing-hide-divider" style={{ width: '1px', background: 'var(--color-border)', alignSelf: 'stretch' }} />
-          <Stat value="0" label="Signups required" />
-          <div className="landing-hide-divider" style={{ width: '1px', background: 'var(--color-border)', alignSelf: 'stretch' }} />
-          <Stat value="50+" label="Expert tips included" />
-        </div>
-
-        {/* Scroll indicator */}
-        <div aria-hidden="true" style={{
-          marginTop: '2rem',
-          display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px',
-          color: 'rgba(255,255,255,0.22)',
-          animation: 'scrollBounce 2s ease-in-out infinite',
-        }}>
-          <ChevronDown size={18} strokeWidth={1.5} />
-        </div>
-      </section>
-
-      {/* ── Section 1: The Science ── */}
-      <section style={{ borderTop: '1px solid var(--color-border)', padding: '3rem 5vw 7rem' }}>
-        <div className="landing-grid-2col" style={{ maxWidth: '1200px', margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6rem', alignItems: 'center' }}>
-          <div>
-            <p className="font-mono" style={{ fontSize: '0.72rem', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--color-text-3)', marginBottom: '1.5rem' }}>
-              The Science
+      <section style={{ minHeight: 'calc(100dvh - 160px)', display: 'flex', alignItems: 'center', padding: '80px clamp(1.5rem,6vw,4rem) 3rem', maxWidth: '1400px', margin: '0 auto' }}>
+        <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'space-between', gap: '4rem', flexWrap: 'wrap', width: '100%' }}>
+          {/* Left: headline */}
+          <div style={{ maxWidth: '640px' }}>
+            <h1 className="font-headline animate-fade-in-up" style={{ fontSize: 'clamp(3.5rem, 8vw, 7.5rem)', fontWeight: 800, lineHeight: 0.9, letterSpacing: '-0.03em', marginBottom: '2rem' }}>
+              Become a <span style={{ color: C.primary }}>regular.</span>
+            </h1>
+            <p className="animate-fade-in-up delay-100" style={{ fontSize: '1.2rem', color: C.muted, lineHeight: 1.7, marginBottom: '2.5rem', maxWidth: '44ch', opacity: 0, animationFillMode: 'forwards' }}>
+              Build the habit of showing up. No friction, just focus.
             </p>
-            <h2 className="font-display" style={{ fontSize: 'clamp(2rem, 3.5vw, 3rem)', lineHeight: 1.1, marginBottom: '1.5rem', color: 'var(--color-text-1)' }}>
-              Miss once, human.<br />Miss twice, a pattern.
-            </h2>
-            <p style={{ fontSize: '1rem', lineHeight: 1.8, color: 'var(--color-text-2)', marginBottom: '1rem' }}>
-              Research shows a single missed day has almost zero impact on habit formation.
-              The danger is the second miss — that's when habits break.
-            </p>
-            <p style={{ fontSize: '1rem', lineHeight: 1.8, color: 'var(--color-text-2)', marginBottom: '1.5rem' }}>
-              Regulr is built around the <strong style={{ color: 'var(--color-text-1)' }}>2-Day Rule</strong> — we don't punish you for being human.
-              We just make sure you always come back.
-            </p>
-            <p className="font-mono" style={{ fontSize: '0.75rem', color: 'var(--color-text-3)' }}>
-              Based on Lally et al., 2010 — University College London
-            </p>
+            <div className="animate-fade-in-up delay-200" style={{ opacity: 0, animationFillMode: 'forwards' }}>
+              <button onClick={goToOnboarding} style={{ background: C.primary, color: C.onPrimary, border: 'none', borderRadius: '4px', padding: '1rem 2.4rem', fontSize: '1.05rem', fontWeight: 700, cursor: 'pointer', fontFamily: 'Manrope, sans-serif', display: 'inline-flex', alignItems: 'center', gap: '8px' }}
+                onMouseEnter={e => e.currentTarget.style.filter = 'brightness(1.1)'}
+                onMouseLeave={e => e.currentTarget.style.filter = 'none'}
+              >
+                Start for free →
+              </button>
+              <p style={{ fontSize: '0.78rem', color: C.faint, marginTop: '0.75rem' }}>No account · 2 minutes</p>
+            </div>
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-            <p style={{ fontSize: '0.75rem', color: 'var(--color-text-3)', marginBottom: '0.5rem', letterSpacing: '0.05em' }}>Your week</p>
+          {/* Right: proof-point grid */}
+          <div className="animate-fade-in-up delay-300" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '12px', minWidth: '340px', opacity: 0, animationFillMode: 'forwards' }}>
             {[
-              { day: 'Mon', state: 'done' },
-              { day: 'Tue', state: 'done' },
-              { day: 'Wed', state: 'miss1' },
-              { day: 'Thu', state: 'warning' },
-              { day: 'Fri', state: 'done' },
-              { day: 'Sat', state: 'rest' },
-              { day: 'Sun', state: 'done' },
-            ].map(({ day, state }) => {
-              const cfg = {
-                done: { label: 'Completed', bg: 'rgba(74,222,128,0.1)', border: 'rgba(74,222,128,0.3)', dot: '#4ADE80', text: 'var(--color-text-1)' },
-                miss1: { label: 'Missed — 1 miss, still safe', bg: 'rgba(232,193,98,0.07)', border: 'rgba(232,193,98,0.25)', dot: '#E8C162', text: 'var(--color-text-1)' },
-                warning: { label: 'Come back today!', bg: 'rgba(248,113,113,0.07)', border: 'rgba(248,113,113,0.25)', dot: '#F87171', text: 'var(--color-text-1)' },
-                rest: { label: 'Rest day', bg: 'transparent', border: 'var(--color-border)', dot: 'var(--color-text-3)', text: 'var(--color-text-3)' },
-              }[state];
-              return (
-                <div key={day} style={{
-                  display: 'flex', alignItems: 'center', gap: '1rem',
-                  padding: '0.75rem 1.25rem', borderRadius: '10px',
-                  background: cfg.bg, border: `1px solid ${cfg.border}`,
-                }}>
-                  <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: cfg.dot, flexShrink: 0 }} />
-                  <span className="font-mono" style={{ fontSize: '0.8rem', color: 'var(--color-text-3)', width: '2rem', flexShrink: 0 }}>{day}</span>
-                  <span style={{ fontSize: '0.85rem', color: cfg.text }}>{cfg.label}</span>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Section 2: Identity ── */}
-      <section style={{ borderTop: '1px solid var(--color-border)', padding: '7rem 5vw' }}>
-        <div className="landing-grid-2col" style={{ maxWidth: '1200px', margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6rem', alignItems: 'center' }}>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-            <p style={{ fontSize: '0.75rem', color: 'var(--color-text-3)', marginBottom: '0.5rem', letterSpacing: '0.05em' }}>Your identity evolves</p>
-            {[
-              { level: 1, title: 'Newcomer', xp: '0 XP', active: false },
-              { level: 2, title: 'Committed', xp: '250 XP', active: false },
-              { level: 3, title: 'Consistent', xp: '750 XP', active: true },
-              { level: 4, title: 'Dedicated', xp: '1,500 XP', active: false },
-              { level: 5, title: 'Regular', xp: '3,000 XP', active: false },
-            ].map(({ level, title, xp, active }) => (
-              <div key={level} style={{
-                display: 'flex', alignItems: 'center', gap: '1.2rem',
-                padding: '1rem 1.25rem', borderRadius: '12px',
-                background: active ? 'rgba(232,193,98,0.08)' : 'var(--color-surface)',
-                border: active ? '1px solid rgba(232,193,98,0.3)' : '1px solid var(--color-border)',
-                boxShadow: active ? '0 0 24px rgba(232,193,98,0.06)' : 'none',
-              }}>
-                <span className="font-mono" style={{ fontSize: '1.4rem', fontWeight: 700, color: active ? 'var(--color-gold)' : 'var(--color-text-3)', width: '2rem', lineHeight: 1 }}>
-                  {level}
-                </span>
-                <div style={{ flex: 1 }}>
-                  <p style={{ fontWeight: active ? 600 : 400, color: active ? 'var(--color-text-1)' : 'var(--color-text-2)', fontSize: '0.95rem' }}>{title}</p>
-                  <p className="font-mono" style={{ fontSize: '0.72rem', color: 'var(--color-text-3)', marginTop: '2px' }}>{xp}</p>
-                </div>
-                {active && (
-                  <span style={{ fontSize: '0.72rem', color: 'var(--color-gold)', background: 'rgba(232,193,98,0.12)', padding: '0.2rem 0.6rem', borderRadius: '100px' }}>
-                    You are here
-                  </span>
-                )}
+              { icon: '📅', tag: 'Structure', title: '4-Week Progressive Plan' },
+              { icon: '🔁', tag: 'Philosophy', title: 'The 2-Day Rule' },
+              { icon: '🔓', tag: 'Access', title: 'Zero signups required' },
+              { icon: '💡', tag: 'Knowledge', title: '50+ Expert Tips' },
+            ].map(({ icon, tag, title }) => (
+              <div key={tag} style={{ background: C.low, borderRadius: '12px', padding: '1.5rem' }}>
+                <span style={{ fontSize: '1.4rem', display: 'block', marginBottom: '0.75rem' }}>{icon}</span>
+                <p style={{ fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase', color: C.faint, marginBottom: '4px' }}>{tag}</p>
+                <p className="font-headline" style={{ fontSize: '0.95rem', fontWeight: 700, color: C.text }}>{title}</p>
               </div>
             ))}
           </div>
+        </div>
+      </section>
 
+      {/* ── Science Section ── */}
+      <section style={{ background: C.lowest, padding: '6rem clamp(1.5rem,6vw,4rem)' }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(300px,1fr))', gap: '5rem', alignItems: 'center' }}>
           <div>
-            <p className="font-mono" style={{ fontSize: '0.72rem', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--color-text-3)', marginBottom: '1.5rem' }}>
-              Identity
-            </p>
-            <h2 className="font-display" style={{ fontSize: 'clamp(2rem, 3.5vw, 3rem)', lineHeight: 1.1, marginBottom: '1.5rem', color: 'var(--color-text-1)' }}>
-              You don't build habits.<br />You become someone.
+            <p className="font-headline" style={{ fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', color: C.primary, marginBottom: '1.5rem' }}>The Science</p>
+            <h2 className="font-headline" style={{ fontSize: 'clamp(2rem, 4vw, 3.2rem)', fontWeight: 800, lineHeight: 1.05, letterSpacing: '-0.02em', marginBottom: '1.5rem', color: C.text }}>
+              The high cost of<br />missing twice.
             </h2>
-            <p style={{ fontSize: '1rem', lineHeight: 1.8, color: 'var(--color-text-2)', marginBottom: '1rem' }}>
-              Every great lifter started with an empty bar and no idea what they were doing.
-              The difference? They kept showing up.
+            <p style={{ fontSize: '1rem', color: C.muted, lineHeight: 1.8, marginBottom: '2rem' }}>
+              One miss is an accident. Two misses is the start of a new habit. The 2-Day Rule keeps your identity intact.
             </p>
-            <p style={{ fontSize: '1rem', lineHeight: 1.8, color: 'var(--color-text-2)' }}>
-              Regulr doesn't just track what you do — it tracks who you're <strong style={{ color: 'var(--color-text-1)' }}>becoming</strong>.
-              Level up through consistent action. Earn badges. Own the identity.
-            </p>
+            {[
+              { title: 'Psychological Safety', body: 'Eliminate the guilt that usually follows a missed day.' },
+              { title: 'Momentum Retention', body: 'Recover 90% of habit strength by showing up the next day.' },
+            ].map(({ title, body }) => (
+              <div key={title} style={{ display: 'flex', gap: '12px', alignItems: 'flex-start', marginBottom: '1.25rem' }}>
+                <span style={{ color: C.green, fontSize: '1.1rem', lineHeight: 1.5, flexShrink: 0 }}>✓</span>
+                <div>
+                  <p style={{ fontWeight: 600, color: C.text, marginBottom: '2px' }}>{title}</p>
+                  <p style={{ fontSize: '0.88rem', color: C.faint }}>{body}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div style={{ background: C.container, borderRadius: '2rem', aspectRatio: '1', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '6rem', opacity: 0.6 }}>
+            🪨
           </div>
         </div>
       </section>
 
-      {/* ── Section 3: How it works ── */}
-      <section style={{ borderTop: '1px solid var(--color-border)', padding: '7rem 5vw' }}>
+      {/* ── Identity Evolution ── */}
+      <section style={{ padding: '6rem clamp(1.5rem,6vw,4rem)' }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-          <div className="landing-section-hdr" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '4rem' }}>
-            <h2 className="font-display" style={{ fontSize: 'clamp(2rem, 3.5vw, 2.8rem)', lineHeight: 1.1, color: 'var(--color-text-1)' }}>
-              Simple to start.<br />Hard to quit.
-            </h2>
-            <button
-              onClick={goToOnboarding}
-              style={{ background: 'none', border: '1px solid var(--color-border-strong)', borderRadius: '100px', padding: '0.6rem 1.5rem', fontSize: '0.875rem', color: 'var(--color-text-1)', cursor: 'pointer', whiteSpace: 'nowrap' }}
-              onMouseEnter={e => { e.currentTarget.style.background = 'var(--color-text-1)'; e.currentTarget.style.color = 'var(--color-bg)'; }}
-              onMouseLeave={e => { e.currentTarget.style.background = 'none'; e.currentTarget.style.color = 'var(--color-text-1)'; }}
-            >
-              Try it now →
-            </button>
-          </div>
-          <div className="landing-cards-3col" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.5rem' }}>
+          <h2 className="font-headline" style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 800, letterSpacing: '-0.02em', textAlign: 'center', marginBottom: '4rem' }}>Identity Evolution</h2>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '16px' }}>
             {[
-              {
-                num: '01',
-                title: 'Answer 5 questions',
-                body: 'Goal, experience, days per week, schedule, equipment. No email, no account, no friction.',
-                detail: '~90 seconds',
-              },
-              {
-                num: '02',
-                title: 'Get your 4-week plan',
-                body: 'A progressive gym program — Full Body, Push/Pull/Legs, or Upper/Lower — built around your schedule.',
-                detail: 'Built instantly',
-              },
-              {
-                num: '03',
-                title: 'Show up and level up',
-                body: 'Check in daily. Earn XP and badges. The 2-Day Rule protects your streak when life gets in the way.',
-                detail: '50+ expert tips included',
-              },
-            ].map(({ num, title, body, detail }) => (
-              <div
-                key={num}
-                style={{
-                  background: 'var(--color-surface)', border: '1px solid var(--color-border)',
-                  borderRadius: '16px', padding: '2rem',
-                  display: 'flex', flexDirection: 'column', gap: '1rem',
-                  transition: 'border-color 0.2s',
-                }}
-                onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--color-border-strong)'}
-                onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--color-border)'}
-              >
-                <span className="font-mono" style={{ fontSize: '0.75rem', color: 'var(--color-text-3)' }}>{num}</span>
-                <h3 style={{ fontSize: '1.15rem', fontWeight: 600, color: 'var(--color-text-1)', lineHeight: 1.3 }}>{title}</h3>
-                <p style={{ fontSize: '0.9rem', lineHeight: 1.7, color: 'var(--color-text-2)', flex: 1 }}>{body}</p>
-                <p className="font-mono" style={{ fontSize: '0.72rem', color: 'var(--color-text-3)', marginTop: 'auto', paddingTop: '1rem', borderTop: '1px solid var(--color-border)' }}>
-                  {detail}
-                </p>
+              { num: '01', title: 'The Visitor', body: 'Just showing up once in a while. Testing the waters.', active: false },
+              { num: '02', title: 'The Builder', body: 'Putting in the reps. Creating a weekly baseline.', active: true },
+              { num: '03', title: 'The Architect', body: 'Systems in place. Optimizing for consistency.', active: false },
+              { num: '04', title: 'The Regular', body: 'Identity transformed. The habit is who you are.', active: false },
+            ].map(({ num, title, body, active }) => (
+              <div key={num} style={{
+                background: C.low,
+                borderRadius: '16px',
+                padding: '2rem',
+                borderTop: active ? `2px solid ${C.primary}` : '2px solid transparent',
+              }}>
+                <p className="font-headline" style={{ fontSize: '2.5rem', fontWeight: 800, color: active ? `${C.primary}66` : C.highest, marginBottom: '1rem' }}>{num}</p>
+                <p className="font-headline" style={{ fontSize: '1.1rem', fontWeight: 700, color: active ? C.primary : C.text, marginBottom: '0.5rem' }}>{title}</p>
+                <p style={{ fontSize: '0.85rem', color: C.faint, lineHeight: 1.6 }}>{body}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── The Protocol ── */}
+      <section style={{ padding: '5rem clamp(1.5rem,6vw,4rem)', textAlign: 'center' }}>
+        <div style={{ maxWidth: '900px', margin: '0 auto' }}>
+          <p style={{ fontSize: '0.65rem', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', color: C.faint, marginBottom: '4rem' }}>The Protocol</p>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '4rem' }}>
+            {[
+              { n: '1', title: 'Choose Your Anchor', body: 'Select one core habit that defines your progress.' },
+              { n: '2', title: 'Mark the Win', body: 'Open the app, tap once, close the app. Zero friction.' },
+              { n: '3', title: 'Defend the Streak', body: 'Use expert tips to navigate the hard days.' },
+            ].map(({ n, title, body }) => (
+              <div key={n}>
+                <div style={{ width: '56px', height: '56px', borderRadius: '50%', background: C.highest, display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1.5rem', color: C.primary, fontSize: '1.1rem', fontWeight: 800, fontFamily: 'Manrope, sans-serif' }}>{n}</div>
+                <p className="font-headline" style={{ fontSize: '1.05rem', fontWeight: 700, marginBottom: '0.5rem', color: C.text }}>{title}</p>
+                <p style={{ fontSize: '0.85rem', color: C.faint, lineHeight: 1.6 }}>{body}</p>
               </div>
             ))}
           </div>
@@ -481,39 +219,21 @@ export default function Landing() {
       </section>
 
       {/* ── Final CTA ── */}
-      <section style={{ borderTop: '1px solid var(--color-border)', padding: '8rem 5vw', textAlign: 'center' }}>
-        <div style={{ maxWidth: '640px', margin: '0 auto' }}>
-          <h2 className="font-display" style={{ fontSize: 'clamp(2.5rem, 6vw, 5rem)', lineHeight: 1.02, marginBottom: '1.5rem', color: 'var(--color-text-1)', letterSpacing: '-0.02em' }}>
-            No email.<br />No account.<br />Start in 90 seconds.
-          </h2>
-          <p style={{ fontSize: '1rem', color: 'var(--color-text-2)', marginBottom: '2.5rem', lineHeight: 1.7 }}>
-            Your data lives on your device. No servers, no logins, no ads.
-            Just you and the habit.
-          </p>
-          <button
-            onClick={goToOnboarding}
-            style={{
-              background: 'var(--color-text-1)', color: 'var(--color-bg)',
-              border: 'none', borderRadius: '100px',
-              padding: '1.1rem 3rem', fontSize: '1.05rem', fontWeight: 600,
-              cursor: 'pointer', marginBottom: '1rem', display: 'inline-block',
-            }}
-            onMouseEnter={e => e.currentTarget.style.opacity = '0.88'}
-            onMouseLeave={e => e.currentTarget.style.opacity = '1'}
+      <section style={{ padding: '3rem clamp(1.5rem,6vw,4rem) 8rem' }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto', background: C.primary, borderRadius: '3rem', padding: 'clamp(3rem,6vw,6rem)', textAlign: 'center' }}>
+          <h2 className="font-headline" style={{ fontSize: 'clamp(2.5rem, 6vw, 5rem)', fontWeight: 800, color: C.onPrimary, lineHeight: 0.95, letterSpacing: '-0.03em', marginBottom: '1.5rem' }}>Ready to show up?</h2>
+          <p style={{ fontSize: '1.1rem', color: `${C.onPrimary}cc`, maxWidth: '40ch', margin: '0 auto 2.5rem', lineHeight: 1.6 }}>Join thousands who stopped chasing hacks and started becoming regulars.</p>
+          <button onClick={goToOnboarding} style={{ background: C.onPrimary, color: C.primary, border: 'none', borderRadius: '4px', padding: '1.1rem 3rem', fontSize: '1.1rem', fontWeight: 700, cursor: 'pointer', fontFamily: 'Manrope, sans-serif' }}
+            onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.04)'}
+            onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
           >
-            Begin Your Journey
+            Start your first plan
           </button>
         </div>
       </section>
 
-      {/* ── Footer ── */}
-      <footer style={{ borderTop: '1px solid var(--color-border)', padding: '2rem 5vw' }}>
-        <div className="landing-footer-row" style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <span className="font-display" style={{ color: 'var(--color-text-3)', fontSize: '0.95rem' }}>Regulr</span>
-          <p style={{ fontSize: '0.78rem', color: 'var(--color-text-3)' }}>
-            Your data stays on your device. Always.
-          </p>
-        </div>
+      <footer style={{ borderTop: `1px solid ${C.highest}33`, padding: '2rem', textAlign: 'center', fontSize: '0.65rem', letterSpacing: '0.14em', textTransform: 'uppercase', color: C.faint }}>
+        © 2024 Regular. Built for focus.
       </footer>
     </div>
   );
