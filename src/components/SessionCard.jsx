@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Clock, Check, ChevronDown, Youtube } from 'lucide-react';
+import { Clock, Check, ChevronDown, PlayCircle } from 'lucide-react';
 
 const CARD = {
   background: 'linear-gradient(145deg, #1c1c1c 0%, #121212 100%)',
@@ -222,7 +222,7 @@ export default function SessionCard({ session, onComplete, isCompleted, isCooldo
                         onMouseEnter={e => e.currentTarget.style.color = '#FF0000'}
                         onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.25)'}
                       >
-                        <Youtube size={13} strokeWidth={1.8} />
+                        <PlayCircle size={13} strokeWidth={1.8} />
                       </a>
                     </div>
                     {ex.note && <p style={{ fontSize: '0.75rem', color: 'var(--color-text-3)', marginTop: '2px' }}>{ex.note}</p>}
