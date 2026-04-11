@@ -35,12 +35,14 @@ export function sanityImageUrl(asset, { width, quality = 85 } = {}) {
  * Returns null if not configured or fetch fails.
  */
 export async function fetchHeroImage() {
+  console.log('[Sanity] isConfigured:', isConfigured, 'projectId:', projectId);
   if (!sanity) return null;
   try {
     const doc = await sanity.fetch(`*[_type == "heroImage"][0]{ image, alt }`);
+    console.log('[Sanity] fetchHeroImage result:', JSON.stringify(doc));
     return doc ?? null;
   } catch (err) {
-    console.warn('[Sanity] fetchHeroImage failed:', err.message);
+    console.warn('[Sanity] fetchHeroImage failed:', err.message, err);
     return null;
   }
 }
