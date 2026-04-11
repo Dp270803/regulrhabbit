@@ -6,6 +6,7 @@ import Dashboard from './screens/Dashboard';
 import PlanView from './screens/PlanView';
 import Profile from './screens/Profile';
 import Tips from './screens/Tips';
+import SanityStudio from './screens/SanityStudio';
 import BottomNav from './components/BottomNav';
 
 const NAV_SCREENS = ['/dashboard', '/plan', '/profile', '/tips'];
@@ -35,6 +36,7 @@ export default function App() {
         <Route path="/plan" element={<PlanView />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/tips" element={<Tips />} />
+        <Route path="/studio/*" element={<SanityStudio />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
       {showNav && <BottomNav />}
