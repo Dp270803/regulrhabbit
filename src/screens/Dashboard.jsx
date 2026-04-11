@@ -2,7 +2,6 @@ import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SessionCard from '../components/SessionCard';
 import WeeklyGrid from '../components/WeeklyGrid';
-import XPBar from '../components/XPBar';
 import TipCard from '../components/TipCard';
 import BadgeCard from '../components/BadgeCard';
 import ReturnBanner from '../components/ReturnBanner';
@@ -13,14 +12,23 @@ import { getData, updateData } from '../utils/storage';
 import { getTodaySession, isRestDay } from '../utils/planGenerator';
 import { detectReturnState, getReturnMessage, getTimeMessage, getReducedSession, getCelebrationMessage } from '../utils/returnState';
 import { updateStreak, getConsecutiveMisses, getStreakMilestone } from '../utils/streakTracker';
-import { calculateSessionXP, checkLevelUp, getLevelFromXP } from '../utils/xpCalculator';
+import { calculateSessionXP, checkLevelUp, getLevelFromXP, getXPToNextLevel } from '../utils/xpCalculator';
 import { checkBadges } from '../utils/badgeChecker';
 import { selectTip, markTipSeen } from '../utils/tipSelector';
 import { getToday, formatDate, getWeekDates } from '../utils/dateUtils';
 import { trackPageView, trackSessionCompleted, trackReturnState, trackBadgeEarned, trackLevelUp } from '../utils/analytics';
 import messagesData from '../data/messages.json';
+import levelsData from '../data/levels.json';
 
+const ALL_LEVELS = levelsData.levels;
 const DAY_KEYS = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+
+const C = {
+  bg: '#131313', low: '#1c1b1b', container: '#201f1f',
+  high: '#2a2a2a', highest: '#353534', lowest: '#0e0e0e',
+  primary: '#e9c349', onPrimary: '#3c2f00', green: '#2ff801',
+  text: '#e5e2e1', muted: '#c4c7c7', faint: '#7b7c7c',
+};
 
 function getMotivationalNote(streak, sessionsLeft, isCompleted) {
   if (isCompleted) return 'Session done. Recovery starts now.';
@@ -52,21 +60,37 @@ function getNextSession(plan) {
   return null;
 }
 
-function StatTile({ label, value, sub, valueColor, accent, unit }) {
+// Consistency dot grid — last 20 days mapped to green/gold/grey
+function ConsistencyDots({ checkIns, scheduledDays, plan }) {
+  const today = getToday();
+  const days = [];
+  for (let i = 19; i >= 0; i--) {
+    const d = new Date();
+    d.setDate(d.getDate() - i);
+    const dateStr = d.toISOString().split('T')[0];
+    const dayKey = DAY_KEYS[d.getDay() === 0 ? 6 : d.getDay() - 1];
+    const isScheduled = scheduledDays?.includes(dayKey);
+    const done = checkIns?.some(c => c.date === dateStr && c.completed);
+    const isPast = dateStr < today;
+    const isToday = dateStr === today;
+    days.push({ dateStr, isScheduled, done, isPast, isToday });
+  }
+
   return (
-    <div style={{
-      background: 'linear-gradient(145deg, #1a1a1a 0%, #111111 100%)',
-      border: accent ? `1px solid ${accent}28` : '1px solid rgba(255,255,255,0.07)',
-      borderRadius: '18px',
-      padding: '24px 22px 20px',
-      boxShadow: '0 4px 28px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.04)',
-    }}>
-      <p style={{ fontSize: '0.55rem', fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.28)', marginBottom: '14px' }}>{label}</p>
-      <div style={{ display: 'flex', alignItems: 'baseline', gap: '5px' }}>
-        <p className="font-mono" style={{ fontSize: '2.4rem', fontWeight: 700, lineHeight: 1, color: valueColor || 'var(--color-text-1)' }}>{value}</p>
-        {unit && <span style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.3)', fontWeight: 500 }}>{unit}</span>}
-      </div>
-      {sub && <p style={{ fontSize: '0.68rem', color: 'rgba(255,255,255,0.28)', marginTop: '6px', lineHeight: 1.4 }}>{sub}</p>}
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(10, 1fr)', gap: '4px' }}>
+      {days.map(({ dateStr, isScheduled, done, isPast, isToday }) => {
+        let bg;
+        if (done) bg = C.green;
+        else if (isToday) bg = C.primary;
+        else if (isPast && isScheduled) bg = 'rgba(255,180,171,0.4)'; // missed — muted red
+        else bg = C.highest;
+        return (
+          <div key={dateStr} style={{
+            width: '8px', height: '8px', borderRadius: '2px',
+            background: bg,
+          }} />
+        );
+      })}
     </div>
   );
 }
@@ -84,6 +108,7 @@ export default function Dashboard() {
   const [recentXP, setRecentXP] = useState(0);
   const [celebrationMsg, setCelebrationMsg] = useState(null);
   const [showBanner, setShowBanner] = useState(true);
+  const [xpFlash, setXpFlash] = useState(false);
 
   const loadDashboard = useCallback(async () => {
     const d = getData();
@@ -123,13 +148,14 @@ export default function Dashboard() {
   const isNextSession = !displaySession && !!nextInfo;
   const nextLabel = nextInfo ? `Up Next — ${formatDate(nextInfo.session.date)}` : null;
 
-  // Weekly stats for stat tiles
   const weekDates = getWeekDates(today);
   const scheduledDays = activePlan?.scheduled_days || [];
   const completedThisWeek = weekDates.filter(date => data.check_ins.some(c => c.date === date && c.completed)).length;
   const scheduledThisWeek = weekDates.filter((_, i) => scheduledDays.includes(DAY_KEYS[i])).length;
 
   const level = getLevelFromXP(data.user.total_xp);
+  const { needed, progress, nextLevel } = getXPToNextLevel(data.user.total_xp);
+  const xpPct = Math.min((progress || 0) * 100, 100);
 
   function handleComplete() {
     const d = getData();
@@ -150,7 +176,8 @@ export default function Dashboard() {
       if (li) data.user.level = li.level;
       return data;
     });
-    setData(updated); setRecentXP(xpResult.total);
+    setData(updated); setRecentXP(xpResult.total); setXpFlash(true);
+    setTimeout(() => setXpFlash(false), 2200);
     const li = checkLevelUp(oldXP, updated.user.total_xp);
     if (li) { setLevelUpInfo(li); trackLevelUp(li.level, updated.user.total_xp); }
     const badges = checkBadges(updated);
@@ -169,83 +196,105 @@ export default function Dashboard() {
   }
 
   const recentBadges = data.badges.filter(b => b.earned).slice(-3).reverse();
-  // Cooldown: block logging if already completed today (any check-in in the last 6h)
   const sixHoursAgo = new Date(Date.now() - 6 * 60 * 60 * 1000).toISOString();
   const recentCompletedToday = data.check_ins.some(c => c.date === today && c.completed && c.completed_at && c.completed_at > sixHoursAgo);
 
-  const W = { maxWidth: '1100px', margin: '0 auto', padding: '0 clamp(16px, 4vw, 60px)' };
+  const W = { maxWidth: '860px', margin: '0 auto', padding: '0 clamp(16px, 4vw, 48px)' };
 
   return (
-    <div className="min-h-dvh pb-32" style={{
-      background: 'radial-gradient(ellipse 70% 35% at 15% 0%, rgba(232,193,98,0.06) 0%, transparent 100%), #080808',
-      color: 'var(--color-text-1)',
-    }}>
+    <div className="min-h-dvh pb-32" style={{ background: C.bg, color: C.text }}>
       <ConfettiEffect trigger={showConfetti} />
       {levelUpInfo && <LevelUpModal level={levelUpInfo} onClose={() => setLevelUpInfo(null)} />}
       {newBadge && <BadgeModal badge={newBadge} onClose={() => setNewBadge(null)} />}
       {showBanner && returnMessage && <ReturnBanner message={returnMessage} state={returnStateNum} timeMessage={timeMessage} onDismiss={() => setShowBanner(false)} />}
 
-      {/* ── Header ── */}
-      <div style={{ ...W, paddingTop: '48px', paddingBottom: '24px' }}>
-        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '24px', flexWrap: 'wrap' }}>
+      {/* ── Level Hero Section ── */}
+      <div style={{ ...W, paddingTop: '48px', paddingBottom: '32px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: '24px', alignItems: 'end' }}>
+          {/* Left: Level heading */}
           <div>
-            <p style={{ fontSize: '0.65rem', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.25)', marginBottom: '8px' }}>
-              {getTimeGreeting()} · Week {todayInfo?.weekNumber || nextInfo?.weekNumber || 1} of 4
+            <p style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: C.faint, marginBottom: '8px' }}>
+              Current Standing
             </p>
-            <h1 className="font-display" style={{ fontSize: 'clamp(2rem, 4vw, 3.2rem)', lineHeight: 1.02, letterSpacing: '-0.02em', marginBottom: '0' }}>
-              {activePlan?.plan_label || 'Dashboard'}
+            <h1 className="font-headline" style={{ fontSize: 'clamp(2.2rem, 5vw, 4rem)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.05, marginBottom: '20px' }}>
+              Level {level.level}: <span style={{ color: C.primary }}>{level.title}</span>
             </h1>
+            {/* XP bar */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+              <div style={{ flex: 1, height: '3px', background: C.highest, overflow: 'hidden', borderRadius: '2px' }}>
+                <div style={{
+                  height: '100%', background: C.primary, borderRadius: '2px',
+                  width: `${xpPct}%`, transition: 'width 0.7s ease',
+                  boxShadow: `0 0 8px rgba(233,195,73,0.4)`,
+                }} />
+              </div>
+              <span className="font-headline" style={{ fontWeight: 700, color: C.primary, whiteSpace: 'nowrap', position: 'relative' }}>
+                {data.user.total_xp.toLocaleString()} / {nextLevel ? nextLevel.xp_required.toLocaleString() : '—'} XP
+                {xpFlash && recentXP > 0 && (
+                  <span className="animate-fade-in-up" style={{ position: 'absolute', top: '-22px', right: 0, fontSize: '0.85rem', color: C.primary }}>
+                    +{recentXP}
+                  </span>
+                )}
+              </span>
+            </div>
           </div>
-          {/* Motivational note pill */}
-          <div style={{
-            alignSelf: 'flex-end',
-            padding: '8px 16px',
-            borderRadius: '100px',
-            background: 'rgba(232,193,98,0.07)',
-            border: '1px solid rgba(232,193,98,0.18)',
-            fontSize: '0.78rem',
-            color: 'rgba(232,193,98,0.8)',
-            whiteSpace: 'nowrap',
-            flexShrink: 0,
-          }}>
-            {getMotivationalNote(data.streaks.current, scheduledThisWeek - completedThisWeek, isCompleted)}
+
+          {/* Right: Consistency track */}
+          <div style={{ background: C.lowest, padding: '20px 20px 16px', borderRadius: '12px', minWidth: '200px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
+              <span style={{ fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.16em', textTransform: 'uppercase', color: C.faint }}>Consistency Track</span>
+              {data.streaks.current > 0 && (
+                <span className="font-headline" style={{ fontWeight: 700, color: C.primary, fontSize: '0.85rem' }}>
+                  {data.streaks.current} Day Streak
+                </span>
+              )}
+            </div>
+            <ConsistencyDots checkIns={data.check_ins} scheduledDays={scheduledDays} plan={activePlan} />
           </div>
         </div>
+
         {celebrationMsg && (
-          <div style={{ marginTop: '16px', padding: '10px 18px', borderRadius: '10px', background: 'rgba(74,222,128,0.06)', border: '1px solid rgba(74,222,128,0.18)', color: '#4ADE80', fontSize: '0.85rem', textAlign: 'center' }}>
+          <div style={{ marginTop: '16px', padding: '10px 18px', borderRadius: '10px', background: `rgba(47,248,1,0.06)`, border: `1px solid rgba(47,248,1,0.18)`, color: C.green, fontSize: '0.85rem', textAlign: 'center' }}>
             {celebrationMsg}
           </div>
         )}
       </div>
 
       {/* ── Content ── */}
-      <div style={{ ...W, display: 'flex', flexDirection: 'column', gap: '16px' }}>
+      <div style={{ ...W, display: 'flex', flexDirection: 'column', gap: '12px' }}>
 
         {/* ── Stat tiles (3 across) ── */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px' }}>
-          <StatTile
-            label="Streak"
-            value={data.streaks.current === 0 ? '—' : data.streaks.current}
-            unit={data.streaks.current > 0 ? 'days' : undefined}
-            sub={data.streaks.current > 0 ? `Personal best · ${data.streaks.best} days` : 'Complete a session to start'}
-            valueColor={data.streaks.current > 0 ? '#E8C162' : 'rgba(255,255,255,0.25)'}
-            accent={data.streaks.current > 0 ? '#E8C162' : null}
-          />
-          <StatTile
-            label="This Week"
-            value={`${completedThisWeek}/${scheduledThisWeek}`}
-            sub={completedThisWeek === scheduledThisWeek && scheduledThisWeek > 0 ? 'All done — great week!' : `${scheduledThisWeek - completedThisWeek} session${scheduledThisWeek - completedThisWeek !== 1 ? 's' : ''} remaining`}
-            valueColor={completedThisWeek === scheduledThisWeek && scheduledThisWeek > 0 ? '#4ADE80' : 'var(--color-text-1)'}
-            accent={completedThisWeek === scheduledThisWeek && scheduledThisWeek > 0 ? '#4ADE80' : null}
-          />
-          <StatTile
-            label="Total XP"
-            value={data.user.total_xp.toLocaleString()}
-            unit="xp"
-            sub={`${level.title} · Level ${level.level}`}
-            valueColor="#E8C162"
-            accent="#E8C162"
-          />
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px' }}>
+          {[
+            {
+              label: 'Streak',
+              value: data.streaks.current === 0 ? '—' : data.streaks.current,
+              unit: data.streaks.current > 0 ? 'days' : undefined,
+              sub: data.streaks.current > 0 ? `Best · ${data.streaks.best}d` : 'Start today',
+              color: data.streaks.current > 0 ? C.primary : C.faint,
+            },
+            {
+              label: 'This Week',
+              value: `${completedThisWeek}/${scheduledThisWeek}`,
+              sub: completedThisWeek === scheduledThisWeek && scheduledThisWeek > 0 ? 'All done!' : `${scheduledThisWeek - completedThisWeek} left`,
+              color: completedThisWeek === scheduledThisWeek && scheduledThisWeek > 0 ? C.green : C.text,
+            },
+            {
+              label: 'Total XP',
+              value: data.user.total_xp.toLocaleString(),
+              sub: `${level.title}`,
+              color: C.primary,
+            },
+          ].map(({ label, value, unit, sub, color }) => (
+            <div key={label} style={{ background: C.low, borderRadius: '12px', padding: '18px 16px' }}>
+              <p style={{ fontSize: '0.58rem', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', color: C.faint, marginBottom: '10px' }}>{label}</p>
+              <div style={{ display: 'flex', alignItems: 'baseline', gap: '4px' }}>
+                <p className="font-headline" style={{ fontSize: '1.8rem', fontWeight: 800, lineHeight: 1, color }}>{value}</p>
+                {unit && <span style={{ fontSize: '0.72rem', color: C.faint, fontWeight: 500 }}>{unit}</span>}
+              </div>
+              {sub && <p style={{ fontSize: '0.65rem', color: C.faint, marginTop: '4px' }}>{sub}</p>}
+            </div>
+          ))}
         </div>
 
         {/* ── Weekly calendar ── */}
@@ -266,7 +315,7 @@ export default function Dashboard() {
         {!todaySession && !rest && !isCompleted && !recentCompletedToday && (
           <button
             onClick={handleBonusSession}
-            style={{ width: '100%', padding: '13px', fontSize: '0.9rem', borderRadius: '12px', border: '1px dashed rgba(255,255,255,0.12)', color: 'rgba(255,255,255,0.3)', background: 'transparent', cursor: 'pointer', transition: 'all 0.2s', letterSpacing: '0.03em' }}
+            style={{ width: '100%', padding: '13px', fontSize: '0.9rem', borderRadius: '12px', border: `1px dashed rgba(255,255,255,0.12)`, color: 'rgba(255,255,255,0.3)', background: 'transparent', cursor: 'pointer', transition: 'all 0.2s', letterSpacing: '0.03em' }}
             onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.25)'; e.currentTarget.style.color = 'rgba(255,255,255,0.6)'; }}
             onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.12)'; e.currentTarget.style.color = 'rgba(255,255,255,0.3)'; }}
           >
@@ -274,18 +323,15 @@ export default function Dashboard() {
           </button>
         )}
 
-        {/* ── XP progress + Tip side by side ── */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', alignItems: 'start' }}>
-          <XPBar totalXP={data.user.total_xp} recentXP={recentXP} />
-          {tip && <TipCard tip={tip} onSeeMore={() => navigate('/tips')} />}
-        </div>
+        {/* ── Tip card ── */}
+        {tip && <TipCard tip={tip} onSeeMore={() => navigate('/tips')} />}
 
         {/* ── Recent badges ── */}
         {recentBadges.length > 0 && (
-          <div style={{ borderRadius: '18px', padding: '24px', background: 'linear-gradient(145deg, #1a1a1a 0%, #111111 100%)', border: '1px solid rgba(255,255,255,0.07)', boxShadow: '0 4px 28px rgba(0,0,0,0.4)' }}>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
-              <p style={{ fontSize: '0.55rem', fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.28)' }}>Recent Badges</p>
-              <button onClick={() => navigate('/profile')} style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.3)', background: 'none', border: 'none', cursor: 'pointer' }}>View all →</button>
+          <div style={{ borderRadius: '12px', padding: '20px', background: C.low }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px' }}>
+              <p style={{ fontSize: '0.58rem', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', color: C.faint }}>Recent Badges</p>
+              <button onClick={() => navigate('/profile')} style={{ fontSize: '0.75rem', color: C.faint, background: 'none', border: 'none', cursor: 'pointer' }}>View all →</button>
             </div>
             <div style={{ display: 'flex', gap: '10px' }}>
               {recentBadges.map(badge => <div key={badge.id} style={{ flex: 1 }}><BadgeCard badge={badge} /></div>)}

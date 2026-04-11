@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 import { Clock, Check, ChevronDown, PlayCircle } from 'lucide-react';
 
-const CARD = {
-  background: 'linear-gradient(145deg, #1c1c1c 0%, #121212 100%)',
-  border: '1px solid rgba(255,255,255,0.07)',
-  borderRadius: '20px',
-  boxShadow: '0 4px 28px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.05)',
+const C = {
+  low: '#1c1b1b', container: '#201f1f',
+  high: '#2a2a2a', highest: '#353534', lowest: '#0e0e0e',
+  primary: '#e9c349', onPrimary: '#3c2f00', green: '#2ff801',
+  text: '#e5e2e1', muted: '#c4c7c7', faint: '#7b7c7c',
+  red: '#ffb4ab',
 };
 
 function parseExercises(detail) {
@@ -31,20 +32,20 @@ function shortAlt(str) {
 function CollapsibleBlock({ label, duration, text }) {
   const [open, setOpen] = useState(false);
   return (
-    <div style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+    <div style={{ borderTop: `1px solid rgba(255,255,255,0.05)` }}>
       <button
         onClick={() => setOpen(v => !v)}
-        style={{ width: '100%', padding: '18px 32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: 'none', border: 'none', cursor: 'pointer' }}
+        style={{ width: '100%', padding: '16px 28px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: 'none', border: 'none', cursor: 'pointer', color: C.text }}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <span style={{ fontSize: '0.78rem', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--color-text-2)' }}>{label}</span>
-          {duration && <span className="font-mono" style={{ fontSize: '0.78rem', color: 'var(--color-text-3)' }}>· {duration}m</span>}
+          <span style={{ fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: C.muted }}>{label}</span>
+          {duration && <span style={{ fontSize: '0.72rem', color: C.faint }}>· {duration}m</span>}
         </div>
-        <ChevronDown size={16} strokeWidth={1.8} style={{ color: 'var(--color-text-3)', transform: open ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
+        <ChevronDown size={15} strokeWidth={1.8} style={{ color: C.faint, transform: open ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
       </button>
       {open && (
-        <div style={{ padding: '4px 32px 24px' }}>
-          <p style={{ fontSize: '0.95rem', lineHeight: 1.75, color: 'var(--color-text-2)' }}>{text}</p>
+        <div style={{ padding: '4px 28px 20px' }}>
+          <p style={{ fontSize: '0.92rem', lineHeight: 1.75, color: C.muted }}>{text}</p>
         </div>
       )}
     </div>
@@ -62,27 +63,33 @@ export default function SessionCard({ session, onComplete, isCompleted, isCooldo
       const db = data.equipment_variants?.home_dumbbells?.substitutions || {};
       if (equipment === 'bodyweight') setAlts({});
       else if (equipment === 'home_dumbbells') setAlts(bw);
-      else setAlts(db); // full_gym → show dumbbell alts
+      else setAlts(db);
     }).catch(() => {});
   }, [equipment]);
 
+  const cardStyle = {
+    background: C.low,
+    borderRadius: '16px',
+    overflow: 'hidden',
+  };
+
   if (isRestDay) {
     return (
-      <div style={{ ...CARD, padding: '36px' }}>
-        <p style={{ fontSize: '0.7rem', fontWeight: 700, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'var(--color-text-3)', marginBottom: '14px' }}>Today</p>
-        <h3 className="font-display" style={{ fontSize: '2.2rem', color: 'var(--color-text-1)', marginBottom: '12px' }}>Rest Day</h3>
-        <p style={{ fontSize: '1rem', color: 'var(--color-text-2)', lineHeight: 1.7 }}>Recovery is where growth happens. Rest days build what training breaks down.</p>
-        <p style={{ marginTop: '24px', fontSize: '0.75rem', letterSpacing: '0.1em', color: 'var(--color-text-3)', textTransform: 'uppercase' }}>Tomorrow you rise again</p>
+      <div style={{ ...cardStyle, padding: '36px 28px' }}>
+        <p style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', color: C.faint, marginBottom: '12px' }}>Today</p>
+        <h3 className="font-headline" style={{ fontSize: '2rem', fontWeight: 800, letterSpacing: '-0.02em', color: C.text, marginBottom: '12px' }}>Rest Day</h3>
+        <p style={{ fontSize: '1rem', color: C.muted, lineHeight: 1.7 }}>Recovery is where growth happens. Rest days build what training breaks down.</p>
+        <p style={{ marginTop: '20px', fontSize: '0.72rem', letterSpacing: '0.1em', color: C.faint, textTransform: 'uppercase' }}>Tomorrow you rise again</p>
       </div>
     );
   }
 
   if (!session) {
     return (
-      <div style={{ ...CARD, padding: '36px' }}>
-        <p style={{ fontSize: '0.7rem', fontWeight: 700, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'var(--color-text-3)', marginBottom: '14px' }}>Today</p>
-        <h3 className="font-display" style={{ fontSize: '2.2rem', color: 'var(--color-text-1)', marginBottom: '8px' }}>No Session Today</h3>
-        <p style={{ fontSize: '1rem', color: 'var(--color-text-2)' }}>Enjoy your day.</p>
+      <div style={{ ...cardStyle, padding: '36px 28px' }}>
+        <p style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', color: C.faint, marginBottom: '12px' }}>Today</p>
+        <h3 className="font-headline" style={{ fontSize: '2rem', fontWeight: 800, letterSpacing: '-0.02em', color: C.text, marginBottom: '8px' }}>No Session Today</h3>
+        <p style={{ fontSize: '1rem', color: C.muted }}>Enjoy your day.</p>
       </div>
     );
   }
@@ -98,35 +105,31 @@ export default function SessionCard({ session, onComplete, isCompleted, isCooldo
   const toggle = (name) => setChecked(prev => ({ ...prev, [name]: !prev[name] }));
 
   const showAlts = Object.keys(alts).length > 0;
-  const cols = showAlts ? '28px 1fr 88px 1fr' : '28px 1fr 88px';
+  const cols = showAlts ? '24px 1fr 80px 1fr' : '24px 1fr 80px';
 
   return (
-    <div
-      style={{
-        ...CARD,
-        background: isCompleted
-          ? 'linear-gradient(145deg, rgba(74,222,128,0.07) 0%, #121212 60%)'
-          : CARD.background,
-        border: isCompleted ? '1px solid rgba(74,222,128,0.2)' : CARD.border,
-      }}
-    >
+    <div style={{
+      ...cardStyle,
+      background: isCompleted ? `linear-gradient(145deg, rgba(47,248,1,0.06) 0%, ${C.low} 60%)` : C.low,
+      outline: isCompleted ? `1px solid rgba(47,248,1,0.18)` : 'none',
+    }}>
       {/* ── Header ── */}
-      <div style={{ padding: '32px 32px 24px', display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '16px' }}>
+      <div style={{ padding: '28px 28px 20px', display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '16px' }}>
         <div>
-          <p style={{ fontSize: '0.7rem', fontWeight: 700, letterSpacing: '0.16em', textTransform: 'uppercase', color: isNextSession ? 'var(--color-gold)' : 'var(--color-text-3)', marginBottom: '10px' }}>
-            {nextLabel || 'Today'}
+          <p style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', color: isNextSession ? C.primary : C.faint, marginBottom: '8px' }}>
+            {nextLabel || 'Today\'s Session'}
           </p>
-          <h3 className="font-display" style={{ fontSize: 'clamp(1.5rem, 2.5vw, 2.2rem)', color: 'var(--color-text-1)', lineHeight: 1.1, marginBottom: '10px' }}>
+          <h3 className="font-headline" style={{ fontSize: 'clamp(1.6rem, 2.5vw, 2.2rem)', fontWeight: 800, letterSpacing: '-0.02em', color: C.text, lineHeight: 1.1, marginBottom: '10px', textTransform: 'uppercase' }}>
             {session.title}
           </h3>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'var(--color-text-3)' }}>
-            <Clock size={13} strokeWidth={1.8} />
-            <span className="font-mono" style={{ fontSize: '0.85rem' }}>{session.duration_minutes} min</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: C.faint }}>
+            <Clock size={12} strokeWidth={1.8} />
+            <span style={{ fontFamily: 'Inter, monospace', fontSize: '0.82rem' }}>{session.duration_minutes} min</span>
           </div>
         </div>
         {isCompleted && (
-          <div style={{ width: '48px', height: '48px', borderRadius: '50%', flexShrink: 0, background: 'rgba(74,222,128,0.12)', border: '1px solid rgba(74,222,128,0.35)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <Check size={20} strokeWidth={2.5} style={{ color: 'var(--color-green)' }} />
+          <div style={{ width: '44px', height: '44px', borderRadius: '50%', flexShrink: 0, background: `rgba(47,248,1,0.1)`, border: `1px solid rgba(47,248,1,0.3)`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <Check size={18} strokeWidth={2.5} style={{ color: C.green }} />
           </div>
         )}
       </div>
@@ -136,42 +139,29 @@ export default function SessionCard({ session, onComplete, isCompleted, isCooldo
 
       {/* ── Exercise Table ── */}
       {exercises.length > 0 && (
-        <div style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}>
-
-          {/* Section label + progress counter */}
-          <div style={{ padding: '20px 32px 0', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <p style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--color-text-2)' }}>
-              Main Work{mainBlock?.duration_minutes ? ` · ${mainBlock.duration_minutes}m` : ''}
+        <div style={{ borderTop: `1px solid rgba(255,255,255,0.05)` }}>
+          {/* Section label + progress */}
+          <div style={{ padding: '18px 28px 0', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <p style={{ fontSize: '0.68rem', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: C.muted }}>
+              Core Movements{mainBlock?.duration_minutes ? ` · ${mainBlock.duration_minutes}m` : ''}
             </p>
             {doneCount > 0 && (
-              <p className="font-mono" style={{ fontSize: '0.82rem', fontWeight: 600, color: doneCount === exercises.length ? 'var(--color-green)' : 'var(--color-gold)' }}>
+              <p style={{ fontFamily: 'Inter, monospace', fontSize: '0.78rem', fontWeight: 700, color: doneCount === exercises.length ? C.green : C.primary }}>
                 {doneCount}/{exercises.length} done
               </p>
             )}
           </div>
 
           {/* Column headers */}
-          <div style={{
-            margin: '14px 32px 0',
-            padding: '10px 0',
-            display: 'grid',
-            gridTemplateColumns: cols,
-            gap: '0 16px',
-            alignItems: 'center',
-            borderBottom: '1px solid rgba(255,255,255,0.08)',
-          }}>
+          <div style={{ margin: '12px 28px 0', padding: '8px 0', display: 'grid', gridTemplateColumns: cols, gap: '0 14px', alignItems: 'center', borderBottom: `1px solid rgba(255,255,255,0.06)` }}>
             <div />
-            <p style={{ fontSize: '0.72rem', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.35)' }}>Exercise</p>
-            <p style={{ fontSize: '0.72rem', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.35)', textAlign: 'center' }}>Sets</p>
-            {showAlts && (
-              <p style={{ fontSize: '0.72rem', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.35)' }}>
-                Alternative
-              </p>
-            )}
+            <p style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.28)' }}>Exercise</p>
+            <p style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.28)', textAlign: 'center' }}>Sets</p>
+            {showAlts && <p style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.28)' }}>Alternative</p>}
           </div>
 
           {/* Exercise rows */}
-          <div style={{ padding: '0 32px 24px' }}>
+          <div style={{ padding: '0 28px 20px' }}>
             {exercises.map((ex, i) => {
               const isDone = checked[ex.name];
               const alt = alts[ex.name];
@@ -180,37 +170,33 @@ export default function SessionCard({ session, onComplete, isCompleted, isCooldo
                   key={i}
                   onClick={() => !isCompleted && toggle(ex.name)}
                   style={{
-                    display: 'grid',
-                    gridTemplateColumns: cols,
-                    gap: '0 16px',
-                    alignItems: 'center',
-                    padding: '16px 0',
-                    borderBottom: i < exercises.length - 1 ? '1px solid rgba(255,255,255,0.05)' : 'none',
+                    display: 'grid', gridTemplateColumns: cols, gap: '0 14px',
+                    alignItems: 'center', padding: '16px 0',
+                    borderBottom: i < exercises.length - 1 ? `1px solid rgba(255,255,255,0.04)` : 'none',
                     cursor: isCompleted ? 'default' : 'pointer',
-                    transition: 'opacity 0.15s',
-                    opacity: isDone ? 0.45 : 1,
+                    transition: 'opacity 0.15s', opacity: isDone ? 0.42 : 1,
                   }}
-                  onMouseEnter={e => { if (!isCompleted) e.currentTarget.style.opacity = isDone ? '0.35' : '0.8'; }}
-                  onMouseLeave={e => { e.currentTarget.style.opacity = isDone ? '0.45' : '1'; }}
+                  onMouseEnter={e => { if (!isCompleted) e.currentTarget.style.opacity = isDone ? '0.32' : '0.78'; }}
+                  onMouseLeave={e => { e.currentTarget.style.opacity = isDone ? '0.42' : '1'; }}
                 >
                   {/* Checkbox */}
                   <div style={{
                     width: '20px', height: '20px', borderRadius: '6px', flexShrink: 0,
-                    border: isDone ? 'none' : '1.5px solid rgba(255,255,255,0.25)',
-                    background: isDone ? 'var(--color-green)' : 'transparent',
+                    border: isDone ? 'none' : `1.5px solid rgba(255,255,255,0.22)`,
+                    background: isDone ? C.green : 'transparent',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                     transition: 'all 0.15s',
                   }}>
-                    {isDone && <Check size={12} strokeWidth={3} style={{ color: '#000' }} />}
+                    {isDone && <Check size={12} strokeWidth={3} style={{ color: C.onPrimary }} />}
                   </div>
 
-                  {/* Exercise name */}
+                  {/* Exercise name + Watch link */}
                   <div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                      <p style={{
-                        fontSize: '1rem', color: isDone ? 'var(--color-text-3)' : 'var(--color-text-1)',
-                        fontWeight: 500, lineHeight: 1.3,
-                        textDecoration: isDone ? 'line-through' : 'none',
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <p className="font-headline" style={{
+                        fontSize: '1rem', fontWeight: 700, color: isDone ? C.faint : C.text,
+                        lineHeight: 1.2, textDecoration: isDone ? 'line-through' : 'none',
+                        letterSpacing: '-0.01em',
                       }}>{ex.name}</p>
                       <a
                         href={`https://www.youtube.com/results?search_query=${encodeURIComponent(ex.name + ' exercise form tutorial')}`}
@@ -218,27 +204,27 @@ export default function SessionCard({ session, onComplete, isCompleted, isCooldo
                         rel="noopener noreferrer"
                         onClick={e => e.stopPropagation()}
                         title={`How to: ${ex.name}`}
-                        style={{ color: 'rgba(255,255,255,0.25)', display: 'flex', alignItems: 'center', flexShrink: 0, transition: 'color 0.15s' }}
+                        style={{ color: 'rgba(255,255,255,0.2)', display: 'flex', alignItems: 'center', gap: '3px', flexShrink: 0, transition: 'color 0.15s', textDecoration: 'none', fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase' }}
                         onMouseEnter={e => e.currentTarget.style.color = '#FF0000'}
-                        onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.25)'}
+                        onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.2)'}
                       >
-                        <PlayCircle size={13} strokeWidth={1.8} />
+                        <PlayCircle size={12} strokeWidth={1.8} />
                       </a>
                     </div>
-                    {ex.note && <p style={{ fontSize: '0.75rem', color: 'var(--color-text-3)', marginTop: '2px' }}>{ex.note}</p>}
+                    {ex.note && <p style={{ fontSize: '0.72rem', color: C.faint, marginTop: '2px' }}>{ex.note}</p>}
                   </div>
 
-                  {/* Sets */}
+                  {/* Sets badge */}
                   <div style={{ textAlign: 'center' }}>
-                    <span className="font-mono" style={{ fontSize: '1rem', color: isDone ? 'var(--color-text-3)' : 'var(--color-gold)', fontWeight: 700 }}>
+                    <span className="font-headline" style={{ fontSize: '1rem', fontWeight: 800, color: isDone ? C.faint : C.primary }}>
                       {ex.sets}
                     </span>
                   </div>
 
                   {/* Alternative */}
                   {showAlts && (
-                    <p style={{ fontSize: '0.9rem', color: 'var(--color-text-3)', lineHeight: 1.4 }}>
-                      {alt ? shortAlt(alt) : <span style={{ opacity: 0.25 }}>—</span>}
+                    <p style={{ fontSize: '0.85rem', color: C.faint, lineHeight: 1.4 }}>
+                      {alt ? shortAlt(alt) : <span style={{ opacity: 0.22 }}>—</span>}
                     </p>
                   )}
                 </div>
@@ -248,14 +234,14 @@ export default function SessionCard({ session, onComplete, isCompleted, isCooldo
 
           {/* Progress bar */}
           {doneCount > 0 && (
-            <div style={{ padding: '0 32px 20px' }}>
-              <div style={{ height: '3px', background: 'rgba(255,255,255,0.06)', borderRadius: '3px', overflow: 'hidden' }}>
+            <div style={{ padding: '0 28px 18px' }}>
+              <div style={{ height: '2px', background: 'rgba(255,255,255,0.05)', borderRadius: '2px', overflow: 'hidden' }}>
                 <div style={{
-                  height: '100%', borderRadius: '3px',
-                  background: allDone ? 'var(--color-green)' : 'var(--color-gold)',
+                  height: '100%', borderRadius: '2px',
+                  background: allDone ? C.green : C.primary,
                   width: `${(doneCount / exercises.length) * 100}%`,
                   transition: 'width 0.3s ease, background 0.3s ease',
-                  boxShadow: allDone ? '0 0 8px rgba(74,222,128,0.5)' : '0 0 8px rgba(232,193,98,0.4)',
+                  boxShadow: allDone ? `0 0 8px rgba(47,248,1,0.5)` : `0 0 8px rgba(233,195,73,0.4)`,
                 }} />
               </div>
             </div>
@@ -268,10 +254,10 @@ export default function SessionCard({ session, onComplete, isCompleted, isCooldo
 
       {/* ── Complete button ── */}
       {!isCompleted && !isNextSession && (
-        <div style={{ padding: '24px 32px 32px', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+        <div style={{ padding: '20px 28px 28px', borderTop: `1px solid rgba(255,255,255,0.05)` }}>
           {isCooldown ? (
-            <div style={{ padding: '16px', borderRadius: '12px', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', textAlign: 'center' }}>
-              <p style={{ fontSize: '0.9rem', color: 'rgba(255,255,255,0.4)', letterSpacing: '0.02em' }}>
+            <div style={{ padding: '16px', borderRadius: '10px', background: 'rgba(255,255,255,0.02)', textAlign: 'center' }}>
+              <p style={{ fontSize: '0.9rem', color: 'rgba(255,255,255,0.35)', letterSpacing: '0.02em' }}>
                 Session logged — come back tomorrow
               </p>
             </div>
@@ -280,15 +266,14 @@ export default function SessionCard({ session, onComplete, isCompleted, isCooldo
               onClick={onComplete}
               style={{
                 width: '100%', padding: '18px',
-                background: allDone
-                  ? 'linear-gradient(135deg, #4ade80 0%, #22c55e 100%)'
-                  : '#fff',
-                color: allDone ? '#000' : '#000',
-                border: 'none', borderRadius: '12px',
-                fontSize: '1rem', fontWeight: 600, cursor: 'pointer',
-                letterSpacing: '0.02em',
+                background: allDone ? C.green : C.text,
+                color: allDone ? C.onPrimary : '#000',
+                border: 'none', borderRadius: '100px',
+                fontSize: '1rem', fontWeight: 700, cursor: 'pointer',
+                letterSpacing: '0.06em', textTransform: 'uppercase',
                 transition: 'all 0.25s ease',
-                boxShadow: allDone ? '0 0 28px rgba(74,222,128,0.35)' : 'none',
+                boxShadow: allDone ? `0 0 28px rgba(47,248,1,0.35)` : '0 4px 24px rgba(0,0,0,0.3)',
+                fontFamily: 'Manrope, sans-serif',
               }}
               onMouseEnter={e => e.currentTarget.style.opacity = '0.9'}
               onMouseLeave={e => e.currentTarget.style.opacity = '1'}
