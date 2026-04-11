@@ -9,6 +9,7 @@ import LevelUpModal from '../components/LevelUpModal';
 import BadgeModal from '../components/BadgeModal';
 import ConfettiEffect from '../components/ConfettiEffect';
 import { getData, updateData } from '../utils/storage';
+import { fetchHeroImage, sanityImageUrl } from '../utils/sanityClient';
 import { getTodaySession, isRestDay } from '../utils/planGenerator';
 import { detectReturnState, getReturnMessage, getTimeMessage, getReducedSession, getCelebrationMessage } from '../utils/returnState';
 import { updateStreak, getConsecutiveMisses, getStreakMilestone } from '../utils/streakTracker';
@@ -109,6 +110,7 @@ export default function Dashboard() {
   const [celebrationMsg, setCelebrationMsg] = useState(null);
   const [showBanner, setShowBanner] = useState(true);
   const [xpFlash, setXpFlash] = useState(false);
+  const [heroImg, setHeroImg] = useState(null);
 
   const loadDashboard = useCallback(async () => {
     const d = getData();
@@ -130,6 +132,7 @@ export default function Dashboard() {
   }, [navigate]);
 
   useEffect(() => { trackPageView('dashboard'); loadDashboard(); }, [loadDashboard]);
+  useEffect(() => { fetchHeroImage().then(setHeroImg).catch(() => {}); }, []);
 
   if (!data) return null;
 
@@ -216,8 +219,13 @@ export default function Dashboard() {
             <p style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: C.faint, marginBottom: '8px' }}>
               Current Standing
             </p>
-            <h1 className="font-headline" style={{ fontSize: 'clamp(2.2rem, 5vw, 4rem)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.05, marginBottom: '20px' }}>
-              Level {level.level}: <span style={{ color: C.primary }}>{level.title}</span>
+            <h1 className="font-headline" style={{ fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1, marginBottom: '20px' }}>
+              <span style={{ display: 'block', fontSize: 'clamp(1.4rem, 2.5vw, 1.9rem)', color: C.text, marginBottom: '2px' }}>
+                Level {level.level}:
+              </span>
+              <span style={{ display: 'block', fontSize: 'clamp(3rem, 6vw, 5.5rem)', color: C.primary, lineHeight: 0.92 }}>
+                {level.title}
+              </span>
             </h1>
             {/* XP bar */}
             <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
@@ -259,6 +267,22 @@ export default function Dashboard() {
           </div>
         )}
       </div>
+
+      {/* ── Hero image (full bleed, Sanity-powered) ── */}
+      {(heroImg || true) && (
+        <div style={{
+          width: '100%', height: '220px', marginBottom: '-40px',
+          background: heroImg
+            ? `url(${sanityImageUrl(heroImg.image, { width: 1400 })}) center/cover no-repeat`
+            : `linear-gradient(135deg, #1a1510 0%, #0e0c09 40%, #0e0e0e 100%)`,
+          position: 'relative',
+        }}>
+          {/* Bottom fade into page background */}
+          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(19,19,19,0) 20%, #131313 100%)' }} />
+          {/* Subtle vignette */}
+          <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at 50% 0%, rgba(233,195,73,0.04) 0%, transparent 70%)' }} />
+        </div>
+      )}
 
       {/* ── Content ── */}
       <div style={{ ...W, display: 'flex', flexDirection: 'column', gap: '12px' }}>

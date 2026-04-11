@@ -134,7 +134,7 @@ export default function WeeklyGrid({ plan, checkIns }) {
                 ...cellStyle,
               }}>
                 <span style={{ fontFamily: 'Inter, monospace', fontSize: '0.82rem', fontWeight: 700, color: numColor, lineHeight: 1 }}>
-                  {isCompleted ? '✓' : dayNum}
+                  {isCompleted ? '✓' : isMissed ? '✕' : dayNum}
                 </span>
               </div>
               {sessionName && (

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Clock, Check, ChevronDown, PlayCircle } from 'lucide-react';
+import { Clock, Check, ChevronDown } from 'lucide-react';
 
 const C = {
   low: '#1c1b1b', container: '#201f1f',
@@ -9,18 +9,42 @@ const C = {
   red: '#ffb4ab',
 };
 
+// Muscle/movement group tags per exercise name
+const EXERCISE_TAGS = {
+  'Barbell Back Squat': ['LEGS', 'POWER'], 'Romanian Deadlift': ['LEGS', 'PULL'],
+  'Leg Press': ['LEGS', 'PUSH'], 'Walking Lunges': ['LEGS', 'UNI'], 'Dumbbell Lunges': ['LEGS', 'UNI'],
+  'Calf Raises': ['CALVES', 'PUSH'], 'Bulgarian Split Squat': ['LEGS', 'UNI'],
+  'Flat Bench Press': ['CHEST', 'PUSH'], 'Dumbbell Bench Press': ['CHEST', 'PUSH'],
+  'Incline Dumbbell Press': ['CHEST', 'PUSH'], 'Incline Barbell Press': ['CHEST', 'PUSH'],
+  'Overhead Press': ['SHOULDERS', 'PUSH'], 'Dumbbell Shoulder Press': ['SHOULDERS', 'PUSH'],
+  'Dumbbell Lateral Raise': ['SHOULDERS', 'ISO'], 'Tricep Rope Pushdown': ['TRICEPS', 'PUSH'],
+  'Bent-Over Barbell Row': ['BACK', 'PULL'], 'Barbell Row': ['BACK', 'PULL'],
+  'Barbell Deadlift': ['BACK', 'POWER'], 'Deadlift': ['BACK', 'POWER'],
+  'Lat Pulldown': ['BACK', 'PULL'], 'Seated Rows': ['BACK', 'PULL'],
+  'Neutral Grip Pull-ups': ['BACK', 'PULL'], 'Pull Ups': ['BACK', 'PULL'],
+  'Face Pulls': ['REAR DELTS', 'PULL'], 'Dumbbell Bicep Curl': ['BICEPS', 'ISO'],
+  'Barbell Curl': ['BICEPS', 'ISO'], 'Hammer Curl': ['BICEPS', 'ISO'],
+};
+
 function parseExercises(detail) {
   return detail
     .split(',')
     .map(s => s.trim())
     .map(item => {
-      const match = item.match(/^(.+?)\s+(\d+x\d+)(\s+.*)?$/);
+      const match = item.match(/^(.+?)\s+(\d+x\d+(?:-\d+)?)(\s+.*)?$/);
       if (match) {
         return { name: match[1].trim(), sets: match[2], note: match[3]?.trim() || '' };
       }
       return { name: item, sets: '-', note: '' };
     })
     .filter(e => e.name.length > 1);
+}
+
+function formatSets(sets) {
+  if (!sets || sets === '-') return null;
+  const m = sets.match(/^(\d+)x(\d+(?:-\d+)?)$/);
+  if (!m) return sets;
+  return `${m[1]} Sets × ${m[2]} Reps`;
 }
 
 function shortAlt(str) {
@@ -104,9 +128,6 @@ export default function SessionCard({ session, onComplete, isCompleted, isCooldo
 
   const toggle = (name) => setChecked(prev => ({ ...prev, [name]: !prev[name] }));
 
-  const showAlts = Object.keys(alts).length > 0;
-  const cols = showAlts ? '24px 1fr 80px 1fr' : '24px 1fr 80px';
-
   return (
     <div style={{
       ...cardStyle,
@@ -152,26 +173,20 @@ export default function SessionCard({ session, onComplete, isCompleted, isCooldo
             )}
           </div>
 
-          {/* Column headers */}
-          <div style={{ margin: '12px 28px 0', padding: '8px 0', display: 'grid', gridTemplateColumns: cols, gap: '0 14px', alignItems: 'center', borderBottom: `1px solid rgba(255,255,255,0.06)` }}>
-            <div />
-            <p style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.28)' }}>Exercise</p>
-            <p style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.28)', textAlign: 'center' }}>Sets</p>
-            {showAlts && <p style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.28)' }}>Alternative</p>}
-          </div>
-
           {/* Exercise rows */}
-          <div style={{ padding: '0 28px 20px' }}>
+          <div style={{ padding: '8px 28px 20px' }}>
             {exercises.map((ex, i) => {
               const isDone = checked[ex.name];
               const alt = alts[ex.name];
+              const tags = EXERCISE_TAGS[ex.name] || [];
+              const setsLabel = formatSets(ex.sets);
               return (
                 <div
                   key={i}
                   onClick={() => !isCompleted && toggle(ex.name)}
                   style={{
-                    display: 'grid', gridTemplateColumns: cols, gap: '0 14px',
-                    alignItems: 'center', padding: '16px 0',
+                    display: 'flex', alignItems: 'flex-start', gap: '14px',
+                    padding: '16px 0',
                     borderBottom: i < exercises.length - 1 ? `1px solid rgba(255,255,255,0.04)` : 'none',
                     cursor: isCompleted ? 'default' : 'pointer',
                     transition: 'opacity 0.15s', opacity: isDone ? 0.42 : 1,
@@ -181,7 +196,7 @@ export default function SessionCard({ session, onComplete, isCompleted, isCooldo
                 >
                   {/* Checkbox */}
                   <div style={{
-                    width: '20px', height: '20px', borderRadius: '6px', flexShrink: 0,
+                    width: '20px', height: '20px', borderRadius: '6px', flexShrink: 0, marginTop: '3px',
                     border: isDone ? 'none' : `1.5px solid rgba(255,255,255,0.22)`,
                     background: isDone ? C.green : 'transparent',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -190,42 +205,57 @@ export default function SessionCard({ session, onComplete, isCompleted, isCooldo
                     {isDone && <Check size={12} strokeWidth={3} style={{ color: C.onPrimary }} />}
                   </div>
 
-                  {/* Exercise name + Watch link */}
-                  <div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                      <p className="font-headline" style={{
-                        fontSize: '1rem', fontWeight: 700, color: isDone ? C.faint : C.text,
-                        lineHeight: 1.2, textDecoration: isDone ? 'line-through' : 'none',
-                        letterSpacing: '-0.01em',
-                      }}>{ex.name}</p>
+                  {/* Content: name + sets + links */}
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <p className="font-headline" style={{
+                      fontSize: '1rem', fontWeight: 700, color: isDone ? C.faint : C.text,
+                      lineHeight: 1.25, textDecoration: isDone ? 'line-through' : 'none',
+                      letterSpacing: '-0.01em',
+                    }}>{ex.name}</p>
+                    {setsLabel && (
+                      <p style={{ fontFamily: 'Inter, monospace', fontSize: '0.75rem', fontWeight: 600, color: isDone ? C.faint : C.primary, marginTop: '3px' }}>
+                        {setsLabel}
+                      </p>
+                    )}
+                    {ex.note && <p style={{ fontSize: '0.72rem', color: C.faint, marginTop: '2px' }}>{ex.note}</p>}
+                    {/* Links row */}
+                    <div style={{ display: 'flex', gap: '12px', marginTop: '6px' }}>
+                      {alt && (
+                        <a
+                          href={`https://www.youtube.com/results?search_query=${encodeURIComponent(alt + ' exercise')}`}
+                          target="_blank" rel="noopener noreferrer"
+                          onClick={e => e.stopPropagation()}
+                          style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.58rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(233,195,73,0.45)', textDecoration: 'none', transition: 'color 0.15s' }}
+                          onMouseEnter={e => e.currentTarget.style.color = C.primary}
+                          onMouseLeave={e => e.currentTarget.style.color = 'rgba(233,195,73,0.45)'}
+                        >
+                          ⌂ Home Alt
+                        </a>
+                      )}
                       <a
                         href={`https://www.youtube.com/results?search_query=${encodeURIComponent(ex.name + ' exercise form tutorial')}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
+                        target="_blank" rel="noopener noreferrer"
                         onClick={e => e.stopPropagation()}
-                        title={`How to: ${ex.name}`}
-                        style={{ color: 'rgba(255,255,255,0.2)', display: 'flex', alignItems: 'center', gap: '3px', flexShrink: 0, transition: 'color 0.15s', textDecoration: 'none', fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase' }}
+                        style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.58rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.2)', textDecoration: 'none', transition: 'color 0.15s' }}
                         onMouseEnter={e => e.currentTarget.style.color = '#FF0000'}
                         onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.2)'}
                       >
-                        <PlayCircle size={12} strokeWidth={1.8} />
+                        ● Watch
                       </a>
                     </div>
-                    {ex.note && <p style={{ fontSize: '0.72rem', color: C.faint, marginTop: '2px' }}>{ex.note}</p>}
                   </div>
 
-                  {/* Sets badge */}
-                  <div style={{ textAlign: 'center' }}>
-                    <span className="font-headline" style={{ fontSize: '1rem', fontWeight: 800, color: isDone ? C.faint : C.primary }}>
-                      {ex.sets}
-                    </span>
-                  </div>
-
-                  {/* Alternative */}
-                  {showAlts && (
-                    <p style={{ fontSize: '0.85rem', color: C.faint, lineHeight: 1.4 }}>
-                      {alt ? shortAlt(alt) : <span style={{ opacity: 0.22 }}>—</span>}
-                    </p>
+                  {/* Muscle tags */}
+                  {tags.length > 0 && (
+                    <div style={{ display: 'flex', gap: '4px', flexShrink: 0, paddingTop: '2px' }}>
+                      {tags.map(tag => (
+                        <span key={tag} style={{
+                          fontSize: '0.52rem', fontWeight: 700, letterSpacing: '0.08em',
+                          textTransform: 'uppercase', padding: '3px 7px', borderRadius: '4px',
+                          background: C.highest, color: C.faint,
+                        }}>{tag}</span>
+                      ))}
+                    </div>
                   )}
                 </div>
               );
