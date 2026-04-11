@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Clock, Check, ChevronDown } from 'lucide-react';
+import { Clock, Check, ChevronDown, Youtube } from 'lucide-react';
 
 const CARD = {
   background: 'linear-gradient(145deg, #1c1c1c 0%, #121212 100%)',
@@ -206,11 +206,25 @@ export default function SessionCard({ session, onComplete, isCompleted, isCooldo
 
                   {/* Exercise name */}
                   <div>
-                    <p style={{
-                      fontSize: '1rem', color: isDone ? 'var(--color-text-3)' : 'var(--color-text-1)',
-                      fontWeight: 500, lineHeight: 1.3,
-                      textDecoration: isDone ? 'line-through' : 'none',
-                    }}>{ex.name}</p>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <p style={{
+                        fontSize: '1rem', color: isDone ? 'var(--color-text-3)' : 'var(--color-text-1)',
+                        fontWeight: 500, lineHeight: 1.3,
+                        textDecoration: isDone ? 'line-through' : 'none',
+                      }}>{ex.name}</p>
+                      <a
+                        href={`https://www.youtube.com/results?search_query=${encodeURIComponent(ex.name + ' exercise form tutorial')}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={e => e.stopPropagation()}
+                        title={`How to: ${ex.name}`}
+                        style={{ color: 'rgba(255,255,255,0.25)', display: 'flex', alignItems: 'center', flexShrink: 0, transition: 'color 0.15s' }}
+                        onMouseEnter={e => e.currentTarget.style.color = '#FF0000'}
+                        onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.25)'}
+                      >
+                        <Youtube size={13} strokeWidth={1.8} />
+                      </a>
+                    </div>
                     {ex.note && <p style={{ fontSize: '0.75rem', color: 'var(--color-text-3)', marginTop: '2px' }}>{ex.note}</p>}
                   </div>
 
