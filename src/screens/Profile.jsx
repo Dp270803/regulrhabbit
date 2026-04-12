@@ -289,7 +289,7 @@ export default function Profile() {
             </div>
 
             {/* Meta row */}
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'clamp(24px, 4vw, 56px)', alignItems: 'flex-end' }}>
+            <div className="profile-hero-meta" style={{ display: 'flex', flexWrap: 'wrap', gap: 'clamp(16px, 4vw, 56px)', alignItems: 'flex-end' }}>
               <div>
                 <p style={{ fontSize: '0.58rem', fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase', color: C.faint, margin: '0 0 5px' }}>
                   {cms?.activePlanLabel || 'Active Plan'}
@@ -298,7 +298,7 @@ export default function Profile() {
                   {ACTIVITY_LABELS[activePlan?.activity] || activePlan?.activity || '—'}
                 </p>
               </div>
-              <div style={{ width: '1px', height: '38px', background: 'rgba(255,255,255,0.07)', flexShrink: 0 }} />
+              <div className="profile-hero-divider" style={{ width: '1px', height: '38px', background: 'rgba(255,255,255,0.07)', flexShrink: 0 }} />
               <div>
                 <p style={{ fontSize: '0.58rem', fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase', color: C.faint, margin: '0 0 5px' }}>
                   {cms?.currentLevelLabel || 'Current Level'}
@@ -307,7 +307,7 @@ export default function Profile() {
                   Level {level.level}: {level.title}
                 </p>
               </div>
-              <div style={{ width: '1px', height: '38px', background: 'rgba(255,255,255,0.07)', flexShrink: 0 }} />
+              <div className="profile-hero-divider" style={{ width: '1px', height: '38px', background: 'rgba(255,255,255,0.07)', flexShrink: 0 }} />
               <div>
                 <p style={{ fontSize: '0.58rem', fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase', color: C.faint, margin: '0 0 5px' }}>
                   {cms?.membershipLabel || 'Membership'}
@@ -321,7 +321,7 @@ export default function Profile() {
         </div>
 
         {/* ── Stats Row ── */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '16px' }}>
+        <div className="profile-stats-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '16px' }}>
           {statCards.map(stat => (
             <div key={stat.label} style={{ background: C.lowest, borderRadius: '8px', padding: 'clamp(16px, 2vw, 24px)', borderLeft: `2px solid ${stat.accent}` }}>
               <p style={{ fontSize: '0.58rem', fontWeight: 700, letterSpacing: '0.16em', textTransform: 'uppercase', color: C.faint, margin: '0 0 16px' }}>
@@ -360,7 +360,7 @@ export default function Profile() {
         </div>
 
         {/* ── Achievements + Settings (two-column) ── */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', alignItems: 'start' }}>
+        <div className="profile-bottom-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', alignItems: 'start' }}>
 
           {/* Achievements */}
           <div style={{ background: C.low, borderRadius: '12px', padding: 'clamp(20px, 3vw, 32px)' }}>

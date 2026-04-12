@@ -184,8 +184,10 @@
   -webkit-font-smoothing: antialiased;
 }
 
-/* Landing responsive */
+/* ── Responsive ── */
 @media (max-width: 768px) {
+
+  /* Landing */
   .landing-hero-grid {
     grid-template-columns: 1fr !important;
     gap: 2.5rem !important;
@@ -217,5 +219,53 @@
     flex-direction: column !important;
     gap: 0.5rem !important;
     text-align: center !important;
+  }
+
+  /* PlanView progress bento */
+  .planview-stats-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Profile */
+  .profile-stats-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  .profile-bottom-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .profile-hero-divider {
+    display: none !important;
+  }
+  .profile-hero-meta {
+    gap: 16px !important;
+  }
+
+  /* Dashboard level hero */
+  .dashboard-level-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  /* Onboarding — hide side dots, show inline progress */
+  .onboarding-side-dots {
+    display: none !important;
+  }
+  .onboarding-progress-mobile {
+    display: flex !important;
+  }
+  /* Remove left offset added for side dots */
+  .onboarding-main {
+    padding-left: 1.25rem !important;
+    padding-right: 1.25rem !important;
+  }
+
+  /* Session card — hide muscle tags to prevent row overflow */
+  .session-exercise-tags {
+    display: none !important;
+  }
+
+  /* PlanView session row: collapse day column on small screens */
+  .planview-session-row {
+    grid-template-columns: auto 1fr auto !important;
   }
 }

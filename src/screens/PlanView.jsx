@@ -198,11 +198,12 @@ export default function PlanView() {
                         <div key={session.id} style={{ borderTop: `1px solid rgba(255,255,255,0.04)` }}>
                           {/* Session row */}
                           <div
+                            className="planview-session-row"
                             style={{
                               display: 'grid',
-                              gridTemplateColumns: 'clamp(100px,15%,160px) 1fr auto',
+                              gridTemplateColumns: 'clamp(80px,15%,160px) 1fr auto',
                               gap: '12px',
-                              padding: '18px 28px',
+                              padding: '16px clamp(16px, 4vw, 28px)',
                               alignItems: 'center',
                               background: isCompleted ? `rgba(47,248,1,0.02)` : isMissed ? `rgba(255,180,171,0.02)` : 'transparent',
                             }}
@@ -317,7 +318,7 @@ export default function PlanView() {
         </div>
 
         {/* ── Progress Summary Bento ── */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px', marginTop: '20px' }}>
+        <div className="planview-stats-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px', marginTop: '20px' }}>
           {/* Completed Days */}
           <div style={{
             background: C.lowest, borderRadius: '16px', padding: '28px 24px',

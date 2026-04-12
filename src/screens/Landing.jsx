@@ -174,7 +174,7 @@ export default function Landing() {
           </div>
 
           {/* Right: proof points */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: '10px', width: '360px', flexShrink: 0 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: '10px', width: 'min(360px, 100%)', flexShrink: 0 }}>
             {proofPoints.map((pt, i) => (
               <div key={i} style={{ background: C.low, borderRadius: '12px', padding: '1.4rem' }}>
                 <Icon name={pt.icon || 'star'} style={{ fontSize: '1.4rem', color: C.primary, display: 'block', marginBottom: '0.75rem' }} />

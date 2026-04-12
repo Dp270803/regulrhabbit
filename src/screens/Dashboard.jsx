@@ -205,7 +205,7 @@ export default function Dashboard() {
       <div style={{ ...W, display: 'flex', flexDirection: 'column', gap: '16px', paddingTop: 'clamp(28px, 4vw, 48px)', paddingBottom: '8px' }}>
 
         {/* ── Level Hero Section ── */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr minmax(200px, 28%)', gap: '24px', alignItems: 'end', marginBottom: '8px' }}>
+        <div className="dashboard-level-grid" style={{ display: 'grid', gridTemplateColumns: '1fr minmax(200px, 28%)', gap: '24px', alignItems: 'end', marginBottom: '8px' }}>
           {/* Left: Level heading */}
           <div>
             <p style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: C.faint, marginBottom: '8px' }}>

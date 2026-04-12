@@ -204,7 +204,7 @@ export default function SessionCard({ session, onComplete, isCompleted, isCooldo
       {exercises.length > 0 && (
         <div style={{ borderTop: `1px solid rgba(255,255,255,0.05)` }}>
           {/* Section label + progress */}
-          <div style={{ padding: '18px 28px 0', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <div style={{ padding: '18px clamp(16px,5vw,28px) 0', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <p style={{ fontSize: '0.68rem', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: C.muted }}>
               Core Movements{mainBlock?.duration_minutes ? ` · ${mainBlock.duration_minutes}m` : ''}
             </p>
@@ -216,7 +216,7 @@ export default function SessionCard({ session, onComplete, isCompleted, isCooldo
           </div>
 
           {/* Exercise rows */}
-          <div style={{ padding: '8px 28px 20px' }}>
+          <div style={{ padding: `8px clamp(16px,5vw,28px) 20px` }}>
             {exercises.map((ex, i) => {
               const isDone = checked[ex.name];
               const alt = alts[ex.name];
@@ -291,9 +291,9 @@ export default function SessionCard({ session, onComplete, isCompleted, isCooldo
                     )}
                   </div>
 
-                  {/* Muscle tags */}
+                  {/* Muscle tags — hidden on mobile to prevent overflow */}
                   {tags.length > 0 && (
-                    <div style={{ display: 'flex', gap: '4px', flexShrink: 0, paddingTop: '2px' }}>
+                    <div className="session-exercise-tags" style={{ display: 'flex', gap: '4px', flexShrink: 0, paddingTop: '2px' }}>
                       {tags.map(tag => (
                         <span key={tag} style={{
                           fontSize: '0.52rem', fontWeight: 700, letterSpacing: '0.08em',
@@ -310,7 +310,7 @@ export default function SessionCard({ session, onComplete, isCompleted, isCooldo
 
           {/* Progress bar */}
           {doneCount > 0 && (
-            <div style={{ padding: '0 28px 18px' }}>
+            <div style={{ padding: `0 clamp(16px,5vw,28px) 18px` }}>
               <div style={{ height: '2px', background: 'rgba(255,255,255,0.05)', borderRadius: '2px', overflow: 'hidden' }}>
                 <div style={{
                   height: '100%', borderRadius: '2px',

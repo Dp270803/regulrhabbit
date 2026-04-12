@@ -301,21 +301,36 @@ export default function PlanBuilder() {
       {/* ── Fixed header ── */}
       <header style={{
         position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50,
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        padding: '1rem 2rem',
-        background: 'rgba(19,19,19,0.88)', backdropFilter: 'blur(20px)',
+        background: 'rgba(19,19,19,0.92)', backdropFilter: 'blur(20px)',
         WebkitBackdropFilter: 'blur(20px)',
       }}>
-        <span className="font-headline" style={{ fontSize: '1.4rem', fontWeight: 800, color: C.primary, letterSpacing: '-0.03em', textTransform: 'uppercase' }}>Regulr</span>
-        {visibleStepIndex >= 0 && (
-          <span style={{ fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: C.faint }}>
-            Onboarding {String(Math.min(visibleStepIndex + 1, STEP_ORDER.length)).padStart(2, '0')}/{String(STEP_ORDER.length).padStart(2, '0')}
-          </span>
-        )}
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '1rem 1.25rem' }}>
+          <span className="font-headline" style={{ fontSize: '1.3rem', fontWeight: 800, color: C.primary, letterSpacing: '-0.03em', textTransform: 'uppercase' }}>Regulr</span>
+          {visibleStepIndex >= 0 && (
+            <span style={{ fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: C.faint }}>
+              {String(Math.min(visibleStepIndex + 1, STEP_ORDER.length)).padStart(2, '0')} / {String(STEP_ORDER.length).padStart(2, '0')}
+            </span>
+          )}
+        </div>
+        {/* Mobile progress bar (hidden on desktop via CSS) */}
+        <div className="onboarding-progress-mobile" style={{ display: 'none', alignItems: 'center', gap: '6px', padding: '0 1.25rem 0.875rem' }}>
+          {STEP_ORDER.map((step, i) => {
+            const isDone = i < visibleStepIndex || (isSummaryOrConfirm && i < STEP_ORDER.length);
+            const isActive = i === visibleStepIndex && !isSummaryOrConfirm;
+            return (
+              <div key={step} style={{
+                flex: 1, height: '3px', borderRadius: '2px',
+                background: isDone ? C.green : isActive ? C.primary : C.highest,
+                transition: 'background 0.3s',
+                boxShadow: isActive ? `0 0 6px rgba(233,195,73,0.5)` : 'none',
+              }} />
+            );
+          })}
+        </div>
       </header>
 
-      {/* ── Side progress dots (desktop) ── */}
-      <div style={{ position: 'fixed', left: '3rem', top: '50%', transform: 'translateY(-50%)', display: 'flex', flexDirection: 'column', gap: '14px', zIndex: 40 }}>
+      {/* ── Side progress dots (desktop only) ── */}
+      <div className="onboarding-side-dots" style={{ position: 'fixed', left: '3rem', top: '50%', transform: 'translateY(-50%)', display: 'flex', flexDirection: 'column', gap: '14px', zIndex: 40 }}>
         {STEP_ORDER.map((step, i) => {
           const isDone = i < visibleStepIndex || (isSummaryOrConfirm && i < STEP_ORDER.length);
           const isActive = i === visibleStepIndex;
@@ -334,6 +349,7 @@ export default function PlanBuilder() {
       {/* ── Scrollable content ── */}
       <main
         ref={scrollRef}
+        className="onboarding-main"
         style={{ flex: 1, overflowY: 'auto', padding: '7rem 2rem 12rem', maxWidth: '680px', margin: '0 auto', width: '100%' }}
       >
         {/* Past Q&A pairs */}
