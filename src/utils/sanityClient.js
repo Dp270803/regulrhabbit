@@ -34,6 +34,23 @@ export function sanityImageUrl(asset, { width, quality = 85 } = {}) {
  * The document should have type "heroImage" and a field "image".
  * Returns null if not configured or fetch fails.
  */
+export async function fetchLandingPage() {
+  if (!sanity) return null;
+  try {
+    const doc = await sanity.fetch(`*[_type == "landingPage"][0]{
+      heroHeading, heroAccent, heroSubtitle, heroCtaText, heroCtaNote,
+      proofPoints,
+      scienceEyebrow, scienceHeading, scienceBody, scienceBullets, scienceImage,
+      ctaHeading, ctaSubtitle, ctaButtonText,
+      footerLeft, footerRight
+    }`);
+    return doc ?? null;
+  } catch (err) {
+    console.warn('[Sanity] fetchLandingPage failed:', err.message);
+    return null;
+  }
+}
+
 export async function fetchHeroImage() {
   console.log('[Sanity] isConfigured:', isConfigured, 'projectId:', projectId);
   if (!sanity) return null;
