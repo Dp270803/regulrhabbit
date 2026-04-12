@@ -75,25 +75,46 @@ export const profilePage = defineType({
 
     // ── Section labels ──
     defineField({
-      name: 'activitySectionLabel',
-      title: '"Activity" section heading',
+      name: 'activePlanLabel',
+      title: '"Active Plan" meta label',
       type: 'string',
       group: 'sections',
-      initialValue: 'Activity',
+      initialValue: 'Active Plan',
+    }),
+    defineField({
+      name: 'currentLevelLabel',
+      title: '"Current Level" meta label',
+      type: 'string',
+      group: 'sections',
+      initialValue: 'Current Level',
+    }),
+    defineField({
+      name: 'membershipLabel',
+      title: '"Membership" meta label',
+      type: 'string',
+      group: 'sections',
+      initialValue: 'Membership',
+    }),
+    defineField({
+      name: 'consistencyMatrixLabel',
+      title: '"Consistency Matrix" section heading',
+      type: 'string',
+      group: 'sections',
+      initialValue: 'Consistency Matrix',
     }),
     defineField({
       name: 'badgesSectionLabel',
-      title: '"Badges" section heading',
+      title: '"Achievements" section heading',
       type: 'string',
       group: 'sections',
-      initialValue: 'Badges',
+      initialValue: 'Achievements',
     }),
     defineField({
-      name: 'settingsSectionLabel',
-      title: '"Settings" section heading',
+      name: 'dataVaultLabel',
+      title: '"Data Vault" section heading',
       type: 'string',
       group: 'sections',
-      initialValue: 'Settings',
+      initialValue: 'Data Vault',
     }),
 
     // ── Settings rows ──

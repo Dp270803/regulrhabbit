@@ -105,7 +105,8 @@ export async function fetchProfilePage() {
     const doc = await sanity.fetch(`*[_type == "profilePage"][0]{
       personalVaultEyebrow, ghostTag, namePrompt, nameInputPlaceholder,
       statSessionsLabel, statDaysLabel, statStreakLabel, statXpLabel,
-      activitySectionLabel, badgesSectionLabel, settingsSectionLabel,
+      activePlanLabel, currentLevelLabel, membershipLabel,
+      consistencyMatrixLabel, badgesSectionLabel, dataVaultLabel,
       appearanceRowLabel, exportRowLabel, importRowLabel, resetRowLabel
     }`);
     return doc ?? null;
