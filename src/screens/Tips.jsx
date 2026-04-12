@@ -4,6 +4,7 @@ import { Crosshair, Zap, Lightbulb, TrendingUp } from 'lucide-react';
 import { getData } from '../utils/storage';
 import { selectTip } from '../utils/tipSelector';
 import { trackPageView } from '../utils/analytics';
+import { fetchTipsPage } from '../utils/sanityClient';
 
 const C = {
   bg: '#131313', low: '#1c1b1b', container: '#201f1f',
@@ -14,12 +15,41 @@ const C = {
 
 const W = { maxWidth: '1000px', margin: '0 auto', padding: '0 clamp(16px, 4vw, 48px)' };
 
-const CATEGORY_CONFIG = {
-  technique: { label: 'Technique', color: C.primary, Icon: Crosshair },
-  recovery:  { label: 'Recovery',  color: C.green,   Icon: Zap       },
-  mindset:   { label: 'Mindset',   color: C.muted,   Icon: Lightbulb },
-  progress:  { label: 'Progress',  color: C.primary, Icon: TrendingUp },
+// CMS-independent config (icons + colours are design constants, not editorial)
+const CATEGORY_BASE = {
+  technique: { color: C.primary, Icon: Crosshair },
+  recovery:  { color: C.green,   Icon: Zap       },
+  mindset:   { color: C.muted,   Icon: Lightbulb },
+  progress:  { color: C.primary, Icon: TrendingUp },
 };
+
+// Default labels — overridden by CMS data when available
+const DEFAULT_LABELS = {
+  technique: 'Technique',
+  recovery:  'Recovery',
+  mindset:   'Mindset',
+  progress:  'Progress',
+};
+
+// Default page copy — overridden by CMS data when available
+const DEFAULT_COPY = {
+  featuredEyebrow:       'Featured Tip of the Day',
+  featuredHeadingPrefix: 'The Science of',
+  featuredCtaLabel:      'Read Masterclass',
+  footerQuote:           'Growth Is Nonlinear',
+};
+
+function buildCategoryConfig(cmsCategories) {
+  const labels = { ...DEFAULT_LABELS };
+  if (Array.isArray(cmsCategories)) {
+    for (const { key, label } of cmsCategories) {
+      if (key && label && key in labels) labels[key] = label;
+    }
+  }
+  return Object.fromEntries(
+    Object.entries(CATEGORY_BASE).map(([k, v]) => [k, { ...v, label: labels[k] }])
+  );
+}
 
 // Left col then right col — matches screenshot layout
 const COLUMN_LAYOUT = [
@@ -40,8 +70,7 @@ function extractBody(text) {
   return s.length > 120 ? s.slice(0, 118) + '…' : s;
 }
 
-function TipCard({ tip, category }) {
-  const cfg = CATEGORY_CONFIG[category];
+function TipCard({ tip, cfg }) {
   return (
     <div style={{
       background: C.low, borderRadius: '12px',
@@ -70,15 +99,33 @@ export default function Tips() {
   const navigate = useNavigate();
   const [todayTip, setTodayTip] = useState(null);
   const [tipsByCategory, setTipsByCategory] = useState({});
+  const [copy, setCopy] = useState(DEFAULT_COPY);
+  const [categoryConfig, setCategoryConfig] = useState(buildCategoryConfig(null));
 
   useEffect(() => {
     trackPageView('tips');
     const d = getData();
     if (!d.onboarding_complete) { navigate('/'); return; }
 
-    const loadTips = async () => {
-      const tip = await selectTip(d);
+    // Load CMS content and tips in parallel
+    const loadAll = async () => {
+      const [tip, cmsData] = await Promise.all([
+        selectTip(d),
+        fetchTipsPage(),
+      ]);
+
       setTodayTip(tip);
+
+      if (cmsData) {
+        setCopy({
+          featuredEyebrow:       cmsData.featuredEyebrow       || DEFAULT_COPY.featuredEyebrow,
+          featuredHeadingPrefix: cmsData.featuredHeadingPrefix || DEFAULT_COPY.featuredHeadingPrefix,
+          featuredCtaLabel:      cmsData.featuredCtaLabel      || DEFAULT_COPY.featuredCtaLabel,
+          footerQuote:           cmsData.footerQuote           || DEFAULT_COPY.footerQuote,
+        });
+        setCategoryConfig(buildCategoryConfig(cmsData.categories));
+      }
+
       const activePlan = d.plans.find(p => p.status === 'active');
       if (!activePlan) return;
       const loaders = {
@@ -96,16 +143,16 @@ export default function Tips() {
         const mod = await loader();
         const allTips = (mod.default || mod).tips || [];
         const byCat = {};
-        for (const key of Object.keys(CATEGORY_CONFIG)) {
+        for (const key of Object.keys(CATEGORY_BASE)) {
           byCat[key] = allTips.filter(t => t.category === key);
         }
         setTipsByCategory(byCat);
       } catch { /* ok */ }
     };
-    loadTips();
+    loadAll();
   }, [navigate]);
 
-  const featuredCfg = todayTip ? CATEGORY_CONFIG[todayTip.category] : null;
+  const featuredCfg = todayTip ? categoryConfig[todayTip.category] : null;
 
   return (
     <div style={{ minHeight: '100dvh', background: C.bg, color: C.text, paddingBottom: '7rem' }}>
@@ -131,7 +178,7 @@ export default function Tips() {
                 fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.2em',
                 textTransform: 'uppercase', color: C.primary, marginBottom: '1.25rem', opacity: 0.85,
               }}>
-                Featured Tip of the Day
+                {copy.featuredEyebrow}
               </p>
               <h2 className="font-headline" style={{
                 fontSize: 'clamp(1.8rem, 3.5vw, 2.6rem)', fontWeight: 800,
@@ -140,7 +187,7 @@ export default function Tips() {
               }}>
                 {featuredCfg ? (
                   <>
-                    <span style={{ color: C.text }}>The Science of </span>
+                    <span style={{ color: C.text }}>{copy.featuredHeadingPrefix} </span>
                     <span style={{ color: C.primary }}>{featuredCfg.label}</span>
                   </>
                 ) : 'Today\'s Insight'}
@@ -166,7 +213,7 @@ export default function Tips() {
                 onMouseEnter={e => { e.currentTarget.style.background = `rgba(233,195,73,0.1)`; }}
                 onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; }}
               >
-                Read Masterclass →
+                {copy.featuredCtaLabel} →
               </button>
             </div>
           </div>
@@ -181,7 +228,7 @@ export default function Tips() {
           {COLUMN_LAYOUT.map((colKeys, ci) => (
             <div key={ci} style={{ display: 'flex', flexDirection: 'column', gap: '36px' }}>
               {colKeys.map(catKey => {
-                const cfg = CATEGORY_CONFIG[catKey];
+                const cfg = categoryConfig[catKey];
                 const tips = (tipsByCategory[catKey] || []).slice(0, 2);
                 return (
                   <div key={catKey}>
@@ -201,7 +248,7 @@ export default function Tips() {
 
                     {/* Tip cards */}
                     {tips.length > 0 ? (
-                      tips.map((tip, i) => <TipCard key={tip.id || i} tip={tip} category={catKey} />)
+                      tips.map((tip, i) => <TipCard key={tip.id || i} tip={tip} cfg={cfg} />)
                     ) : (
                       /* Skeleton placeholders while loading */
                       [0, 1].map(i => (
@@ -223,7 +270,7 @@ export default function Tips() {
             ))}
           </div>
           <p style={{ fontSize: '0.58rem', fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: C.faint }}>
-            Growth Is Nonlinear
+            {copy.footerQuote}
           </p>
         </div>
       </div>
