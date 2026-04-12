@@ -306,7 +306,7 @@ export default function PlanBuilder() {
         background: 'rgba(19,19,19,0.88)', backdropFilter: 'blur(20px)',
         WebkitBackdropFilter: 'blur(20px)',
       }}>
-        <span className="font-headline" style={{ fontSize: '1.4rem', fontWeight: 800, color: C.primary, letterSpacing: '-0.03em', textTransform: 'uppercase' }}>Regular</span>
+        <span className="font-headline" style={{ fontSize: '1.4rem', fontWeight: 800, color: C.primary, letterSpacing: '-0.03em', textTransform: 'uppercase' }}>Regulr</span>
         {visibleStepIndex >= 0 && (
           <span style={{ fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: C.faint }}>
             Onboarding {String(Math.min(visibleStepIndex + 1, STEP_ORDER.length)).padStart(2, '0')}/{String(STEP_ORDER.length).padStart(2, '0')}
@@ -359,7 +359,7 @@ export default function PlanBuilder() {
               <div>
                 <p style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: C.primary, marginBottom: '1rem' }}>Onboarding Complete</p>
                 <h2 className="font-headline" style={{ fontSize: 'clamp(2.2rem, 5vw, 3.5rem)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.05, marginBottom: '1rem', fontStyle: 'italic' }}>
-                  Ready for <span style={{ color: C.primary }}>Regular.</span>
+                  Ready for <span style={{ color: C.primary }}>Regulr.</span>
                 </h2>
                 <p style={{ fontSize: '1rem', color: C.faint, marginBottom: '2rem', lineHeight: 1.6 }}>
                   Your blueprint for consistent progress is locked and loaded.

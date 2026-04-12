@@ -66,7 +66,7 @@ export const landingPage = defineType({
     defineField({ name: 'ctaButtonText', title: 'CTA Button Label', type: 'string', group: 'cta', initialValue: 'Start your first plan' }),
 
     // ── Other ──
-    defineField({ name: 'footerLeft', title: 'Footer left text', type: 'string', group: 'other', initialValue: '© 2026 Regular. Built for focus.' }),
+    defineField({ name: 'footerLeft', title: 'Footer left text', type: 'string', group: 'other', initialValue: '© 2026 Regulr. Built for focus.' }),
     defineField({ name: 'footerRight', title: 'Footer right text', type: 'string', group: 'other', initialValue: 'No tracking · No ads · No nonsense' }),
   ],
   preview: { prepare: () => ({ title: 'Landing Page Content' }) },
