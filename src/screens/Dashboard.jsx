@@ -18,16 +18,10 @@ import { getToday, formatDate } from '../utils/dateUtils';
 import { trackPageView, trackSessionCompleted, trackReturnState, trackBadgeEarned, trackLevelUp } from '../utils/analytics';
 import messagesData from '../data/messages.json';
 import levelsData from '../data/levels.json';
+import { useThemeColors } from '../hooks/useTheme';
 
 const ALL_LEVELS = levelsData.levels;
 const DAY_KEYS = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
-
-const C = {
-  bg: '#131313', low: '#1c1b1b', container: '#201f1f',
-  high: '#2a2a2a', highest: '#353534', lowest: '#0e0e0e',
-  primary: '#e9c349', onPrimary: '#3c2f00', green: '#2ff801',
-  text: '#e5e2e1', muted: '#c4c7c7', faint: '#7b7c7c',
-};
 
 function getMotivationalNote(streak, sessionsLeft, isCompleted) {
   if (isCompleted) return 'Session done. Recovery starts now.';
@@ -61,6 +55,7 @@ function getNextSession(plan) {
 
 // Consistency dot grid — last 20 days mapped to green/gold/grey
 function ConsistencyDots({ checkIns, scheduledDays, plan }) {
+  const C = useThemeColors();
   const today = getToday();
   const days = [];
   for (let i = 19; i >= 0; i--) {
@@ -95,6 +90,7 @@ function ConsistencyDots({ checkIns, scheduledDays, plan }) {
 }
 
 export default function Dashboard() {
+  const C = useThemeColors();
   const navigate = useNavigate();
   const [data, setData] = useState(null);
   const [tip, setTip] = useState(null);

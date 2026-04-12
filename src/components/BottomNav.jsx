@@ -1,12 +1,9 @@
 import { NavLink } from 'react-router-dom';
 import { LayoutDashboard, CalendarDays, User, Lightbulb } from 'lucide-react';
-
-const C = {
-  primary: '#e9c349',
-  onPrimary: '#3c2f00',
-};
+import { useThemeColors } from '../hooks/useTheme';
 
 export default function BottomNav() {
+  const C = useThemeColors();
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-50 flex justify-center px-4">
       <div
@@ -30,7 +27,7 @@ export default function BottomNav() {
               to={to}
               className="flex flex-col items-center gap-1 py-2 px-4 rounded-xl transition-all duration-200"
               style={({ isActive }) => ({
-                color: isActive ? C.primary : 'rgba(255,255,255,0.3)',
+                color: isActive ? C.primary : C.faint,
               })}
             >
               {({ isActive }) => (

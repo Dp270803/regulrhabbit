@@ -1,14 +1,8 @@
 import { getWeekDates, getToday } from '../utils/dateUtils';
+import { useThemeColors } from '../hooks/useTheme';
 
 const DAY_LABELS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 const DAY_KEYS = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
-
-const C = {
-  low: '#1c1b1b', container: '#201f1f',
-  high: '#2a2a2a', highest: '#353534', lowest: '#0e0e0e',
-  primary: '#e9c349', green: '#2ff801', red: '#ffb4ab',
-  text: '#e5e2e1', faint: '#7b7c7c',
-};
 
 function abbrev(title) {
   if (!title) return '';
@@ -17,6 +11,7 @@ function abbrev(title) {
 }
 
 export default function WeeklyGrid({ plan, checkIns, label }) {
+  const C = useThemeColors();
   const today = getToday();
   const weekDates = getWeekDates(today);
   const scheduledDays = plan?.scheduled_days || [];

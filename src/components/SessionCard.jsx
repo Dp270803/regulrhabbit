@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Clock, Check, ChevronDown } from 'lucide-react';
+import { useThemeColors } from '../hooks/useTheme';
 
 function YtIcon({ size = 13 }) {
   return (
@@ -9,14 +10,6 @@ function YtIcon({ size = 13 }) {
   );
 }
 import { sanityImageUrl } from '../utils/sanityClient';
-
-const C = {
-  low: '#1c1b1b', container: '#201f1f',
-  high: '#2a2a2a', highest: '#353534', lowest: '#0e0e0e',
-  primary: '#e9c349', onPrimary: '#3c2f00', green: '#2ff801',
-  text: '#e5e2e1', muted: '#c4c7c7', faint: '#7b7c7c',
-  red: '#ffb4ab',
-};
 
 // Muscle/movement group tags per exercise name
 const EXERCISE_TAGS = {
@@ -63,6 +56,7 @@ function shortAlt(str) {
 }
 
 function CollapsibleBlock({ label, duration, text }) {
+  const C = useThemeColors();
   const [open, setOpen] = useState(false);
   return (
     <div style={{ borderTop: `1px solid rgba(255,255,255,0.05)` }}>
@@ -86,6 +80,7 @@ function CollapsibleBlock({ label, duration, text }) {
 }
 
 export default function SessionCard({ session, onComplete, isCompleted, isCooldown, isRestDay, equipment, isNextSession, nextLabel, heroImg, cms }) {
+  const C = useThemeColors();
   const [checked, setChecked] = useState({});
   const [alts, setAlts] = useState({});
 

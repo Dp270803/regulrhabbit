@@ -4,23 +4,7 @@ import { getData } from '../utils/storage';
 import { selectTip } from '../utils/tipSelector';
 import { trackPageView } from '../utils/analytics';
 import { fetchTipsPage, sanityImageUrl } from '../utils/sanityClient';
-
-// ── Colour tokens (mirrors design system) ────────────────────────────────────
-const C = {
-  bg:       '#131313',
-  lowest:   '#0e0e0e',
-  low:      '#1c1b1b',
-  high:     '#2a2a2a',
-  highest:  '#353534',
-  primary:  '#e9c349',
-  onPrimary:'#3c2f00',
-  green:    '#2ff801',
-  amber:    '#f59e0b',
-  text:     '#e5e2e1',
-  muted:    '#c4c7c7',
-  faint:    '#7b7c7c',
-  outline:  '#444748',
-};
+import { useThemeColors } from '../hooks/useTheme';
 
 // ── Default content (matches HTML design; overridden by CMS) ─────────────────
 const DEFAULT_HERO_IMAGE =
@@ -60,16 +44,7 @@ const DEFAULT_CARDS = {
   ],
 };
 
-// ── Design constants (icons + accent colours — not editorial content) ─────────
-const CATEGORY_STYLE = {
-  technique: { color: C.primary, icon: 'fitness_center', cardBg: C.low,    hoverBg: C.high,   border: false },
-  recovery:  { color: C.green,   icon: 'self_care',      cardBg: C.lowest, hoverBg: C.low,    border: true  },
-  mindset:   { color: C.primary, icon: 'psychology',     cardBg: C.low,    hoverBg: C.high,   border: false },
-  progress:  { color: C.amber,   icon: 'trending_up',    cardBg: C.lowest, hoverBg: C.low,    border: true  },
-};
-
-const COLUMN_LAYOUT  = [['technique', 'mindset'], ['recovery', 'progress']];
-const FOOTER_DOTS    = [C.primary, C.primary, C.green, C.highest, C.highest, C.primary, C.primary, C.green, C.primary, C.highest];
+const COLUMN_LAYOUT = [['technique', 'mindset'], ['recovery', 'progress']];
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 function buildCategoryLabels(cmsCategories) {
@@ -98,6 +73,7 @@ function buildCategoryCards(cmsCategoryCards) {
 
 // ── Sub-components ────────────────────────────────────────────────────────────
 function TipCard({ card, catStyle }) {
+  const C = useThemeColors();
   const [hovered, setHovered] = useState(false);
   return (
     <div
@@ -134,6 +110,7 @@ function TipCard({ card, catStyle }) {
 }
 
 function CategorySection({ catKey, label, cards, catStyle }) {
+  const C = useThemeColors();
   return (
     <section>
       <div style={{
@@ -165,7 +142,16 @@ function CategorySection({ catKey, label, cards, catStyle }) {
 
 // ── Page ──────────────────────────────────────────────────────────────────────
 export default function Tips() {
+  const C = useThemeColors();
   const navigate = useNavigate();
+
+  const CATEGORY_STYLE = {
+    technique: { color: C.primary, icon: 'fitness_center', cardBg: C.low,    hoverBg: C.high,   border: false },
+    recovery:  { color: C.green,   icon: 'self_care',      cardBg: C.lowest, hoverBg: C.low,    border: true  },
+    mindset:   { color: C.primary, icon: 'psychology',     cardBg: C.low,    hoverBg: C.high,   border: false },
+    progress:  { color: C.amber,   icon: 'trending_up',    cardBg: C.lowest, hoverBg: C.low,    border: true  },
+  };
+  const FOOTER_DOTS = [C.primary, C.primary, C.green, C.highest, C.highest, C.primary, C.primary, C.green, C.primary, C.highest];
 
   const [todayTip, setTodayTip]         = useState(null);
   const [copy, setCopy]                 = useState(DEFAULT_COPY);

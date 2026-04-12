@@ -1,17 +1,19 @@
 import { getLevelFromXP, getXPToNextLevel } from '../utils/xpCalculator';
 import { useState, useEffect } from 'react';
 import levelsData from '../data/levels.json';
+import { useThemeColors, useTheme } from '../hooks/useTheme';
 
 const ALL_LEVELS = levelsData.levels;
 
-const C = {
-  low: '#1c1b1b', container: '#201f1f',
-  high: '#2a2a2a', highest: '#353534', lowest: '#0e0e0e',
-  primary: '#e9c349', green: '#2ff801',
-  text: '#e5e2e1', muted: '#c4c7c7', faint: '#7b7c7c',
-};
-
 export default function XPBar({ totalXP, recentXP }) {
+  const C = useThemeColors();
+  const { isDark } = useTheme();
+  const primaryMuted   = isDark ? 'rgba(233,195,73,0.25)' : 'rgba(0,92,171,0.2)';
+  const primaryMid     = isDark ? 'rgba(233,195,73,0.35)' : 'rgba(0,92,171,0.3)';
+  const primaryGlow    = isDark ? 'rgba(233,195,73,0.5)'  : 'rgba(0,92,171,0.4)';
+  const primaryShadow  = isDark ? 'rgba(233,195,73,0.3)'  : 'rgba(0,92,171,0.25)';
+  const subtleWhite    = isDark ? 'rgba(255,255,255,0.1)'  : 'rgba(0,0,0,0.06)';
+  const subtleWhiteMid = isDark ? 'rgba(255,255,255,0.25)' : 'rgba(0,0,0,0.18)';
   const level = getLevelFromXP(totalXP);
   const { needed, progress, nextLevel } = getXPToNextLevel(totalXP);
   const [flash, setFlash] = useState(false);
@@ -62,7 +64,7 @@ export default function XPBar({ totalXP, recentXP }) {
             background: C.primary,
             width: `${Math.max(0, ((level.level - 1) / (ALL_LEVELS.length - 1)) * 100)}%`,
             transition: 'width 0.8s ease',
-            boxShadow: `0 0 6px rgba(233,195,73,0.3)`,
+            boxShadow: `0 0 6px ${primaryShadow}`,
           }} />
         </div>
         <div style={{ display: 'flex', justifyContent: 'space-between', position: 'relative', zIndex: 1 }}>
@@ -75,9 +77,9 @@ export default function XPBar({ totalXP, recentXP }) {
                   width: isCurrent ? '28px' : '12px',
                   height: isCurrent ? '28px' : '12px',
                   borderRadius: '50%',
-                  background: isCurrent ? C.primary : isReached ? `rgba(233,195,73,0.25)` : C.highest,
-                  border: isCurrent ? `2px solid rgba(233,195,73,0.6)` : isReached ? `1.5px solid rgba(233,195,73,0.35)` : `1.5px solid rgba(255,255,255,0.08)`,
-                  boxShadow: isCurrent ? `0 0 14px rgba(233,195,73,0.5)` : 'none',
+                  background: isCurrent ? C.primary : isReached ? primaryMuted : C.highest,
+                  border: isCurrent ? `2px solid ${primaryMid}` : isReached ? `1.5px solid ${primaryMid}` : `1.5px solid ${subtleWhite}`,
+                  boxShadow: isCurrent ? `0 0 14px ${primaryGlow}` : 'none',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                   transition: 'all 0.3s ease',
                 }}>
@@ -89,7 +91,7 @@ export default function XPBar({ totalXP, recentXP }) {
                 </div>
                 <span style={{
                   fontSize: '0.48rem', fontFamily: 'Inter, monospace',
-                  color: isCurrent ? C.primary : isReached ? `rgba(233,195,73,0.3)` : 'rgba(255,255,255,0.1)',
+                  color: isCurrent ? C.primary : isReached ? primaryMuted : subtleWhite,
                   fontWeight: isCurrent ? 700 : 400, lineHeight: 1,
                 }}>
                   {l.level}
@@ -108,15 +110,15 @@ export default function XPBar({ totalXP, recentXP }) {
               height: '100%', borderRadius: '2px',
               background: C.primary,
               width: `${xpPct}%`,
-              boxShadow: `0 0 6px rgba(233,195,73,0.3)`,
+              boxShadow: `0 0 6px ${primaryShadow}`,
               transition: 'width 0.7s ease',
             }} />
           </div>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <p style={{ fontFamily: 'Inter, monospace', fontSize: '0.65rem', color: 'rgba(255,255,255,0.25)' }}>
+            <p style={{ fontFamily: 'Inter, monospace', fontSize: '0.65rem', color: subtleWhiteMid }}>
               {needed?.toLocaleString()} XP to next level
             </p>
-            <p style={{ fontSize: '0.65rem', color: 'rgba(255,255,255,0.25)' }}>
+            <p style={{ fontSize: '0.65rem', color: subtleWhiteMid }}>
               {nextLevel?.title}
             </p>
           </div>

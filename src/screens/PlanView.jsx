@@ -4,14 +4,7 @@ import { getData } from '../utils/storage';
 import { formatDate } from '../utils/dateUtils';
 import { trackPageView } from '../utils/analytics';
 import { fetchPlanPage } from '../utils/sanityClient';
-
-const C = {
-  bg: '#131313', low: '#1c1b1b', container: '#201f1f',
-  high: '#2a2a2a', highest: '#353534', lowest: '#0e0e0e',
-  primary: '#e9c349', onPrimary: '#3c2f00', green: '#2ff801',
-  text: '#e5e2e1', muted: '#c4c7c7', faint: '#7b7c7c',
-  red: '#ffb4ab',
-};
+import { useThemeColors } from '../hooks/useTheme';
 
 const W = { maxWidth: '1200px', margin: '0 auto', padding: '0 clamp(16px, 4vw, 64px)' };
 
@@ -50,6 +43,7 @@ function parseExercises(detail) {
 }
 
 export default function PlanView() {
+  const C = useThemeColors();
   const navigate = useNavigate();
   const [data, setData] = useState(null);
   const [selectedPlan, setSelectedPlan] = useState(null);

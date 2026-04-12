@@ -6,7 +6,7 @@ import { getData, exportData, importData, resetData, updateData } from '../utils
 import { getAllBadges } from '../utils/badgeChecker';
 import { getLevelFromXP } from '../utils/xpCalculator';
 import { trackPageView } from '../utils/analytics';
-import { useTheme } from '../hooks/useTheme';
+import { useTheme, useThemeColors } from '../hooks/useTheme';
 import { fetchProfilePage } from '../utils/sanityClient';
 import { getToday } from '../utils/dateUtils';
 
@@ -15,17 +15,11 @@ const ACTIVITY_LABELS = {
   yoga: 'Yogi', dance: 'Dancer', singing: 'Vocalist', instrument: 'Musician',
 };
 
-const C = {
-  bg: '#131313', low: '#1c1b1b', container: '#201f1f',
-  high: '#2a2a2a', highest: '#353534', lowest: '#0e0e0e',
-  primary: '#e9c349', onPrimary: '#3c2f00', green: '#2ff801',
-  red: '#ffb4ab', text: '#e5e2e1', muted: '#c4c7c7', faint: '#7b7c7c',
-};
-
 const DAY_KEYS = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
 
 // ── Consistency dot grid (8 weeks × 7 days) ─────────────────────────────────
 function ConsistencyMatrix({ checkIns, scheduledDays }) {
+  const C = useThemeColors();
   const today = getToday();
   const WEEKS = 8;
   const days = [];
@@ -70,6 +64,7 @@ function ConsistencyMatrix({ checkIns, scheduledDays }) {
 
 // ── Badge tile matching the reference ────────────────────────────────────────
 function BadgeTile({ badge, onClick }) {
+  const C = useThemeColors();
   const isEarned = badge.earned;
   const isGreen = badge.id?.includes('streak') || badge.id?.includes('comeback');
 
@@ -129,6 +124,7 @@ function BadgeTile({ badge, onClick }) {
 
 // ────────────────────────────────────────────────────────────────────────────
 export default function Profile() {
+  const C = useThemeColors();
   const navigate = useNavigate();
   const [data, setData] = useState(null);
   const [selectedBadge, setSelectedBadge] = useState(null);

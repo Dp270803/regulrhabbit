@@ -5,13 +5,7 @@ import { generatePlan } from '../utils/planGenerator';
 import { getData, updateData } from '../utils/storage';
 import { trackOnboardingStarted, trackOnboardingStep, trackPlanCreated } from '../utils/analytics';
 import chatbotFlow from '../data/chatbot-flow.json';
-
-const C = {
-  bg: '#131313', low: '#1c1b1b', container: '#201f1f',
-  high: '#2a2a2a', highest: '#353534', lowest: '#0e0e0e',
-  primary: '#e9c349', onPrimary: '#3c2f00', green: '#2ff801',
-  text: '#e5e2e1', muted: '#c4c7c7', faint: '#7b7c7c',
-};
+import { useThemeColors } from '../hooks/useTheme';
 
 const STEP_ORDER = ['welcome', 'experience', 'days', 'schedule', 'equipment'];
 
@@ -39,6 +33,7 @@ const EQUIPMENT_LABELS = {
 const PLAN_TYPE_LABELS = { 2: 'Full Body A/B', 3: 'Push / Pull / Legs', 4: 'Upper / Lower', 5: 'Upper / Lower' };
 
 export default function PlanBuilder() {
+  const C = useThemeColors();
   const navigate = useNavigate();
   const scrollRef = useRef(null);
   const [currentStep, setCurrentStep] = useState(chatbotFlow.initial_step);

@@ -3,13 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { isOnboardingComplete, getData } from '../utils/storage';
 import { trackPageView } from '../utils/analytics';
 import { fetchLandingPage, sanityImageUrl } from '../utils/sanityClient';
-
-const C = {
-  bg: '#131313', low: '#1c1b1b', container: '#201f1f',
-  high: '#2a2a2a', highest: '#353534', lowest: '#0e0e0e',
-  primary: '#e9c349', onPrimary: '#3c2f00', green: '#2ff801',
-  text: '#e5e2e1', muted: '#c4c7c7', faint: '#7b7c7c',
-};
+import { useThemeColors } from '../hooks/useTheme';
 
 const DEFAULTS = {
   heroHeading: 'Become a',
@@ -61,6 +55,7 @@ function Icon({ name, style }) {
 
 
 function WelcomeBack({ onContinue }) {
+  const C = useThemeColors();
   const d = getData();
   const streak = d?.streaks?.current || 0;
   const planLabel = d?.plans?.find(p => p.status === 'active')?.plan_label || 'Your Plan';
@@ -106,6 +101,7 @@ function WelcomeBack({ onContinue }) {
 }
 
 export default function Landing() {
+  const C = useThemeColors();
   const navigate = useNavigate();
   const [scrolled, setScrolled] = useState(false);
   const [isReturning, setIsReturning] = useState(false);
