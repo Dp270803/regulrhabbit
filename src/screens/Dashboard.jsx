@@ -7,7 +7,7 @@ import LevelUpModal from '../components/LevelUpModal';
 import BadgeModal from '../components/BadgeModal';
 import ConfettiEffect from '../components/ConfettiEffect';
 import { getData, updateData } from '../utils/storage';
-import { fetchHeroImage } from '../utils/sanityClient';
+import { fetchHeroImage, fetchDashboardPage } from '../utils/sanityClient';
 import { getTodaySession, isRestDay } from '../utils/planGenerator';
 import { detectReturnState, getReturnMessage, getTimeMessage, getReducedSession, getCelebrationMessage } from '../utils/returnState';
 import { updateStreak, getConsecutiveMisses, getStreakMilestone } from '../utils/streakTracker';
@@ -109,6 +109,7 @@ export default function Dashboard() {
   const [showBanner, setShowBanner] = useState(true);
   const [xpFlash, setXpFlash] = useState(false);
   const [heroImg, setHeroImg] = useState(null);
+  const [cms, setCms] = useState(null);
 
   const loadDashboard = useCallback(async () => {
     const d = getData();
@@ -131,6 +132,7 @@ export default function Dashboard() {
 
   useEffect(() => { trackPageView('dashboard'); loadDashboard(); }, [loadDashboard]);
   useEffect(() => { fetchHeroImage().then(setHeroImg).catch(() => {}); }, []);
+  useEffect(() => { fetchDashboardPage().then(doc => { if (doc) setCms(doc); }).catch(() => {}); }, []);
 
   if (!data) return null;
 
@@ -207,7 +209,7 @@ export default function Dashboard() {
           {/* Left: Level heading */}
           <div>
             <p style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: C.faint, marginBottom: '8px' }}>
-              Current Standing
+              {cms?.currentStandingLabel || 'Current Standing'}
             </p>
             <h1 className="font-headline" style={{ fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1, marginBottom: '20px' }}>
               <span style={{ display: 'block', fontSize: 'clamp(1.2rem, 2vw, 1.7rem)', color: C.text, marginBottom: '2px' }}>
@@ -240,7 +242,7 @@ export default function Dashboard() {
           {/* Right: Consistency track */}
           <div style={{ background: C.lowest, padding: '18px 18px 14px', borderRadius: '12px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-              <span style={{ fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.16em', textTransform: 'uppercase', color: C.faint }}>Consistency Track</span>
+              <span style={{ fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.16em', textTransform: 'uppercase', color: C.faint }}>{cms?.consistencyTrackLabel || 'Consistency Track'}</span>
               {data.streaks.current > 0 && (
                 <span className="font-headline" style={{ fontWeight: 700, color: C.primary, fontSize: '0.8rem' }}>
                   {data.streaks.current} Day Streak
@@ -268,10 +270,11 @@ export default function Dashboard() {
           isRestDay={rest && !todaySession && !nextInfo}
           equipment={activePlan?.equipment}
           heroImg={heroImg}
+          cms={cms}
         />
 
         {/* ── Weekly calendar ── */}
-        <WeeklyGrid plan={activePlan} checkIns={data.check_ins} />
+        <WeeklyGrid plan={activePlan} checkIns={data.check_ins} label={cms?.trainingRecordLabel} />
 
       </div>
     </div>

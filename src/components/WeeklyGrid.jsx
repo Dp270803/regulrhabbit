@@ -16,7 +16,7 @@ function abbrev(title) {
   return short.length > 10 ? short.slice(0, 9) + '…' : short;
 }
 
-export default function WeeklyGrid({ plan, checkIns }) {
+export default function WeeklyGrid({ plan, checkIns, label }) {
   const today = getToday();
   const weekDates = getWeekDates(today);
   const scheduledDays = plan?.scheduled_days || [];
@@ -53,7 +53,7 @@ export default function WeeklyGrid({ plan, checkIns }) {
       {/* Header */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px' }}>
         <p style={{ fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.16em', textTransform: 'uppercase', color: C.faint }}>
-          Training Record
+          {label || 'Training Record'}
         </p>
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
           {completedCount > 0 && <span style={{ fontSize: '0.68rem', color: C.green }}>{completedCount} done</span>}

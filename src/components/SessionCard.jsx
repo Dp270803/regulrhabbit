@@ -85,7 +85,7 @@ function CollapsibleBlock({ label, duration, text }) {
   );
 }
 
-export default function SessionCard({ session, onComplete, isCompleted, isCooldown, isRestDay, equipment, isNextSession, nextLabel, heroImg }) {
+export default function SessionCard({ session, onComplete, isCompleted, isCooldown, isRestDay, equipment, isNextSession, nextLabel, heroImg, cms }) {
   const [checked, setChecked] = useState({});
   const [alts, setAlts] = useState({});
 
@@ -110,9 +110,9 @@ export default function SessionCard({ session, onComplete, isCompleted, isCooldo
     return (
       <div style={{ ...cardStyle, padding: '36px 28px' }}>
         <p style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', color: C.faint, marginBottom: '12px' }}>Today</p>
-        <h3 className="font-headline" style={{ fontSize: '2rem', fontWeight: 800, letterSpacing: '-0.02em', color: C.text, marginBottom: '12px' }}>Rest Day</h3>
-        <p style={{ fontSize: '1rem', color: C.muted, lineHeight: 1.7 }}>Recovery is where growth happens. Rest days build what training breaks down.</p>
-        <p style={{ marginTop: '20px', fontSize: '0.72rem', letterSpacing: '0.1em', color: C.faint, textTransform: 'uppercase' }}>Tomorrow you rise again</p>
+        <h3 className="font-headline" style={{ fontSize: '2rem', fontWeight: 800, letterSpacing: '-0.02em', color: C.text, marginBottom: '12px' }}>{cms?.restDayTitle || 'Rest Day'}</h3>
+        <p style={{ fontSize: '1rem', color: C.muted, lineHeight: 1.7 }}>{cms?.restDayBody || 'Recovery is where growth happens. Rest days build what training breaks down.'}</p>
+        <p style={{ marginTop: '20px', fontSize: '0.72rem', letterSpacing: '0.1em', color: C.faint, textTransform: 'uppercase' }}>{cms?.restDayFootnote || 'Tomorrow you rise again'}</p>
       </div>
     );
   }
@@ -156,7 +156,7 @@ export default function SessionCard({ session, onComplete, isCompleted, isCooldo
           <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(19,19,19,0.15) 0%, rgba(28,27,27,0.97) 100%)' }} />
           <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '20px 28px 24px' }}>
             <p style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', color: isNextSession ? C.primary : 'rgba(255,255,255,0.45)', marginBottom: '6px' }}>
-              {nextLabel || "Today's Session"}
+              {nextLabel || cms?.todaySessionLabel || "Today's Session"}
             </p>
             <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: '12px' }}>
               <h3 className="font-headline" style={{ fontSize: 'clamp(1.6rem, 2.5vw, 2.2rem)', fontWeight: 800, letterSpacing: '-0.02em', color: C.text, lineHeight: 1.1, textTransform: 'uppercase' }}>
@@ -179,7 +179,7 @@ export default function SessionCard({ session, onComplete, isCompleted, isCooldo
         <div style={{ padding: '28px 28px 20px', display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '16px' }}>
           <div>
             <p style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', color: isNextSession ? C.primary : C.faint, marginBottom: '8px' }}>
-              {nextLabel || "Today's Session"}
+              {nextLabel || cms?.todaySessionLabel || "Today's Session"}
             </p>
             <h3 className="font-headline" style={{ fontSize: 'clamp(1.6rem, 2.5vw, 2.2rem)', fontWeight: 800, letterSpacing: '-0.02em', color: C.text, lineHeight: 1.1, marginBottom: '10px', textTransform: 'uppercase' }}>
               {session.title}
@@ -334,7 +334,7 @@ export default function SessionCard({ session, onComplete, isCompleted, isCooldo
           {isCooldown ? (
             <div style={{ padding: '16px', borderRadius: '10px', background: 'rgba(255,255,255,0.02)', textAlign: 'center' }}>
               <p style={{ fontSize: '0.9rem', color: 'rgba(255,255,255,0.35)', letterSpacing: '0.02em' }}>
-                Session logged — come back tomorrow
+                {cms?.sessionDoneLabel || 'Session logged — come back tomorrow'}
               </p>
             </div>
           ) : (
@@ -355,10 +355,10 @@ export default function SessionCard({ session, onComplete, isCompleted, isCooldo
               onMouseLeave={e => e.currentTarget.style.opacity = '1'}
             >
               {allDone
-                ? '✓ All done — Mark Complete'
+                ? `✓ All done — ${cms?.markCompleteLabel || 'Mark Complete'}`
                 : doneCount > 0
-                ? `Mark Complete (${doneCount}/${exercises.length} done)`
-                : 'Mark Complete'}
+                ? `${cms?.markCompleteLabel || 'Mark Complete'} (${doneCount}/${exercises.length} done)`
+                : cms?.markCompleteLabel || 'Mark Complete'}
             </button>
           )}
         </div>

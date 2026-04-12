@@ -68,6 +68,37 @@ export async function fetchTipsPage() {
   }
 }
 
+export async function fetchPlanPage() {
+  if (!sanity) return null;
+  try {
+    const doc = await sanity.fetch(`*[_type == "planPage"][0]{
+      pageTitle, phaseLabel, durationLabel,
+      weekEntries[]{name, theme, description},
+      statCompletedLabel, statBurnLabel, statFocusLabel, focusMetric
+    }`);
+    return doc ?? null;
+  } catch (err) {
+    console.warn('[Sanity] fetchPlanPage failed:', err.message);
+    return null;
+  }
+}
+
+export async function fetchDashboardPage() {
+  if (!sanity) return null;
+  try {
+    const doc = await sanity.fetch(`*[_type == "dashboardPage"][0]{
+      currentStandingLabel, consistencyTrackLabel,
+      todaySessionLabel, markCompleteLabel, sessionDoneLabel,
+      trainingRecordLabel,
+      restDayTitle, restDayBody, restDayFootnote
+    }`);
+    return doc ?? null;
+  } catch (err) {
+    console.warn('[Sanity] fetchDashboardPage failed:', err.message);
+    return null;
+  }
+}
+
 export async function fetchHeroImage() {
   if (!sanity) return null;
   try {
