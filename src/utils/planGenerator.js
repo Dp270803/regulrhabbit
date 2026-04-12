@@ -20,11 +20,12 @@ export async function generatePlan(answers) {
   const mod = await import('../data/templates/gym.json');
   const templateData = mod.default || mod;
 
+  const normLevel = experience_level === 'beginner_new' ? 'beginner' : experience_level;
   const freqKey = frequency >= 4 ? '4x' : `${frequency}x`;
   const template = templateData.templates[freqKey];
   if (!template) throw new Error(`No template for frequency: ${freqKey}`);
 
-  const modifiers = templateData.experience_modifiers?.[experience_level] || {
+  const modifiers = templateData.experience_modifiers?.[normLevel] || {
     sets_multiplier: 1.0,
     reps_multiplier: 1.0,
     duration_multiplier: 1.0,
@@ -47,11 +48,11 @@ export async function generatePlan(answers) {
   return {
     id: planId,
     activity,
-    experience_level,
+    experience_level: normLevel,
     frequency: Math.min(frequency, sortedDays.length),
     session_duration: session_duration || null,
     scheduled_days: sortedDays,
-    template_id: `gym_${experience_level}_${freqKey}`,
+    template_id: `gym_${normLevel}_${freqKey}`,
     plan_label: PLAN_LABELS[freqKey] || template.label,
     start_date: startDate,
     current_week: 1,

@@ -272,10 +272,10 @@ export default function PlanBuilder() {
     if (!step.options) return null;
 
     return (
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
-        {step.options.map(opt => (
+      <div key={currentStep} style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
+        {step.options.map((opt, i) => (
           <button
-            key={opt.value}
+            key={`${currentStep}-${i}`}
             onClick={() => handleOptionSelect(opt)}
             style={{
               padding: '10px 22px', borderRadius: '8px',
