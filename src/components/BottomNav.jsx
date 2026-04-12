@@ -9,10 +9,11 @@ export default function BottomNav() {
       <div
         className="w-full max-w-[480px] mb-3 rounded-2xl overflow-hidden"
         style={{
-          background: 'rgba(13,13,13,0.92)',
+          background: C.navBg,
           backdropFilter: 'blur(24px)',
           WebkitBackdropFilter: 'blur(24px)',
-          boxShadow: '0 -10px 40px rgba(0,0,0,0.6)',
+          boxShadow: `0 -10px 40px rgba(0,0,0,0.25)`,
+          border: `1px solid ${C.separator}`,
         }}
       >
         <div className="flex items-center justify-around px-2 py-2">
@@ -35,7 +36,7 @@ export default function BottomNav() {
                   <div style={{
                     padding: '6px',
                     borderRadius: '10px',
-                    background: isActive ? `rgba(233,195,73,0.12)` : 'transparent',
+                    background: isActive ? `rgba(${C.primaryRgb},0.12)` : 'transparent',
                     transition: 'background 0.2s',
                   }}>
                     <Icon size={18} strokeWidth={isActive ? 2.5 : 1.5} />

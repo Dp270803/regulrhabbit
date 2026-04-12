@@ -221,7 +221,7 @@ export default function Dashboard() {
                 <div style={{
                   height: '100%', background: C.primary, borderRadius: '2px',
                   width: `${xpPct}%`, transition: 'width 0.7s ease',
-                  boxShadow: `0 0 8px rgba(233,195,73,0.4)`,
+                  boxShadow: `0 0 8px rgba(${C.primaryRgb},0.4)`,
                 }} />
               </div>
               <span className="font-headline" style={{ fontWeight: 700, color: C.primary, whiteSpace: 'nowrap', position: 'relative', fontSize: '0.9rem' }}>

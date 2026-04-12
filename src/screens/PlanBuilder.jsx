@@ -5,7 +5,7 @@ import { generatePlan } from '../utils/planGenerator';
 import { getData, updateData } from '../utils/storage';
 import { trackOnboardingStarted, trackOnboardingStep, trackPlanCreated } from '../utils/analytics';
 import chatbotFlow from '../data/chatbot-flow.json';
-import { useThemeColors } from '../hooks/useTheme';
+import { useThemeColors, useTheme } from '../hooks/useTheme';
 
 const STEP_ORDER = ['welcome', 'experience', 'days', 'schedule', 'equipment'];
 
@@ -34,6 +34,7 @@ const PLAN_TYPE_LABELS = { 2: 'Full Body A/B', 3: 'Push / Pull / Legs', 4: 'Uppe
 
 export default function PlanBuilder() {
   const C = useThemeColors();
+  const { isDark } = useTheme();
   const navigate = useNavigate();
   const scrollRef = useRef(null);
   const [currentStep, setCurrentStep] = useState(chatbotFlow.initial_step);
@@ -167,7 +168,7 @@ export default function PlanBuilder() {
               ))}
             </div>
             {/* Info box */}
-            <div style={{ marginTop: '1.5rem', padding: '1rem', background: C.lowest, borderRadius: '10px', borderLeft: `2px solid rgba(233,195,73,0.3)`, display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+            <div style={{ marginTop: '1.5rem', padding: '1rem', background: C.lowest, borderRadius: '10px', borderLeft: `2px solid rgba(${C.primaryRgb},0.3)`, display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
               <span style={{ color: C.primary, flexShrink: 0, marginTop: '1px' }}>ⓘ</span>
               <p style={{ fontSize: '0.8rem', color: C.faint, lineHeight: 1.6 }}>Your plan has been optimized based on your inputs. You can adjust frequency at any time from settings.</p>
             </div>
@@ -228,7 +229,7 @@ export default function PlanBuilder() {
                       opacity: isDisabled ? 0.3 : 1,
                       display: 'flex', alignItems: 'center', justifyContent: 'center',
                       transition: 'all 0.12s',
-                      boxShadow: isSelected ? `0 0 0 4px rgba(233,195,73,0.15)` : 'none',
+                      boxShadow: isSelected ? `0 0 0 4px rgba(${C.primaryRgb},0.2)` : 'none',
                     }}
                   >
                     {DAY_LETTERS[opt.value] || opt.label[0]}
@@ -249,8 +250,8 @@ export default function PlanBuilder() {
                 marginTop: '2rem', padding: '0.875rem 2.5rem', borderRadius: '100px',
                 fontSize: '0.95rem', fontWeight: 700, fontFamily: 'Manrope, sans-serif',
                 cursor: multiSelect.length === limit ? 'pointer' : 'not-allowed',
-                background: multiSelect.length === limit ? C.text : 'rgba(255,255,255,0.08)',
-                color: multiSelect.length === limit ? C.bg : 'rgba(255,255,255,0.28)',
+                background: multiSelect.length === limit ? C.text : C.separator,
+                color: multiSelect.length === limit ? C.bg : C.faint,
                 border: 'none', transition: 'opacity 0.2s',
                 opacity: multiSelect.length === limit ? 1 : 0.6,
               }}
@@ -274,13 +275,13 @@ export default function PlanBuilder() {
             onClick={() => handleOptionSelect(opt)}
             style={{
               padding: '10px 22px', borderRadius: '8px',
-              background: C.high, border: `1px solid rgba(255,255,255,0.1)`,
+              background: C.high, border: `1px solid ${C.border}`,
               color: C.text, fontFamily: 'Manrope, sans-serif',
               fontWeight: 700, fontSize: '1rem', cursor: 'pointer',
               transition: 'all 0.12s',
             }}
             onMouseEnter={e => { e.currentTarget.style.background = C.primary; e.currentTarget.style.color = C.onPrimary; e.currentTarget.style.borderColor = C.primary; }}
-            onMouseLeave={e => { e.currentTarget.style.background = C.high; e.currentTarget.style.color = C.text; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)'; }}
+            onMouseLeave={e => { e.currentTarget.style.background = C.high; e.currentTarget.style.color = C.text; e.currentTarget.style.borderColor = C.border; }}
           >
             {opt.label}
           </button>
@@ -296,7 +297,7 @@ export default function PlanBuilder() {
       {/* ── Fixed header ── */}
       <header style={{
         position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50,
-        background: 'rgba(19,19,19,0.92)', backdropFilter: 'blur(20px)',
+        background: C.navBg, backdropFilter: 'blur(20px)',
         WebkitBackdropFilter: 'blur(20px)',
       }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '1rem 1.25rem' }}>
@@ -317,7 +318,7 @@ export default function PlanBuilder() {
                 flex: 1, height: '3px', borderRadius: '2px',
                 background: isDone ? C.green : isActive ? C.primary : C.highest,
                 transition: 'background 0.3s',
-                boxShadow: isActive ? `0 0 6px rgba(233,195,73,0.5)` : 'none',
+                boxShadow: isActive ? `0 0 6px rgba(${C.primaryRgb},0.5)` : 'none',
               }} />
             );
           })}
@@ -335,7 +336,7 @@ export default function PlanBuilder() {
               borderRadius: '50%',
               background: isDone ? C.green : isActive ? C.primary : C.highest,
               transition: 'all 0.3s',
-              boxShadow: isActive ? `0 0 8px rgba(233,195,73,0.5)` : 'none',
+              boxShadow: isActive ? `0 0 8px rgba(${C.primaryRgb},0.5)` : 'none',
             }} />
           );
         })}

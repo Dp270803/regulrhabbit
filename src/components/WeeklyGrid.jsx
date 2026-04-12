@@ -1,5 +1,5 @@
 import { getWeekDates, getToday } from '../utils/dateUtils';
-import { useThemeColors } from '../hooks/useTheme';
+import { useThemeColors, useTheme } from '../hooks/useTheme';
 
 const DAY_LABELS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 const DAY_KEYS = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
@@ -12,6 +12,7 @@ function abbrev(title) {
 
 export default function WeeklyGrid({ plan, checkIns, label }) {
   const C = useThemeColors();
+  const { isDark } = useTheme();
   const today = getToday();
   const weekDates = getWeekDates(today);
   const scheduledDays = plan?.scheduled_days || [];
@@ -53,9 +54,9 @@ export default function WeeklyGrid({ plan, checkIns, label }) {
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
           {completedCount > 0 && <span style={{ fontSize: '0.68rem', color: C.green }}>{completedCount} done</span>}
           {missedCount > 0 && <span style={{ fontSize: '0.68rem', color: `rgba(255,180,171,0.7)` }}>{missedCount} missed</span>}
-          {remainingCount > 0 && <span style={{ fontSize: '0.68rem', color: `rgba(233,195,73,0.7)` }}>{remainingCount} left</span>}
+          {remainingCount > 0 && <span style={{ fontSize: '0.68rem', color: C.primary }}>{remainingCount} left</span>}
           {completedCount === 0 && missedCount === 0 && remainingCount === 0 && (
-            <span style={{ fontSize: '0.68rem', color: 'rgba(255,255,255,0.2)' }}>0/{scheduledCount}</span>
+            <span style={{ fontSize: '0.68rem', color: C.faint }}>0/{scheduledCount}</span>
           )}
         </div>
       </div>
@@ -91,10 +92,10 @@ export default function WeeklyGrid({ plan, checkIns, label }) {
             cellStyle = {
               background: C.container,
               border: `2px solid ${C.primary}`,
-              boxShadow: `0 0 16px rgba(233,195,73,0.15)`,
+              boxShadow: `0 0 16px rgba(${C.primaryRgb},0.15)`,
             };
             numColor = C.primary;
-            labelColor = `rgba(233,195,73,0.8)`;
+            labelColor = C.primary;
           } else if (isMissed) {
             cellStyle = {
               background: `rgba(255,180,171,0.04)`,
@@ -104,18 +105,18 @@ export default function WeeklyGrid({ plan, checkIns, label }) {
             labelColor = `rgba(255,180,171,0.3)`;
           } else if (isScheduled && isFuture) {
             cellStyle = {
-              background: `rgba(233,195,73,0.03)`,
-              border: `1px solid rgba(233,195,73,0.2)`,
+              background: `rgba(${C.primaryRgb},0.04)`,
+              border: `1px solid rgba(${C.primaryRgb},0.2)`,
             };
-            numColor = `rgba(233,195,73,0.55)`;
-            labelColor = `rgba(233,195,73,0.38)`;
+            numColor = C.primary;
+            labelColor = `rgba(${C.primaryRgb},0.55)`;
           } else {
             cellStyle = {
               background: 'transparent',
-              border: `1px solid rgba(255,255,255,0.05)`,
+              border: `1px solid ${C.separator}`,
             };
-            numColor = 'rgba(255,255,255,0.16)';
-            labelColor = 'rgba(255,255,255,0.12)';
+            numColor = C.faint;
+            labelColor = C.faint;
           }
 
           const iconName = isCompleted ? 'check_circle'
@@ -163,15 +164,15 @@ export default function WeeklyGrid({ plan, checkIns, label }) {
       </div>
 
       {/* Legend */}
-      <div style={{ display: 'flex', gap: '14px', marginTop: '12px', paddingTop: '10px', borderTop: `1px solid rgba(255,255,255,0.04)`, flexWrap: 'wrap' }}>
+      <div style={{ display: 'flex', gap: '14px', marginTop: '12px', paddingTop: '10px', borderTop: `1px solid ${C.separator}`, flexWrap: 'wrap' }}>
         {[
           { color: C.green, label: 'Done' },
-          { color: `rgba(233,195,73,0.7)`, label: 'Planned' },
+          { color: C.primary, label: 'Planned' },
           { color: `rgba(255,180,171,0.5)`, label: 'Missed' },
         ].map(({ color, label }) => (
           <div key={label} style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
             <div style={{ width: '6px', height: '6px', borderRadius: '2px', background: color, flexShrink: 0 }} />
-            <span style={{ fontSize: '0.58rem', color: 'rgba(255,255,255,0.2)' }}>{label}</span>
+            <span style={{ fontSize: '0.58rem', color: C.faint }}>{label}</span>
           </div>
         ))}
       </div>

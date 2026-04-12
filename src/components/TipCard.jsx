@@ -1,16 +1,18 @@
 import { Lightbulb, ArrowRight } from 'lucide-react';
+import { useThemeColors } from '../hooks/useTheme';
 
 export default function TipCard({ tip, onSeeMore }) {
+  const C = useThemeColors();
   if (!tip) return null;
 
   return (
     <div
       className="animate-fade-in"
       style={{
-        background: 'linear-gradient(145deg, rgba(232,193,98,0.06) 0%, #121212 55%)',
-        border: '1px solid rgba(232,193,98,0.14)',
+        background: `linear-gradient(145deg, rgba(${C.primaryRgb},0.06) 0%, ${C.lowest} 55%)`,
+        border: `1px solid ${C.primaryBorder}`,
         borderRadius: '20px',
-        boxShadow: '0 4px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04)',
+        boxShadow: `0 4px 24px rgba(0,0,0,0.15)`,
         padding: '24px',
       }}
     >
@@ -19,15 +21,15 @@ export default function TipCard({ tip, onSeeMore }) {
         <div
           className="w-6 h-6 rounded-lg flex items-center justify-center shrink-0"
           style={{
-            background: 'rgba(232,193,98,0.12)',
-            border: '1px solid rgba(232,193,98,0.2)',
+            background: `rgba(${C.primaryRgb},0.1)`,
+            border: `1px solid ${C.primaryBorder}`,
           }}
         >
-          <Lightbulb size={11} strokeWidth={2} style={{ color: 'var(--color-gold)' }} />
+          <Lightbulb size={11} strokeWidth={2} style={{ color: C.primary }} />
         </div>
         <p
           className="text-[9px] font-semibold tracking-[0.2em] uppercase"
-          style={{ color: 'var(--color-gold)' }}
+          style={{ color: C.primary }}
         >
           {tip.category || 'Expert Tip'}
         </p>
@@ -46,7 +48,7 @@ export default function TipCard({ tip, onSeeMore }) {
         <button
           onClick={onSeeMore}
           className="mt-5 flex items-center gap-1.5 text-xs font-medium transition-all duration-200 cursor-pointer group"
-          style={{ color: 'var(--color-gold)' }}
+          style={{ color: C.primary }}
           onMouseEnter={e => {
             e.currentTarget.style.gap = '10px';
           }}

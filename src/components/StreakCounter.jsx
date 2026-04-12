@@ -1,6 +1,8 @@
 import { Trophy } from 'lucide-react';
+import { useThemeColors } from '../hooks/useTheme';
 
 export default function StreakCounter({ current, best, consecutiveMisses }) {
+  const C = useThemeColors();
   const twoDayStatus =
     consecutiveMisses === 0 ? 'safe' : consecutiveMisses === 1 ? 'warning' : 'danger';
 
@@ -28,10 +30,10 @@ export default function StreakCounter({ current, best, consecutiveMisses }) {
     <div
       className="animate-fade-in"
       style={{
-        background: 'linear-gradient(145deg, #1c1c1c 0%, #121212 100%)',
-        border: '1px solid rgba(255,255,255,0.07)',
+        background: `linear-gradient(145deg, ${C.low} 0%, ${C.lowest} 100%)`,
+        border: `1px solid ${C.separator}`,
         borderRadius: '20px',
-        boxShadow: '0 4px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04)',
+        boxShadow: `0 4px 24px rgba(0,0,0,0.2)`,
         padding: '28px',
       }}
     >

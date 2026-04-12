@@ -4,7 +4,7 @@ import { getData } from '../utils/storage';
 import { formatDate } from '../utils/dateUtils';
 import { trackPageView } from '../utils/analytics';
 import { fetchPlanPage } from '../utils/sanityClient';
-import { useThemeColors } from '../hooks/useTheme';
+import { useThemeColors, useTheme } from '../hooks/useTheme';
 
 const W = { maxWidth: '1200px', margin: '0 auto', padding: '0 clamp(16px, 4vw, 64px)' };
 
@@ -44,6 +44,7 @@ function parseExercises(detail) {
 
 export default function PlanView() {
   const C = useThemeColors();
+  const { isDark } = useTheme();
   const navigate = useNavigate();
   const [data, setData] = useState(null);
   const [selectedPlan, setSelectedPlan] = useState(null);
@@ -98,14 +99,14 @@ export default function PlanView() {
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
             <span style={{
               fontSize: '0.65rem', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase',
-              color: C.primary, background: `rgba(233,195,73,0.1)`,
+              color: C.primary, background: `rgba(${C.primaryRgb},0.1)`,
               padding: '5px 12px', borderRadius: '100px',
             }}>
               {d(cms, 'phaseLabel')}
             </span>
             <span style={{
               fontSize: '0.65rem', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase',
-              color: C.faint, background: `rgba(255,255,255,0.05)`,
+              color: C.faint, background: C.separator,
               padding: '5px 12px', borderRadius: '100px',
             }}>
               {d(cms, 'durationLabel')}
@@ -142,7 +143,7 @@ export default function PlanView() {
                     border: 'none', cursor: 'pointer', color: C.text,
                     transition: 'background 0.15s',
                   }}
-                  onMouseEnter={e => { if (!isExpanded) e.currentTarget.style.background = `rgba(255,255,255,0.03)`; }}
+                  onMouseEnter={e => { if (!isExpanded) e.currentTarget.style.background = C.separator; }}
                   onMouseLeave={e => { if (!isExpanded) e.currentTarget.style.background = 'transparent'; }}
                 >
                   <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
@@ -150,7 +151,7 @@ export default function PlanView() {
                       className="font-headline"
                       style={{
                         fontSize: 'clamp(2rem, 4vw, 3.5rem)', fontWeight: 800,
-                        color: isExpanded ? `rgba(233,195,73,0.25)` : `rgba(255,255,255,0.08)`,
+                        color: isExpanded ? `rgba(${C.primaryRgb},0.3)` : C.border,
                         lineHeight: 1, transition: 'color 0.2s', userSelect: 'none',
                       }}
                     >
@@ -189,7 +190,7 @@ export default function PlanView() {
                       const cooldown = session.blocks?.find(b => b.type === 'cooldown');
 
                       return (
-                        <div key={session.id} style={{ borderTop: `1px solid rgba(255,255,255,0.04)` }}>
+                        <div key={session.id} style={{ borderTop: `1px solid ${C.separator}` }}>
                           {/* Session row */}
                           <div
                             className="planview-session-row"
@@ -246,16 +247,16 @@ export default function PlanView() {
                                 onClick={() => setExpandedSession(isSessionExpanded ? null : session.id)}
                                 style={{
                                   padding: '6px 14px', borderRadius: '6px',
-                                  border: `1px solid ${isSessionExpanded ? `rgba(233,195,73,0.35)` : `rgba(255,255,255,0.14)`}`,
-                                  background: isSessionExpanded ? `rgba(233,195,73,0.08)` : 'transparent',
+                                  border: `1px solid ${isSessionExpanded ? `rgba(${C.primaryRgb},0.35)` : C.border}`,
+                                  background: isSessionExpanded ? `rgba(${C.primaryRgb},0.08)` : 'transparent',
                                   color: isSessionExpanded ? C.primary : C.faint,
                                   fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.1em',
                                   textTransform: 'uppercase', cursor: 'pointer', whiteSpace: 'nowrap',
                                   transition: 'all 0.15s',
                                 }}
-                                onMouseEnter={e => { e.currentTarget.style.borderColor = `rgba(233,195,73,0.35)`; e.currentTarget.style.color = C.primary; }}
+                                onMouseEnter={e => { e.currentTarget.style.borderColor = `rgba(${C.primaryRgb},0.35)`; e.currentTarget.style.color = C.primary; }}
                                 onMouseLeave={e => {
-                                  e.currentTarget.style.borderColor = isSessionExpanded ? `rgba(233,195,73,0.35)` : `rgba(255,255,255,0.14)`;
+                                  e.currentTarget.style.borderColor = isSessionExpanded ? `rgba(${C.primaryRgb},0.35)` : C.border;
                                   e.currentTarget.style.color = isSessionExpanded ? C.primary : C.faint;
                                 }}
                               >
@@ -268,13 +269,13 @@ export default function PlanView() {
                           {isSessionExpanded && (
                             <div style={{ padding: '0 28px 24px' }}>
                               {warmup && (
-                                <div style={{ marginBottom: '16px', padding: '12px 0', borderTop: `1px solid rgba(255,255,255,0.05)` }}>
+                                <div style={{ marginBottom: '16px', padding: '12px 0', borderTop: `1px solid ${C.separator}` }}>
                                   <p style={{ fontSize: '0.58rem', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: C.faint, marginBottom: '4px' }}>Warm Up</p>
                                   <p style={{ fontSize: '0.83rem', color: C.muted, lineHeight: 1.6 }}>{warmup.detail}</p>
                                 </div>
                               )}
                               {exercises.length > 0 && (
-                                <div style={{ borderTop: `1px solid rgba(255,255,255,0.05)`, paddingTop: '12px' }}>
+                                <div style={{ borderTop: `1px solid ${C.separator}`, paddingTop: '12px' }}>
                                   <p style={{ fontSize: '0.58rem', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: C.faint, marginBottom: '12px' }}>Exercises</p>
                                   <div>
                                     {exercises.map((ex, i) => (
@@ -283,7 +284,7 @@ export default function PlanView() {
                                         style={{
                                           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
                                           padding: '10px 0',
-                                          borderBottom: i < exercises.length - 1 ? `1px solid rgba(255,255,255,0.04)` : 'none',
+                                          borderBottom: i < exercises.length - 1 ? `1px solid ${C.separator}` : 'none',
                                         }}
                                       >
                                         <p style={{ fontSize: '0.9rem', color: C.text }}>{ex.name}</p>
@@ -294,7 +295,7 @@ export default function PlanView() {
                                 </div>
                               )}
                               {cooldown && (
-                                <div style={{ marginTop: '16px', paddingTop: '12px', borderTop: `1px solid rgba(255,255,255,0.05)` }}>
+                                <div style={{ marginTop: '16px', paddingTop: '12px', borderTop: `1px solid ${C.separator}` }}>
                                   <p style={{ fontSize: '0.58rem', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: C.faint, marginBottom: '4px' }}>Cool Down</p>
                                   <p style={{ fontSize: '0.83rem', color: C.muted, lineHeight: 1.6 }}>{cooldown.detail}</p>
                                 </div>
@@ -378,12 +379,12 @@ export default function PlanView() {
             onClick={() => navigate('/onboarding')}
             style={{
               width: '100%', padding: '14px', borderRadius: '12px',
-              border: `1px solid rgba(255,255,255,0.1)`,
+              border: `1px solid ${C.border}`,
               background: 'transparent', color: C.faint,
               fontSize: '0.9rem', cursor: 'pointer', transition: 'all 0.2s',
             }}
-            onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.25)'; e.currentTarget.style.color = C.text; }}
-            onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)'; e.currentTarget.style.color = C.faint; }}
+            onMouseEnter={e => { e.currentTarget.style.borderColor = C.muted; e.currentTarget.style.color = C.text; }}
+            onMouseLeave={e => { e.currentTarget.style.borderColor = C.border; e.currentTarget.style.color = C.faint; }}
           >
             Start New Plan
           </button>

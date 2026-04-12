@@ -6,6 +6,11 @@ export const DARK_COLORS = {
   primary: '#e9c349', onPrimary: '#3c2f00', green: '#2ff801',
   text: '#e5e2e1', muted: '#c4c7c7', faint: '#7b7c7c',
   red: '#ffb4ab', amber: '#f59e0b',
+  separator: 'rgba(255,255,255,0.05)',
+  border: 'rgba(255,255,255,0.12)',
+  navBg: 'rgba(19,19,19,0.94)',
+  primaryBorder: 'rgba(233,195,73,0.22)',
+  primaryRgb: '233,195,73',
 };
 
 export const LIGHT_COLORS = {
@@ -14,6 +19,11 @@ export const LIGHT_COLORS = {
   primary: '#005cab', onPrimary: '#ffffff', green: '#166534',
   text: '#1b1c1c', muted: '#5f5e5e', faint: '#727783',
   red: '#b91c1c', amber: '#b45309',
+  separator: 'rgba(0,0,0,0.06)',
+  border: 'rgba(0,0,0,0.1)',
+  navBg: 'rgba(251,249,248,0.94)',
+  primaryBorder: 'rgba(0,92,171,0.18)',
+  primaryRgb: '0,92,171',
 };
 
 export function useTheme() {

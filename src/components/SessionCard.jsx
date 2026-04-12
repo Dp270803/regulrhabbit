@@ -59,7 +59,7 @@ function CollapsibleBlock({ label, duration, text }) {
   const C = useThemeColors();
   const [open, setOpen] = useState(false);
   return (
-    <div style={{ borderTop: `1px solid rgba(255,255,255,0.05)` }}>
+    <div style={{ borderTop: `1px solid ${C.separator}` }}>
       <button
         onClick={() => setOpen(v => !v)}
         style={{ width: '100%', padding: '16px 28px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: 'none', border: 'none', cursor: 'pointer', color: C.text }}
@@ -150,7 +150,7 @@ export default function SessionCard({ session, onComplete, isCompleted, isCooldo
           />
           <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(19,19,19,0.15) 0%, rgba(28,27,27,0.97) 100%)' }} />
           <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '20px 28px 24px' }}>
-            <p style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', color: isNextSession ? C.primary : 'rgba(255,255,255,0.45)', marginBottom: '6px' }}>
+            <p style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', color: isNextSession ? C.primary : C.muted, marginBottom: '6px' }}>
               {nextLabel || cms?.todaySessionLabel || "Today's Session"}
             </p>
             <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: '12px' }}>
@@ -163,7 +163,7 @@ export default function SessionCard({ session, onComplete, isCompleted, isCooldo
                 </div>
               )}
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'rgba(255,255,255,0.35)', marginTop: '8px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: C.faint, marginTop: '8px' }}>
               <Clock size={12} strokeWidth={1.8} />
               <span style={{ fontFamily: 'Inter, monospace', fontSize: '0.82rem' }}>{session.duration_minutes} min</span>
             </div>
@@ -197,7 +197,7 @@ export default function SessionCard({ session, onComplete, isCompleted, isCooldo
 
       {/* ── Exercise Table ── */}
       {exercises.length > 0 && (
-        <div style={{ borderTop: `1px solid rgba(255,255,255,0.05)` }}>
+        <div style={{ borderTop: `1px solid ${C.separator}` }}>
           {/* Section label + progress */}
           <div style={{ padding: '18px clamp(16px,5vw,28px) 0', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <p style={{ fontSize: '0.68rem', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: C.muted }}>
@@ -224,7 +224,7 @@ export default function SessionCard({ session, onComplete, isCompleted, isCooldo
                   style={{
                     display: 'flex', alignItems: 'flex-start', gap: '14px',
                     padding: '16px 0',
-                    borderBottom: i < exercises.length - 1 ? `1px solid rgba(255,255,255,0.04)` : 'none',
+                    borderBottom: i < exercises.length - 1 ? `1px solid ${C.separator}` : 'none',
                     cursor: isCompleted ? 'default' : 'pointer',
                     transition: 'opacity 0.15s', opacity: isDone ? 0.42 : 1,
                   }}
@@ -234,7 +234,7 @@ export default function SessionCard({ session, onComplete, isCompleted, isCooldo
                   {/* Checkbox */}
                   <div style={{
                     width: '20px', height: '20px', borderRadius: '6px', flexShrink: 0, marginTop: '3px',
-                    border: isDone ? 'none' : `1.5px solid rgba(255,255,255,0.22)`,
+                    border: isDone ? 'none' : `1.5px solid ${C.border}`,
                     background: isDone ? C.green : 'transparent',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                     transition: 'all 0.15s',
@@ -256,9 +256,9 @@ export default function SessionCard({ session, onComplete, isCompleted, isCooldo
                         target="_blank" rel="noopener noreferrer"
                         onClick={e => e.stopPropagation()}
                         title={`How to: ${ex.name}`}
-                        style={{ color: 'rgba(255,255,255,0.22)', display: 'flex', alignItems: 'center', flexShrink: 0, textDecoration: 'none', transition: 'color 0.15s' }}
+                        style={{ color: C.faint, display: 'flex', alignItems: 'center', flexShrink: 0, textDecoration: 'none', transition: 'color 0.15s' }}
                         onMouseEnter={e => e.currentTarget.style.color = '#FF0000'}
-                        onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.22)'}
+                        onMouseLeave={e => e.currentTarget.style.color = C.faint}
                       >
                         <YtIcon size={13} />
                       </a>
@@ -276,9 +276,9 @@ export default function SessionCard({ session, onComplete, isCompleted, isCooldo
                           href={`https://www.youtube.com/results?search_query=${encodeURIComponent(alt + ' exercise')}`}
                           target="_blank" rel="noopener noreferrer"
                           onClick={e => e.stopPropagation()}
-                          style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', fontSize: '0.58rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(233,195,73,0.45)', textDecoration: 'none', transition: 'color 0.15s' }}
+                          style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', fontSize: '0.58rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: C.faint, textDecoration: 'none', transition: 'color 0.15s' }}
                           onMouseEnter={e => e.currentTarget.style.color = C.primary}
-                          onMouseLeave={e => e.currentTarget.style.color = 'rgba(233,195,73,0.45)'}
+                          onMouseLeave={e => e.currentTarget.style.color = C.faint}
                         >
                           ⌂ Home Alt
                         </a>
@@ -306,13 +306,13 @@ export default function SessionCard({ session, onComplete, isCompleted, isCooldo
           {/* Progress bar */}
           {doneCount > 0 && (
             <div style={{ padding: `0 clamp(16px,5vw,28px) 18px` }}>
-              <div style={{ height: '2px', background: 'rgba(255,255,255,0.05)', borderRadius: '2px', overflow: 'hidden' }}>
+              <div style={{ height: '2px', background: C.separator, borderRadius: '2px', overflow: 'hidden' }}>
                 <div style={{
                   height: '100%', borderRadius: '2px',
                   background: allDone ? C.green : C.primary,
                   width: `${(doneCount / exercises.length) * 100}%`,
                   transition: 'width 0.3s ease, background 0.3s ease',
-                  boxShadow: allDone ? `0 0 8px rgba(47,248,1,0.5)` : `0 0 8px rgba(233,195,73,0.4)`,
+                  boxShadow: allDone ? `0 0 8px rgba(47,248,1,0.5)` : `0 0 8px rgba(${C.primaryRgb},0.4)`,
                 }} />
               </div>
             </div>
@@ -325,10 +325,10 @@ export default function SessionCard({ session, onComplete, isCompleted, isCooldo
 
       {/* ── Complete button ── */}
       {!isCompleted && !isNextSession && (
-        <div style={{ padding: '20px 28px 28px', borderTop: `1px solid rgba(255,255,255,0.05)` }}>
+        <div style={{ padding: '20px 28px 28px', borderTop: `1px solid ${C.separator}` }}>
           {isCooldown ? (
-            <div style={{ padding: '16px', borderRadius: '10px', background: 'rgba(255,255,255,0.02)', textAlign: 'center' }}>
-              <p style={{ fontSize: '0.9rem', color: 'rgba(255,255,255,0.35)', letterSpacing: '0.02em' }}>
+            <div style={{ padding: '16px', borderRadius: '10px', background: C.separator, textAlign: 'center' }}>
+              <p style={{ fontSize: '0.9rem', color: C.faint, letterSpacing: '0.02em' }}>
                 {cms?.sessionDoneLabel || 'Session logged — come back tomorrow'}
               </p>
             </div>

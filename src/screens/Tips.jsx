@@ -222,7 +222,7 @@ export default function Tips() {
             {/* Dark gradient scrim — bottom-heavy so text stays legible */}
             <div style={{
               position: 'absolute', inset: 0,
-              background: `linear-gradient(to top, ${C.bg} 0%, rgba(19,19,19,0.45) 50%, transparent 100%)`,
+              background: `linear-gradient(to top, ${C.bg} 0%, ${C.bg}70 50%, transparent 100%)`,
             }} />
 
             {/* Content */}
@@ -254,11 +254,11 @@ export default function Tips() {
                   fontFamily: 'Manrope, sans-serif', fontWeight: 700,
                   fontSize: '0.78rem', letterSpacing: '0.1em',
                   textTransform: 'uppercase', cursor: 'pointer',
-                  boxShadow: '0 8px 32px rgba(233,195,73,0.25)',
+                  boxShadow: `0 8px 32px rgba(${C.primaryRgb},0.25)`,
                   transition: 'transform 0.15s, box-shadow 0.15s',
                 }}
-                onMouseEnter={e => { e.currentTarget.style.boxShadow = '0 8px 40px rgba(233,195,73,0.4)'; }}
-                onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.boxShadow = '0 8px 32px rgba(233,195,73,0.25)'; }}
+                onMouseEnter={e => { e.currentTarget.style.boxShadow = `0 8px 40px rgba(${C.primaryRgb},0.4)`; }}
+                onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.boxShadow = `0 8px 32px rgba(${C.primaryRgb},0.25)`; }}
                 onMouseDown={e => { e.currentTarget.style.transform = 'scale(0.95)'; }}
                 onMouseUp={e => { e.currentTarget.style.transform = 'scale(1)'; }}
               >

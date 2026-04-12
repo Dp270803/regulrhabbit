@@ -72,7 +72,7 @@ function WelcomeBack({ onContinue }) {
         position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100,
         padding: '0 clamp(1.5rem,5vw,3rem)', height: '64px',
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        background: scrolled ? 'rgba(19,19,19,0.9)' : 'transparent',
+        background: scrolled ? C.navBg : 'transparent',
         backdropFilter: scrolled ? 'blur(20px)' : 'none',
         transition: 'background 0.3s',
       }}>
@@ -82,7 +82,7 @@ function WelcomeBack({ onContinue }) {
         </button>
       </nav>
       <section style={{ minHeight: '100dvh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '80px 5vw 60px', position: 'relative' }}>
-        <div style={{ position: 'absolute', top: '30%', left: '50%', transform: 'translate(-50%,-50%)', width: '60vw', height: '35vw', borderRadius: '50%', background: 'radial-gradient(circle, rgba(233,195,73,0.08) 0%, transparent 65%)', filter: 'blur(80px)', pointerEvents: 'none' }} />
+        <div style={{ position: 'absolute', top: '30%', left: '50%', transform: 'translate(-50%,-50%)', width: '60vw', height: '35vw', borderRadius: '50%', background: `radial-gradient(circle, rgba(${C.primaryRgb},0.08) 0%, transparent 65%)`, filter: 'blur(80px)', pointerEvents: 'none' }} />
         <p className="font-headline" style={{ fontSize: '0.72rem', letterSpacing: '0.18em', textTransform: 'uppercase', color: C.faint, marginBottom: '1.5rem' }}>
           {streak > 0 ? `${streak}-Day Streak` : 'Welcome back'}
         </p>
@@ -133,7 +133,7 @@ export default function Landing() {
         position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100,
         padding: '0 clamp(1.5rem,5vw,3rem)', height: '64px',
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        background: scrolled ? 'rgba(19,19,19,0.88)' : 'rgba(19,19,19,0.6)',
+        background: C.navBg,
         backdropFilter: 'blur(20px)',
         transition: 'background 0.3s',
       }}>
@@ -213,9 +213,9 @@ export default function Landing() {
                 <img src={scienceImgUrl} alt="Science visual" style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.85 }} />
               ) : (
                 <>
-                  <div style={{ position: 'absolute', top: '20%', left: '20%', width: '60%', height: '60%', borderRadius: '50%', background: 'radial-gradient(circle, rgba(233,195,73,0.06) 0%, transparent 70%)', filter: 'blur(20px)' }} />
+                  <div style={{ position: 'absolute', top: '20%', left: '20%', width: '60%', height: '60%', borderRadius: '50%', background: `radial-gradient(circle, rgba(${C.primaryRgb},0.06) 0%, transparent 70%)`, filter: 'blur(20px)' }} />
                   <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <div style={{ width: '65%', height: '65%', borderRadius: '50%', background: `radial-gradient(circle at 40% 35%, ${C.high} 0%, ${C.lowest} 100%)`, boxShadow: 'inset -8px -12px 24px rgba(0,0,0,0.7), inset 4px 4px 12px rgba(233,195,73,0.04)' }} />
+                    <div style={{ width: '65%', height: '65%', borderRadius: '50%', background: `radial-gradient(circle at 40% 35%, ${C.high} 0%, ${C.lowest} 100%)`, boxShadow: `inset -8px -12px 24px rgba(0,0,0,0.7), inset 4px 4px 12px rgba(${C.primaryRgb},0.04)` }} />
                   </div>
                 </>
               )}

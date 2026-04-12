@@ -37,7 +37,7 @@ function ConsistencyMatrix({ checkIns, scheduledDays }) {
     if (done)                            bg = C.green;
     else if (isToday)                    bg = C.primary;
     else if (isPast && isScheduled)      bg = 'rgba(255,180,171,0.35)';
-    else if (!isPast && isScheduled)     bg = `rgba(233,195,73,0.25)`;
+    else if (!isPast && isScheduled)     bg = `rgba(${C.primaryRgb},0.3)`;
     else                                 bg = C.highest;
 
     days.push({ dateStr, bg });
@@ -85,11 +85,11 @@ function BadgeTile({ badge, onClick }) {
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             fontSize: '28px',
             background: isEarned
-              ? isGreen ? 'rgba(47,248,1,0.12)' : 'rgba(233,195,73,0.1)'
-              : 'rgba(255,255,255,0.04)',
+              ? isGreen ? 'rgba(47,248,1,0.12)' : `rgba(${C.primaryRgb},0.1)`
+              : C.separator,
             border: isEarned
-              ? isGreen ? '1px solid rgba(47,248,1,0.28)' : '1px solid rgba(233,195,73,0.22)'
-              : '1px solid rgba(255,255,255,0.08)',
+              ? isGreen ? '1px solid rgba(47,248,1,0.28)' : `1px solid rgba(${C.primaryRgb},0.22)`
+              : `1px solid ${C.border}`,
             transition: 'transform 0.15s',
           }}
           onMouseEnter={e => { if (onClick) e.currentTarget.style.transform = 'scale(1.06)'; }}
@@ -213,7 +213,7 @@ export default function Profile() {
           {/* Decorative gradient */}
           <div style={{ position: 'absolute', top: 0, right: 0, width: '40%', height: '100%', pointerEvents: 'none', background: 'radial-gradient(ellipse at 90% 30%, rgba(20,16,8,0.9) 0%, rgba(20,16,8,0.6) 50%, transparent 80%)', zIndex: 0 }} />
           <div style={{ position: 'absolute', top: 0, right: 0, width: '38%', height: '100%', pointerEvents: 'none', zIndex: 0, overflow: 'hidden' }}>
-            <div style={{ width: '100%', height: '100%', background: 'repeating-linear-gradient(45deg, rgba(233,195,73,0.03) 0px, rgba(233,195,73,0.03) 1px, transparent 1px, transparent 12px)', opacity: 0.6 }} />
+            <div style={{ width: '100%', height: '100%', background: `repeating-linear-gradient(45deg, rgba(${C.primaryRgb},0.04) 0px, rgba(${C.primaryRgb},0.04) 1px, transparent 1px, transparent 12px)`, opacity: 0.6 }} />
           </div>
 
           <div style={{ position: 'relative', zIndex: 1 }}>
@@ -265,7 +265,7 @@ export default function Profile() {
                     </h1>
                   ) : (
                     <div>
-                      <div style={{ display: 'inline-flex', alignItems: 'center', padding: '6px 16px', borderRadius: '6px', border: `1px dashed rgba(255,255,255,0.16)`, background: 'rgba(255,255,255,0.03)', marginBottom: '8px' }}>
+                      <div style={{ display: 'inline-flex', alignItems: 'center', padding: '6px 16px', borderRadius: '6px', border: `1px dashed ${C.border}`, background: C.separator, marginBottom: '8px' }}>
                         <span style={{ fontFamily: 'Manrope, sans-serif', fontSize: 'clamp(1.8rem, 4vw, 3.2rem)', fontWeight: 700, color: C.faint }}>
                           {ghostTag}
                         </span>
@@ -276,7 +276,7 @@ export default function Profile() {
                   <button
                     onClick={() => { setNameInput(data.user.name || ''); setIsEditingName(true); }}
                     title={data.user.name ? 'Edit name' : 'Add your name'}
-                    style={{ color: C.faint, background: 'rgba(255,255,255,0.06)', border: 'none', cursor: 'pointer', padding: '7px', borderRadius: '6px', flexShrink: 0, display: 'flex', alignItems: 'center' }}
+                    style={{ color: C.faint, background: C.separator, border: 'none', cursor: 'pointer', padding: '7px', borderRadius: '6px', flexShrink: 0, display: 'flex', alignItems: 'center' }}
                   >
                     <Pencil size={14} strokeWidth={2} />
                   </button>
@@ -294,7 +294,7 @@ export default function Profile() {
                   {ACTIVITY_LABELS[activePlan?.activity] || activePlan?.activity || '—'}
                 </p>
               </div>
-              <div className="profile-hero-divider" style={{ width: '1px', height: '38px', background: 'rgba(255,255,255,0.07)', flexShrink: 0 }} />
+              <div className="profile-hero-divider" style={{ width: '1px', height: '38px', background: C.separator, flexShrink: 0 }} />
               <div>
                 <p style={{ fontSize: '0.58rem', fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase', color: C.faint, margin: '0 0 5px' }}>
                   {cms?.currentLevelLabel || 'Current Level'}
@@ -303,7 +303,7 @@ export default function Profile() {
                   Level {level.level}: {level.title}
                 </p>
               </div>
-              <div className="profile-hero-divider" style={{ width: '1px', height: '38px', background: 'rgba(255,255,255,0.07)', flexShrink: 0 }} />
+              <div className="profile-hero-divider" style={{ width: '1px', height: '38px', background: C.separator, flexShrink: 0 }} />
               <div>
                 <p style={{ fontSize: '0.58rem', fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase', color: C.faint, margin: '0 0 5px' }}>
                   {cms?.membershipLabel || 'Membership'}
@@ -344,7 +344,7 @@ export default function Profile() {
             <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
               {[
                 { bg: C.highest,                  label: 'Rest' },
-                { bg: 'rgba(233,195,73,0.25)',     label: 'Planned' },
+                { bg: `rgba(${C.primaryRgb},0.3)`,  label: 'Planned' },
                 { bg: C.primary,                  label: 'Today' },
                 { bg: C.green,                    label: 'Done' },
               ].map(({ bg, label }) => (
@@ -449,12 +449,12 @@ export default function Profile() {
                     value={resetText}
                     onChange={e => setResetText(e.target.value)}
                     placeholder="Type DELETE"
-                    style={{ width: '100%', padding: '10px 12px', background: 'transparent', border: '1px solid rgba(255,255,255,0.12)', borderRadius: '4px', color: C.text, fontSize: '0.85rem', outline: 'none', marginBottom: '10px', boxSizing: 'border-box' }}
+                    style={{ width: '100%', padding: '10px 12px', background: 'transparent', border: `1px solid ${C.border}`, borderRadius: '4px', color: C.text, fontSize: '0.85rem', outline: 'none', marginBottom: '10px', boxSizing: 'border-box' }}
                   />
                   <div style={{ display: 'flex', gap: '8px' }}>
                     <button
                       onClick={() => { setShowResetConfirm(false); setResetText(''); }}
-                      style={{ flex: 1, padding: '10px', background: 'transparent', border: '1px solid rgba(255,255,255,0.12)', borderRadius: '4px', color: C.muted, fontSize: '0.75rem', fontWeight: 700, cursor: 'pointer' }}
+                      style={{ flex: 1, padding: '10px', background: 'transparent', border: `1px solid ${C.border}`, borderRadius: '4px', color: C.muted, fontSize: '0.75rem', fontWeight: 700, cursor: 'pointer' }}
                     >
                       Cancel
                     </button>
