@@ -147,7 +147,7 @@ export default function SessionCard({ session, onComplete, isCompleted, isCooldo
     }}>
       {/* ── Hero Image Header ── */}
       {heroImgUrl ? (
-        <div style={{ position: 'relative', height: '220px', overflow: 'hidden' }}>
+        <div style={{ position: 'relative', height: 'clamp(220px, 28vw, 380px)', overflow: 'hidden' }}>
           <img
             src={heroImgUrl}
             alt={heroImg.alt || 'Training session'}

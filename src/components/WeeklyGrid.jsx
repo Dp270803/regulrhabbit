@@ -135,19 +135,19 @@ export default function WeeklyGrid({ plan, checkIns }) {
                 {DAY_LABELS[i]}
               </span>
               <div style={{
-                width: '100%', height: '44px', borderRadius: '8px',
+                width: '100%', height: 'clamp(44px, 7vw, 80px)', borderRadius: '8px',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 ...cellStyle,
               }}>
                 {iconName ? (
                   <span
                     className="material-symbols-outlined"
-                    style={{ fontSize: '20px', color: numColor, userSelect: 'none', lineHeight: 1 }}
+                    style={{ fontSize: 'clamp(20px, 3vw, 32px)', color: numColor, userSelect: 'none', lineHeight: 1 }}
                   >
                     {iconName}
                   </span>
                 ) : (
-                  <span style={{ fontFamily: 'Inter, monospace', fontSize: '0.82rem', fontWeight: 700, color: numColor, lineHeight: 1 }}>
+                  <span style={{ fontFamily: 'Inter, monospace', fontSize: 'clamp(0.82rem, 1.5vw, 1.1rem)', fontWeight: 700, color: numColor, lineHeight: 1 }}>
                     {dayNum}
                   </span>
                 )}

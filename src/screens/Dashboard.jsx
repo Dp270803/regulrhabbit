@@ -190,28 +190,30 @@ export default function Dashboard() {
   const sixHoursAgo = new Date(Date.now() - 6 * 60 * 60 * 1000).toISOString();
   const recentCompletedToday = data.check_ins.some(c => c.date === today && c.completed && c.completed_at && c.completed_at > sixHoursAgo);
 
-  const W = { maxWidth: '860px', margin: '0 auto', padding: '0 clamp(16px, 4vw, 48px)' };
+  const W = { maxWidth: '1200px', margin: '0 auto', padding: '0 clamp(16px, 4vw, 64px)' };
 
   return (
-    <div className="min-h-dvh pb-32" style={{ background: C.bg, color: C.text }}>
+    <div className="min-h-dvh pb-32 md:pb-12 md:pt-14" style={{ background: C.bg, color: C.text }}>
       <ConfettiEffect trigger={showConfetti} />
       {levelUpInfo && <LevelUpModal level={levelUpInfo} onClose={() => setLevelUpInfo(null)} />}
       {newBadge && <BadgeModal badge={newBadge} onClose={() => setNewBadge(null)} />}
       {showBanner && returnMessage && <ReturnBanner message={returnMessage} state={returnStateNum} timeMessage={timeMessage} onDismiss={() => setShowBanner(false)} />}
 
-      {/* ── Level Hero Section ── */}
-      <div style={{ ...W, paddingTop: '48px', paddingBottom: '32px' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: '24px', alignItems: 'end' }}>
+      {/* ── Main content ── */}
+      <div style={{ ...W, display: 'flex', flexDirection: 'column', gap: '16px', paddingTop: 'clamp(28px, 4vw, 48px)', paddingBottom: '8px' }}>
+
+        {/* ── Level Hero Section ── */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr minmax(200px, 28%)', gap: '24px', alignItems: 'end', marginBottom: '8px' }}>
           {/* Left: Level heading */}
           <div>
             <p style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: C.faint, marginBottom: '8px' }}>
               Current Standing
             </p>
             <h1 className="font-headline" style={{ fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1, marginBottom: '20px' }}>
-              <span style={{ display: 'block', fontSize: 'clamp(1.4rem, 2.5vw, 1.9rem)', color: C.text, marginBottom: '2px' }}>
+              <span style={{ display: 'block', fontSize: 'clamp(1.2rem, 2vw, 1.7rem)', color: C.text, marginBottom: '2px' }}>
                 Level {level.level}:
               </span>
-              <span style={{ display: 'block', fontSize: 'clamp(3rem, 6vw, 5.5rem)', color: C.primary, lineHeight: 0.92 }}>
+              <span style={{ display: 'block', fontSize: 'clamp(2.8rem, 5vw, 4.8rem)', color: C.primary, lineHeight: 0.92 }}>
                 {level.title}
               </span>
             </h1>
@@ -224,7 +226,7 @@ export default function Dashboard() {
                   boxShadow: `0 0 8px rgba(233,195,73,0.4)`,
                 }} />
               </div>
-              <span className="font-headline" style={{ fontWeight: 700, color: C.primary, whiteSpace: 'nowrap', position: 'relative' }}>
+              <span className="font-headline" style={{ fontWeight: 700, color: C.primary, whiteSpace: 'nowrap', position: 'relative', fontSize: '0.9rem' }}>
                 {data.user.total_xp.toLocaleString()} / {nextLevel ? nextLevel.xp_required.toLocaleString() : '—'} XP
                 {xpFlash && recentXP > 0 && (
                   <span className="animate-fade-in-up" style={{ position: 'absolute', top: '-22px', right: 0, fontSize: '0.85rem', color: C.primary }}>
@@ -236,11 +238,11 @@ export default function Dashboard() {
           </div>
 
           {/* Right: Consistency track */}
-          <div style={{ background: C.lowest, padding: '20px 20px 16px', borderRadius: '12px', minWidth: '200px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
+          <div style={{ background: C.lowest, padding: '18px 18px 14px', borderRadius: '12px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
               <span style={{ fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.16em', textTransform: 'uppercase', color: C.faint }}>Consistency Track</span>
               {data.streaks.current > 0 && (
-                <span className="font-headline" style={{ fontWeight: 700, color: C.primary, fontSize: '0.85rem' }}>
+                <span className="font-headline" style={{ fontWeight: 700, color: C.primary, fontSize: '0.8rem' }}>
                   {data.streaks.current} Day Streak
                 </span>
               )}
@@ -250,14 +252,10 @@ export default function Dashboard() {
         </div>
 
         {celebrationMsg && (
-          <div style={{ marginTop: '16px', padding: '10px 18px', borderRadius: '10px', background: `rgba(47,248,1,0.06)`, border: `1px solid rgba(47,248,1,0.18)`, color: C.green, fontSize: '0.85rem', textAlign: 'center' }}>
+          <div style={{ padding: '10px 18px', borderRadius: '10px', background: `rgba(47,248,1,0.06)`, border: `1px solid rgba(47,248,1,0.18)`, color: C.green, fontSize: '0.85rem', textAlign: 'center' }}>
             {celebrationMsg}
           </div>
         )}
-      </div>
-
-      {/* ── Content ── */}
-      <div style={{ ...W, display: 'flex', flexDirection: 'column', gap: '12px' }}>
 
         {/* ── Session card ── */}
         <SessionCard
