@@ -34,7 +34,7 @@ const DEFAULTS = {
   ctaHeading: 'Ready to show up?',
   ctaSubtitle: 'Join 12,000+ others who stopped chasing hacks and started becoming regulars.',
   ctaButtonText: 'Start your first plan',
-  footerLeft: '© 2026 Regular. Built for focus.',
+  footerLeft: '© 2026 Regulr. Built for focus.',
   footerRight: 'No tracking · No ads · No nonsense',
 };
 
@@ -59,22 +59,6 @@ function Icon({ name, style }) {
   );
 }
 
-function DotTrack() {
-  const dots = [
-    C.green, C.green, C.green, C.green, C.green,
-    C.green, C.green, C.green, C.green, C.green,
-    C.green, C.green, C.primary,
-    C.highest, C.highest, C.highest, C.highest,
-    C.highest, C.highest, C.highest,
-  ];
-  return (
-    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', maxWidth: '300px' }}>
-      {dots.map((bg, i) => (
-        <div key={i} style={{ width: '10px', height: '10px', borderRadius: '2px', background: bg }} />
-      ))}
-    </div>
-  );
-}
 
 function WelcomeBack({ onContinue }) {
   const d = getData();
@@ -97,7 +81,7 @@ function WelcomeBack({ onContinue }) {
         backdropFilter: scrolled ? 'blur(20px)' : 'none',
         transition: 'background 0.3s',
       }}>
-        <span className="font-headline" style={{ fontSize: '1.4rem', fontWeight: 800, color: C.primary, letterSpacing: '-0.03em', textTransform: 'uppercase' }}>Regular</span>
+        <span className="font-headline" style={{ fontSize: '1.4rem', fontWeight: 800, color: C.primary, letterSpacing: '-0.03em', textTransform: 'uppercase' }}>Regulr</span>
         <button onClick={onContinue} style={{ background: C.primary, color: C.onPrimary, border: 'none', borderRadius: '4px', padding: '0.5rem 1.4rem', fontSize: '0.85rem', fontWeight: 700, cursor: 'pointer', fontFamily: 'Manrope, sans-serif' }}>
           My Plan →
         </button>
@@ -157,7 +141,7 @@ export default function Landing() {
         backdropFilter: 'blur(20px)',
         transition: 'background 0.3s',
       }}>
-        <span className="font-headline" style={{ fontSize: '1.1rem', fontWeight: 800, color: C.primary, letterSpacing: '0.08em', textTransform: 'uppercase' }}>Regular</span>
+        <span className="font-headline" style={{ fontSize: '1.1rem', fontWeight: 800, color: C.primary, letterSpacing: '0.08em', textTransform: 'uppercase' }}>Regulr</span>
         <button onClick={go}
           style={{ background: C.primary, color: C.onPrimary, border: 'none', borderRadius: '4px', padding: '0.5rem 1.4rem', fontSize: '0.82rem', fontWeight: 700, cursor: 'pointer', fontFamily: 'Manrope, sans-serif' }}
           onMouseEnter={e => e.currentTarget.style.filter = 'brightness(1.1)'}
@@ -198,45 +182,6 @@ export default function Landing() {
                 <p className="font-headline" style={{ fontSize: '0.88rem', fontWeight: 700, color: C.text, lineHeight: 1.3 }}>{pt.title}</p>
               </div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Bento ── */}
-      <section style={{ padding: '0 clamp(1.5rem,6vw,4rem) 6rem', maxWidth: '1300px', margin: '0 auto' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '16px' }} className="landing-bento-grid">
-          {/* Main habit card */}
-          <div style={{ background: C.container, borderRadius: '24px', padding: '2.5rem 2.5rem 2rem', overflow: 'hidden', position: 'relative', minHeight: '220px' }}>
-            <div style={{ position: 'absolute', bottom: '-40px', right: '-40px', width: '260px', height: '260px', background: 'rgba(47,248,1,0.04)', borderRadius: '50%', filter: 'blur(60px)', pointerEvents: 'none' }} />
-            <div style={{ position: 'relative', zIndex: 1 }}>
-              <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '2.5rem', flexWrap: 'wrap', gap: '12px' }}>
-                <div>
-                  <h2 className="font-headline" style={{ fontSize: '1.8rem', fontWeight: 800, letterSpacing: '-0.02em', marginBottom: '4px' }}>Deep Work</h2>
-                  <p style={{ fontSize: '0.88rem', color: C.faint }}>Daily Session · 90min</p>
-                </div>
-                <span style={{ background: C.green, color: '#053900', padding: '4px 14px', borderRadius: '100px', fontSize: '0.62rem', fontWeight: 800, letterSpacing: '0.1em', textTransform: 'uppercase', whiteSpace: 'nowrap', alignSelf: 'flex-start' }}>
-                  Active Streak: 12
-                </span>
-              </div>
-              <DotTrack />
-            </div>
-          </div>
-
-          {/* Stats card */}
-          <div style={{ background: C.lowest, borderRadius: '24px', padding: '2.5rem', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minHeight: '220px' }}>
-            <p style={{ fontSize: '0.58rem', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', color: C.faint }}>Level 04 — Architect</p>
-            <div>
-              <p className="font-headline" style={{ fontSize: '4rem', fontWeight: 800, lineHeight: 1, color: C.primary, letterSpacing: '-0.03em' }}>88%</p>
-              <p style={{ fontSize: '0.88rem', color: C.muted, marginTop: '4px' }}>Consistency Score</p>
-            </div>
-            <div>
-              <div style={{ height: '3px', background: C.highest, borderRadius: '2px', overflow: 'hidden', marginBottom: '14px' }}>
-                <div style={{ height: '100%', background: C.primary, width: '88%', boxShadow: '0 0 8px rgba(233,195,73,0.4)' }} />
-              </div>
-              <p style={{ fontSize: '0.8rem', color: C.faint, lineHeight: 1.6, fontStyle: 'italic' }}>
-                "Success is the sum of small efforts repeated day in and day out."
-              </p>
-            </div>
           </div>
         </div>
       </section>
