@@ -123,19 +123,34 @@ export default function WeeklyGrid({ plan, checkIns }) {
             labelColor = 'rgba(255,255,255,0.12)';
           }
 
+          const iconName = isCompleted ? 'check_circle'
+            : isMissed ? 'cancel'
+            : isToday ? 'radio_button_checked'
+            : (isScheduled && isFuture) ? 'schedule'
+            : null;
+
           return (
             <div key={date} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '5px' }}>
               <span style={{ fontSize: '0.58rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em', color: labelColor }}>
                 {DAY_LABELS[i]}
               </span>
               <div style={{
-                width: '100%', height: '40px', borderRadius: '8px',
+                width: '100%', height: '44px', borderRadius: '8px',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 ...cellStyle,
               }}>
-                <span style={{ fontFamily: 'Inter, monospace', fontSize: '0.82rem', fontWeight: 700, color: numColor, lineHeight: 1 }}>
-                  {isCompleted ? '✓' : isMissed ? '✕' : dayNum}
-                </span>
+                {iconName ? (
+                  <span
+                    className="material-symbols-outlined"
+                    style={{ fontSize: '20px', color: numColor, userSelect: 'none', lineHeight: 1 }}
+                  >
+                    {iconName}
+                  </span>
+                ) : (
+                  <span style={{ fontFamily: 'Inter, monospace', fontSize: '0.82rem', fontWeight: 700, color: numColor, lineHeight: 1 }}>
+                    {dayNum}
+                  </span>
+                )}
               </div>
               {sessionName && (
                 <span style={{

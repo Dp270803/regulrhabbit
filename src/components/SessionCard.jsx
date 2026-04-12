@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Clock, Check, ChevronDown } from 'lucide-react';
+import { Clock, Check, ChevronDown, Youtube } from 'lucide-react';
+import { sanityImageUrl } from '../utils/sanityClient';
 
 const C = {
   low: '#1c1b1b', container: '#201f1f',
@@ -76,7 +77,7 @@ function CollapsibleBlock({ label, duration, text }) {
   );
 }
 
-export default function SessionCard({ session, onComplete, isCompleted, isCooldown, isRestDay, equipment, isNextSession, nextLabel }) {
+export default function SessionCard({ session, onComplete, isCompleted, isCooldown, isRestDay, equipment, isNextSession, nextLabel, heroImg }) {
   const [checked, setChecked] = useState({});
   const [alts, setAlts] = useState({});
 
@@ -128,32 +129,65 @@ export default function SessionCard({ session, onComplete, isCompleted, isCooldo
 
   const toggle = (name) => setChecked(prev => ({ ...prev, [name]: !prev[name] }));
 
+  const heroImgUrl = heroImg ? sanityImageUrl(heroImg.image, { width: 900 }) : null;
+
   return (
     <div style={{
       ...cardStyle,
       background: isCompleted ? `linear-gradient(145deg, rgba(47,248,1,0.06) 0%, ${C.low} 60%)` : C.low,
       outline: isCompleted ? `1px solid rgba(47,248,1,0.18)` : 'none',
     }}>
-      {/* ── Header ── */}
-      <div style={{ padding: '28px 28px 20px', display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '16px' }}>
-        <div>
-          <p style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', color: isNextSession ? C.primary : C.faint, marginBottom: '8px' }}>
-            {nextLabel || 'Today\'s Session'}
-          </p>
-          <h3 className="font-headline" style={{ fontSize: 'clamp(1.6rem, 2.5vw, 2.2rem)', fontWeight: 800, letterSpacing: '-0.02em', color: C.text, lineHeight: 1.1, marginBottom: '10px', textTransform: 'uppercase' }}>
-            {session.title}
-          </h3>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: C.faint }}>
-            <Clock size={12} strokeWidth={1.8} />
-            <span style={{ fontFamily: 'Inter, monospace', fontSize: '0.82rem' }}>{session.duration_minutes} min</span>
+      {/* ── Hero Image Header ── */}
+      {heroImgUrl ? (
+        <div style={{ position: 'relative', height: '220px', overflow: 'hidden' }}>
+          <img
+            src={heroImgUrl}
+            alt={heroImg.alt || 'Training session'}
+            style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+          />
+          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(19,19,19,0.15) 0%, rgba(28,27,27,0.97) 100%)' }} />
+          <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '20px 28px 24px' }}>
+            <p style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', color: isNextSession ? C.primary : 'rgba(255,255,255,0.45)', marginBottom: '6px' }}>
+              {nextLabel || "Today's Session"}
+            </p>
+            <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: '12px' }}>
+              <h3 className="font-headline" style={{ fontSize: 'clamp(1.6rem, 2.5vw, 2.2rem)', fontWeight: 800, letterSpacing: '-0.02em', color: C.text, lineHeight: 1.1, textTransform: 'uppercase' }}>
+                {session.title}
+              </h3>
+              {isCompleted && (
+                <div style={{ width: '40px', height: '40px', borderRadius: '50%', flexShrink: 0, background: `rgba(47,248,1,0.12)`, border: `1px solid rgba(47,248,1,0.35)`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <Check size={17} strokeWidth={2.5} style={{ color: C.green }} />
+                </div>
+              )}
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'rgba(255,255,255,0.35)', marginTop: '8px' }}>
+              <Clock size={12} strokeWidth={1.8} />
+              <span style={{ fontFamily: 'Inter, monospace', fontSize: '0.82rem' }}>{session.duration_minutes} min</span>
+            </div>
           </div>
         </div>
-        {isCompleted && (
-          <div style={{ width: '44px', height: '44px', borderRadius: '50%', flexShrink: 0, background: `rgba(47,248,1,0.1)`, border: `1px solid rgba(47,248,1,0.3)`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <Check size={18} strokeWidth={2.5} style={{ color: C.green }} />
+      ) : (
+        /* ── Text Header (fallback when no hero image) ── */
+        <div style={{ padding: '28px 28px 20px', display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '16px' }}>
+          <div>
+            <p style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', color: isNextSession ? C.primary : C.faint, marginBottom: '8px' }}>
+              {nextLabel || "Today's Session"}
+            </p>
+            <h3 className="font-headline" style={{ fontSize: 'clamp(1.6rem, 2.5vw, 2.2rem)', fontWeight: 800, letterSpacing: '-0.02em', color: C.text, lineHeight: 1.1, marginBottom: '10px', textTransform: 'uppercase' }}>
+              {session.title}
+            </h3>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: C.faint }}>
+              <Clock size={12} strokeWidth={1.8} />
+              <span style={{ fontFamily: 'Inter, monospace', fontSize: '0.82rem' }}>{session.duration_minutes} min</span>
+            </div>
           </div>
-        )}
-      </div>
+          {isCompleted && (
+            <div style={{ width: '44px', height: '44px', borderRadius: '50%', flexShrink: 0, background: `rgba(47,248,1,0.1)`, border: `1px solid rgba(47,248,1,0.3)`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <Check size={18} strokeWidth={2.5} style={{ color: C.green }} />
+            </div>
+          )}
+        </div>
+      )}
 
       {/* ── Warm Up ── */}
       {warmup && <CollapsibleBlock label="Warm Up" duration={warmup.duration_minutes} text={warmup.detail} />}
@@ -207,42 +241,46 @@ export default function SessionCard({ session, onComplete, isCompleted, isCooldo
 
                   {/* Content: name + sets + links */}
                   <div style={{ flex: 1, minWidth: 0 }}>
-                    <p className="font-headline" style={{
-                      fontSize: '1rem', fontWeight: 700, color: isDone ? C.faint : C.text,
-                      lineHeight: 1.25, textDecoration: isDone ? 'line-through' : 'none',
-                      letterSpacing: '-0.01em',
-                    }}>{ex.name}</p>
+                    {/* Name row with inline YouTube icon */}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <p className="font-headline" style={{
+                        fontSize: '1rem', fontWeight: 700, color: isDone ? C.faint : C.text,
+                        lineHeight: 1.25, textDecoration: isDone ? 'line-through' : 'none',
+                        letterSpacing: '-0.01em',
+                      }}>{ex.name}</p>
+                      <a
+                        href={`https://www.youtube.com/results?search_query=${encodeURIComponent(ex.name + ' exercise form tutorial')}`}
+                        target="_blank" rel="noopener noreferrer"
+                        onClick={e => e.stopPropagation()}
+                        title={`How to: ${ex.name}`}
+                        style={{ color: 'rgba(255,255,255,0.22)', display: 'flex', alignItems: 'center', flexShrink: 0, textDecoration: 'none', transition: 'color 0.15s' }}
+                        onMouseEnter={e => e.currentTarget.style.color = '#FF0000'}
+                        onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.22)'}
+                      >
+                        <Youtube size={13} strokeWidth={1.8} />
+                      </a>
+                    </div>
                     {setsLabel && (
                       <p style={{ fontFamily: 'Inter, monospace', fontSize: '0.75rem', fontWeight: 600, color: isDone ? C.faint : C.primary, marginTop: '3px' }}>
                         {setsLabel}
                       </p>
                     )}
                     {ex.note && <p style={{ fontSize: '0.72rem', color: C.faint, marginTop: '2px' }}>{ex.note}</p>}
-                    {/* Links row */}
-                    <div style={{ display: 'flex', gap: '12px', marginTop: '6px' }}>
-                      {alt && (
+                    {/* Home alt link (only when equipment variant applies) */}
+                    {alt && (
+                      <div style={{ marginTop: '5px' }}>
                         <a
                           href={`https://www.youtube.com/results?search_query=${encodeURIComponent(alt + ' exercise')}`}
                           target="_blank" rel="noopener noreferrer"
                           onClick={e => e.stopPropagation()}
-                          style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.58rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(233,195,73,0.45)', textDecoration: 'none', transition: 'color 0.15s' }}
+                          style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', fontSize: '0.58rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(233,195,73,0.45)', textDecoration: 'none', transition: 'color 0.15s' }}
                           onMouseEnter={e => e.currentTarget.style.color = C.primary}
                           onMouseLeave={e => e.currentTarget.style.color = 'rgba(233,195,73,0.45)'}
                         >
                           ⌂ Home Alt
                         </a>
-                      )}
-                      <a
-                        href={`https://www.youtube.com/results?search_query=${encodeURIComponent(ex.name + ' exercise form tutorial')}`}
-                        target="_blank" rel="noopener noreferrer"
-                        onClick={e => e.stopPropagation()}
-                        style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.58rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.2)', textDecoration: 'none', transition: 'color 0.15s' }}
-                        onMouseEnter={e => e.currentTarget.style.color = '#FF0000'}
-                        onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.2)'}
-                      >
-                        ● Watch
-                      </a>
-                    </div>
+                      </div>
+                    )}
                   </div>
 
                   {/* Muscle tags */}

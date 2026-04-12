@@ -2,21 +2,19 @@ import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SessionCard from '../components/SessionCard';
 import WeeklyGrid from '../components/WeeklyGrid';
-import TipCard from '../components/TipCard';
-import BadgeCard from '../components/BadgeCard';
 import ReturnBanner from '../components/ReturnBanner';
 import LevelUpModal from '../components/LevelUpModal';
 import BadgeModal from '../components/BadgeModal';
 import ConfettiEffect from '../components/ConfettiEffect';
 import { getData, updateData } from '../utils/storage';
-import { fetchHeroImage, sanityImageUrl } from '../utils/sanityClient';
+import { fetchHeroImage } from '../utils/sanityClient';
 import { getTodaySession, isRestDay } from '../utils/planGenerator';
 import { detectReturnState, getReturnMessage, getTimeMessage, getReducedSession, getCelebrationMessage } from '../utils/returnState';
 import { updateStreak, getConsecutiveMisses, getStreakMilestone } from '../utils/streakTracker';
 import { calculateSessionXP, checkLevelUp, getLevelFromXP, getXPToNextLevel } from '../utils/xpCalculator';
 import { checkBadges } from '../utils/badgeChecker';
 import { selectTip, markTipSeen } from '../utils/tipSelector';
-import { getToday, formatDate, getWeekDates } from '../utils/dateUtils';
+import { getToday, formatDate } from '../utils/dateUtils';
 import { trackPageView, trackSessionCompleted, trackReturnState, trackBadgeEarned, trackLevelUp } from '../utils/analytics';
 import messagesData from '../data/messages.json';
 import levelsData from '../data/levels.json';
@@ -151,10 +149,7 @@ export default function Dashboard() {
   const isNextSession = !displaySession && !!nextInfo;
   const nextLabel = nextInfo ? `Up Next — ${formatDate(nextInfo.session.date)}` : null;
 
-  const weekDates = getWeekDates(today);
   const scheduledDays = activePlan?.scheduled_days || [];
-  const completedThisWeek = weekDates.filter(date => data.check_ins.some(c => c.date === date && c.completed)).length;
-  const scheduledThisWeek = weekDates.filter((_, i) => scheduledDays.includes(DAY_KEYS[i])).length;
 
   const level = getLevelFromXP(data.user.total_xp);
   const { needed, progress, nextLevel } = getXPToNextLevel(data.user.total_xp);
@@ -192,13 +187,6 @@ export default function Dashboard() {
     setTimeout(() => { setCelebrationMsg(null); setRecentXP(0); }, 4000);
   }
 
-  function handleBonusSession() {
-    const d = getData(); const newStreaks = updateStreak(d); const xpResult = calculateSessionXP(newStreaks.current, true, false);
-    updateData(data => { data.streaks = newStreaks; data.user.total_xp += xpResult.total; data.check_ins.push({ date: today, plan_id: activePlan?.id, session_id: 'bonus', completed: true, completed_at: new Date().toISOString(), xp_earned: xpResult.total, bonus_xp: 0, is_bonus: true }); return data; });
-    setRecentXP(xpResult.total); setData(getData()); setTimeout(() => setRecentXP(0), 4000);
-  }
-
-  const recentBadges = data.badges.filter(b => b.earned).slice(-3).reverse();
   const sixHoursAgo = new Date(Date.now() - 6 * 60 * 60 * 1000).toISOString();
   const recentCompletedToday = data.check_ins.some(c => c.date === today && c.completed && c.completed_at && c.completed_at > sixHoursAgo);
 
@@ -268,22 +256,6 @@ export default function Dashboard() {
         )}
       </div>
 
-      {/* ── Hero image (full bleed, Sanity-powered) ── */}
-      {(heroImg || true) && (
-        <div style={{
-          width: '100%', height: '220px', marginBottom: '-40px',
-          background: heroImg
-            ? `url(${sanityImageUrl(heroImg.image, { width: 1400 })}) center/cover no-repeat`
-            : `linear-gradient(135deg, #1a1510 0%, #0e0c09 40%, #0e0e0e 100%)`,
-          position: 'relative',
-        }}>
-          {/* Bottom fade into page background */}
-          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(19,19,19,0) 20%, #131313 100%)' }} />
-          {/* Subtle vignette */}
-          <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at 50% 0%, rgba(233,195,73,0.04) 0%, transparent 70%)' }} />
-        </div>
-      )}
-
       {/* ── Content ── */}
       <div style={{ ...W, display: 'flex', flexDirection: 'column', gap: '12px' }}>
 
@@ -297,71 +269,12 @@ export default function Dashboard() {
           isCooldown={recentCompletedToday}
           isRestDay={rest && !todaySession && !nextInfo}
           equipment={activePlan?.equipment}
+          heroImg={heroImg}
         />
 
         {/* ── Weekly calendar ── */}
         <WeeklyGrid plan={activePlan} checkIns={data.check_ins} />
 
-        {/* ── Stat tiles (3 across) ── */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px' }}>
-          {[
-            {
-              label: 'Streak',
-              value: data.streaks.current === 0 ? '—' : data.streaks.current,
-              unit: data.streaks.current > 0 ? 'days' : undefined,
-              sub: data.streaks.current > 0 ? `Best · ${data.streaks.best}d` : 'Start today',
-              color: data.streaks.current > 0 ? C.primary : C.faint,
-            },
-            {
-              label: 'This Week',
-              value: `${completedThisWeek}/${scheduledThisWeek}`,
-              sub: completedThisWeek === scheduledThisWeek && scheduledThisWeek > 0 ? 'All done!' : `${scheduledThisWeek - completedThisWeek} left`,
-              color: completedThisWeek === scheduledThisWeek && scheduledThisWeek > 0 ? C.green : C.text,
-            },
-            {
-              label: 'Total XP',
-              value: data.user.total_xp.toLocaleString(),
-              sub: `${level.title}`,
-              color: C.primary,
-            },
-          ].map(({ label, value, unit, sub, color }) => (
-            <div key={label} style={{ background: C.low, borderRadius: '12px', padding: '18px 16px' }}>
-              <p style={{ fontSize: '0.58rem', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', color: C.faint, marginBottom: '10px' }}>{label}</p>
-              <div style={{ display: 'flex', alignItems: 'baseline', gap: '4px' }}>
-                <p className="font-headline" style={{ fontSize: '1.8rem', fontWeight: 800, lineHeight: 1, color }}>{value}</p>
-                {unit && <span style={{ fontSize: '0.72rem', color: C.faint, fontWeight: 500 }}>{unit}</span>}
-              </div>
-              {sub && <p style={{ fontSize: '0.65rem', color: C.faint, marginTop: '4px' }}>{sub}</p>}
-            </div>
-          ))}
-        </div>
-
-        {!todaySession && !rest && !isCompleted && !recentCompletedToday && (
-          <button
-            onClick={handleBonusSession}
-            style={{ width: '100%', padding: '13px', fontSize: '0.9rem', borderRadius: '12px', border: `1px dashed rgba(255,255,255,0.12)`, color: 'rgba(255,255,255,0.3)', background: 'transparent', cursor: 'pointer', transition: 'all 0.2s', letterSpacing: '0.03em' }}
-            onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.25)'; e.currentTarget.style.color = 'rgba(255,255,255,0.6)'; }}
-            onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.12)'; e.currentTarget.style.color = 'rgba(255,255,255,0.3)'; }}
-          >
-            + Bonus session · +50 XP
-          </button>
-        )}
-
-        {/* ── Tip card ── */}
-        {tip && <TipCard tip={tip} onSeeMore={() => navigate('/tips')} />}
-
-        {/* ── Recent badges ── */}
-        {recentBadges.length > 0 && (
-          <div style={{ borderRadius: '12px', padding: '20px', background: C.low }}>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px' }}>
-              <p style={{ fontSize: '0.58rem', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', color: C.faint }}>Recent Badges</p>
-              <button onClick={() => navigate('/profile')} style={{ fontSize: '0.75rem', color: C.faint, background: 'none', border: 'none', cursor: 'pointer' }}>View all →</button>
-            </div>
-            <div style={{ display: 'flex', gap: '10px' }}>
-              {recentBadges.map(badge => <div key={badge.id} style={{ flex: 1 }}><BadgeCard badge={badge} /></div>)}
-            </div>
-          </div>
-        )}
       </div>
     </div>
   );
