@@ -151,11 +151,11 @@ export default function SessionCard({ session, onComplete, isCompleted, isCooldo
           />
           <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(19,19,19,0.15) 0%, rgba(28,27,27,0.97) 100%)' }} />
           <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '20px 28px 24px' }}>
-            <p style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', color: isNextSession ? C.primary : C.muted, marginBottom: '6px' }}>
+            <p style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', color: isNextSession ? C.primary : 'rgba(255,255,255,0.55)', marginBottom: '6px' }}>
               {nextLabel || cms?.todaySessionLabel || "Today's Session"}
             </p>
             <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: '12px' }}>
-              <h3 className="font-headline" style={{ fontSize: 'clamp(1.6rem, 2.5vw, 2.2rem)', fontWeight: 800, letterSpacing: '-0.02em', color: C.text, lineHeight: 1.1, textTransform: 'uppercase' }}>
+              <h3 className="font-headline" style={{ fontSize: 'clamp(1.6rem, 2.5vw, 2.2rem)', fontWeight: 800, letterSpacing: '-0.02em', color: '#ffffff', lineHeight: 1.1, textTransform: 'uppercase' }}>
                 {session.title}
               </h3>
               {isCompleted && (
@@ -164,7 +164,7 @@ export default function SessionCard({ session, onComplete, isCompleted, isCooldo
                 </div>
               )}
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: C.faint, marginTop: '8px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'rgba(255,255,255,0.45)', marginTop: '8px' }}>
               <Clock size={12} strokeWidth={1.8} />
               <span style={{ fontFamily: 'Inter, monospace', fontSize: '0.82rem' }}>{session.duration_minutes} min</span>
             </div>
