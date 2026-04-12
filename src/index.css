@@ -72,44 +72,48 @@
 .font-headline { font-family: 'Manrope', sans-serif; }
 .font-body-inter { font-family: 'Inter', sans-serif; }
 
-/* Light mode overrides */
+/* Light mode overrides — clean Zenith-style palette */
 .light {
-  /* ── Backgrounds & surfaces (from reference palette) ── */
-  --color-bg:               #fbf9f8;   /* warm off-white page bg        */
-  --color-surface-lowest:   #ffffff;   /* pure white — most elevated    */
-  --color-surface-low:      #f5f3f3;   /* section / card base           */
+  /* ── Backgrounds & surfaces ── */
+  --color-bg:               #f4f5f7;   /* cool light-gray page bg       */
+  --color-surface-lowest:   #ffffff;   /* pure white — cards            */
+  --color-surface-low:      #ffffff;   /* card base                     */
   --color-surface:          #ffffff;   /* primary card surface          */
-  --color-surface-2:        #f5f3f3;   /* secondary surface             */
-  --color-surface-high:     #eae8e7;   /* pressed / active states       */
-  --color-surface-highest:  #e4e2e1;   /* dividers, chip backgrounds    */
-  --color-surface-elevated: #f0eded;   /* modals, elevated cards        */
+  --color-surface-2:        #eef0f3;   /* secondary surface             */
+  --color-surface-high:     #e6e8ec;   /* pressed / active states       */
+  --color-surface-highest:  #dcdfe5;   /* dividers, chip backgrounds    */
+  --color-surface-elevated: #eef0f3;   /* modals, elevated cards        */
 
   /* ── Borders ── */
-  --color-border:        rgba(193, 198, 211, 0.55);  /* outline-variant   */
-  --color-border-strong: #c1c6d3;                    /* stronger dividers */
-  --color-outline:       #727783;
+  --color-border:        rgba(0, 0, 0, 0.07);
+  --color-border-strong: rgba(0, 0, 0, 0.14);
+  --color-outline:       #878c99;
 
   /* ── Text ── */
-  --color-text-1:         #1b1c1c;   /* primary text — on-surface     */
-  --color-text-2:         #5f5e5e;   /* secondary — secondary token   */
-  --color-text-3:         #727783;   /* muted / placeholder — outline */
-  --color-text-primary:   #1b1c1c;
-  --color-text-secondary: #5f5e5e;
-  --color-text-muted:     #727783;
+  --color-text-1:         #111318;
+  --color-text-2:         #4b4f5a;
+  --color-text-3:         #878c99;
+  --color-text-primary:   #111318;
+  --color-text-secondary: #4b4f5a;
+  --color-text-muted:     #878c99;
 
-  /* ── Brand accents (optimised for light backgrounds) ── */
-  --color-gold:     #9E6A00;
+  /* ── Brand accents ── */
+  --color-gold:     #005cab;   /* primary accent is blue in light mode  */
   --color-green:    #166534;
   --color-red:      #b91c1c;
-  --color-streak:   #9E6A00;
+  --color-streak:   #005cab;
   --color-complete: #166534;
   --color-missed:   #b91c1c;
-  --color-xp:       #9E6A00;
+  --color-xp:       #005cab;
   --color-on-primary: #ffffff;
 
   /* ── Nav ── */
-  --nav-bg: rgba(251, 249, 248, 0.9);
+  --nav-bg: rgba(244, 245, 247, 0.95);
 }
+
+/* Make body background follow theme */
+.light body,
+.light { background: var(--color-bg); }
 
 .font-display { font-family: var(--font-display); }
 .font-mono { font-family: var(--font-mono); }

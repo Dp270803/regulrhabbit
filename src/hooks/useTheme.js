@@ -14,43 +14,51 @@ export const DARK_COLORS = {
 };
 
 export const LIGHT_COLORS = {
-  bg: '#fbf9f8', low: '#f5f3f3', container: '#f0eded',
-  high: '#eae8e7', highest: '#e4e2e1', lowest: '#ffffff',
+  bg: '#f4f5f7', low: '#ffffff', container: '#eef0f3',
+  high: '#e6e8ec', highest: '#dcdfe5', lowest: '#ffffff',
   primary: '#005cab', onPrimary: '#ffffff', green: '#166534',
-  text: '#1b1c1c', muted: '#5f5e5e', faint: '#727783',
+  text: '#111318', muted: '#4b4f5a', faint: '#878c99',
   red: '#b91c1c', amber: '#b45309',
-  separator: 'rgba(0,0,0,0.06)',
-  border: 'rgba(0,0,0,0.1)',
-  navBg: 'rgba(251,249,248,0.94)',
-  primaryBorder: 'rgba(0,92,171,0.18)',
+  separator: 'rgba(0,0,0,0.07)',
+  border: 'rgba(0,0,0,0.12)',
+  navBg: 'rgba(244,245,247,0.95)',
+  primaryBorder: 'rgba(0,92,171,0.2)',
   primaryRgb: '0,92,171',
 };
+
+// Single broadcast channel so every useTheme() instance syncs on toggle
+const THEME_EVENT = 'regulr-theme-change';
 
 export function useTheme() {
   const [theme, setTheme] = useState(() => {
     try {
-      const stored = localStorage.getItem('regulr_theme');
-      return stored || 'dark';
+      return localStorage.getItem('regulr_theme') || 'dark';
     } catch {
       return 'dark';
     }
   });
 
+  // Listen for changes broadcast by any other useTheme instance
+  useEffect(() => {
+    const handler = (e) => setTheme(e.detail);
+    window.addEventListener(THEME_EVENT, handler);
+    return () => window.removeEventListener(THEME_EVENT, handler);
+  }, []);
+
+  // Apply the class to <html> and persist
   useEffect(() => {
     const root = document.documentElement;
-    if (theme === 'light') {
-      root.classList.remove('dark');
-      root.classList.add('light');
-    } else {
-      root.classList.remove('light');
-      root.classList.add('dark');
-    }
-    try {
-      localStorage.setItem('regulr_theme', theme);
-    } catch {}
+    root.classList.toggle('dark', theme === 'dark');
+    root.classList.toggle('light', theme === 'light');
+    try { localStorage.setItem('regulr_theme', theme); } catch {}
   }, [theme]);
 
-  const toggle = () => setTheme(t => t === 'dark' ? 'light' : 'dark');
+  const toggle = () => {
+    const next = theme === 'dark' ? 'light' : 'dark';
+    setTheme(next);
+    // Broadcast to all other mounted useTheme() instances
+    window.dispatchEvent(new CustomEvent(THEME_EVENT, { detail: next }));
+  };
 
   return { theme, toggle, isDark: theme === 'dark' };
 }
