@@ -152,7 +152,7 @@ export default function Landing() {
       </nav>
 
       {/* ── Hero ── */}
-      <section style={{ minHeight: 'calc(100dvh - 64px)', display: 'flex', alignItems: 'center', padding: '100px clamp(1.5rem,6vw,4rem) 4rem', maxWidth: '1300px', margin: '0 auto' }}>
+      <section style={{ padding: '120px clamp(1.5rem,6vw,4rem) 5rem', maxWidth: '1300px', margin: '0 auto' }}>
         <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0,1fr) auto', alignItems: 'flex-end', gap: '3rem', width: '100%' }} className="landing-hero-grid">
           {/* Left */}
           <div>
