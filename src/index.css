@@ -74,26 +74,41 @@
 
 /* Light mode overrides */
 .light {
-  --color-bg: #F8F6F1;
-  --color-surface: #FFFFFF;
-  --color-surface-2: #F0EDE6;
-  --color-border: rgba(0,0,0,0.07);
-  --color-border-strong: rgba(0,0,0,0.14);
-  --color-text-1: #0A0A0A;
-  --color-text-2: rgba(0,0,0,0.55);
-  --color-text-3: rgba(0,0,0,0.35);
-  --color-gold: #B8860B;
-  --color-green: #166534;
-  --color-red: #B91C1C;
-  --color-streak: #B8860B;
+  /* ── Backgrounds & surfaces (from reference palette) ── */
+  --color-bg:               #fbf9f8;   /* warm off-white page bg        */
+  --color-surface-lowest:   #ffffff;   /* pure white — most elevated    */
+  --color-surface-low:      #f5f3f3;   /* section / card base           */
+  --color-surface:          #ffffff;   /* primary card surface          */
+  --color-surface-2:        #f5f3f3;   /* secondary surface             */
+  --color-surface-high:     #eae8e7;   /* pressed / active states       */
+  --color-surface-highest:  #e4e2e1;   /* dividers, chip backgrounds    */
+  --color-surface-elevated: #f0eded;   /* modals, elevated cards        */
+
+  /* ── Borders ── */
+  --color-border:        rgba(193, 198, 211, 0.55);  /* outline-variant   */
+  --color-border-strong: #c1c6d3;                    /* stronger dividers */
+  --color-outline:       #727783;
+
+  /* ── Text ── */
+  --color-text-1:         #1b1c1c;   /* primary text — on-surface     */
+  --color-text-2:         #5f5e5e;   /* secondary — secondary token   */
+  --color-text-3:         #727783;   /* muted / placeholder — outline */
+  --color-text-primary:   #1b1c1c;
+  --color-text-secondary: #5f5e5e;
+  --color-text-muted:     #727783;
+
+  /* ── Brand accents (optimised for light backgrounds) ── */
+  --color-gold:     #9E6A00;
+  --color-green:    #166534;
+  --color-red:      #b91c1c;
+  --color-streak:   #9E6A00;
   --color-complete: #166534;
-  --color-missed: #B91C1C;
-  --color-xp: #B8860B;
-  --color-text-primary: #0A0A0A;
-  --color-text-secondary: rgba(0,0,0,0.55);
-  --color-text-muted: rgba(0,0,0,0.35);
-  --color-surface-elevated: #F0EDE6;
-  --nav-bg: rgba(255,255,255,0.88);
+  --color-missed:   #b91c1c;
+  --color-xp:       #9E6A00;
+  --color-on-primary: #ffffff;
+
+  /* ── Nav ── */
+  --nav-bg: rgba(251, 249, 248, 0.9);
 }
 
 .font-display { font-family: var(--font-display); }
