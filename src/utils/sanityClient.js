@@ -55,8 +55,9 @@ export async function fetchTipsPage() {
   if (!sanity) return null;
   try {
     const doc = await sanity.fetch(`*[_type == "tipsPage"][0]{
-      featuredEyebrow, featuredHeadingPrefix, featuredCtaLabel,
+      featuredEyebrow, featuredHeadingPrefix, featuredCtaLabel, heroImageUrl,
       categories[]{key, label},
+      categoryCards[]{categoryKey, subcategoryLabel, title, body},
       footerQuote
     }`);
     return doc ?? null;
