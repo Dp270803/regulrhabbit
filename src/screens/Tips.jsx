@@ -183,11 +183,17 @@ export default function Tips() {
       setTodayTip(tip);
 
       if (cmsData) {
+        // Uploaded image beats URL field beats hardcoded default
+        const heroImageUrl =
+          cmsData.heroImage?.asset?.url ||
+          cmsData.heroImageUrl          ||
+          DEFAULT_COPY.heroImageUrl;
+
         setCopy({
           featuredEyebrow:       cmsData.featuredEyebrow       || DEFAULT_COPY.featuredEyebrow,
           featuredHeadingPrefix: cmsData.featuredHeadingPrefix || DEFAULT_COPY.featuredHeadingPrefix,
           featuredCtaLabel:      cmsData.featuredCtaLabel      || DEFAULT_COPY.featuredCtaLabel,
-          heroImageUrl:          cmsData.heroImageUrl          || DEFAULT_COPY.heroImageUrl,
+          heroImageUrl,
           footerQuote:           cmsData.footerQuote           || DEFAULT_COPY.footerQuote,
         });
         setLabels(buildCategoryLabels(cmsData.categories));

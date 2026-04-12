@@ -37,11 +37,19 @@ export const tipsPage = defineType({
       initialValue: 'Read Masterclass',
     }),
     defineField({
+      name: 'heroImage',
+      title: 'Hero background image (upload)',
+      type: 'image',
+      group: 'featured',
+      options: { hotspot: true },
+      description: 'Upload a photo directly to Sanity. Takes priority over the URL field below. Recommended: landscape, dark/moody aesthetic.',
+    }),
+    defineField({
       name: 'heroImageUrl',
-      title: 'Hero background image URL',
+      title: 'Hero background image URL (fallback)',
       type: 'url',
       group: 'featured',
-      description: 'Full URL for the featured hero background photo. Recommended: landscape, dark/moody aesthetic.',
+      description: 'Used when no uploaded image is set above.',
       initialValue: 'https://lh3.googleusercontent.com/aida-public/AB6AXuD68CMbg3KNXfRMFfnZp0gsXPG21ZD6fzt4WviJGAcrvfPlXq5g9jCY6ppNmVSthfzJh-WaGO_9wuGzaL6xiS4aEZd-2w7ryo4RlE5rD3lpRqBruK3zEByMM0jpeyc3QbaMxgwEmFQw4WML4gkAyoVpw7gc25-RJDaa4NLQMVGF1pP6UU4kL67DoT1Klm2kwxMTPMkuszHaufmVC-NyQcTUUtGk2oBVJXkwrcmI5y-kvxqibuhSS4V9K1QEVB27wOBgNkn0tZSQNGsm',
     }),
 
