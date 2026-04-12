@@ -51,6 +51,22 @@ export async function fetchLandingPage() {
   }
 }
 
+export async function fetchTipsPage() {
+  if (!sanity) return null;
+  try {
+    const doc = await sanity.fetch(`*[_type == "tipsPage"][0]{
+      featuredEyebrow, featuredHeadingPrefix, featuredCtaLabel, heroImageUrl,
+      categories[]{key, label},
+      categoryCards[]{categoryKey, subcategoryLabel, title, body},
+      footerQuote
+    }`);
+    return doc ?? null;
+  } catch (err) {
+    console.warn('[Sanity] fetchTipsPage failed:', err.message);
+    return null;
+  }
+}
+
 export async function fetchHeroImage() {
   console.log('[Sanity] isConfigured:', isConfigured, 'projectId:', projectId);
   if (!sanity) return null;

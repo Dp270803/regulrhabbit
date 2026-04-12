@@ -1,6 +1,6 @@
 import { defineConfig } from 'sanity';
 import { structureTool } from 'sanity/structure';
-import { heroImage, landingPage } from './src/studio/schemas';
+import { heroImage, landingPage, tipsPage } from './src/studio/schemas';
 
 const projectId = import.meta.env.VITE_SANITY_PROJECT_ID;
 const dataset   = import.meta.env.VITE_SANITY_DATASET || 'production';
@@ -17,11 +17,11 @@ export default defineConfig({
   ],
 
   schema: {
-    types: [heroImage, landingPage],
+    types: [heroImage, landingPage, tipsPage],
   },
 
   document: {
     newDocumentOptions: (prev) =>
-      prev.filter(t => ['heroImage', 'landingPage'].includes(t.templateId)),
+      prev.filter(t => ['heroImage', 'landingPage', 'tipsPage'].includes(t.templateId)),
   },
 });
