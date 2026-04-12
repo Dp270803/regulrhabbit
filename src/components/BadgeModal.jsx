@@ -1,7 +1,9 @@
 import { useEffect } from 'react';
 import { X } from 'lucide-react';
+import { useThemeColors } from '../hooks/useTheme';
 
 export default function BadgeModal({ badge, onClose }) {
+  const C = useThemeColors();
   useEffect(() => {
     const handle = (e) => e.key === 'Escape' && onClose();
     window.addEventListener('keydown', handle);
@@ -54,9 +56,9 @@ export default function BadgeModal({ badge, onClose }) {
           <div
             className="text-5xl w-20 h-20 rounded-2xl mx-auto flex items-center justify-center mb-6"
             style={{
-              background: 'rgba(232,193,98,0.08)',
-              border: '1px solid rgba(232,193,98,0.26)',
-              boxShadow: '0 0 28px rgba(232,193,98,0.12), inset 0 1px 0 rgba(232,193,98,0.1)',
+              background: `rgba(${C.primaryRgb},0.08)`,
+              border: `1px solid rgba(${C.primaryRgb},0.26)`,
+              boxShadow: `0 0 28px rgba(${C.primaryRgb},0.12)`,
             }}
           >
             {badge.icon || '🏆'}
@@ -93,9 +95,9 @@ export default function BadgeModal({ badge, onClose }) {
             onClick={onClose}
             className="mt-8 px-8 py-3 rounded-xl text-sm font-medium tracking-wide transition-opacity hover:opacity-80 cursor-pointer"
             style={{
-              background: 'rgba(232,193,98,0.12)',
-              border: '1px solid rgba(232,193,98,0.26)',
-              color: 'var(--color-gold)',
+              background: `rgba(${C.primaryRgb},0.1)`,
+              border: `1px solid rgba(${C.primaryRgb},0.22)`,
+              color: C.primary,
             }}
           >
             Nice

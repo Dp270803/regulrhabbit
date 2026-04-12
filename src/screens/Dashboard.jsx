@@ -76,7 +76,7 @@ function ConsistencyDots({ checkIns, scheduledDays, plan }) {
         let bg;
         if (done) bg = C.green;
         else if (isToday) bg = C.primary;
-        else if (isPast && isScheduled) bg = 'rgba(255,180,171,0.4)'; // missed — muted red
+        else if (isPast && isScheduled) bg = C.redSoft; // missed — muted red
         else bg = C.highest;
         return (
           <div key={dateStr} style={{

@@ -9,10 +9,10 @@ export default function TipCard({ tip, onSeeMore }) {
     <div
       className="animate-fade-in"
       style={{
-        background: `linear-gradient(145deg, rgba(${C.primaryRgb},0.06) 0%, ${C.lowest} 55%)`,
+        background: `linear-gradient(145deg, rgba(${C.primaryRgb},0.05) 0%, ${C.lowest} 55%)`,
         border: `1px solid ${C.primaryBorder}`,
         borderRadius: '20px',
-        boxShadow: `0 4px 24px rgba(0,0,0,0.15)`,
+        boxShadow: C.cardShadow || `0 4px 24px rgba(0,0,0,0.15)`,
         padding: '24px',
       }}
     >

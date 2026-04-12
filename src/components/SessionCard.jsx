@@ -99,6 +99,7 @@ export default function SessionCard({ session, onComplete, isCompleted, isCooldo
     background: C.low,
     borderRadius: '16px',
     overflow: 'hidden',
+    boxShadow: C.cardShadow,
   };
 
   if (isRestDay) {

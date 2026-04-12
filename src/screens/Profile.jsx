@@ -209,9 +209,9 @@ export default function Profile() {
       <div style={{ ...W, display: 'flex', flexDirection: 'column', gap: '20px', paddingTop: 'clamp(28px, 4vw, 48px)' }}>
 
         {/* ── Hero Card ── */}
-        <div style={{ background: C.low, borderRadius: '12px', position: 'relative', overflow: 'hidden', padding: 'clamp(24px, 4vw, 48px)' }}>
+        <div style={{ background: C.low, borderRadius: '12px', position: 'relative', overflow: 'hidden', padding: 'clamp(24px, 4vw, 48px)', boxShadow: C.cardShadow }}>
           {/* Decorative gradient */}
-          <div style={{ position: 'absolute', top: 0, right: 0, width: '40%', height: '100%', pointerEvents: 'none', background: 'radial-gradient(ellipse at 90% 30%, rgba(20,16,8,0.9) 0%, rgba(20,16,8,0.6) 50%, transparent 80%)', zIndex: 0 }} />
+          {isDark && <div style={{ position: 'absolute', top: 0, right: 0, width: '40%', height: '100%', pointerEvents: 'none', background: 'radial-gradient(ellipse at 90% 30%, rgba(20,16,8,0.9) 0%, rgba(20,16,8,0.6) 50%, transparent 80%)', zIndex: 0 }} />}
           <div style={{ position: 'absolute', top: 0, right: 0, width: '38%', height: '100%', pointerEvents: 'none', zIndex: 0, overflow: 'hidden' }}>
             <div style={{ width: '100%', height: '100%', background: `repeating-linear-gradient(45deg, rgba(${C.primaryRgb},0.04) 0px, rgba(${C.primaryRgb},0.04) 1px, transparent 1px, transparent 12px)`, opacity: 0.6 }} />
           </div>

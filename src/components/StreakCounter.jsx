@@ -33,7 +33,7 @@ export default function StreakCounter({ current, best, consecutiveMisses }) {
         background: `linear-gradient(145deg, ${C.low} 0%, ${C.lowest} 100%)`,
         border: `1px solid ${C.separator}`,
         borderRadius: '20px',
-        boxShadow: `0 4px 24px rgba(0,0,0,0.2)`,
+        boxShadow: C.cardShadow || `0 4px 24px rgba(0,0,0,0.2)`,
         padding: '28px',
       }}
     >

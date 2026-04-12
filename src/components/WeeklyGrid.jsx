@@ -45,6 +45,7 @@ export default function WeeklyGrid({ plan, checkIns, label }) {
       background: C.low,
       borderRadius: '12px',
       padding: '20px 20px 16px',
+      boxShadow: C.cardShadow,
     }}>
       {/* Header */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px' }}>

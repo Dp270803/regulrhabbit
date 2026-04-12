@@ -72,48 +72,47 @@
 .font-headline { font-family: 'Manrope', sans-serif; }
 .font-body-inter { font-family: 'Inter', sans-serif; }
 
-/* Light mode overrides — clean Zenith-style palette */
+/* Light mode — white / blue / black minimalist palette */
+html.light,
+html.light body { background: #f5f6fa; }
+
 .light {
   /* ── Backgrounds & surfaces ── */
-  --color-bg:               #f4f5f7;   /* cool light-gray page bg       */
-  --color-surface-lowest:   #ffffff;   /* pure white — cards            */
-  --color-surface-low:      #ffffff;   /* card base                     */
-  --color-surface:          #ffffff;   /* primary card surface          */
-  --color-surface-2:        #eef0f3;   /* secondary surface             */
-  --color-surface-high:     #e6e8ec;   /* pressed / active states       */
-  --color-surface-highest:  #dcdfe5;   /* dividers, chip backgrounds    */
-  --color-surface-elevated: #eef0f3;   /* modals, elevated cards        */
+  --color-bg:               #f5f6fa;   /* cool-gray page — white cards pop */
+  --color-surface-lowest:   #ffffff;
+  --color-surface-low:      #ffffff;   /* card surface                      */
+  --color-surface:          #ffffff;
+  --color-surface-2:        #f0f2f7;   /* secondary container               */
+  --color-surface-high:     #e8eaf2;   /* hover / pressed                   */
+  --color-surface-highest:  #dde0eb;   /* chip bg / strong divider          */
+  --color-surface-elevated: #f0f2f7;
 
   /* ── Borders ── */
-  --color-border:        rgba(0, 0, 0, 0.07);
-  --color-border-strong: rgba(0, 0, 0, 0.14);
-  --color-outline:       #878c99;
+  --color-border:        rgba(0, 0, 0, 0.05);
+  --color-border-strong: rgba(0, 0, 0, 0.09);
+  --color-outline:       #8891a5;
 
   /* ── Text ── */
-  --color-text-1:         #111318;
-  --color-text-2:         #4b4f5a;
-  --color-text-3:         #878c99;
-  --color-text-primary:   #111318;
-  --color-text-secondary: #4b4f5a;
-  --color-text-muted:     #878c99;
+  --color-text-1:         #0d0f14;   /* near-black, cool tint             */
+  --color-text-2:         #3d4558;   /* blue-gray secondary               */
+  --color-text-3:         #8891a5;   /* soft gray tertiary                */
+  --color-text-primary:   #0d0f14;
+  --color-text-secondary: #3d4558;
+  --color-text-muted:     #8891a5;
 
   /* ── Brand accents ── */
-  --color-gold:     #005cab;   /* primary accent is blue in light mode  */
-  --color-green:    #166534;
-  --color-red:      #b91c1c;
-  --color-streak:   #005cab;
-  --color-complete: #166534;
-  --color-missed:   #b91c1c;
-  --color-xp:       #005cab;
+  --color-gold:       #005cab;   /* blue replaces gold in light mode  */
+  --color-green:      #15803d;
+  --color-red:        #dc2626;
+  --color-streak:     #005cab;
+  --color-complete:   #15803d;
+  --color-missed:     #dc2626;
+  --color-xp:         #005cab;
   --color-on-primary: #ffffff;
 
   /* ── Nav ── */
-  --nav-bg: rgba(244, 245, 247, 0.95);
+  --nav-bg: rgba(245, 246, 250, 0.96);
 }
-
-/* Make body background follow theme */
-.light body,
-.light { background: var(--color-bg); }
 
 .font-display { font-family: var(--font-display); }
 .font-mono { font-family: var(--font-mono); }

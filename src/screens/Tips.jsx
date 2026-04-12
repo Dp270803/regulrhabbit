@@ -81,7 +81,7 @@ function TipCard({ card, catStyle }) {
         background: hovered ? catStyle.hoverBg : catStyle.cardBg,
         borderRadius: '12px',
         padding: '24px',
-        border: catStyle.border ? `1px solid rgba(68,71,72,0.25)` : 'none',
+        border: catStyle.border ? `1px solid ${C.border}` : 'none',
         cursor: 'pointer',
         transition: 'background 0.2s',
       }}
@@ -116,7 +116,7 @@ function CategorySection({ catKey, label, cards, catStyle }) {
       <div style={{
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         paddingBottom: '8px', marginBottom: '24px',
-        borderBottom: `1px solid rgba(68,71,72,0.12)`,
+        borderBottom: `1px solid ${C.separator}`,
       }}>
         <h2 style={{
           fontFamily: 'Manrope, sans-serif', fontSize: '1.4rem',
