@@ -6,6 +6,7 @@ const DEFAULT_DATA = {
   last_opened: null,
   onboarding_complete: false,
   user: {
+    name: null,
     persona: null,
     preferred_time: null,
     level: 1,

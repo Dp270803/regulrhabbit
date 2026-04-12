@@ -1,14 +1,15 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Download, Upload, Trash2, Sun, Moon } from 'lucide-react';
+import { Download, Upload, Trash2, Sun, Moon, Pencil, Check } from 'lucide-react';
 import BadgeGrid from '../components/BadgeGrid';
 import BadgeModal from '../components/BadgeModal';
 import ContributionGrid from '../components/ContributionGrid';
-import { getData, exportData, importData, resetData } from '../utils/storage';
+import { getData, exportData, importData, resetData, updateData } from '../utils/storage';
 import { getAllBadges } from '../utils/badgeChecker';
 import { getLevelFromXP } from '../utils/xpCalculator';
 import { trackPageView } from '../utils/analytics';
 import { useTheme } from '../hooks/useTheme';
+import { fetchProfilePage } from '../utils/sanityClient';
 
 const ACTIVITY_LABELS = { gym: 'Gym Regular', swimming: 'Swimmer', running: 'Runner', yoga: 'Yogi', dance: 'Dancer', singing: 'Vocalist', instrument: 'Musician' };
 
@@ -19,6 +20,12 @@ export default function Profile() {
   const [showResetConfirm, setShowResetConfirm] = useState(false);
   const [resetText, setResetText] = useState('');
   const { theme, toggle, isDark } = useTheme();
+  const [cms, setCms] = useState(null);
+
+  // Name editing state
+  const [isEditingName, setIsEditingName] = useState(false);
+  const [nameInput, setNameInput] = useState('');
+  const nameInputRef = useRef(null);
 
   useEffect(() => {
     trackPageView('profile');
@@ -28,7 +35,16 @@ export default function Profile() {
       return;
     }
     setData(d);
+    setNameInput(d.user.name || '');
+    fetchProfilePage().then(doc => { if (doc) setCms(doc); }).catch(() => {});
   }, [navigate]);
+
+  useEffect(() => {
+    if (isEditingName && nameInputRef.current) {
+      nameInputRef.current.focus();
+      nameInputRef.current.select();
+    }
+  }, [isEditingName]);
 
   if (!data) return null;
 
@@ -39,6 +55,28 @@ export default function Profile() {
     ? Math.floor((Date.now() - new Date(data.created_at).getTime()) / (1000 * 60 * 60 * 24))
     : 0;
   const allBadges = getAllBadges(data);
+
+  const displayName = data.user.name;
+  const ghostTag = cms?.ghostTag || 'Ghost Member';
+  const namePrompt = cms?.namePrompt || 'Tap to add your name';
+
+  function saveName() {
+    const trimmed = nameInput.trim();
+    const updated = updateData(d => {
+      d.user.name = trimmed || null;
+      return d;
+    });
+    setData(updated);
+    setIsEditingName(false);
+  }
+
+  function handleNameKeyDown(e) {
+    if (e.key === 'Enter') saveName();
+    if (e.key === 'Escape') {
+      setNameInput(data.user.name || '');
+      setIsEditingName(false);
+    }
+  }
 
   function handleExport() {
     exportData();
@@ -68,10 +106,10 @@ export default function Profile() {
   }
 
   const statCards = [
-    { label: 'Sessions', value: totalSessions },
-    { label: 'Days Active', value: daysSinceStart },
-    { label: 'Best Streak', value: `${data.streaks.best}d` },
-    { label: 'Total XP', value: data.user.total_xp.toLocaleString() },
+    { label: cms?.statSessionsLabel || 'Sessions', value: totalSessions },
+    { label: cms?.statDaysLabel || 'Days Active', value: daysSinceStart },
+    { label: cms?.statStreakLabel || 'Best Streak', value: `${data.streaks.best}d` },
+    { label: cms?.statXpLabel || 'Total XP', value: data.user.total_xp.toLocaleString() },
   ];
 
   return (
@@ -80,23 +118,93 @@ export default function Profile() {
 
       {/* Header */}
       <div className="px-4 pt-14 pb-8 max-w-[480px] mx-auto">
-        <p className="text-xs font-medium uppercase tracking-[0.15em] mb-1" style={{ color: 'var(--color-text-3)' }}>
-          {ACTIVITY_LABELS[activePlan?.activity] || 'Regular'} &middot; {daysSinceStart} days in
+        <p className="text-xs font-medium uppercase tracking-[0.15em] mb-3" style={{ color: 'var(--color-text-3)' }}>
+          {cms?.personalVaultEyebrow || 'Personal Vault'}
         </p>
-        <h1 className="font-display text-3xl" style={{ color: 'var(--color-text-1)' }}>
-          You&apos;re a Regular.
-        </h1>
-        <div
-          className="inline-flex items-center gap-2 mt-4 px-4 py-2 rounded-full"
-          style={{ background: 'rgba(232,193,98,0.1)' }}
-        >
-          <span className="font-mono text-sm font-semibold" style={{ color: 'var(--color-gold)' }}>
-            Level {level.level}
+
+        {/* Name block */}
+        {isEditingName ? (
+          <div className="flex items-center gap-2 mb-4">
+            <input
+              ref={nameInputRef}
+              type="text"
+              value={nameInput}
+              onChange={e => setNameInput(e.target.value)}
+              onBlur={saveName}
+              onKeyDown={handleNameKeyDown}
+              maxLength={32}
+              placeholder={cms?.nameInputPlaceholder || 'Your name'}
+              className="font-display text-3xl bg-transparent outline-none border-b-2 flex-1 min-w-0"
+              style={{
+                color: 'var(--color-text-1)',
+                borderColor: 'var(--color-gold)',
+                paddingBottom: '2px',
+              }}
+            />
+            <button
+              onMouseDown={e => { e.preventDefault(); saveName(); }}
+              className="flex-shrink-0 p-1 rounded-full cursor-pointer"
+              style={{ color: 'var(--color-gold)' }}
+            >
+              <Check size={18} strokeWidth={2.5} />
+            </button>
+          </div>
+        ) : (
+          <div className="flex items-end gap-3 mb-4">
+            {displayName ? (
+              <h1 className="font-display text-3xl" style={{ color: 'var(--color-text-1)' }}>
+                {displayName}
+              </h1>
+            ) : (
+              <div>
+                <div
+                  className="inline-flex items-center gap-2 px-3 py-1 rounded-full mb-1"
+                  style={{ background: 'rgba(255,255,255,0.05)', border: '1px dashed rgba(255,255,255,0.12)' }}
+                >
+                  <span className="font-mono text-base font-semibold" style={{ color: 'var(--color-text-3)' }}>
+                    {ghostTag}
+                  </span>
+                </div>
+                <p className="text-xs" style={{ color: 'var(--color-text-3)', opacity: 0.6 }}>
+                  {namePrompt}
+                </p>
+              </div>
+            )}
+            <button
+              onClick={() => {
+                setNameInput(data.user.name || '');
+                setIsEditingName(true);
+              }}
+              className="flex-shrink-0 mb-1 p-1.5 rounded-full cursor-pointer transition-opacity hover:opacity-70"
+              style={{ color: 'var(--color-text-3)', background: 'rgba(255,255,255,0.05)' }}
+              title={displayName ? 'Edit name' : 'Add your name'}
+            >
+              <Pencil size={13} strokeWidth={2} />
+            </button>
+          </div>
+        )}
+
+        {/* Meta row */}
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+          <span className="text-xs" style={{ color: 'var(--color-text-3)' }}>
+            {ACTIVITY_LABELS[activePlan?.activity] || 'Regular'}
           </span>
-          <span className="text-xs" style={{ color: 'var(--color-text-3)' }}>—</span>
-          <span className="text-xs" style={{ color: 'var(--color-gold)', opacity: 0.8 }}>
-            {level.title}
+          <span style={{ color: 'var(--color-text-3)', opacity: 0.4, fontSize: '0.6rem' }}>·</span>
+          <span className="text-xs" style={{ color: 'var(--color-text-3)' }}>
+            {daysSinceStart} days in
           </span>
+          <span style={{ color: 'var(--color-text-3)', opacity: 0.4, fontSize: '0.6rem' }}>·</span>
+          <div
+            className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full"
+            style={{ background: 'rgba(232,193,98,0.1)' }}
+          >
+            <span className="font-mono text-xs font-semibold" style={{ color: 'var(--color-gold)' }}>
+              Lv.{level.level}
+            </span>
+            <span className="text-xs" style={{ color: 'var(--color-gold)', opacity: 0.75 }}>
+              {level.title}
+            </span>
+          </div>
         </div>
       </div>
 
@@ -131,7 +239,7 @@ export default function Profile() {
             className="text-xs font-medium uppercase tracking-widest mb-3"
             style={{ color: 'var(--color-text-3)' }}
           >
-            Activity
+            {cms?.activitySectionLabel || 'Activity'}
           </p>
           <div
             className="rounded-2xl p-5"
@@ -147,7 +255,7 @@ export default function Profile() {
             className="text-xs font-medium uppercase tracking-widest mb-3"
             style={{ color: 'var(--color-text-3)' }}
           >
-            Badges
+            {cms?.badgesSectionLabel || 'Badges'}
           </p>
           <BadgeGrid badges={allBadges} onBadgeClick={setSelectedBadge} />
         </div>
@@ -158,7 +266,7 @@ export default function Profile() {
             className="text-xs font-medium uppercase tracking-widest mb-3"
             style={{ color: 'var(--color-text-3)' }}
           >
-            Settings
+            {cms?.settingsSectionLabel || 'Settings'}
           </p>
           <div
             className="rounded-2xl overflow-hidden"
@@ -175,7 +283,7 @@ export default function Profile() {
                   : <Sun size={16} style={{ color: 'var(--color-text-2)' }} />
                 }
                 <span className="text-sm" style={{ color: 'var(--color-text-2)' }}>
-                  Appearance
+                  {cms?.appearanceRowLabel || 'Appearance'}
                 </span>
               </div>
               <button
@@ -202,7 +310,7 @@ export default function Profile() {
               }}
             >
               <Download size={16} style={{ color: 'var(--color-text-3)' }} />
-              Export My Data
+              {cms?.exportRowLabel || 'Export My Data'}
             </button>
 
             {/* Import */}
@@ -216,7 +324,7 @@ export default function Profile() {
               }}
             >
               <Upload size={16} style={{ color: 'var(--color-text-3)' }} />
-              Import Data
+              {cms?.importRowLabel || 'Import Data'}
             </button>
 
             {/* Reset */}
@@ -229,7 +337,7 @@ export default function Profile() {
               }}
             >
               <Trash2 size={16} />
-              Reset All Data
+              {cms?.resetRowLabel || 'Reset All Data'}
             </button>
           </div>
         </div>

@@ -99,6 +99,22 @@ export async function fetchDashboardPage() {
   }
 }
 
+export async function fetchProfilePage() {
+  if (!sanity) return null;
+  try {
+    const doc = await sanity.fetch(`*[_type == "profilePage"][0]{
+      personalVaultEyebrow, ghostTag, namePrompt, nameInputPlaceholder,
+      statSessionsLabel, statDaysLabel, statStreakLabel, statXpLabel,
+      activitySectionLabel, badgesSectionLabel, settingsSectionLabel,
+      appearanceRowLabel, exportRowLabel, importRowLabel, resetRowLabel
+    }`);
+    return doc ?? null;
+  } catch (err) {
+    console.warn('[Sanity] fetchProfilePage failed:', err.message);
+    return null;
+  }
+}
+
 export async function fetchHeroImage() {
   if (!sanity) return null;
   try {
