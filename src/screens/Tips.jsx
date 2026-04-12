@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { getData } from '../utils/storage';
 import { selectTip } from '../utils/tipSelector';
 import { trackPageView } from '../utils/analytics';
-import { fetchTipsPage } from '../utils/sanityClient';
+import { fetchTipsPage, sanityImageUrl } from '../utils/sanityClient';
 
 // ── Colour tokens (mirrors design system) ────────────────────────────────────
 const C = {
@@ -187,7 +187,7 @@ export default function Tips() {
           featuredEyebrow:       cmsData.featuredEyebrow       || DEFAULT_COPY.featuredEyebrow,
           featuredHeadingPrefix: cmsData.featuredHeadingPrefix || DEFAULT_COPY.featuredHeadingPrefix,
           featuredCtaLabel:      cmsData.featuredCtaLabel      || DEFAULT_COPY.featuredCtaLabel,
-          heroImageUrl:          cmsData.heroImageUrl          || DEFAULT_COPY.heroImageUrl,
+          heroImageUrl:          sanityImageUrl(cmsData.heroImage, { width: 1400 }) || cmsData.heroImageUrl || DEFAULT_COPY.heroImageUrl,
           footerQuote:           cmsData.footerQuote           || DEFAULT_COPY.footerQuote,
         });
         setLabels(buildCategoryLabels(cmsData.categories));

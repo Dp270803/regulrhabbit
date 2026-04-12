@@ -55,7 +55,8 @@ export async function fetchTipsPage() {
   if (!sanity) return null;
   try {
     const doc = await sanity.fetch(`*[_type == "tipsPage"][0]{
-      featuredEyebrow, featuredHeadingPrefix, featuredCtaLabel, heroImageUrl,
+      featuredEyebrow, featuredHeadingPrefix, featuredCtaLabel,
+      heroImage, heroImageUrl,
       categories[]{key, label},
       categoryCards[]{categoryKey, subcategoryLabel, title, body},
       footerQuote
@@ -68,14 +69,12 @@ export async function fetchTipsPage() {
 }
 
 export async function fetchHeroImage() {
-  console.log('[Sanity] isConfigured:', isConfigured, 'projectId:', projectId);
   if (!sanity) return null;
   try {
     const doc = await sanity.fetch(`*[_type == "heroImage"][0]{ image, alt }`);
-    console.log('[Sanity] fetchHeroImage result:', JSON.stringify(doc));
     return doc ?? null;
   } catch (err) {
-    console.warn('[Sanity] fetchHeroImage failed:', err.message, err);
+    console.warn('[Sanity] fetchHeroImage failed:', err.message);
     return null;
   }
 }
