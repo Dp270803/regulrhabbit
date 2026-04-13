@@ -7,10 +7,10 @@ import { trackOnboardingStarted, trackOnboardingStep, trackPlanCreated } from '.
 import chatbotFlow from '../data/chatbot-flow.json';
 import { useThemeColors, useTheme } from '../hooks/useTheme';
 
-const STEP_ORDER = ['goal', 'experience', 'days', 'equipment', 'split', 'schedule'];
+const STEP_ORDER = ['welcome', 'experience', 'days', 'equipment', 'split', 'schedule'];
 
 const STEP_LABELS = {
-  goal: 'What is your main goal?',
+  welcome: 'What is your main goal?',
   experience: 'Your experience level?',
   days: 'How many days per week?',
   equipment: 'What equipment do you have?',
@@ -19,22 +19,22 @@ const STEP_LABELS = {
 };
 
 const STEP_SUBTITLES = {
-  goal: 'All 20 programs build muscle. Your goal sets session length, not a different program.',
+  welcome: 'All 20 programs build muscle. Goal determines session length — not a different program.',
   experience: "Be honest — it shapes your program's volume and structure.",
   days: "A lower frequency you can stick to beats a higher one you can't.",
   split: 'Optional — only matters if your answers result in a tie between two equally good programs.',
-  schedule: "We'll schedule your sessions around these days.",
+  schedule: "We'll optimize your recovery based on your availability.",
 };
 
 const GOAL_LABELS = {
-  build_max: 'Build Muscle (Full Volume)',
+  build_max: 'Build Muscle',
   build_efficient: 'Build Muscle (Time-Efficient)',
   fat_loss: 'Fat Loss',
-  recomp: 'Body Recomposition',
+  recomp: 'Recomposition',
 };
 const EQUIPMENT_LABELS = {
-  'Full gym': 'Full Commercial Gym',
-  'Home gym': 'Home Gym (Barbell + Dumbbells)',
+  'Full gym': 'Full Gym',
+  'Home gym': 'Home Gym',
   'Dumbbells only': 'Dumbbells Only',
   'Bodyweight': 'Bodyweight Only',
 };
