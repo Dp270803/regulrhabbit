@@ -1,38 +1,66 @@
 {
   "steps": {
-    "welcome": {
-      "bot_message": "Hey. Let's build your gym plan. What's your main goal?",
+    "goal": {
+      "bot_message": "What is your main goal?",
+      "field": "gym_goal",
+      "note": "All 20 programs build muscle. Your goal determines session length — not a different program.",
       "options": [
-        { "label": "Build muscle and get bigger", "value": "muscle", "next": "experience" },
-        { "label": "Lose fat and get lean", "value": "fat_loss", "next": "experience" },
-        { "label": "Get stronger (powerlifting)", "value": "strength", "next": "experience" },
-        { "label": "General fitness and health", "value": "general", "next": "experience" }
-      ],
-      "field": "gym_goal"
+        { "label": "Build muscle & gain strength", "description": "Fully optimised version — more volume, 60–90 min sessions", "value": "build_max", "next": "experience" },
+        { "label": "Build muscle (limited time)", "description": "Time-efficient version — same results, 45–60 min sessions", "value": "build_efficient", "next": "experience" },
+        { "label": "Lose fat while maintaining muscle", "description": "Same training as muscle-building. Fat loss is driven by diet.", "value": "fat_loss", "next": "experience" },
+        { "label": "Body recomposition", "description": "Lose fat and gain muscle simultaneously — same training, adjust nutrition.", "value": "recomp", "next": "experience" }
+      ]
     },
     "experience": {
-      "bot_message": "How long have you been lifting consistently?",
+      "bot_message": "What is your training experience level?",
+      "field": "experience_level",
+      "note": "Based on years of serious, consistent training — not just time spent in a gym casually.",
       "options": [
-        { "label": "Brand new — never trained before", "value": "beginner_new", "next": "days" },
-        { "label": "Less than a year, still learning", "value": "beginner", "next": "days" },
-        { "label": "1–3 years, decent base", "value": "intermediate", "next": "days" },
-        { "label": "3+ years, advanced lifter", "value": "advanced", "next": "days" }
-      ],
-      "field": "experience_level"
+        { "label": "Beginner", "description": "Under ~1 year of serious training. You make strength progress workout to workout.", "value": "Beginner", "next": "days" },
+        { "label": "Intermediate", "description": "2–5 years of serious training. Progress happens week to week.", "value": "Intermediate", "next": "days" },
+        { "label": "Advanced", "description": "5–10 years of serious training. Progress happens over months.", "value": "Advanced", "next": "days" }
+      ]
     },
     "days": {
-      "bot_message": "How many days a week can you realistically commit?",
+      "bot_message": "How many days per week can you consistently train?",
+      "field": "frequency",
+      "note": "A lower frequency you can stick to is always better than a higher one you can't.",
       "options": [
-        { "label": "2 days — minimum effective dose", "value": 2, "next": "schedule" },
-        { "label": "3 days — ideal for most people", "value": 3, "next": "schedule" },
-        { "label": "4 days — solid upper/lower split", "value": 4, "next": "schedule" },
-        { "label": "5–6 days — high commitment", "value": 5, "next": "schedule" }
-      ],
-      "field": "frequency"
+        { "label": "2 days", "value": 2, "next": "equipment" },
+        { "label": "3 days", "value": 3, "next": "equipment" },
+        { "label": "4 days", "value": 4, "next": "equipment" },
+        { "label": "5 days", "value": 5, "next": "equipment" },
+        { "label": "6 days", "value": 6, "next": "equipment" }
+      ]
+    },
+    "equipment": {
+      "bot_message": "What equipment do you have access to?",
+      "field": "equipment",
+      "note": "Every exercise in every program has substitution options. Equipment affects exercise selection, not which program you follow.",
+      "options": [
+        { "label": "Full commercial gym", "description": "Barbells, dumbbells, cables, machines — all 20 programs available", "value": "Full gym", "next": "split" },
+        { "label": "Home gym", "description": "Barbell, dumbbells, rack and bench — all splits still work", "value": "Home gym", "next": "split" },
+        { "label": "Dumbbells only", "description": "Home or limited gym — full-body splits work best", "value": "Dumbbells only", "next": "split" },
+        { "label": "Bodyweight only", "description": "Works at beginner level — progressions will be limited without added resistance", "value": "Bodyweight", "next": "split" }
+      ]
+    },
+    "split": {
+      "bot_message": "Do you have a preferred training split?",
+      "field": "split_preference",
+      "optional": true,
+      "note": "This only matters if your other answers result in a tie between 2 equally good programs. If you have no preference, select the last option.",
+      "options": [
+        { "label": "Full Body", "description": "Every session trains all major muscle groups. Best for beginners and those who want flexibility — missing a session doesn't leave a muscle untrained.", "value": "Full Body", "next": "schedule" },
+        { "label": "Upper / Lower", "description": "Alternates upper and lower body days. A clean, popular split for intermediate lifters at 4–6 days/week.", "value": "Upper / Lower", "next": "schedule" },
+        { "label": "Push / Pull / Legs (PPL)", "description": "Push, Pull, Legs days — cycled twice over 6 days. Focused sessions with clear muscle group separation.", "value": "Push / Pull / Legs", "next": "schedule" },
+        { "label": "Hybrid (Upper/Lower + PPL)", "description": "Combines Upper/Lower and PPL across 5 days. Great for intermediate+ lifters wanting structure with variety.", "value": "Hybrid (Upper/Lower + PPL)", "next": "schedule" },
+        { "label": "No preference — just recommend one", "description": "We'll pick the best fit based on your other answers. Both tied programs are equally effective.", "value": "none", "next": "schedule" }
+      ]
     },
     "schedule": {
       "bot_message": "Which days work best for you?",
       "type": "multi_select",
+      "field": "scheduled_days",
       "options": [
         { "label": "Mon", "value": "monday" },
         { "label": "Tue", "value": "tuesday" },
@@ -42,33 +70,23 @@
         { "label": "Sat", "value": "saturday" },
         { "label": "Sun", "value": "sunday" }
       ],
-      "next": "equipment",
-      "field": "scheduled_days"
-    },
-    "equipment": {
-      "bot_message": "What equipment do you have access to?",
-      "options": [
-        { "label": "Full gym — barbells, dumbbells, machines", "value": "full_gym", "next": "summary" },
-        { "label": "Home gym — dumbbells and a bench", "value": "home_dumbbells", "next": "summary" },
-        { "label": "Bodyweight only", "value": "bodyweight", "next": "summary" }
-      ],
-      "field": "equipment"
+      "next": "summary"
     },
     "summary": {
-      "bot_message": "Perfect. Here's your plan:",
+      "bot_message": "Perfect. Here's your program:",
       "type": "summary",
       "next": "confirm"
     },
     "confirm": {
-      "bot_message": "Your 4-week gym plan is ready. First session: {first_day}.",
+      "bot_message": "Your Muscle Ladder program is ready.",
       "options": [
-        { "label": "Create my dashboard →", "value": "confirm", "next": "complete" }
+        { "label": "Start training →", "value": "confirm", "next": "complete" }
       ]
     },
     "complete": {
       "type": "complete",
-      "bot_message": "You're in. First session: {first_day}. Just show up."
+      "bot_message": "You're in. Just show up."
     }
   },
-  "initial_step": "welcome"
+  "initial_step": "goal"
 }

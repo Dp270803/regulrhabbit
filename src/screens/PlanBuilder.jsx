@@ -1,36 +1,43 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ConfettiEffect from '../components/ConfettiEffect';
-import { generatePlan } from '../utils/planGenerator';
+import { generatePlan, selectNippardProgram } from '../utils/planGenerator';
 import { getData, updateData } from '../utils/storage';
 import { trackOnboardingStarted, trackOnboardingStep, trackPlanCreated } from '../utils/analytics';
 import chatbotFlow from '../data/chatbot-flow.json';
 import { useThemeColors, useTheme } from '../hooks/useTheme';
 
-const STEP_ORDER = ['welcome', 'experience', 'days', 'schedule', 'equipment'];
+const STEP_ORDER = ['goal', 'experience', 'days', 'equipment', 'split', 'schedule'];
 
 const STEP_LABELS = {
-  welcome: 'What is your main goal?',
+  goal: 'What is your main goal?',
   experience: 'Your experience level?',
   days: 'How many days per week?',
-  schedule: 'Which specific days work for you?',
   equipment: 'What equipment do you have?',
+  split: 'Preferred training split?',
+  schedule: 'Which specific days work for you?',
 };
 
 const STEP_SUBTITLES = {
-  schedule: "We'll optimize your recovery based on your availability.",
-  equipment: "We'll only program what you can actually use.",
-  days: "Pick what's sustainable, not what sounds impressive.",
+  goal: 'All 20 programs build muscle. Your goal sets session length, not a different program.',
+  experience: "Be honest — it shapes your program's volume and structure.",
+  days: "A lower frequency you can stick to beats a higher one you can't.",
+  split: 'Optional — only matters if your answers result in a tie between two equally good programs.',
+  schedule: "We'll schedule your sessions around these days.",
 };
 
 const GOAL_LABELS = {
-  muscle: 'Muscle', fat_loss: 'Fat Loss',
-  strength: 'Strength', general: 'General Fitness',
+  build_max: 'Build Muscle (Full Volume)',
+  build_efficient: 'Build Muscle (Time-Efficient)',
+  fat_loss: 'Fat Loss',
+  recomp: 'Body Recomposition',
 };
 const EQUIPMENT_LABELS = {
-  full_gym: 'Full Gym', home_dumbbells: 'Home Gym (Dumbbells)', bodyweight: 'Bodyweight Only',
+  'Full gym': 'Full Commercial Gym',
+  'Home gym': 'Home Gym (Barbell + Dumbbells)',
+  'Dumbbells only': 'Dumbbells Only',
+  'Bodyweight': 'Bodyweight Only',
 };
-const PLAN_TYPE_LABELS = { 2: 'Full Body A/B', 3: 'Push / Pull / Legs', 4: 'Upper / Lower', 5: 'Upper / Lower' };
 
 export default function PlanBuilder() {
   const C = useThemeColors();
@@ -89,7 +96,7 @@ export default function PlanBuilder() {
     const label = multiSelect.map(d => d.charAt(0).toUpperCase() + d.slice(1, 3)).join(', ');
     trackOnboardingStep(stepIndex + 1, currentStep, label);
     setMultiSelect([]);
-    advanceStep(newAnswers, label, stepData.next || 'equipment');
+    advanceStep(newAnswers, label, stepData.next || 'summary');
   }
 
   async function handleComplete(finalAnswers) {
@@ -109,7 +116,7 @@ export default function PlanBuilder() {
         experience_level: enrichedAnswers.experience_level,
         frequency: enrichedAnswers.frequency,
         persona: 'neutral',
-        session_duration: enrichedAnswers.session_duration,
+        session_duration: enrichedAnswers.gym_goal === 'build_efficient' ? '45–60 min' : '60–90 min',
       });
       setTimeout(() => navigate('/dashboard'), 2000);
     } catch (err) {
@@ -131,32 +138,43 @@ export default function PlanBuilder() {
     if (currentStep === 'summary' || currentStep === 'confirm') {
       const confirmStep = chatbotFlow.steps['confirm'];
       const opt = confirmStep?.options?.[0];
+      const selectedProgram = selectNippardProgram(answers);
+      const isDietGoal = answers.gym_goal === 'fat_loss' || answers.gym_goal === 'recomp';
       return (
         <div>
           {/* Plan summary card */}
-          <div style={{ background: C.low, borderRadius: '16px', padding: '2rem', marginBottom: '2rem', maxWidth: '520px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
-              <p className="font-headline" style={{ fontSize: '1.1rem', fontWeight: 700 }}>Plan Summary</p>
-              <span style={{ color: C.primary, fontSize: '1.2rem' }}>◎</span>
-            </div>
+          <div style={{ background: C.low, borderRadius: '16px', padding: '2rem', marginBottom: '2rem', maxWidth: '520px', boxShadow: C.cardShadow }}>
+            {/* Program recommendation — hero row */}
+            {selectedProgram && (
+              <div style={{ marginBottom: '1.5rem', padding: '1.25rem', background: `rgba(${C.primaryRgb},0.06)`, borderRadius: '12px', border: `1px solid rgba(${C.primaryRgb},0.15)` }}>
+                <p style={{ fontSize: '0.55rem', fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: C.primary, marginBottom: '6px' }}>
+                  Muscle Ladder — Program {selectedProgram.number}
+                </p>
+                <p className="font-headline" style={{ fontSize: '1.15rem', fontWeight: 800, color: C.text, marginBottom: '4px', lineHeight: 1.2 }}>
+                  {selectedProgram.name}
+                </p>
+                <p style={{ fontSize: '0.78rem', color: C.faint }}>{selectedProgram.split} · {selectedProgram.session_duration}</p>
+              </div>
+            )}
+
             <div style={{ display: 'grid', gap: '1rem' }}>
               {[
-                { icon: '◉', label: 'Target Goal', value: GOAL_LABELS[answers.gym_goal] || answers.gym_goal },
-                { icon: '▦', label: 'Frequency', value: answers.frequency ? `${answers.frequency} Day${answers.frequency > 1 ? 's' : ''} / Week` : null,
+                { icon: '▦', label: 'Training Days', value: answers.frequency ? `${answers.frequency} Day${answers.frequency > 1 ? 's' : ''} / Week` : null,
                   sub: answers.scheduled_days?.map(d => d.charAt(0).toUpperCase() + d.slice(1, 3)).join(', '),
                   dots: answers.frequency,
                 },
-                { icon: '◈', label: 'Equipment Level', value: EQUIPMENT_LABELS[answers.equipment] || answers.equipment },
+                { icon: '◈', label: 'Equipment', value: EQUIPMENT_LABELS[answers.equipment] || answers.equipment },
+                { icon: '◉', label: 'Goal', value: GOAL_LABELS[answers.gym_goal] || answers.gym_goal },
               ].filter(r => r.value).map(({ icon, label, value, sub, dots }) => (
                 <div key={label} style={{ display: 'flex', alignItems: 'flex-start', gap: '16px' }}>
-                  <div style={{ width: '44px', height: '44px', background: C.highest, borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, color: C.primary, fontSize: '1.1rem' }}>{icon}</div>
+                  <div style={{ width: '40px', height: '40px', background: C.highest, borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, color: C.primary, fontSize: '1rem' }}>{icon}</div>
                   <div style={{ flex: 1 }}>
-                    <p style={{ fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.16em', textTransform: 'uppercase', color: C.faint, marginBottom: '4px' }}>{label}</p>
+                    <p style={{ fontSize: '0.55rem', fontWeight: 700, letterSpacing: '0.16em', textTransform: 'uppercase', color: C.faint, marginBottom: '4px' }}>{label}</p>
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '8px' }}>
-                      <p className="font-headline" style={{ fontSize: '1.1rem', fontWeight: 700 }}>{value}</p>
+                      <p style={{ fontSize: '1rem', fontWeight: 700 }}>{value}</p>
                       {dots && (
                         <div style={{ display: 'flex', gap: '3px' }}>
-                          {[1,2,3,4,5].map(i => (
+                          {[1,2,3,4,5,6].map(i => (
                             <div key={i} style={{ width: '7px', height: '7px', borderRadius: '2px', background: i <= dots ? C.primary : C.highest }} />
                           ))}
                         </div>
@@ -167,11 +185,18 @@ export default function PlanBuilder() {
                 </div>
               ))}
             </div>
-            {/* Info box */}
-            <div style={{ marginTop: '1.5rem', padding: '1rem', background: C.lowest, borderRadius: '10px', borderLeft: `2px solid rgba(${C.primaryRgb},0.3)`, display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
-              <span style={{ color: C.primary, flexShrink: 0, marginTop: '1px' }}>ⓘ</span>
-              <p style={{ fontSize: '0.8rem', color: C.faint, lineHeight: 1.6 }}>Your plan has been optimized based on your inputs. You can adjust frequency at any time from settings.</p>
-            </div>
+
+            {/* Diet note for fat loss / recomp */}
+            {isDietGoal && (
+              <div style={{ marginTop: '1.5rem', padding: '1rem', background: C.lowest, borderRadius: '10px', borderLeft: `2px solid rgba(${C.primaryRgb},0.3)`, display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+                <span style={{ color: C.primary, flexShrink: 0, marginTop: '1px' }}>ⓘ</span>
+                <p style={{ fontSize: '0.78rem', color: C.faint, lineHeight: 1.6 }}>
+                  {answers.gym_goal === 'fat_loss'
+                    ? 'Fat loss is achieved through a 10–20% caloric deficit — not a different training program. Follow this program and adjust your nutrition.'
+                    : 'Recomposition works best at or near maintenance calories with high protein. Same training program as muscle-building.'}
+                </p>
+              </div>
+            )}
           </div>
 
           {/* CTA */}
@@ -267,6 +292,40 @@ export default function PlanBuilder() {
 
     if (!step.options) return null;
 
+    const hasDescriptions = step.options.some(opt => opt.description);
+
+    if (hasDescriptions) {
+      // Card-style options (experience, equipment, split, goal)
+      return (
+        <div key={currentStep} style={{ display: 'flex', flexDirection: 'column', gap: '10px', maxWidth: '520px' }}>
+          {step.options.map((opt, i) => (
+            <button
+              key={`${currentStep}-${i}`}
+              onClick={() => handleOptionSelect(opt)}
+              style={{
+                padding: '14px 18px', borderRadius: '12px', textAlign: 'left',
+                background: C.high, border: `1px solid ${C.border}`,
+                color: C.text, fontFamily: 'Manrope, sans-serif',
+                cursor: 'pointer', transition: 'all 0.12s', width: '100%',
+              }}
+              onMouseEnter={e => {
+                e.currentTarget.style.background = `rgba(${C.primaryRgb},0.08)`;
+                e.currentTarget.style.borderColor = C.primary;
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.background = C.high;
+                e.currentTarget.style.borderColor = C.border;
+              }}
+            >
+              <div style={{ fontWeight: 700, fontSize: '0.95rem', color: C.text, marginBottom: opt.description ? '3px' : 0 }}>{opt.label}</div>
+              {opt.description && <div style={{ fontSize: '0.78rem', color: C.faint, lineHeight: 1.45 }}>{opt.description}</div>}
+            </button>
+          ))}
+        </div>
+      );
+    }
+
+    // Pill-style options (days: 2, 3, 4, 5, 6)
     return (
       <div key={currentStep} style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
         {step.options.map((opt, i) => (
