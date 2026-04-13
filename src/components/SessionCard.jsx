@@ -29,13 +29,19 @@ const EXERCISE_TAGS = {
 };
 
 function parseExercises(detail) {
+  if (!detail) return [];
   return detail
-    .split(',')
+    .split(/\s*\|\s*|\s*,\s*/)
     .map(s => s.trim())
+    .filter(Boolean)
+    .flatMap(item => {
+      const clean = item.replace(/^Superset\s+\d+:\s*/i, '').trim();
+      return clean.includes(' + ') ? clean.split(' + ').map(s => s.trim()) : [clean];
+    })
     .map(item => {
-      const match = item.match(/^(.+?)\s+(\d+x\d+(?:-\d+)?)(\s+.*)?$/);
+      const match = item.match(/^(.+?)\s+(\d+[x×]\d+(?:-\d+)?)(\s+.*)?$/);
       if (match) {
-        return { name: match[1].trim(), sets: match[2], note: match[3]?.trim() || '' };
+        return { name: match[1].trim(), sets: match[2].replace('×', 'x'), note: match[3]?.trim() || '' };
       }
       return { name: item, sets: '-', note: '' };
     })
