@@ -1,0 +1,867 @@
+{
+  "title": "The Muscle Ladder \u2013 Program Selector",
+  "source": "Jeff Nippard \u2013 The Muscle Ladder: Get Jacked Using Science (Chapter 15)",
+  "description": "4 required questions + 1 optional question. Each answer filters the 20 programs from Chapter 15 down to the one best suited to you. Q5 (split preference) is optional \u2014 it only comes into play when your first 4 answers result in a tie between 2 programs.",
+  "questions": [
+    {
+      "id": "Q1",
+      "order": 1,
+      "question": "What is your main goal?",
+      "note": "The book frames all 20 programs around muscle and strength gain. The goal question determines whether you follow the fully optimised version (more volume, more time) or the time-efficient version (leaner, faster). Fat loss and recomposition are achieved through diet, not a different program \u2014 the training stays the same.",
+      "options": [
+        {
+          "id": "Q1A",
+          "label": "Build muscle and gain strength (maximise results)",
+          "maps_to_book_goal": "Build muscle and gain strength",
+          "session_duration": "60\u201390 min"
+        },
+        {
+          "id": "Q1B",
+          "label": "Build muscle and gain strength (limited time available)",
+          "maps_to_book_goal": "Time-limited muscle and strength gain",
+          "session_duration": "45\u201360 min"
+        },
+        {
+          "id": "Q1C",
+          "label": "Lose fat while maintaining muscle",
+          "maps_to_book_goal": "Build muscle and gain strength",
+          "session_duration": "60\u201390 min",
+          "diet_note": "Training program is identical to muscle-building. Fat loss is driven by a 10\u201320% caloric deficit in your diet, not a different program. Pick the program that matches your level and schedule, then adjust your nutrition."
+        },
+        {
+          "id": "Q1D",
+          "label": "Body recomposition (lose fat and gain muscle simultaneously)",
+          "maps_to_book_goal": "Build muscle and gain strength",
+          "session_duration": "60\u201390 min",
+          "diet_note": "Recomp is realistic especially for beginners and those with higher body fat. Keep calories at maintenance and prioritise protein. Same training program as muscle-building."
+        }
+      ]
+    },
+    {
+      "id": "Q2",
+      "order": 2,
+      "question": "What is your training experience level?",
+      "note": "Based on years of serious, consistent training \u2014 not just time spent in a gym casually.",
+      "options": [
+        {
+          "id": "Q2A",
+          "label": "Beginner",
+          "description": "Under ~1 year of serious training. You make strength progress workout to workout. Beginner programs use more machine-based exercises, which are easier to learn safely.",
+          "book_level": "Beginner"
+        },
+        {
+          "id": "Q2B",
+          "label": "Intermediate",
+          "description": "2\u20135 years of serious training. Progress happens week to week.",
+          "book_level": "Intermediate"
+        },
+        {
+          "id": "Q2C",
+          "label": "Advanced",
+          "description": "5\u201310 years of serious training. Progress happens over months. Requires higher volume and more training days to keep progressing.",
+          "book_level": "Advanced"
+        }
+      ]
+    },
+    {
+      "id": "Q3",
+      "order": 3,
+      "question": "How many days per week can you consistently train?",
+      "note": "Sustainability is a core principle. A lower frequency you can stick to is always better than a higher frequency you can't. More days is not automatically better \u2014 recovery matters equally.",
+      "options": [
+        {
+          "id": "Q3A",
+          "label": "2 days"
+        },
+        {
+          "id": "Q3B",
+          "label": "3 days"
+        },
+        {
+          "id": "Q3C",
+          "label": "4 days"
+        },
+        {
+          "id": "Q3D",
+          "label": "5 days"
+        },
+        {
+          "id": "Q3E",
+          "label": "6 days"
+        }
+      ]
+    },
+    {
+      "id": "Q4",
+      "order": 4,
+      "question": "What equipment do you have access to?",
+      "note": "The book states that exercise selection matters less than technique, effort, and volume. Every exercise in every program has 2 substitution options for missing equipment. Equipment primarily affects which exercises you do within a program \u2014 not which program number you follow. However, a full commercial gym unlocks all programs equally, while limited setups may constrain some splits.",
+      "options": [
+        {
+          "id": "Q4A",
+          "label": "Full commercial gym (barbells, dumbbells, cables, machines)",
+          "constraint": "none \u2014 all 20 programs are available",
+          "equipment_list": [
+            "barbell",
+            "dumbbells",
+            "cable machine",
+            "machines",
+            "bench",
+            "rack"
+          ]
+        },
+        {
+          "id": "Q4B",
+          "label": "Home gym with barbell, dumbbells, rack and bench",
+          "constraint": "minor \u2014 cable and machine exercises need substitution with free-weight equivalents. All splits still work.",
+          "equipment_list": [
+            "barbell",
+            "dumbbells",
+            "bench",
+            "power rack"
+          ],
+          "substitution_note": "Swap any cable or machine exercise for the free-weight alternative listed in each program. The book explicitly supports this."
+        },
+        {
+          "id": "Q4C",
+          "label": "Dumbbells only (home or limited gym)",
+          "constraint": "moderate \u2014 barbell primary lifts (squat, bench, deadlift, OHP) need dumbbell substitutions. Full-body splits work best. Heavy compound progressions are harder to track.",
+          "equipment_list": [
+            "dumbbells",
+            "bench (optional)"
+          ],
+          "substitution_note": "Replace barbell exercises with dumbbell equivalents: DB goblet squat, DB Romanian deadlift, DB bench press, DB shoulder press. The book provides substitution options for every exercise."
+        },
+        {
+          "id": "Q4D",
+          "label": "Bodyweight only",
+          "constraint": "significant \u2014 the book is designed around resistance training with weights. Bodyweight works for beginners at low frequencies but limits progression at intermediate/advanced levels.",
+          "equipment_list": [
+            "bodyweight",
+            "pull-up bar (optional)"
+          ],
+          "substitution_note": "The book's minimal example (3 exercises: goblet squat, push-up, dumbbell row) shows bodyweight can work at beginner level. Advanced progressions will be limited without added resistance."
+        }
+      ]
+    },
+    {
+      "id": "Q5",
+      "order": 5,
+      "question": "Do you have a preferred training split structure?",
+      "optional": true,
+      "note": "This question only matters when your other answers return 2 programs (a tie). If you have no preference, skip it \u2014 both options in a tie are equally effective. Not all splits are available at every level and day combination; only the splits available to you based on Q1\u2013Q4 will apply.",
+      "options": [
+        {
+          "id": "Q5A",
+          "label": "Full Body",
+          "description": "Every session trains all major muscle groups. High frequency per muscle. Best for beginners and those who want flexibility \u2014 missing a session doesn't leave a muscle group untrained for the week.",
+          "available_in_programs": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            9,
+            10,
+            11,
+            12,
+            13
+          ]
+        },
+        {
+          "id": "Q5B",
+          "label": "Upper / Lower",
+          "description": "Alternates between upper body days and lower body days. A clean, popular split for intermediate lifters. 4\u20136 days/week. Allows higher volume per session for each half of the body.",
+          "available_in_programs": [
+            6,
+            7,
+            8,
+            16,
+            17
+          ]
+        },
+        {
+          "id": "Q5C",
+          "label": "Push / Pull / Legs (PPL)",
+          "description": "Push day (chest, shoulders, triceps), Pull day (back, biceps), Legs day \u2014 repeated twice over 6 days. Focused sessions, clear muscle group separation. A favourite for intermediate and advanced lifters at 6 days.",
+          "available_in_programs": [
+            18,
+            19,
+            20
+          ]
+        },
+        {
+          "id": "Q5D",
+          "label": "Hybrid (Upper/Lower + PPL)",
+          "description": "Combines Upper/Lower and PPL across 5 days. More variety than either split alone. Best for intermediate and advanced lifters who want structured variety without going to 6 days.",
+          "available_in_programs": [
+            14,
+            15
+          ]
+        },
+        {
+          "id": "Q5E",
+          "label": "No preference \u2014 let the other answers decide",
+          "description": "Skip this question. The decision map will recommend both tied programs and you can choose freely.",
+          "available_in_programs": "all"
+        }
+      ],
+      "how_it_resolves_ties": {
+        "description": "When Q1\u2013Q4 return 2 programs, Q5 picks one. Map of ties and how Q5 resolves them:",
+        "ties": [
+          {
+            "scenario": "Beginner + 4 days + 60\u201390 min + Full gym or Home gym",
+            "tied_programs": [
+              6,
+              9
+            ],
+            "Q5A_Full_Body": 9,
+            "Q5B_Upper_Lower": 6,
+            "Q5C_PPL": "not available at this combination",
+            "Q5D_Hybrid": "not available at this combination"
+          },
+          {
+            "scenario": "Intermediate or Advanced + 4 days + 60\u201390 min + Full gym or Home gym",
+            "tied_programs": [
+              7,
+              10
+            ],
+            "Q5A_Full_Body": 10,
+            "Q5B_Upper_Lower": 7,
+            "Q5C_PPL": "not available at this combination",
+            "Q5D_Hybrid": "not available at this combination"
+          },
+          {
+            "scenario": "Any level + 4 days + 45\u201360 min + Full gym, Home gym, or Dumbbells",
+            "tied_programs": [
+              8,
+              11
+            ],
+            "Q5A_Full_Body": 11,
+            "Q5B_Upper_Lower": 8,
+            "Q5C_PPL": "not available at this combination",
+            "Q5D_Hybrid": "not available at this combination"
+          },
+          {
+            "scenario": "Advanced + 5 days + 60\u201390 min + Full gym",
+            "tied_programs": [
+              12,
+              14
+            ],
+            "Q5A_Full_Body": 12,
+            "Q5B_Upper_Lower": "not available at this combination",
+            "Q5C_PPL": "not available at this combination",
+            "Q5D_Hybrid": 14
+          },
+          {
+            "scenario": "Advanced + 5 days + 45\u201360 min + Full gym",
+            "tied_programs": [
+              13,
+              15
+            ],
+            "Q5A_Full_Body": 13,
+            "Q5B_Upper_Lower": "not available at this combination",
+            "Q5C_PPL": "not available at this combination",
+            "Q5D_Hybrid": 15
+          },
+          {
+            "scenario": "Intermediate or Advanced + 6 days + 60\u201390 min + Full gym",
+            "tied_programs": [
+              16,
+              19
+            ],
+            "Q5A_Full_Body": "not available at this combination",
+            "Q5B_Upper_Lower": 16,
+            "Q5C_PPL": 19,
+            "Q5D_Hybrid": "not available at this combination"
+          },
+          {
+            "scenario": "Any level + 6 days + 45\u201360 min + Full gym",
+            "tied_programs": [
+              17,
+              20
+            ],
+            "Q5A_Full_Body": "not available at this combination",
+            "Q5B_Upper_Lower": 17,
+            "Q5C_PPL": 20,
+            "Q5D_Hybrid": "not available at this combination"
+          }
+        ]
+      }
+    }
+  ],
+  "programs": [
+    {
+      "number": 1,
+      "name": "Full-Body Split 2x/Week",
+      "split": "Full Body",
+      "days_per_week": 2,
+      "session_duration": "60\u201390 min",
+      "level": [
+        "Beginner"
+      ],
+      "book_goal": "Build muscle and gain strength",
+      "equipment_needed": "Full gym or home gym with barbell + dumbbells",
+      "notes": "Best starting point for beginners who can only commit to 2 days. Machine-based exercises recommended but free-weight swaps are fine."
+    },
+    {
+      "number": 2,
+      "name": "Full-Body Split 2x/Week (Time-Efficient)",
+      "split": "Full Body",
+      "days_per_week": 2,
+      "session_duration": "45\u201360 min",
+      "level": [
+        "Beginner",
+        "Intermediate",
+        "Advanced"
+      ],
+      "book_goal": "Time-limited muscle and strength gain",
+      "equipment_needed": "Full gym, home gym, or dumbbells only",
+      "notes": "Works for all levels when time per session is constrained. Fewer exercises, some supersets to maintain volume within the shorter window."
+    },
+    {
+      "number": 3,
+      "name": "Full-Body Split 3x/Week",
+      "split": "Full Body",
+      "days_per_week": 3,
+      "session_duration": "60\u201390 min",
+      "level": [
+        "Beginner"
+      ],
+      "book_goal": "Build muscle and gain strength",
+      "equipment_needed": "Full gym or home gym with barbell + dumbbells",
+      "notes": "Ideal entry point for most beginners. 3 full-body sessions with rest days in between for full recovery."
+    },
+    {
+      "number": 4,
+      "name": "Full-Body Split 3x/Week",
+      "split": "Full Body",
+      "days_per_week": 3,
+      "session_duration": "60\u201390 min",
+      "level": [
+        "Intermediate",
+        "Advanced"
+      ],
+      "book_goal": "Build muscle and gain strength",
+      "equipment_needed": "Full gym or home gym with barbell + dumbbells",
+      "notes": "Higher volume and more exercise variety than Program 3. Intermediate and advanced lifters need more total sets to keep progressing."
+    },
+    {
+      "number": 5,
+      "name": "Full-Body Split 3x/Week (Time-Efficient)",
+      "split": "Full Body",
+      "days_per_week": 3,
+      "session_duration": "45\u201360 min",
+      "level": [
+        "Beginner",
+        "Intermediate",
+        "Advanced"
+      ],
+      "book_goal": "Time-limited muscle and strength gain",
+      "equipment_needed": "Full gym, home gym, or dumbbells only",
+      "notes": "Streamlined version of 3x/week full body. Works across all levels when session time is tight."
+    },
+    {
+      "number": 6,
+      "name": "Upper/Lower Split 4x/Week",
+      "split": "Upper / Lower",
+      "days_per_week": 4,
+      "session_duration": "60\u201390 min",
+      "level": [
+        "Beginner"
+      ],
+      "book_goal": "Build muscle and gain strength",
+      "equipment_needed": "Full gym or home gym with barbell + dumbbells",
+      "notes": "Introduces the Upper/Lower split to beginners at 4 days. Allows dedicated focus on upper or lower body each session while still recovering well."
+    },
+    {
+      "number": 7,
+      "name": "Upper/Lower Split 4x/Week",
+      "split": "Upper / Lower",
+      "days_per_week": 4,
+      "session_duration": "60\u201390 min",
+      "level": [
+        "Intermediate",
+        "Advanced"
+      ],
+      "book_goal": "Build muscle and gain strength",
+      "equipment_needed": "Full gym or home gym with barbell + dumbbells",
+      "notes": "One of the most popular and well-supported intermediate programs. Higher volume, more exercise variety, and greater intensity than the beginner version."
+    },
+    {
+      "number": 8,
+      "name": "Upper/Lower Split 4x/Week (Time-Efficient)",
+      "split": "Upper / Lower",
+      "days_per_week": 4,
+      "session_duration": "45\u201360 min",
+      "level": [
+        "Beginner",
+        "Intermediate",
+        "Advanced"
+      ],
+      "book_goal": "Time-limited muscle and strength gain",
+      "equipment_needed": "Full gym or home gym with barbell + dumbbells",
+      "notes": "Time-efficient Upper/Lower. Supersets are used to fit quality volume into shorter sessions."
+    },
+    {
+      "number": 9,
+      "name": "Full-Body Split 4x/Week",
+      "split": "Full Body",
+      "days_per_week": 4,
+      "session_duration": "60\u201390 min",
+      "level": [
+        "Beginner"
+      ],
+      "book_goal": "Build muscle and gain strength",
+      "equipment_needed": "Full gym or home gym with barbell + dumbbells",
+      "notes": "Alternative to Program 6 for beginners who prefer full-body training at 4 days rather than an Upper/Lower split."
+    },
+    {
+      "number": 10,
+      "name": "Full-Body Split 4x/Week",
+      "split": "Full Body",
+      "days_per_week": 4,
+      "session_duration": "60\u201390 min",
+      "level": [
+        "Intermediate",
+        "Advanced"
+      ],
+      "book_goal": "Build muscle and gain strength",
+      "equipment_needed": "Full gym or home gym with barbell + dumbbells",
+      "notes": "Alternative to Program 7. Choose this over 7 if you prefer hitting each muscle group every session rather than splitting upper/lower."
+    },
+    {
+      "number": 11,
+      "name": "Full-Body Split 4x/Week (Time-Efficient)",
+      "split": "Full Body",
+      "days_per_week": 4,
+      "session_duration": "45\u201360 min",
+      "level": [
+        "Beginner",
+        "Intermediate",
+        "Advanced"
+      ],
+      "book_goal": "Time-limited muscle and strength gain",
+      "equipment_needed": "Full gym, home gym, or dumbbells only",
+      "notes": "Time-efficient full-body at 4 days. Alternative to Program 8 if you prefer full-body over Upper/Lower."
+    },
+    {
+      "number": 12,
+      "name": "Full-Body Split 5x/Week",
+      "split": "Full Body",
+      "days_per_week": 5,
+      "session_duration": "60\u201390 min",
+      "level": [
+        "Advanced"
+      ],
+      "book_goal": "Build muscle and gain strength",
+      "equipment_needed": "Full gym",
+      "notes": "High-frequency full-body for advanced lifters only. Demands strong recovery capacity. Not recommended for beginners or intermediates."
+    },
+    {
+      "number": 13,
+      "name": "Full-Body Split 5x/Week (Time-Efficient)",
+      "split": "Full Body",
+      "days_per_week": 5,
+      "session_duration": "45\u201360 min",
+      "level": [
+        "Advanced"
+      ],
+      "book_goal": "Time-limited muscle and strength gain",
+      "equipment_needed": "Full gym",
+      "notes": "Advanced 5-day full-body condensed into shorter sessions. Best for advanced lifters with limited time but high training frequency."
+    },
+    {
+      "number": 14,
+      "name": "Upper/Lower + Push/Pull/Legs Hybrid 5x/Week",
+      "split": "Hybrid (Upper/Lower + PPL)",
+      "days_per_week": 5,
+      "session_duration": "60\u201390 min",
+      "level": [
+        "Intermediate",
+        "Advanced"
+      ],
+      "book_goal": "Build muscle and gain strength",
+      "equipment_needed": "Full gym",
+      "notes": "Combines the Upper/Lower and PPL structures across 5 days. More variety and greater per-muscle frequency than a standard 5-day split."
+    },
+    {
+      "number": 15,
+      "name": "Upper/Lower + Push/Pull/Legs Hybrid 5x/Week (Time-Efficient)",
+      "split": "Hybrid (Upper/Lower + PPL)",
+      "days_per_week": 5,
+      "session_duration": "45\u201360 min",
+      "level": [
+        "Beginner",
+        "Intermediate",
+        "Advanced"
+      ],
+      "book_goal": "Time-limited muscle and strength gain",
+      "equipment_needed": "Full gym",
+      "notes": "Time-efficient hybrid 5-day. The 'all levels' label means the time constraint is the dominant factor here, not experience."
+    },
+    {
+      "number": 16,
+      "name": "Upper/Lower Split 6x/Week",
+      "split": "Upper / Lower",
+      "days_per_week": 6,
+      "session_duration": "60\u201390 min",
+      "level": [
+        "Intermediate",
+        "Advanced"
+      ],
+      "book_goal": "Build muscle and gain strength",
+      "equipment_needed": "Full gym",
+      "notes": "Very high volume Upper/Lower. 3 upper days and 3 lower days per week. Requires solid recovery habits: sleep, nutrition, and stress management."
+    },
+    {
+      "number": 17,
+      "name": "Upper/Lower Split 6x/Week (Time-Efficient)",
+      "split": "Upper / Lower",
+      "days_per_week": 6,
+      "session_duration": "45\u201360 min",
+      "level": [
+        "Beginner",
+        "Intermediate",
+        "Advanced"
+      ],
+      "book_goal": "Time-limited muscle and strength gain",
+      "equipment_needed": "Full gym",
+      "notes": "High frequency but shorter sessions. Useful when you can train 6 days but have limited time each day."
+    },
+    {
+      "number": 18,
+      "name": "Push/Pull/Legs Split 6x/Week",
+      "split": "Push / Pull / Legs",
+      "days_per_week": 6,
+      "session_duration": "60\u201390 min",
+      "level": [
+        "Beginner"
+      ],
+      "book_goal": "Build muscle and gain strength",
+      "equipment_needed": "Full gym",
+      "notes": "Beginner PPL at 6 days. Each muscle group is hit twice per week. Sessions are focused and shorter per body part compared to full-body workouts."
+    },
+    {
+      "number": 19,
+      "name": "Push/Pull/Legs Split 6x/Week",
+      "split": "Push / Pull / Legs",
+      "days_per_week": 6,
+      "session_duration": "60\u201390 min",
+      "level": [
+        "Intermediate",
+        "Advanced"
+      ],
+      "book_goal": "Build muscle and gain strength",
+      "equipment_needed": "Full gym",
+      "notes": "Classic PPL for serious lifters. Higher volume and intensity than the beginner version. Each push, pull, and leg day is trained twice per week."
+    },
+    {
+      "number": 20,
+      "name": "Push/Pull/Legs Split 6x/Week (Time-Efficient)",
+      "split": "Push / Pull / Legs",
+      "days_per_week": 6,
+      "session_duration": "45\u201360 min",
+      "level": [
+        "Beginner",
+        "Intermediate",
+        "Advanced"
+      ],
+      "book_goal": "Time-limited muscle and strength gain",
+      "equipment_needed": "Full gym",
+      "notes": "PPL at 6 days but each session kept to 45\u201360 min. Good when you love high frequency but are crunched for time per session."
+    }
+  ],
+  "decision_map": {
+    "description": "Combine your 4 answers to find your program. Key: goal \u2192 session duration (Q1), level \u2192 Q2, days \u2192 Q3, equipment \u2192 Q4 (secondary filter).",
+    "how_goal_maps_to_duration": {
+      "Q1A_Build_muscle_maximise": "60\u201390 min programs",
+      "Q1B_Build_muscle_limited_time": "45\u201360 min programs",
+      "Q1C_Lose_fat": "60\u201390 min programs (same training as muscle-building; fat loss via diet)",
+      "Q1D_Recomposition": "60\u201390 min programs (same training as muscle-building; recomp via diet)"
+    },
+    "entries": [
+      {
+        "level": "Beginner",
+        "days": 2,
+        "duration": "60\u201390 min",
+        "equipment": [
+          "Full gym",
+          "Home gym"
+        ],
+        "recommended": [
+          1
+        ],
+        "tiebreaker": null
+      },
+      {
+        "level": "Any",
+        "days": 2,
+        "duration": "45\u201360 min",
+        "equipment": [
+          "Full gym",
+          "Home gym",
+          "Dumbbells only"
+        ],
+        "recommended": [
+          2
+        ],
+        "tiebreaker": null
+      },
+      {
+        "level": "Beginner",
+        "days": 3,
+        "duration": "60\u201390 min",
+        "equipment": [
+          "Full gym",
+          "Home gym",
+          "Dumbbells only"
+        ],
+        "recommended": [
+          3
+        ],
+        "equipment_note": "Use dumbbell substitutions within Program 3 if no barbell."
+      },
+      {
+        "level": "Intermediate",
+        "days": 3,
+        "duration": "60\u201390 min",
+        "equipment": [
+          "Full gym",
+          "Home gym",
+          "Dumbbells only"
+        ],
+        "recommended": [
+          4
+        ],
+        "equipment_note": "Use dumbbell substitutions within Program 4 if no barbell."
+      },
+      {
+        "level": "Advanced",
+        "days": 3,
+        "duration": "60\u201390 min",
+        "equipment": [
+          "Full gym",
+          "Home gym",
+          "Dumbbells only"
+        ],
+        "recommended": [
+          4
+        ],
+        "equipment_note": "Use dumbbell substitutions within Program 4 if no barbell."
+      },
+      {
+        "level": "Any",
+        "days": 3,
+        "duration": "45\u201360 min",
+        "equipment": [
+          "Full gym",
+          "Home gym",
+          "Dumbbells only"
+        ],
+        "recommended": [
+          5
+        ]
+      },
+      {
+        "level": "Beginner",
+        "days": 4,
+        "duration": "60\u201390 min",
+        "equipment": [
+          "Full gym",
+          "Home gym"
+        ],
+        "recommended": [
+          6,
+          9
+        ],
+        "tiebreaker": "Program 6 = Upper/Lower. Program 9 = Full Body. Same muscle stimulus, different structure. Pick whichever split you prefer."
+      },
+      {
+        "level": "Beginner",
+        "days": 4,
+        "duration": "60\u201390 min",
+        "equipment": [
+          "Dumbbells only"
+        ],
+        "recommended": [
+          9
+        ],
+        "equipment_note": "Full Body is better suited to dumbbell-only setups. Use dumbbell substitutions within Program 9."
+      },
+      {
+        "level": "Intermediate",
+        "days": 4,
+        "duration": "60\u201390 min",
+        "equipment": [
+          "Full gym",
+          "Home gym"
+        ],
+        "recommended": [
+          7,
+          10
+        ],
+        "tiebreaker": "Program 7 = Upper/Lower. Program 10 = Full Body. Upper/Lower is slightly more common at this level, but both are equally effective."
+      },
+      {
+        "level": "Advanced",
+        "days": 4,
+        "duration": "60\u201390 min",
+        "equipment": [
+          "Full gym",
+          "Home gym"
+        ],
+        "recommended": [
+          7,
+          10
+        ],
+        "tiebreaker": "Program 7 = Upper/Lower. Program 10 = Full Body. Same tiebreaker as intermediate."
+      },
+      {
+        "level": "Any",
+        "days": 4,
+        "duration": "45\u201360 min",
+        "equipment": [
+          "Full gym",
+          "Home gym",
+          "Dumbbells only"
+        ],
+        "recommended": [
+          8,
+          11
+        ],
+        "tiebreaker": "Program 8 = Upper/Lower time-efficient. Program 11 = Full Body time-efficient. Pick based on split preference."
+      },
+      {
+        "level": "Intermediate",
+        "days": 5,
+        "duration": "60\u201390 min",
+        "equipment": [
+          "Full gym"
+        ],
+        "recommended": [
+          14
+        ]
+      },
+      {
+        "level": "Advanced",
+        "days": 5,
+        "duration": "60\u201390 min",
+        "equipment": [
+          "Full gym"
+        ],
+        "recommended": [
+          12,
+          14
+        ],
+        "tiebreaker": "Program 12 = Full Body 5x (advanced only, very high frequency). Program 14 = Hybrid Upper/Lower + PPL (more split variety). Program 14 is more commonly recommended."
+      },
+      {
+        "level": "Beginner",
+        "days": 5,
+        "duration": "45\u201360 min",
+        "equipment": [
+          "Full gym"
+        ],
+        "recommended": [
+          15
+        ]
+      },
+      {
+        "level": "Intermediate",
+        "days": 5,
+        "duration": "45\u201360 min",
+        "equipment": [
+          "Full gym"
+        ],
+        "recommended": [
+          15
+        ]
+      },
+      {
+        "level": "Advanced",
+        "days": 5,
+        "duration": "45\u201360 min",
+        "equipment": [
+          "Full gym"
+        ],
+        "recommended": [
+          13,
+          15
+        ],
+        "tiebreaker": "Program 13 = Full Body 5x time-efficient (advanced only). Program 15 = Hybrid time-efficient (all levels). Program 13 is full-body frequency; Program 15 adds split structure."
+      },
+      {
+        "level": "Beginner",
+        "days": 6,
+        "duration": "60\u201390 min",
+        "equipment": [
+          "Full gym"
+        ],
+        "recommended": [
+          18
+        ]
+      },
+      {
+        "level": "Intermediate",
+        "days": 6,
+        "duration": "60\u201390 min",
+        "equipment": [
+          "Full gym"
+        ],
+        "recommended": [
+          16,
+          19
+        ],
+        "tiebreaker": "Program 16 = Upper/Lower 6x (more volume per muscle per session). Program 19 = PPL 6x (more focused, shorter sessions per muscle group). Both train each muscle twice per week."
+      },
+      {
+        "level": "Advanced",
+        "days": 6,
+        "duration": "60\u201390 min",
+        "equipment": [
+          "Full gym"
+        ],
+        "recommended": [
+          16,
+          19
+        ],
+        "tiebreaker": "Same as intermediate. Program 16 = Upper/Lower. Program 19 = PPL."
+      },
+      {
+        "level": "Any",
+        "days": 6,
+        "duration": "45\u201360 min",
+        "equipment": [
+          "Full gym"
+        ],
+        "recommended": [
+          17,
+          20
+        ],
+        "tiebreaker": "Program 17 = Upper/Lower time-efficient. Program 20 = PPL time-efficient. Pick based on split preference."
+      }
+    ]
+  },
+  "equipment_substitution_guide": {
+    "description": "When you lack certain equipment, apply these swaps within whichever program is recommended. Every exercise in the book comes with 2 built-in substitution options.",
+    "rules": [
+      {
+        "missing": "Cable machine",
+        "substitute_with": "Dumbbell equivalent (e.g. cable fly \u2192 dumbbell fly, cable row \u2192 dumbbell row, cable curl \u2192 dumbbell curl)"
+      },
+      {
+        "missing": "Barbell",
+        "substitute_with": "Dumbbell equivalent (e.g. barbell squat \u2192 goblet squat, barbell bench press \u2192 DB bench press, barbell deadlift \u2192 DB Romanian deadlift, barbell OHP \u2192 DB shoulder press)"
+      },
+      {
+        "missing": "Machines (leg press, chest press, etc.)",
+        "substitute_with": "Free-weight compound equivalent (e.g. leg press \u2192 goblet squat, chest press machine \u2192 push-up or DB bench press)"
+      },
+      {
+        "missing": "Pull-up bar",
+        "substitute_with": "DB row or cable row for vertical pull movements"
+      }
+    ]
+  }
+}
