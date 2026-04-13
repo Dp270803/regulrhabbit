@@ -292,40 +292,6 @@ export default function PlanBuilder() {
 
     if (!step.options) return null;
 
-    const hasDescriptions = step.options.some(opt => opt.description);
-
-    if (hasDescriptions) {
-      // Card-style options (experience, equipment, split, goal)
-      return (
-        <div key={currentStep} style={{ display: 'flex', flexDirection: 'column', gap: '10px', maxWidth: '520px' }}>
-          {step.options.map((opt, i) => (
-            <button
-              key={`${currentStep}-${i}`}
-              onClick={() => handleOptionSelect(opt)}
-              style={{
-                padding: '14px 18px', borderRadius: '12px', textAlign: 'left',
-                background: C.high, border: `1px solid ${C.border}`,
-                color: C.text, fontFamily: 'Manrope, sans-serif',
-                cursor: 'pointer', transition: 'all 0.12s', width: '100%',
-              }}
-              onMouseEnter={e => {
-                e.currentTarget.style.background = `rgba(${C.primaryRgb},0.08)`;
-                e.currentTarget.style.borderColor = C.primary;
-              }}
-              onMouseLeave={e => {
-                e.currentTarget.style.background = C.high;
-                e.currentTarget.style.borderColor = C.border;
-              }}
-            >
-              <div style={{ fontWeight: 700, fontSize: '0.95rem', color: C.text, marginBottom: opt.description ? '3px' : 0 }}>{opt.label}</div>
-              {opt.description && <div style={{ fontSize: '0.78rem', color: C.faint, lineHeight: 1.45 }}>{opt.description}</div>}
-            </button>
-          ))}
-        </div>
-      );
-    }
-
-    // Pill-style options (days: 2, 3, 4, 5, 6)
     return (
       <div key={currentStep} style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
         {step.options.map((opt, i) => (

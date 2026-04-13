@@ -35,11 +35,22 @@ function getWeekMeta(cms, index) {
 
 function parseExercises(detail) {
   if (!detail) return [];
-  return detail.split(',').map(s => s.trim()).map(item => {
-    const match = item.match(/^(.+?)\s+(\d+x\d+(?:-\d+)?)(\s+.*)?$/);
-    if (match) return { name: match[1].trim(), sets: match[2] };
-    return { name: item, sets: '' };
-  }).filter(e => e.name.length > 1);
+  // Split on | or , (supports both old comma format and new pipe format)
+  const parts = detail.split(/\s*\|\s*|\s*,\s*/).map(s => s.trim()).filter(Boolean);
+  return parts
+    .flatMap(item => {
+      // Strip "Superset N: " prefix
+      const clean = item.replace(/^Superset\s+\d+:\s*/i, '').trim();
+      // Expand "A + B" supersets into individual items
+      return clean.includes(' + ') ? clean.split(' + ').map(s => s.trim()) : [clean];
+    })
+    .map(item => {
+      // Match "Exercise Name NxN" or "Exercise Name N×N"
+      const match = item.match(/^(.+?)\s+(\d+[x×]\d+(?:-\d+)?)(\s+.*)?$/);
+      if (match) return { name: match[1].trim(), sets: match[2].replace('×', 'x') };
+      return { name: item, sets: '' };
+    })
+    .filter(e => e.name.length > 1);
 }
 
 export default function PlanView() {
@@ -318,7 +329,7 @@ export default function PlanView() {
           <div style={{
             background: C.lowest, borderRadius: '16px', padding: '28px 24px',
             display: 'flex', flexDirection: 'column', justifyContent: 'space-between',
-            minHeight: '160px', border: `1px solid rgba(68,71,72,0.12)`,
+            minHeight: '160px', border: `1px solid ${C.border}`,
           }}>
             <p style={{ fontSize: '0.58rem', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', color: C.faint }}>
               {d(cms, 'statCompletedLabel')}
@@ -337,7 +348,7 @@ export default function PlanView() {
           <div style={{
             background: C.lowest, borderRadius: '16px', padding: '28px 24px',
             display: 'flex', flexDirection: 'column', justifyContent: 'space-between',
-            minHeight: '160px', border: `1px solid rgba(68,71,72,0.12)`,
+            minHeight: '160px', border: `1px solid ${C.border}`,
           }}>
             <p style={{ fontSize: '0.58rem', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', color: C.faint }}>
               {d(cms, 'statBurnLabel')}
@@ -354,7 +365,7 @@ export default function PlanView() {
           <div style={{
             background: C.lowest, borderRadius: '16px', padding: '28px 24px',
             display: 'flex', flexDirection: 'column', justifyContent: 'space-between',
-            minHeight: '160px', border: `1px solid rgba(68,71,72,0.12)`,
+            minHeight: '160px', border: `1px solid ${C.border}`,
             overflow: 'hidden', position: 'relative',
           }}>
             <p style={{ fontSize: '0.58rem', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', color: C.faint, position: 'relative', zIndex: 1 }}>
