@@ -1,3 +1,12 @@
+import { supabase } from './supabaseClient';
+import {
+  pushProfileToSupabase,
+  pushStreaksToSupabase,
+  pushSettingsToSupabase,
+  pushPlanToSupabase,
+  pullFromSupabase,
+} from './supabaseSync';
+
 const STORAGE_KEY = 'regulr_data';
 
 const DEFAULT_DATA = {
@@ -50,9 +59,61 @@ export function loadData() {
 export function saveData(data) {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    // Background sync to Supabase when signed in (fire-and-forget)
+    syncToSupabase(data);
     return true;
   } catch {
     return false;
+  }
+}
+
+/**
+ * Fire-and-forget Supabase sync. Syncs profile, streaks, and settings.
+ * Heavy data (check_ins, badges, plans) is synced at the point of mutation
+ * via supabaseSync.js helpers called directly by feature code.
+ */
+async function syncToSupabase(data) {
+  if (!supabase) return;
+  try {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return;
+    await Promise.all([
+      pushProfileToSupabase(user.id, data.user),
+      pushStreaksToSupabase(user.id, data.streaks),
+      pushSettingsToSupabase(user.id, data.settings),
+    ]);
+  } catch {
+    // Silent — local data is always the source of truth
+  }
+}
+
+/**
+ * Called once after sign-in. Pulls cloud data and merges it into localStorage.
+ * Supabase wins on all fields (cloud is authoritative for signed-in users).
+ */
+export async function loadFromSupabase() {
+  if (!supabase) return null;
+  try {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return null;
+    const cloudData = await pullFromSupabase(user.id);
+    if (!cloudData) return null;
+
+    const local = getData();
+    const merged = {
+      ...local,
+      user: { ...local.user, ...cloudData.user },
+      streaks: cloudData.streaks || local.streaks,
+      check_ins: cloudData.check_ins.length ? cloudData.check_ins : local.check_ins,
+      badges: cloudData.badges.length ? cloudData.badges : local.badges,
+      plans: cloudData.plans.length ? cloudData.plans : local.plans,
+      settings: cloudData.settings || local.settings,
+      onboarding_complete: cloudData.plans.length > 0 || local.onboarding_complete,
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(merged));
+    return merged;
+  } catch {
+    return null;
   }
 }
 

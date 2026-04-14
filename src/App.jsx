@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { Routes, Route, Navigate, useLocation, NavLink } from 'react-router-dom';
 import { useThemeColors } from './hooks/useTheme';
+import { AuthProvider } from './hooks/useAuth';
 import Landing from './screens/Landing';
 import PlanBuilder from './screens/PlanBuilder';
 import Dashboard from './screens/Dashboard';
@@ -80,7 +81,7 @@ export default function App() {
   }, []);
 
   return (
-    <>
+    <AuthProvider>
       {showNav && <TopNav />}
       <Routes>
         <Route path="/" element={<Landing />} />
@@ -98,6 +99,6 @@ export default function App() {
           <BottomNav />
         </div>
       )}
-    </>
+    </AuthProvider>
   );
 }

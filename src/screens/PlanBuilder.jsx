@@ -7,7 +7,7 @@ import { trackOnboardingStarted, trackOnboardingStep, trackPlanCreated } from '.
 import chatbotFlow from '../data/chatbot-flow.json';
 import { useThemeColors, useTheme } from '../hooks/useTheme';
 
-const STEP_ORDER = ['welcome', 'experience', 'days', 'equipment', 'split', 'schedule'];
+const STEP_ORDER = ['welcome', 'experience', 'days', 'equipment', 'split', 'schedule', 'persona_style'];
 
 const STEP_LABELS = {
   welcome: 'What is your main goal?',
@@ -16,6 +16,7 @@ const STEP_LABELS = {
   equipment: 'What equipment do you have?',
   split: 'Preferred training split?',
   schedule: 'Which specific days work for you?',
+  persona_style: 'How do you like to train?',
 };
 
 const STEP_SUBTITLES = {
@@ -24,6 +25,7 @@ const STEP_SUBTITLES = {
   days: "A lower frequency you can stick to beats a higher one you can't.",
   split: 'Optional — only matters if your answers result in a tie between two equally good programs.',
   schedule: "We'll optimize your recovery based on your availability.",
+  persona_style: 'This shapes how the app coaches and communicates with you.',
 };
 
 const GOAL_LABELS = {
@@ -102,12 +104,13 @@ export default function PlanBuilder() {
   async function handleComplete(finalAnswers) {
     setIsGenerating(true);
     const enrichedAnswers = { ...finalAnswers, activity: 'gym' };
+    const initialPersona = finalAnswers.training_style || 'follower';
     try {
       const plan = await generatePlan(enrichedAnswers);
       setShowConfetti(true);
       updateData(data => {
         data.onboarding_complete = true;
-        data.user.persona = 'neutral';
+        data.user.persona = initialPersona;
         data.plans.push(plan);
         return data;
       });
@@ -115,7 +118,7 @@ export default function PlanBuilder() {
         activity: 'gym',
         experience_level: enrichedAnswers.experience_level,
         frequency: enrichedAnswers.frequency,
-        persona: 'neutral',
+        persona: initialPersona,
         session_duration: enrichedAnswers.gym_goal === 'build_efficient' ? '45–60 min' : '60–90 min',
       });
       setTimeout(() => navigate('/dashboard'), 2000);

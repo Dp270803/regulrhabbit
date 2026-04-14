@@ -561,6 +561,7 @@ export async function generatePlan(answers) {
     scheduled_days,
     equipment,
     split_preference,
+    training_style,
   } = answers;
 
   const program = selectNippardProgram(answers);
@@ -590,6 +591,7 @@ export async function generatePlan(answers) {
     equipment: equipment || 'Full gym',
     gym_goal: gym_goal || null,
     split_preference: split_preference || 'none',
+    persona: training_style || 'follower',
     start_date: startDate,
     current_week: 1,
     status: 'active',

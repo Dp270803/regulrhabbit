@@ -2,11 +2,14 @@ import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Download, Upload, Pencil, Check } from 'lucide-react';
 import BadgeModal from '../components/BadgeModal';
+import AuthModal from '../components/AuthModal';
 import { getData, exportData, importData, resetData, updateData } from '../utils/storage';
 import { getAllBadges } from '../utils/badgeChecker';
 import { getLevelFromXP } from '../utils/xpCalculator';
 import { trackPageView } from '../utils/analytics';
 import { useTheme, useThemeColors } from '../hooks/useTheme';
+import { useAuth } from '../hooks/useAuth';
+import { supabase } from '../utils/supabaseClient';
 import { fetchProfilePage } from '../utils/sanityClient';
 import { getToday } from '../utils/dateUtils';
 
@@ -130,10 +133,12 @@ export default function Profile() {
   const [selectedBadge, setSelectedBadge] = useState(null);
   const [showResetConfirm, setShowResetConfirm] = useState(false);
   const [resetText, setResetText] = useState('');
+  const [showAuth, setShowAuth] = useState(false);
   const { toggle, isDark } = useTheme();
   const [cms, setCms] = useState(null);
   const [isEditingName, setIsEditingName] = useState(false);
   const [nameInput, setNameInput] = useState('');
+  const { user: authUser } = useAuth();
   const nameInputRef = useRef(null);
 
   useEffect(() => {
@@ -205,6 +210,7 @@ export default function Profile() {
   return (
     <div className="min-h-dvh pb-32 md:pb-12 md:pt-14" style={{ background: C.bg, color: C.text }}>
       {selectedBadge && <BadgeModal badge={selectedBadge} onClose={() => setSelectedBadge(null)} />}
+      {showAuth && <AuthModal onClose={() => setShowAuth(false)} />}
 
       <div style={{ ...W, display: 'flex', flexDirection: 'column', gap: '20px', paddingTop: 'clamp(28px, 4vw, 48px)' }}>
 
@@ -374,8 +380,46 @@ export default function Profile() {
             </div>
           </div>
 
-          {/* Right: Appearance + Data Vault */}
+          {/* Right: Account + Appearance + Data Vault */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+
+            {/* Account — Save your progress (shown when signed out) */}
+            {!authUser && (
+              <div style={{ background: C.low, borderRadius: '12px', padding: 'clamp(20px, 3vw, 32px)' }}>
+                <h2 style={{ fontFamily: 'Manrope, sans-serif', fontSize: '1.05rem', fontWeight: 700, letterSpacing: '-0.02em', color: C.text, margin: '0 0 8px' }}>
+                  Save your progress
+                </h2>
+                <p style={{ fontSize: '0.82rem', color: C.muted, lineHeight: 1.6, margin: '0 0 16px' }}>
+                  Create an account to sync your streaks, XP, and badges across devices.
+                </p>
+                <button
+                  onClick={() => setShowAuth(true)}
+                  style={{ width: '100%', padding: '0.8rem', borderRadius: '10px', background: C.primary, color: C.onPrimary, fontWeight: 700, border: 'none', cursor: 'pointer', fontSize: '0.9rem' }}
+                >
+                  Create account / Sign in
+                </button>
+              </div>
+            )}
+
+            {/* Account — signed in state */}
+            {authUser && (
+              <div style={{ background: C.low, borderRadius: '12px', padding: 'clamp(20px, 3vw, 32px)' }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                  <div>
+                    <h2 style={{ fontFamily: 'Manrope, sans-serif', fontSize: '1.05rem', fontWeight: 700, letterSpacing: '-0.02em', color: C.text, margin: '0 0 4px' }}>
+                      Account
+                    </h2>
+                    <p style={{ fontSize: '0.82rem', color: C.muted, margin: 0 }}>{authUser.email}</p>
+                  </div>
+                  <button
+                    onClick={() => supabase?.auth.signOut()}
+                    style={{ padding: '7px 14px', borderRadius: '8px', background: C.container, color: C.muted, fontWeight: 600, border: `1px solid ${C.border}`, cursor: 'pointer', fontSize: '0.78rem' }}
+                  >
+                    Sign out
+                  </button>
+                </div>
+              </div>
+            )}
 
             {/* Appearance */}
             <div style={{ background: C.low, borderRadius: '12px', padding: 'clamp(20px, 3vw, 32px)' }}>

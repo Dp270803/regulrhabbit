@@ -6,8 +6,11 @@ import ReturnBanner from '../components/ReturnBanner';
 import LevelUpModal from '../components/LevelUpModal';
 import BadgeModal from '../components/BadgeModal';
 import ConfettiEffect from '../components/ConfettiEffect';
+import CoachMessage from '../components/CoachMessage';
 import { getData, updateData } from '../utils/storage';
 import { fetchHeroImage, fetchDashboardPage } from '../utils/sanityClient';
+import { updatePersona } from '../utils/personaEngine';
+import { useAuth } from '../hooks/useAuth';
 import { getTodaySession, isRestDay } from '../utils/planGenerator';
 import { detectReturnState, getReturnMessage, getTimeMessage, getReducedSession, getCelebrationMessage } from '../utils/returnState';
 import { updateStreak, getConsecutiveMisses, getStreakMilestone } from '../utils/streakTracker';
@@ -92,6 +95,7 @@ function ConsistencyDots({ checkIns, scheduledDays, plan }) {
 export default function Dashboard() {
   const C = useThemeColors();
   const navigate = useNavigate();
+  const { user: authUser } = useAuth();
   const [data, setData] = useState(null);
   const [tip, setTip] = useState(null);
   const [returnMessage, setReturnMessage] = useState(null);
@@ -106,6 +110,8 @@ export default function Dashboard() {
   const [xpFlash, setXpFlash] = useState(false);
   const [heroImg, setHeroImg] = useState(null);
   const [cms, setCms] = useState(null);
+  const [coachTrigger, setCoachTrigger] = useState('session_start');
+  const [showCoach, setShowCoach] = useState(false);
 
   const loadDashboard = useCallback(async () => {
     const d = getData();
@@ -121,6 +127,13 @@ export default function Dashboard() {
       setReturnMessage(msg);
       setTimeMessage(getTimeMessage(messagesData));
       trackReturnState(state, missedCount, msg);
+      // Show AI coaching message for return events
+      setCoachTrigger('return');
+      setShowCoach(true);
+    } else if (state === 1 && todayInfo) {
+      // Normal day with a session — show session_start coach message
+      setCoachTrigger('session_start');
+      setShowCoach(true);
     }
     const t = await selectTip(d);
     if (t) { setTip(t); updateData(() => markTipSeen(d, t.id)); }
@@ -172,17 +185,22 @@ export default function Dashboard() {
       if (li) data.user.level = li.level;
       return data;
     });
-    setData(updated); setRecentXP(xpResult.total); setXpFlash(true);
+    // Update persona after session completion
+    const { updated: withPersona } = updatePersona(updated, authUser?.id || null);
+    setData(withPersona); setRecentXP(xpResult.total); setXpFlash(true);
     setTimeout(() => setXpFlash(false), 2200);
-    const li = checkLevelUp(oldXP, updated.user.total_xp);
-    if (li) { setLevelUpInfo(li); trackLevelUp(li.level, updated.user.total_xp); }
-    const badges = checkBadges(updated);
+    const li = checkLevelUp(oldXP, withPersona.user.total_xp);
+    if (li) { setLevelUpInfo(li); trackLevelUp(li.level, withPersona.user.total_xp); }
+    const badges = checkBadges(withPersona);
     if (badges.length > 0) { setNewBadge(badges[0]); trackBadgeEarned(badges[0].id, badges[0].name); }
-    if (getStreakMilestone(updated.streaks.current) >= 7) setShowConfetti(true);
-    const celMsg = getCelebrationMessage(messagesData, { totalSessions: updated.check_ins.filter(c => c.completed).length, streak: updated.streaks.current });
+    if (getStreakMilestone(withPersona.streaks.current) >= 7) setShowConfetti(true);
+    const celMsg = getCelebrationMessage(messagesData, { totalSessions: withPersona.check_ins.filter(c => c.completed).length, streak: withPersona.streaks.current });
     setCelebrationMsg(celMsg);
-    trackSessionCompleted({ planId: activePlan?.id, activity: activePlan?.activity, sessionId: todaySession?.id, weekNumber: todayInfo?.weekNumber, xpEarned: xpResult.total, streakCount: updated.streaks.current });
+    trackSessionCompleted({ planId: activePlan?.id, activity: activePlan?.activity, sessionId: todaySession?.id, weekNumber: todayInfo?.weekNumber, xpEarned: xpResult.total, streakCount: withPersona.streaks.current });
     setTimeout(() => { setCelebrationMsg(null); setRecentXP(0); }, 4000);
+    // Show post-session coaching message
+    setCoachTrigger('session_complete');
+    setShowCoach(true);
   }
 
   const sixHoursAgo = new Date(Date.now() - 6 * 60 * 60 * 1000).toISOString();
@@ -254,6 +272,20 @@ export default function Dashboard() {
             {celebrationMsg}
           </div>
         )}
+
+        {/* ── Coach message (persona-aware, above session card) ── */}
+        <CoachMessage
+          persona={data.user.persona || 'follower'}
+          trigger={coachTrigger}
+          context={{
+            name: data.user.name,
+            streak: data.streaks?.current || 0,
+            goal: activePlan?.gym_goal,
+            total_sessions: data.check_ins?.length || 0,
+            missed_days: missedCount,
+          }}
+          visible={showCoach && !!(sessionForCard && !isRestDay(activePlan))}
+        />
 
         {/* ── Session card ── */}
         <SessionCard
