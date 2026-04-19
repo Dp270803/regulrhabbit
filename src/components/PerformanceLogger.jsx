@@ -17,6 +17,7 @@ import { useState } from 'react';
 import { useThemeColors } from '../hooks/useTheme';
 import { logPerformanceToSupabase } from '../utils/supabaseSync';
 import { calculateSessionCalories } from '../utils/calorieEngine';
+import { updateData } from '../utils/storage';
 
 export default function PerformanceLogger({ exercises, sessionId, date, userId, onSave }) {
   const C = useThemeColors();
@@ -55,6 +56,20 @@ export default function PerformanceLogger({ exercises, sessionId, date, userId, 
     if (userId && filled.length) {
       await logPerformanceToSupabase(userId, sessionId, date, filled).catch(() => {});
     }
+
+    // Store performance logs locally for offline signal computation
+    if (filled.length) {
+      updateData(d => {
+        d.performance_logs = d.performance_logs || [];
+        for (const log of filled) {
+          d.performance_logs.push({ ...log, session_id: sessionId, date });
+        }
+        // Keep last 500 entries
+        d.performance_logs = d.performance_logs.slice(-500);
+        return d;
+      });
+    }
+
     setSaving(false);
     onSave({ ...calorieData, duration_minutes: duration, body_weight_kg: bodyWeight });
   }

@@ -16,7 +16,9 @@ const STEP_LABELS = {
   equipment: 'What equipment do you have?',
   split: 'Preferred training split?',
   schedule: 'Which specific days work for you?',
-  persona_style: 'How do you like to train?',
+  body_stats: 'Your biological sex?',
+  activity_level: 'Daily activity level?',
+  persona_style: 'How do you want to use this app?',
 };
 
 const STEP_SUBTITLES = {
@@ -25,7 +27,9 @@ const STEP_SUBTITLES = {
   days: "A lower frequency you can stick to beats a higher one you can't.",
   split: 'Optional — only matters if your answers result in a tie between two equally good programs.',
   schedule: "We'll optimize your recovery based on your availability.",
-  persona_style: 'This shapes how the app coaches and communicates with you.',
+  body_stats: 'Used to calculate your calorie baseline — never shared.',
+  activity_level: 'Your daily activity outside the gym affects your total calorie needs.',
+  persona_style: 'This determines how the app tracks and adapts your training.',
 };
 
 const GOAL_LABELS = {

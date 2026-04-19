@@ -10,7 +10,7 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 CREATE TABLE IF NOT EXISTS public.profiles (
   id              UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
   name            TEXT,
-  persona         TEXT DEFAULT 'follower' CHECK (persona IN ('starter','follower','optimizer','struggler','self_directed')),
+  persona         TEXT DEFAULT 'guided' CHECK (persona IN ('guided','self_directed')),
   level           INTEGER DEFAULT 1,
   total_xp        INTEGER DEFAULT 0,
   -- Phase 2: fitness state + diet baseline

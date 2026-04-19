@@ -22,23 +22,9 @@ const SUPABASE_URL     = process.env.VITE_SUPABASE_URL;
 const SUPABASE_SERVICE = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 function detectPersona(signals) {
-  const {
-    total_sessions = 0,
-    streak_break_rate = 0,
-    has_custom_plan = false,
-    consistency_score = 0,
-    onboarding_persona = 'follower',
-  } = signals;
-
-  // Not enough data yet — trust what the user told us at onboarding
-  if (total_sessions < 10) return onboarding_persona;
-
-  // Behavior-based detection (overrides onboarding after 10+ sessions)
-  if (has_custom_plan)           return 'self_directed';
-  if (streak_break_rate > 0.4)   return 'struggler';
-  if (consistency_score > 0.8)   return 'optimizer';
-  if (consistency_score > 0.5)   return 'follower';
-  return 'starter';
+  const { has_custom_plan = false, onboarding_persona = 'guided' } = signals;
+  if (has_custom_plan) return 'self_directed';
+  return onboarding_persona === 'self_directed' ? 'self_directed' : 'guided';
 }
 
 export const handler = async (event) => {

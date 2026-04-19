@@ -125,6 +125,84 @@ function BadgeTile({ badge, onClick }) {
   );
 }
 
+// ── Body weight history sparkline + table ────────────────────────────────────
+function WeightHistory({ entries = [] }) {
+  const C = useThemeColors();
+  const sorted = [...entries].sort((a, b) => a.date.localeCompare(b.date)).slice(-30);
+  if (!sorted.length) return null;
+
+  const weights = sorted.map(e => e.weight_kg);
+  const min = Math.min(...weights);
+  const max = Math.max(...weights);
+  const range = max - min || 1;
+  const latest = sorted[sorted.length - 1];
+  const prev = sorted[sorted.length - 2];
+  const delta = prev ? (latest.weight_kg - prev.weight_kg).toFixed(1) : null;
+
+  const W = 280, H = 60;
+  const points = sorted.map((e, i) => {
+    const x = (i / Math.max(sorted.length - 1, 1)) * W;
+    const y = H - ((e.weight_kg - min) / range) * (H - 8) - 4;
+    return `${x},${y}`;
+  }).join(' ');
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+      {/* Current weight + delta */}
+      <div style={{ display: 'flex', alignItems: 'baseline', gap: '12px' }}>
+        <span style={{ fontFamily: 'Manrope, sans-serif', fontSize: '2.2rem', fontWeight: 800, color: C.text, letterSpacing: '-0.03em' }}>
+          {latest.weight_kg} kg
+        </span>
+        {delta !== null && (
+          <span style={{ fontSize: '0.85rem', fontWeight: 600, color: parseFloat(delta) < 0 ? C.green : C.muted }}>
+            {parseFloat(delta) > 0 ? '+' : ''}{delta} kg from last session
+          </span>
+        )}
+      </div>
+
+      {/* Sparkline */}
+      <svg width={W} height={H} style={{ display: 'block', overflow: 'visible' }}>
+        <polyline
+          points={points}
+          fill="none"
+          stroke={C.primary}
+          strokeWidth="2"
+          strokeLinejoin="round"
+          strokeLinecap="round"
+        />
+        {sorted.map((e, i) => {
+          const x = (i / Math.max(sorted.length - 1, 1)) * W;
+          const y = H - ((e.weight_kg - min) / range) * (H - 8) - 4;
+          return (
+            <circle key={i} cx={x} cy={y} r={i === sorted.length - 1 ? 4 : 2.5}
+              fill={i === sorted.length - 1 ? C.primary : C.bg}
+              stroke={C.primary} strokeWidth="1.5"
+            >
+              <title>{e.date}: {e.weight_kg} kg</title>
+            </circle>
+          );
+        })}
+      </svg>
+
+      {/* Min / max labels */}
+      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <span style={{ fontSize: '0.65rem', color: C.faint }}>{sorted[0].date}</span>
+        <span style={{ fontSize: '0.65rem', color: C.faint }}>{latest.date}</span>
+      </div>
+
+      {/* Recent entries table */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+        {sorted.slice(-5).reverse().map(e => (
+          <div key={e.date} style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 12px', background: C.container, borderRadius: '8px', border: `1px solid ${C.border}` }}>
+            <span style={{ fontSize: '0.82rem', color: C.muted }}>{e.date}</span>
+            <span style={{ fontSize: '0.82rem', fontWeight: 700, color: C.text, fontFamily: 'Manrope, monospace' }}>{e.weight_kg} kg</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 // ────────────────────────────────────────────────────────────────────────────
 export default function Profile() {
   const C = useThemeColors();
@@ -340,6 +418,16 @@ export default function Profile() {
             </div>
           ))}
         </div>
+
+        {/* ── Weight History ── */}
+        {(data.weight_log?.length > 0) && (
+          <div style={{ background: C.low, borderRadius: '12px', padding: 'clamp(20px, 3vw, 32px)' }}>
+            <h2 style={{ fontFamily: 'Manrope, sans-serif', fontSize: '1.05rem', fontWeight: 700, letterSpacing: '-0.02em', color: C.text, margin: '0 0 20px' }}>
+              Body Weight
+            </h2>
+            <WeightHistory entries={data.weight_log} />
+          </div>
+        )}
 
         {/* ── Consistency Matrix ── */}
         <div style={{ background: C.low, borderRadius: '12px', padding: 'clamp(20px, 3vw, 32px)' }}>

@@ -215,10 +215,23 @@ export default function Dashboard() {
     if (!calorieData) return;
     setSessionCalories(calorieData);
 
-    // Persist calorie data onto today's check-in
+    // Persist calorie data + body weight onto today's check-in and weight_log
     updateData(d => {
       const ci = d.check_ins.find(c => c.date === today && c.completed);
       if (ci) Object.assign(ci, calorieData);
+
+      // Append to weight_log if body weight was provided
+      if (calorieData.body_weight_kg) {
+        d.weight_log = d.weight_log || [];
+        const alreadyLogged = d.weight_log.some(w => w.date === today);
+        if (!alreadyLogged) {
+          d.weight_log.push({ date: today, weight_kg: calorieData.body_weight_kg });
+        }
+        // Update diet_profile current weight
+        if (d.user.diet_profile) {
+          d.user.diet_profile.weight_kg = calorieData.body_weight_kg;
+        }
+      }
       return d;
     });
 
@@ -239,7 +252,7 @@ export default function Dashboard() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          persona: d.user.persona || 'follower',
+          persona: d.user.persona || 'guided',
           trigger: 'post_session',
           context: {
             goal: activePlan?.gym_goal,

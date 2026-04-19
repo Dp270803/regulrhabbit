@@ -31,6 +31,8 @@ const DEFAULT_DATA = {
     consecutive_misses: 0,
   },
   check_ins: [],
+  weight_log: [],   // [{ date: 'YYYY-MM-DD', weight_kg: number }]
+  performance_logs: [], // mirror of Supabase performance_log for offline signal computation
   badges: [],
   tips: {
     seen_tip_ids: [],
