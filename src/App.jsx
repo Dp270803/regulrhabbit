@@ -9,6 +9,7 @@ import PlanView from './screens/PlanView';
 import Profile from './screens/Profile';
 import Tips from './screens/Tips';
 import SanityStudio from './screens/SanityStudio';
+import CustomPlanBuilder from './screens/CustomPlanBuilder';
 import BottomNav from './components/BottomNav';
 
 const NAV_SCREENS = ['/dashboard', '/plan', '/profile', '/tips'];
@@ -86,6 +87,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/onboarding" element={<PlanBuilder />} />
+        <Route path="/onboarding/custom" element={<CustomPlanBuilder />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/plan" element={<PlanView />} />
         <Route path="/profile" element={<Profile />} />

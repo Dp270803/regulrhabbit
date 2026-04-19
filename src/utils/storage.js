@@ -10,17 +10,25 @@ import {
 const STORAGE_KEY = 'regulr_data';
 
 const DEFAULT_DATA = {
-  version: '1.0',
+  version: '1.1',
   created_at: null,
   last_opened: null,
   onboarding_complete: false,
   user: {
     name: null,
     persona: null,
+    user_type: null,
     preferred_time: null,
     level: 1,
     total_xp: 0,
     xp_to_next_level: 200,
+    body_weight_kg: null,
+    height_cm: null,
+    age: null,
+    sex: null,
+    goal: null,
+    activity_level: null,
+    preferred_unit: 'kg',
   },
   plans: [],
   streaks: {
@@ -41,13 +49,46 @@ const DEFAULT_DATA = {
     theme: 'light',
     notifications_enabled: false,
   },
+  workout_logs: [],
+  fitness_state: {
+    phase: null,
+    fatigue_level: null,
+    adherence: null,
+    strength_trend: null,
+    weight_trend: null,
+    last_updated: null,
+  },
+  diet: {
+    baseline_calories: null,
+    current_calories: null,
+    last_adjustment_reason: null,
+    last_updated: null,
+  },
+  ai_insights: [],
+  ai_memory: {
+    accepted_suggestions: [],
+    rejected_suggestions: [],
+  },
 };
+
+function migrateData(data) {
+  if (!data.version || data.version === '1.0') {
+    data.version = '1.1';
+    data.user = { ...DEFAULT_DATA.user, ...data.user };
+    for (const key of ['workout_logs', 'fitness_state', 'diet', 'ai_insights', 'ai_memory']) {
+      if (data[key] === undefined) data[key] = DEFAULT_DATA[key];
+    }
+    saveData(data);
+  }
+  return data;
+}
 
 export function loadData() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return null;
     const data = JSON.parse(raw);
+    migrateData(data);
     data.last_opened = new Date().toISOString();
     saveData(data);
     return data;

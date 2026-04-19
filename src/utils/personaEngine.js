@@ -57,7 +57,7 @@ export function computeSignals(data) {
   return {
     total_sessions: totalSessions,
     streak_break_rate: parseFloat(streakBreakRate.toFixed(2)),
-    has_custom_plan: activePlan?.persona === 'self_directed',
+    has_custom_plan: activePlan?.persona === 'self_directed' || data.user?.user_type === 'self_directed',
     consistency_score: parseFloat(consistencyScore.toFixed(2)),
     onboarding_persona: data.user?.persona || 'follower',
   };

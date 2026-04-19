@@ -138,6 +138,8 @@ export default function Profile() {
   const [cms, setCms] = useState(null);
   const [isEditingName, setIsEditingName] = useState(false);
   const [nameInput, setNameInput] = useState('');
+  const [bodyStats, setBodyStats] = useState({ body_weight_kg: '', height_cm: '', age: '', sex: '', goal: '', activity_level: '' });
+  const [statsSaved, setStatsSaved] = useState(false);
   const { user: authUser } = useAuth();
   const nameInputRef = useRef(null);
 
@@ -147,6 +149,14 @@ export default function Profile() {
     if (!d.onboarding_complete) { navigate('/'); return; }
     setData(d);
     setNameInput(d.user.name || '');
+    setBodyStats({
+      body_weight_kg: d.user.body_weight_kg ?? '',
+      height_cm: d.user.height_cm ?? '',
+      age: d.user.age ?? '',
+      sex: d.user.sex ?? '',
+      goal: d.user.goal ?? '',
+      activity_level: d.user.activity_level ?? '',
+    });
     fetchProfilePage().then(doc => { if (doc) setCms(doc); }).catch(() => {});
   }, [navigate]);
 
@@ -180,6 +190,22 @@ export default function Profile() {
   function handleNameKeyDown(e) {
     if (e.key === 'Enter') saveName();
     if (e.key === 'Escape') { setNameInput(data.user.name || ''); setIsEditingName(false); }
+  }
+
+  function handleBodyStatsSave() {
+    const updated = updateData(d => {
+      d.user.body_weight_kg = bodyStats.body_weight_kg !== '' ? parseFloat(bodyStats.body_weight_kg) : null;
+      d.user.height_cm = bodyStats.height_cm !== '' ? parseFloat(bodyStats.height_cm) : null;
+      d.user.age = bodyStats.age !== '' ? parseInt(bodyStats.age) : null;
+      d.user.sex = bodyStats.sex || null;
+      d.user.goal = bodyStats.goal || null;
+      d.user.activity_level = bodyStats.activity_level || null;
+      // Phase 2: call calculateBaselineCalories(d.user) here and store to d.diet
+      return d;
+    });
+    setData(updated);
+    setStatsSaved(true);
+    setTimeout(() => setStatsSaved(false), 2000);
   }
 
   function handleImport() {
@@ -420,6 +446,69 @@ export default function Profile() {
                 </div>
               </div>
             )}
+
+            {/* Body Stats */}
+            <div style={{ background: C.low, borderRadius: '12px', padding: 'clamp(20px, 3vw, 32px)' }}>
+              <h2 style={{ fontFamily: 'Manrope, sans-serif', fontSize: '1.05rem', fontWeight: 700, letterSpacing: '-0.02em', color: C.text, margin: '0 0 20px' }}>
+                Body Stats
+              </h2>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '10px', marginBottom: '10px' }}>
+                {[
+                  { key: 'body_weight_kg', label: 'Weight (kg)', type: 'number', placeholder: '75' },
+                  { key: 'height_cm', label: 'Height (cm)', type: 'number', placeholder: '175' },
+                  { key: 'age', label: 'Age', type: 'number', placeholder: '28' },
+                ].map(f => (
+                  <div key={f.key}>
+                    <p style={{ fontSize: '0.55rem', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: C.faint, marginBottom: '6px' }}>{f.label}</p>
+                    <input
+                      type={f.type}
+                      placeholder={f.placeholder}
+                      value={bodyStats[f.key]}
+                      onChange={e => setBodyStats(prev => ({ ...prev, [f.key]: e.target.value }))}
+                      style={{ width: '100%', padding: '8px 10px', borderRadius: '6px', border: `1px solid ${C.border}`, background: C.container, color: C.text, fontSize: '0.88rem', boxSizing: 'border-box', outline: 'none' }}
+                    />
+                  </div>
+                ))}
+              </div>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '10px', marginBottom: '16px' }}>
+                <div>
+                  <p style={{ fontSize: '0.55rem', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: C.faint, marginBottom: '6px' }}>Sex</p>
+                  <select value={bodyStats.sex} onChange={e => setBodyStats(prev => ({ ...prev, sex: e.target.value }))}
+                    style={{ width: '100%', padding: '8px 10px', borderRadius: '6px', border: `1px solid ${C.border}`, background: C.container, color: bodyStats.sex ? C.text : C.faint, fontSize: '0.88rem', boxSizing: 'border-box', outline: 'none' }}>
+                    <option value="">—</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                  </select>
+                </div>
+                <div>
+                  <p style={{ fontSize: '0.55rem', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: C.faint, marginBottom: '6px' }}>Goal</p>
+                  <select value={bodyStats.goal} onChange={e => setBodyStats(prev => ({ ...prev, goal: e.target.value }))}
+                    style={{ width: '100%', padding: '8px 10px', borderRadius: '6px', border: `1px solid ${C.border}`, background: C.container, color: bodyStats.goal ? C.text : C.faint, fontSize: '0.88rem', boxSizing: 'border-box', outline: 'none' }}>
+                    <option value="">—</option>
+                    <option value="fat_loss">Fat Loss</option>
+                    <option value="muscle_gain">Muscle Gain</option>
+                    <option value="maintenance">Maintenance</option>
+                  </select>
+                </div>
+                <div>
+                  <p style={{ fontSize: '0.55rem', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: C.faint, marginBottom: '6px' }}>Activity Level</p>
+                  <select value={bodyStats.activity_level} onChange={e => setBodyStats(prev => ({ ...prev, activity_level: e.target.value }))}
+                    style={{ width: '100%', padding: '8px 10px', borderRadius: '6px', border: `1px solid ${C.border}`, background: C.container, color: bodyStats.activity_level ? C.text : C.faint, fontSize: '0.88rem', boxSizing: 'border-box', outline: 'none' }}>
+                    <option value="">—</option>
+                    <option value="sedentary">Sedentary</option>
+                    <option value="lightly_active">Lightly Active (1–3x/wk)</option>
+                    <option value="moderately_active">Moderately Active (3–5x/wk)</option>
+                    <option value="very_active">Very Active (6–7x/wk)</option>
+                  </select>
+                </div>
+              </div>
+              <button
+                onClick={handleBodyStatsSave}
+                style={{ width: '100%', padding: '10px', borderRadius: '8px', background: statsSaved ? C.green : C.primary, color: statsSaved ? '#000' : C.onPrimary, fontWeight: 700, border: 'none', cursor: 'pointer', fontSize: '0.88rem', transition: 'background 0.2s' }}
+              >
+                {statsSaved ? 'Saved ✓' : 'Save Stats'}
+              </button>
+            </div>
 
             {/* Appearance */}
             <div style={{ background: C.low, borderRadius: '12px', padding: 'clamp(20px, 3vw, 32px)' }}>

@@ -21,6 +21,7 @@ export async function pushProfileToSupabase(userId, userData) {
     id: userId,
     name: userData.name,
     persona: userData.persona || 'follower',
+    user_type: userData.user_type || null,
     level: userData.level || 1,
     total_xp: userData.total_xp || 0,
     updated_at: new Date().toISOString(),
