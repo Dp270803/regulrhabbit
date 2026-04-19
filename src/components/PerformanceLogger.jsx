@@ -16,12 +16,15 @@
 import { useState } from 'react';
 import { useThemeColors } from '../hooks/useTheme';
 import { logPerformanceToSupabase } from '../utils/supabaseSync';
+import { calculateSessionCalories } from '../utils/calorieEngine';
 
 export default function PerformanceLogger({ exercises, sessionId, date, userId, onSave }) {
   const C = useThemeColors();
   const [logs, setLogs] = useState(() =>
     exercises.map(e => ({ exercise_name: e.name, sets: '', reps: '', weight_kg: '', rpe: '' }))
   );
+  const [durationMinutes, setDurationMinutes] = useState('');
+  const [bodyWeightKg, setBodyWeightKg] = useState('');
   const [saving, setSaving] = useState(false);
   const [expanded, setExpanded] = useState(false);
 
@@ -45,11 +48,15 @@ export default function PerformanceLogger({ exercises, sessionId, date, userId, 
       }))
       .filter(l => l.sets || l.reps || l.weight_kg);
 
+    const duration = durationMinutes ? parseInt(durationMinutes) : 45;
+    const bodyWeight = bodyWeightKg ? parseFloat(bodyWeightKg) : 75;
+    const calorieData = calculateSessionCalories(filled, bodyWeight, duration);
+
     if (userId && filled.length) {
       await logPerformanceToSupabase(userId, sessionId, date, filled).catch(() => {});
     }
     setSaving(false);
-    onSave();
+    onSave({ ...calorieData, duration_minutes: duration, body_weight_kg: bodyWeight });
   }
 
   if (!expanded) {
@@ -62,7 +69,7 @@ export default function PerformanceLogger({ exercises, sessionId, date, userId, 
           + Log weights & reps (optional)
         </button>
         <button
-          onClick={onSave}
+          onClick={() => onSave(null)}
           style={{ marginTop: '8px', width: '100%', padding: '10px', borderRadius: '10px', background: 'none', color: C.faint, fontWeight: 500, border: 'none', cursor: 'pointer', fontSize: '0.8rem' }}
         >
           Skip
@@ -76,6 +83,26 @@ export default function PerformanceLogger({ exercises, sessionId, date, userId, 
       <p style={{ fontSize: '0.65rem', fontWeight: 700, letterSpacing: '0.16em', textTransform: 'uppercase', color: C.faint, marginBottom: '14px' }}>
         Log Performance
       </p>
+
+      {/* Session meta: duration + body weight */}
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '16px' }}>
+        {[
+          { label: 'Duration (min)', value: durationMinutes, setter: setDurationMinutes, placeholder: '45' },
+          { label: 'Body weight (kg)', value: bodyWeightKg, setter: setBodyWeightKg, placeholder: '75' },
+        ].map(({ label, value, setter, placeholder }) => (
+          <div key={label}>
+            <p style={{ fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: C.faint, margin: '0 0 4px' }}>{label}</p>
+            <input
+              type="number"
+              inputMode="decimal"
+              placeholder={placeholder}
+              value={value}
+              onChange={e => setter(e.target.value)}
+              style={{ padding: '8px 10px', borderRadius: '6px', border: `1px solid ${C.border}`, background: C.container, color: C.text, fontSize: '0.85rem', width: '100%', boxSizing: 'border-box', outline: 'none' }}
+            />
+          </div>
+        ))}
+      </div>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '16px' }}>
         {/* Header row */}
@@ -119,7 +146,7 @@ export default function PerformanceLogger({ exercises, sessionId, date, userId, 
         {saving ? 'Saving…' : 'Save & Continue'}
       </button>
       <button
-        onClick={onSave}
+        onClick={() => onSave(null)}
         style={{ marginTop: '8px', width: '100%', padding: '8px', borderRadius: '10px', background: 'none', color: C.faint, fontWeight: 500, border: 'none', cursor: 'pointer', fontSize: '0.8rem' }}
       >
         Skip

@@ -66,7 +66,25 @@
         { "label": "Sat", "value": "saturday" },
         { "label": "Sun", "value": "sunday" }
       ],
-      "next": "persona_style"
+      "next": "body_stats"
+    },
+    "body_stats": {
+      "bot_message": "To estimate your calorie needs, what's your biological sex?",
+      "field": "sex",
+      "options": [
+        { "label": "Male", "value": "male", "next": "activity_level" },
+        { "label": "Female", "value": "female", "next": "activity_level" }
+      ]
+    },
+    "activity_level": {
+      "bot_message": "Outside of gym sessions, how active is your daily life?",
+      "field": "activity_level",
+      "options": [
+        { "label": "Sedentary — mostly desk job, little movement", "value": "sedentary", "next": "persona_style" },
+        { "label": "Lightly active — some walking, light movement", "value": "light", "next": "persona_style" },
+        { "label": "Moderately active — on feet often or occasional cardio", "value": "moderate", "next": "persona_style" },
+        { "label": "Very active — physical job or daily cardio", "value": "active", "next": "persona_style" }
+      ]
     },
     "persona_style": {
       "bot_message": "Last one — how do you like to train?",

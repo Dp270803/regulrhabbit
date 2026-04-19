@@ -1,27 +1,30 @@
 /**
  * generate-coaching — Netlify Function
  *
- * Calls Claude Haiku to generate a short persona-aware coaching message.
- * Uses Anthropic prompt caching on the system prompt — each persona has one
- * cached system block (~400 tokens). After the first call per persona, cached
- * reads cost ~90% less than uncached input tokens.
+ * Calls Claude Haiku to generate a short persona-aware coaching message
+ * or a structured post-session insights response.
+ *
+ * Uses Anthropic prompt caching on system prompts.
  *
  * POST body:
  * {
  *   persona: 'starter' | 'follower' | 'optimizer' | 'struggler' | 'self_directed',
- *   trigger: 'session_complete' | 'session_start' | 'streak_milestone' | 'return' | 'weekly_summary',
+ *   trigger: 'session_complete' | 'session_start' | 'streak_milestone' | 'return' | 'weekly_summary' | 'post_session',
  *   context: {
- *     name: string,
- *     streak: number,
- *     goal: string,
- *     total_sessions: number,
- *     missed_days?: number,
- *     milestone?: number,
- *     exercise_trend?: string,   // Optimizer only
+ *     name, streak, goal, total_sessions,
+ *     missed_days?, milestone?, exercise_trend?,
+ *     // post_session only:
+ *     session_calories?, total_volume?, exercises_completed?,
+ *     fitness_state?, adherence_score?, baseline_calories?,
+ *     skipped_exercises?, overload_candidates?,
+ *     ai_memory?: { accepted_suggestions, rejected_suggestions },
+ *     history?   // last 10 session summaries
  *   }
  * }
  *
- * Response: { message: string }
+ * Response:
+ *   - trigger !== 'post_session': { message: string }
+ *   - trigger === 'post_session': { state_update, suggestions, plan_adjustments, diet_adjustments }
  */
 
 const PERSONA_SYSTEM_PROMPTS = {
@@ -59,6 +62,41 @@ const TRIGGER_TEMPLATES = {
   weekly_summary: (ctx) => `User ${ctx.name || ''} completed their week. Streak: ${ctx.streak}. ${ctx.exercise_trend ? `Performance note: ${ctx.exercise_trend}.` : ''} Generate a weekly summary insight.`,
 };
 
+const POST_SESSION_SYSTEM = `You are an intelligent fitness advisor that analyses user workout data and returns structured JSON recommendations.
+You ONLY suggest — never override system logic or compute calorie baselines.
+Rules: Be specific. No fluff. Output valid JSON only. No markdown code blocks.`;
+
+function buildPostSessionPrompt(ctx) {
+  const state = ctx.fitness_state || {};
+  const memory = ctx.ai_memory || {};
+  const lines = [
+    `Goal: ${ctx.goal || 'build muscle'}`,
+    `Adherence (last 28d): ${ctx.adherence_score ?? 'unknown'}`,
+    `Session calories burned: ${ctx.session_calories ?? 'unknown'} kcal`,
+    `Total volume this session: ${ctx.total_volume ?? 'unknown'} kg`,
+    `Exercises completed: ${Array.isArray(ctx.exercises_completed) ? ctx.exercises_completed.join(', ') : 'unknown'}`,
+    `Fitness phase: ${state.phase || 'unknown'}`,
+    `Fatigue level: ${state.fatigue_level || 'unknown'}`,
+    `Strength trend: ${state.strength_trend || 'unknown'}`,
+    `Weight trend: ${state.weight_trend || 'unknown'}`,
+    `Baseline calories: ${ctx.baseline_calories ?? 'unknown'} kcal/day`,
+  ];
+  if (ctx.skipped_exercises?.length) lines.push(`Exercises often skipped: ${ctx.skipped_exercises.join(', ')}`);
+  if (ctx.overload_candidates?.length) lines.push(`Ready for progressive overload: ${ctx.overload_candidates.join(', ')}`);
+  if (memory.accepted_suggestions?.length) lines.push(`Previously accepted suggestions: ${memory.accepted_suggestions.map(s => s.text).join('; ')}`);
+  if (memory.rejected_suggestions?.length) lines.push(`Previously rejected (don't repeat): ${memory.rejected_suggestions.map(s => s.text).join('; ')}`);
+
+  return `${lines.join('\n')}
+
+Return a JSON object with exactly these keys:
+{
+  "state_update": {},
+  "suggestions": [{ "category": "exercise"|"diet"|"recovery", "text": "..." }],
+  "plan_adjustments": [{ "type": "reduce_volume"|"add_exercise"|"replace_exercise"|"adjust_frequency", "detail": "...", "old_exercise": "...", "new_exercise": { "name": "...", "sets": 3, "reps": "8-12" }, "exercise": { "name": "...", "sets": 3, "reps": "8-12" }, "delta": 0 }],
+  "diet_adjustments": [{ "delta": 0, "reason": "..." }]
+}
+Provide 1-3 suggestions. Only include plan_adjustments or diet_adjustments if genuinely warranted. Keep suggestion text under 20 words.`;
+
 export const handler = async (event) => {
   if (event.httpMethod !== 'POST') {
     return { statusCode: 405, body: JSON.stringify({ error: 'Method not allowed' }) };
@@ -77,9 +115,17 @@ export const handler = async (event) => {
   }
 
   const { persona = 'follower', trigger = 'session_complete', context = {} } = body;
-  const systemPrompt = PERSONA_SYSTEM_PROMPTS[persona] || PERSONA_SYSTEM_PROMPTS.follower;
-  const triggerFn = TRIGGER_TEMPLATES[trigger] || TRIGGER_TEMPLATES.session_complete;
-  const userMessage = triggerFn(context);
+  const isPostSession = trigger === 'post_session';
+
+  const systemPrompt = isPostSession
+    ? POST_SESSION_SYSTEM
+    : (PERSONA_SYSTEM_PROMPTS[persona] || PERSONA_SYSTEM_PROMPTS.follower);
+
+  const userMessage = isPostSession
+    ? buildPostSessionPrompt(context)
+    : (TRIGGER_TEMPLATES[trigger] || TRIGGER_TEMPLATES.session_complete)(context);
+
+  const maxTokens = isPostSession ? 600 : 120;
 
   try {
     const response = await fetch('https://api.anthropic.com/v1/messages', {
@@ -92,12 +138,12 @@ export const handler = async (event) => {
       },
       body: JSON.stringify({
         model: 'claude-haiku-4-5',
-        max_tokens: 120,
+        max_tokens: maxTokens,
         system: [
           {
             type: 'text',
             text: systemPrompt,
-            cache_control: { type: 'ephemeral' }, // Cache the system prompt per persona
+            cache_control: { type: 'ephemeral' },
           },
         ],
         messages: [
@@ -113,12 +159,30 @@ export const handler = async (event) => {
     }
 
     const data = await response.json();
-    const message = data.content?.[0]?.text?.trim() || '';
+    const raw = data.content?.[0]?.text?.trim() || '';
+
+    if (isPostSession) {
+      try {
+        const parsed = JSON.parse(raw);
+        return {
+          statusCode: 200,
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(parsed),
+        };
+      } catch {
+        // If JSON parse fails, return empty structure so client handles gracefully
+        return {
+          statusCode: 200,
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ state_update: {}, suggestions: [], plan_adjustments: [], diet_adjustments: [] }),
+        };
+      }
+    }
 
     return {
       statusCode: 200,
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ message }),
+      body: JSON.stringify({ message: raw }),
     };
   } catch (err) {
     console.error('generate-coaching error:', err);

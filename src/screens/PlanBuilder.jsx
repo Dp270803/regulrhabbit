@@ -7,7 +7,7 @@ import { trackOnboardingStarted, trackOnboardingStep, trackPlanCreated } from '.
 import chatbotFlow from '../data/chatbot-flow.json';
 import { useThemeColors, useTheme } from '../hooks/useTheme';
 
-const STEP_ORDER = ['welcome', 'experience', 'days', 'equipment', 'split', 'schedule', 'persona_style'];
+const STEP_ORDER = ['welcome', 'experience', 'days', 'equipment', 'split', 'schedule', 'body_stats', 'activity_level', 'persona_style'];
 
 const STEP_LABELS = {
   welcome: 'What is your main goal?',
@@ -111,6 +111,16 @@ export default function PlanBuilder() {
       updateData(data => {
         data.onboarding_complete = true;
         data.user.persona = initialPersona;
+        // Store diet profile for Mifflin-St Jeor baseline calculation
+        data.user.diet_profile = {
+          sex: finalAnswers.sex || 'male',
+          activity_level: finalAnswers.activity_level || 'moderate',
+          goal: finalAnswers.gym_goal || 'maintenance',
+          // age and height_cm default to sensible values; user can update in profile
+          age: data.user.diet_profile?.age || 25,
+          height_cm: data.user.diet_profile?.height_cm || 175,
+          weight_kg: data.user.diet_profile?.weight_kg || 75,
+        };
         data.plans.push(plan);
         return data;
       });
