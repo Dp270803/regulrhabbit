@@ -7,6 +7,7 @@ import LevelUpModal from '../components/LevelUpModal';
 import BadgeModal from '../components/BadgeModal';
 import ConfettiEffect from '../components/ConfettiEffect';
 import CoachMessage from '../components/CoachMessage';
+import InsightsCard from '../components/InsightsCard';
 import { getData, updateData } from '../utils/storage';
 import { fetchHeroImage, fetchDashboardPage } from '../utils/sanityClient';
 import { updatePersona } from '../utils/personaEngine';
@@ -19,6 +20,11 @@ import { checkBadges } from '../utils/badgeChecker';
 import { selectTip, markTipSeen } from '../utils/tipSelector';
 import { getToday, formatDate } from '../utils/dateUtils';
 import { trackPageView, trackSessionCompleted, trackReturnState, trackBadgeEarned, trackLevelUp } from '../utils/analytics';
+import { computeFitnessSignals } from '../utils/signalEngine';
+import { computeFitnessState } from '../utils/stateEngine';
+import { calculateBaseline } from '../utils/dietEngine';
+import { detectSkippedExercises, detectOverloadCandidates, applyPlanAdjustments, applyDietAdjustments } from '../utils/adaptationEngine';
+import { recordAccepted, recordRejected, getMemoryContext } from '../utils/aiMemory';
 import messagesData from '../data/messages.json';
 import levelsData from '../data/levels.json';
 import { useThemeColors } from '../hooks/useTheme';
@@ -112,6 +118,8 @@ export default function Dashboard() {
   const [cms, setCms] = useState(null);
   const [coachTrigger, setCoachTrigger] = useState('session_start');
   const [showCoach, setShowCoach] = useState(false);
+  const [sessionCalories, setSessionCalories] = useState(null);
+  const [aiInsights, setAiInsights] = useState([]);
 
   const loadDashboard = useCallback(async () => {
     const d = getData();
@@ -201,6 +209,78 @@ export default function Dashboard() {
     // Show post-session coaching message
     setCoachTrigger('session_complete');
     setShowCoach(true);
+  }
+
+  async function handlePerformanceLogged(calorieData) {
+    if (!calorieData) return;
+    setSessionCalories(calorieData);
+
+    // Persist calorie data onto today's check-in
+    updateData(d => {
+      const ci = d.check_ins.find(c => c.date === today && c.completed);
+      if (ci) Object.assign(ci, calorieData);
+      return d;
+    });
+
+    // Compute signals + state for AI context
+    const d = getData();
+    const activePlan = d.plans.find(p => p.status === 'active');
+    const performanceLogs = d.performance_logs || [];
+    const signals = computeFitnessSignals(d, performanceLogs);
+    const fitnessState = computeFitnessState(signals, d.check_ins.filter(c => c.completed).length);
+    const dietProfile = d.user.diet_profile || {};
+    const { baseline_calories } = calculateBaseline(dietProfile);
+    const skippedExercises = detectSkippedExercises(performanceLogs, d.check_ins, activePlan);
+    const overloadCandidates = detectOverloadCandidates(performanceLogs);
+    const memory = getMemoryContext();
+
+    try {
+      const res = await fetch('/.netlify/functions/generate-coaching', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          persona: d.user.persona || 'follower',
+          trigger: 'post_session',
+          context: {
+            goal: activePlan?.gym_goal,
+            adherence_score: signals.adherence_score,
+            session_calories: calorieData.final_calories,
+            total_volume: signals.total_volume,
+            exercises_completed: [],
+            fitness_state: fitnessState,
+            baseline_calories,
+            skipped_exercises: skippedExercises,
+            overload_candidates: overloadCandidates,
+            ai_memory: memory,
+          },
+        }),
+      });
+      if (!res.ok) return;
+      const result = await res.json();
+
+      if (result.suggestions?.length) setAiInsights(result.suggestions);
+
+      // Apply plan adjustments if present
+      if (result.plan_adjustments?.length && activePlan) {
+        const updatedPlan = applyPlanAdjustments(activePlan, result.plan_adjustments);
+        updateData(d => {
+          const idx = d.plans.findIndex(p => p.id === activePlan.id);
+          if (idx >= 0) d.plans[idx] = updatedPlan;
+          return d;
+        });
+      }
+
+      // Apply diet adjustments if present
+      if (result.diet_adjustments?.length) {
+        updateData(d => {
+          const diet = d.user.diet || { baseline_calories, current_calories: baseline_calories, last_adjustment_reason: '' };
+          d.user.diet = applyDietAdjustments(diet, result.diet_adjustments);
+          return d;
+        });
+      }
+    } catch {
+      // Silent — AI is enhancement only
+    }
   }
 
   const sixHoursAgo = new Date(Date.now() - 6 * 60 * 60 * 1000).toISOString();
@@ -293,12 +373,41 @@ export default function Dashboard() {
           isNextSession={isNextSession}
           nextLabel={nextLabel}
           onComplete={handleComplete}
+          onPerformanceLogged={handlePerformanceLogged}
           isCompleted={isCompleted}
           isCooldown={recentCompletedToday}
           isRestDay={rest && !todaySession && !nextInfo}
           equipment={activePlan?.equipment}
           heroImg={heroImg}
           cms={cms}
+        />
+
+        {/* ── Calories burned (shown after logging) ── */}
+        {sessionCalories && (
+          <div style={{ background: C.lowest, borderRadius: '14px', padding: '16px 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div>
+              <p style={{ fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', color: C.faint, margin: '0 0 4px' }}>Calories Burned</p>
+              <p className="font-headline" style={{ fontSize: '1.6rem', fontWeight: 800, color: C.primary, margin: 0, letterSpacing: '-0.02em' }}>
+                {sessionCalories.final_calories} kcal
+              </p>
+            </div>
+            <p style={{ fontSize: '0.72rem', color: C.muted, maxWidth: '55%', textAlign: 'right', lineHeight: 1.45 }}>
+              {sessionCalories.calorie_reasoning}
+            </p>
+          </div>
+        )}
+
+        {/* ── AI Insights card ── */}
+        <InsightsCard
+          suggestions={aiInsights}
+          onAccept={(s) => {
+            recordAccepted(s);
+            setAiInsights(prev => prev.filter(x => x !== s));
+          }}
+          onDismiss={(s) => {
+            recordRejected(s);
+            setAiInsights(prev => prev.filter(x => x !== s));
+          }}
         />
 
         {/* ── Weekly calendar ── */}

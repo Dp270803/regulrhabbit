@@ -8,13 +8,17 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 -- ─── Profiles ─────────────────────────────────────────────────────────────────
 -- One row per user. Extends auth.users (managed by Supabase Auth).
 CREATE TABLE IF NOT EXISTS public.profiles (
-  id           UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
-  name         TEXT,
-  persona      TEXT DEFAULT 'follower' CHECK (persona IN ('starter','follower','optimizer','struggler','self_directed')),
-  level        INTEGER DEFAULT 1,
-  total_xp     INTEGER DEFAULT 0,
-  created_at   TIMESTAMPTZ DEFAULT NOW(),
-  updated_at   TIMESTAMPTZ DEFAULT NOW()
+  id              UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
+  name            TEXT,
+  persona         TEXT DEFAULT 'follower' CHECK (persona IN ('starter','follower','optimizer','struggler','self_directed')),
+  level           INTEGER DEFAULT 1,
+  total_xp        INTEGER DEFAULT 0,
+  -- Phase 2: fitness state + diet baseline
+  fitness_state   JSONB,                -- { phase, fatigue_level, adherence, strength_trend, weight_trend }
+  diet            JSONB,                -- { baseline_calories, current_calories, last_adjustment_reason }
+  diet_profile    JSONB,                -- { age, height_cm, sex, activity_level, weight_kg, goal }
+  created_at      TIMESTAMPTZ DEFAULT NOW(),
+  updated_at      TIMESTAMPTZ DEFAULT NOW()
 );
 
 ALTER TABLE public.profiles ENABLE ROW LEVEL SECURITY;
@@ -52,14 +56,21 @@ CREATE POLICY "Users can delete own plans" ON public.plans FOR DELETE USING (aut
 
 -- ─── Check-ins (session completions) ─────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS public.check_ins (
-  id             UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  user_id        UUID REFERENCES auth.users(id) ON DELETE CASCADE,
-  plan_id        TEXT REFERENCES public.plans(id) ON DELETE SET NULL,
-  date           DATE NOT NULL,
-  session_id     TEXT,
-  xp_earned      INTEGER DEFAULT 0,
-  bonus_xp       INTEGER DEFAULT 0,
-  completed_at   TIMESTAMPTZ DEFAULT NOW()
+  id                  UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  user_id             UUID REFERENCES auth.users(id) ON DELETE CASCADE,
+  plan_id             TEXT REFERENCES public.plans(id) ON DELETE SET NULL,
+  date                DATE NOT NULL,
+  session_id          TEXT,
+  xp_earned           INTEGER DEFAULT 0,
+  bonus_xp            INTEGER DEFAULT 0,
+  -- Session calorie tracking (Phase 1)
+  base_calories       INTEGER,
+  adjusted_calories   INTEGER,
+  final_calories      INTEGER,
+  calorie_reasoning   TEXT,
+  duration_minutes    INTEGER,
+  body_weight_kg      NUMERIC(5,2),
+  completed_at        TIMESTAMPTZ DEFAULT NOW()
 );
 
 ALTER TABLE public.check_ins ENABLE ROW LEVEL SECURITY;
@@ -142,3 +153,19 @@ CREATE POLICY "Users can delete own performance_log" ON public.performance_log F
 
 -- Index for fast trend queries
 CREATE INDEX IF NOT EXISTS perf_log_user_exercise ON public.performance_log (user_id, exercise_name, date DESC);
+
+-- ─── Migration: add new columns to existing tables ────────────────────────────
+-- Run these ALTER statements if you already have the schema applied:
+--
+-- ALTER TABLE public.check_ins
+--   ADD COLUMN IF NOT EXISTS base_calories      INTEGER,
+--   ADD COLUMN IF NOT EXISTS adjusted_calories  INTEGER,
+--   ADD COLUMN IF NOT EXISTS final_calories      INTEGER,
+--   ADD COLUMN IF NOT EXISTS calorie_reasoning   TEXT,
+--   ADD COLUMN IF NOT EXISTS duration_minutes    INTEGER,
+--   ADD COLUMN IF NOT EXISTS body_weight_kg      NUMERIC(5,2);
+--
+-- ALTER TABLE public.profiles
+--   ADD COLUMN IF NOT EXISTS fitness_state  JSONB,
+--   ADD COLUMN IF NOT EXISTS diet           JSONB,
+--   ADD COLUMN IF NOT EXISTS diet_profile   JSONB;

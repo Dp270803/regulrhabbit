@@ -87,7 +87,7 @@ function CollapsibleBlock({ label, duration, text }) {
   );
 }
 
-export default function SessionCard({ session, onComplete, isCompleted, isCooldown, isRestDay, equipment, isNextSession, nextLabel, heroImg, cms }) {
+export default function SessionCard({ session, onComplete, onPerformanceLogged, isCompleted, isCooldown, isRestDay, equipment, isNextSession, nextLabel, heroImg, cms }) {
   const C = useThemeColors();
   const [checked, setChecked] = useState({});
   const [alts, setAlts] = useState({});
@@ -377,7 +377,10 @@ export default function SessionCard({ session, onComplete, isCompleted, isCooldo
           sessionId={session.id}
           date={session.date}
           userId={authUser?.id || null}
-          onSave={() => setShowLogger(false)}
+          onSave={(calorieData) => {
+            setShowLogger(false);
+            onPerformanceLogged?.(calorieData);
+          }}
         />
       )}
     </div>
