@@ -7,25 +7,25 @@ import { trackOnboardingStarted, trackOnboardingStep, trackPlanCreated } from '.
 import chatbotFlow from '../data/chatbot-flow.json';
 import { useThemeColors, useTheme } from '../hooks/useTheme';
 
-const STEP_ORDER = ['welcome', 'experience', 'days', 'equipment', 'split', 'schedule', 'body_stats', 'activity_level', 'persona_style'];
+const STEP_ORDER = ['user_type_select', 'welcome', 'experience', 'days', 'equipment', 'split', 'schedule', 'body_stats', 'activity_level'];
 
 const STEP_LABELS = {
+  user_type_select: 'How do you want to set up?',
   welcome: 'What is your main goal?',
   experience: 'Your experience level?',
   days: 'How many days per week?',
   equipment: 'What equipment do you have?',
   split: 'Preferred training split?',
   schedule: 'Which specific days work for you?',
-  persona_style: 'How do you like to train?',
 };
 
 const STEP_SUBTITLES = {
+  user_type_select: 'Guided builds a structured plan for you. Self-directed lets you pick your own days and exercises.',
   welcome: 'All 20 programs build muscle. Goal determines session length — not a different program.',
   experience: "Be honest — it shapes your program's volume and structure.",
   days: "A lower frequency you can stick to beats a higher one you can't.",
   split: 'Optional — only matters if your answers result in a tie between two equally good programs.',
   schedule: "We'll optimize your recovery based on your availability.",
-  persona_style: 'This shapes how the app coaches and communicates with you.',
 };
 
 const GOAL_LABELS = {
@@ -76,6 +76,11 @@ export default function PlanBuilder() {
 
     trackOnboardingStep(stepIndex + 1, currentStep, option.label);
 
+    if (option.next === 'custom') {
+      navigate('/onboarding/custom');
+      return;
+    }
+
     if (option.next === 'complete') {
       setCompletedPairs(prev => [...prev, { stepKey: currentStep, selectedLabel: option.label }]);
       setAnswers(newAnswers);
@@ -104,13 +109,13 @@ export default function PlanBuilder() {
   async function handleComplete(finalAnswers) {
     setIsGenerating(true);
     const enrichedAnswers = { ...finalAnswers, activity: 'gym' };
-    const initialPersona = finalAnswers.training_style || 'follower';
     try {
       const plan = await generatePlan(enrichedAnswers);
       setShowConfetti(true);
       updateData(data => {
         data.onboarding_complete = true;
-        data.user.persona = initialPersona;
+        data.user.user_type = 'guided';
+        data.user.persona = data.user.persona || 'follower';
         // Store diet profile for Mifflin-St Jeor baseline calculation
         data.user.diet_profile = {
           sex: finalAnswers.sex || 'male',
@@ -128,7 +133,7 @@ export default function PlanBuilder() {
         activity: 'gym',
         experience_level: enrichedAnswers.experience_level,
         frequency: enrichedAnswers.frequency,
-        persona: initialPersona,
+        persona: 'follower',
         session_duration: enrichedAnswers.gym_goal === 'build_efficient' ? '45–60 min' : '60–90 min',
       });
       setTimeout(() => navigate('/dashboard'), 2000);

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Clock, Check, ChevronDown } from 'lucide-react';
 import { useThemeColors } from '../hooks/useTheme';
-import PerformanceLogger from './PerformanceLogger';
+import WorkoutLogger from './WorkoutLogger';
 import { useAuth } from '../hooks/useAuth';
 
 function YtIcon({ size = 13 }) {
@@ -372,14 +372,14 @@ export default function SessionCard({ session, onComplete, onPerformanceLogged, 
 
       {/* ── Performance logger (shown after session completion) ── */}
       {isCompleted && showLogger && (
-        <PerformanceLogger
+        <WorkoutLogger
           exercises={exercises}
-          sessionId={session.id}
-          date={session.date}
+          session={session}
           userId={authUser?.id || null}
-          onSave={(calorieData) => {
+          onSave={() => {}}
+          onAnalysisResult={(result) => {
             setShowLogger(false);
-            onPerformanceLogged?.(calorieData);
+            onPerformanceLogged?.(result);
           }}
         />
       )}

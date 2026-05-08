@@ -1,5 +1,13 @@
 {
   "steps": {
+    "user_type_select": {
+      "bot_message": "How do you want to set up your training?",
+      "field": "user_type",
+      "options": [
+        { "label": "Guide me — build my plan through questions", "value": "guided", "next": "welcome" },
+        { "label": "I'll build my own — pick my own days and structure", "value": "self_directed", "next": "custom" }
+      ]
+    },
     "welcome": {
       "bot_message": "Hey. Let's build your gym plan. What's your main goal?",
       "field": "gym_goal",
@@ -80,21 +88,10 @@
       "bot_message": "Outside of gym sessions, how active is your daily life?",
       "field": "activity_level",
       "options": [
-        { "label": "Sedentary — mostly desk job, little movement", "value": "sedentary", "next": "persona_style" },
-        { "label": "Lightly active — some walking, light movement", "value": "light", "next": "persona_style" },
-        { "label": "Moderately active — on feet often or occasional cardio", "value": "moderate", "next": "persona_style" },
-        { "label": "Very active — physical job or daily cardio", "value": "active", "next": "persona_style" }
-      ]
-    },
-    "persona_style": {
-      "bot_message": "Last one — how do you like to train?",
-      "field": "training_style",
-      "options": [
-        { "label": "Guide me — I need structure and direction", "value": "starter", "next": "summary" },
-        { "label": "Give me a plan — I'll follow without overthinking", "value": "follower", "next": "summary" },
-        { "label": "Show me data — I want to optimise everything", "value": "optimizer", "next": "summary" },
-        { "label": "Help me stay consistent — I struggle to keep going", "value": "struggler", "next": "summary" },
-        { "label": "I have my own system — I just need tracking", "value": "self_directed", "next": "summary" }
+        { "label": "Sedentary — mostly desk job, little movement", "value": "sedentary", "next": "summary" },
+        { "label": "Lightly active — some walking, light movement", "value": "light", "next": "summary" },
+        { "label": "Moderately active — on feet often or occasional cardio", "value": "moderate", "next": "summary" },
+        { "label": "Very active — physical job or daily cardio", "value": "active", "next": "summary" }
       ]
     },
     "summary": {
@@ -113,5 +110,5 @@
       "bot_message": "You're in. First session: {first_day}. Just show up."
     }
   },
-  "initial_step": "welcome"
+  "initial_step": "user_type_select"
 }
