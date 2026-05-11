@@ -8,6 +8,7 @@ import BadgeModal from '../components/BadgeModal';
 import ConfettiEffect from '../components/ConfettiEffect';
 import CoachMessage from '../components/CoachMessage';
 import InsightsCard from '../components/InsightsCard';
+import PlanUpdatesBanner from '../components/PlanUpdatesBanner';
 import { getData, updateData } from '../utils/storage';
 import { fetchHeroImage, fetchDashboardPage } from '../utils/sanityClient';
 import { updatePersona } from '../utils/personaEngine';
@@ -118,11 +119,16 @@ export default function Dashboard() {
   const [showCoach, setShowCoach] = useState(false);
   const [sessionCalories, setSessionCalories] = useState(null);
   const [aiInsights, setAiInsights] = useState([]);
+  const [weightInput, setWeightInput] = useState('');
+  const [weightSaved, setWeightSaved] = useState(false);
+  const [planUpdates, setPlanUpdates] = useState([]);
 
   const loadDashboard = useCallback(async () => {
     const d = getData();
     if (!d.onboarding_complete) { navigate('/'); return; }
     setData(d);
+    setPlanUpdates(d.plan_updates || []);
+    setWeightInput(d.user?.body_weight_kg ? String(d.user.body_weight_kg) : '');
     const { state, missedCount } = detectReturnState(d);
     setReturnStateNum(state);
     const activePlan = d.plans.find(p => p.status === 'active');
@@ -251,6 +257,25 @@ export default function Dashboard() {
         return d;
       });
     }
+
+    // Refresh plan_updates display
+    setPlanUpdates(getData().plan_updates || []);
+  }
+
+  function handleWeightSave() {
+    const kg = parseFloat(weightInput);
+    if (!kg || kg < 20 || kg > 400) return;
+    const updated = updateData(d => {
+      d.user.body_weight_kg = kg;
+      if (!Array.isArray(d.weight_log)) d.weight_log = [];
+      const todayEntry = d.weight_log.find(w => w.date === today);
+      if (todayEntry) todayEntry.weight_kg = kg;
+      else d.weight_log.push({ date: today, weight_kg: kg });
+      return d;
+    });
+    setData(updated);
+    setWeightSaved(true);
+    setTimeout(() => setWeightSaved(false), 2000);
   }
 
   const sixHoursAgo = new Date(Date.now() - 6 * 60 * 60 * 1000).toISOString();
@@ -322,6 +347,52 @@ export default function Dashboard() {
             {celebrationMsg}
           </div>
         )}
+
+        {/* ── Plan updates banner ── */}
+        <PlanUpdatesBanner
+          updates={planUpdates}
+          onDismissAll={() => setPlanUpdates(getData().plan_updates || [])}
+        />
+
+        {/* ── Weight check-in widget ── */}
+        <div style={{ background: C.low, borderRadius: '14px', padding: '16px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '16px' }}>
+          <div>
+            <p style={{ fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.16em', textTransform: 'uppercase', color: C.faint, margin: '0 0 4px' }}>
+              Today's Weight
+            </p>
+            <p style={{ fontSize: '0.78rem', color: C.muted, margin: 0 }}>
+              {data.user.body_weight_kg ? `Last: ${data.user.body_weight_kg} kg` : 'Log your weight to unlock calorie accuracy'}
+            </p>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <input
+              type="number"
+              inputMode="decimal"
+              placeholder={data.user.body_weight_kg ? String(data.user.body_weight_kg) : '75'}
+              value={weightInput}
+              onChange={e => setWeightInput(e.target.value)}
+              onKeyDown={e => e.key === 'Enter' && handleWeightSave()}
+              style={{
+                width: '72px', padding: '8px 10px', borderRadius: '8px',
+                border: `1px solid ${C.border}`, background: C.container,
+                color: C.text, fontSize: '0.9rem', textAlign: 'center', outline: 'none',
+              }}
+            />
+            <span style={{ fontSize: '0.75rem', color: C.faint, flexShrink: 0 }}>kg</span>
+            <button
+              onClick={handleWeightSave}
+              style={{
+                padding: '8px 16px', borderRadius: '8px',
+                background: weightSaved ? C.green : C.primary,
+                color: C.onPrimary, border: 'none', cursor: 'pointer',
+                fontSize: '0.75rem', fontWeight: 700, transition: 'background 0.2s',
+                whiteSpace: 'nowrap',
+              }}
+            >
+              {weightSaved ? '✓ Saved' : 'Log'}
+            </button>
+          </div>
+        </div>
 
         {/* ── Coach message (persona-aware, above session card) ── */}
         <CoachMessage

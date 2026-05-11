@@ -10,7 +10,7 @@ import {
 const STORAGE_KEY = 'regulr_data';
 
 const DEFAULT_DATA = {
-  version: '1.1',
+  version: '1.2',
   created_at: null,
   last_opened: null,
   onboarding_complete: false,
@@ -69,6 +69,8 @@ const DEFAULT_DATA = {
     accepted_suggestions: [],
     rejected_suggestions: [],
   },
+  plan_updates: [],
+  weight_log: [],
 };
 
 function migrateData(data) {
@@ -78,6 +80,11 @@ function migrateData(data) {
     for (const key of ['workout_logs', 'fitness_state', 'diet', 'ai_insights', 'ai_memory']) {
       if (data[key] === undefined) data[key] = DEFAULT_DATA[key];
     }
+  }
+  if (data.version === '1.1') {
+    data.version = '1.2';
+    if (!data.plan_updates) data.plan_updates = [];
+    if (!data.weight_log) data.weight_log = [];
     saveData(data);
   }
   return data;

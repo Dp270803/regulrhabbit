@@ -80,6 +80,14 @@ export default function PlanBuilder() {
       navigate('/onboarding/custom');
       return;
     }
+    if (option.next === 'import') {
+      navigate('/onboarding/import');
+      return;
+    }
+    if (option.next === 'import_critique') {
+      navigate('/onboarding/import?critique=1');
+      return;
+    }
 
     if (option.next === 'complete') {
       setCompletedPairs(prev => [...prev, { stepKey: currentStep, selectedLabel: option.label }]);

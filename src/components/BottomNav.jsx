@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import { LayoutDashboard, CalendarDays, User, Lightbulb } from 'lucide-react';
+import { LayoutDashboard, CalendarDays, User, Lightbulb, TrendingUp } from 'lucide-react';
 import { useThemeColors } from '../hooks/useTheme';
 
 export default function BottomNav() {
@@ -18,15 +18,16 @@ export default function BottomNav() {
       >
         <div className="flex items-center justify-around px-2 py-2">
           {[
-            { to: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
+            { to: '/dashboard', icon: LayoutDashboard, label: 'Home' },
             { to: '/plan', icon: CalendarDays, label: 'Plan' },
+            { to: '/progress', icon: TrendingUp, label: 'Progress' },
             { to: '/tips', icon: Lightbulb, label: 'Tips' },
             { to: '/profile', icon: User, label: 'Profile' },
           ].map(({ to, icon: Icon, label }) => (
             <NavLink
               key={to}
               to={to}
-              className="flex flex-col items-center gap-1 py-2 px-4 rounded-xl transition-all duration-200"
+              className="flex flex-col items-center gap-1 py-2 px-2 rounded-xl transition-all duration-200"
               style={({ isActive }) => ({
                 color: isActive ? C.primary : C.faint,
               })}

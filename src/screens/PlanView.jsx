@@ -1,10 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getData } from '../utils/storage';
+import { getData, updateData } from '../utils/storage';
 import { formatDate } from '../utils/dateUtils';
 import { trackPageView } from '../utils/analytics';
 import { fetchPlanPage } from '../utils/sanityClient';
 import { useThemeColors, useTheme } from '../hooks/useTheme';
+import exercisesData from '../data/exercises.json';
 
 const W = { maxWidth: '1200px', margin: '0 auto', padding: '0 clamp(16px, 4vw, 64px)' };
 
@@ -53,6 +54,79 @@ function parseExercises(detail) {
     .filter(e => e.name.length > 1);
 }
 
+function ExerciseAddInput({ onAdd, C }) {
+  const [query, setQuery] = useState('');
+  const [results, setResults] = useState([]);
+  const [focused, setFocused] = useState(false);
+  const ref = useRef(null);
+
+  useEffect(() => {
+    if (!query.trim()) { setResults([]); return; }
+    const q = query.toLowerCase();
+    setResults(exercisesData.filter(e => e.name.toLowerCase().includes(q)).slice(0, 6));
+  }, [query]);
+
+  function pick(name) {
+    onAdd(name);
+    setQuery('');
+    setResults([]);
+    ref.current?.focus();
+  }
+
+  function handleKeyDown(e) {
+    if (e.key === 'Enter' && query.trim()) {
+      if (results.length > 0) pick(results[0].name);
+      else { onAdd(query.trim()); setQuery(''); setResults([]); }
+    }
+  }
+
+  return (
+    <div style={{ position: 'relative' }}>
+      <input
+        ref={ref}
+        type="text"
+        value={query}
+        onChange={e => setQuery(e.target.value)}
+        onKeyDown={handleKeyDown}
+        onFocus={() => setFocused(true)}
+        onBlur={() => setTimeout(() => setFocused(false), 150)}
+        placeholder="Add exercise — search or type…"
+        style={{
+          width: '100%', padding: '9px 12px', borderRadius: '8px',
+          border: `1px solid ${focused ? C.primary : C.border}`,
+          background: C.bg, color: C.text, fontSize: '0.85rem',
+          boxSizing: 'border-box', outline: 'none', transition: 'border-color 0.15s',
+        }}
+      />
+      {results.length > 0 && focused && (
+        <div style={{
+          position: 'absolute', top: '100%', left: 0, right: 0, zIndex: 200,
+          background: C.low, border: `1px solid ${C.border}`, borderRadius: '8px',
+          marginTop: '4px', boxShadow: '0 8px 32px rgba(0,0,0,0.3)', overflow: 'hidden',
+        }}>
+          {results.map(ex => (
+            <button
+              key={ex.name}
+              onMouseDown={() => pick(ex.name)}
+              style={{
+                width: '100%', padding: '9px 12px', display: 'flex', alignItems: 'center',
+                justifyContent: 'space-between', background: 'none', border: 'none',
+                cursor: 'pointer', color: C.text, textAlign: 'left',
+                borderBottom: `1px solid ${C.separator}`,
+              }}
+              onMouseEnter={e => e.currentTarget.style.background = C.separator}
+              onMouseLeave={e => e.currentTarget.style.background = 'none'}
+            >
+              <span style={{ fontSize: '0.85rem', fontWeight: 600 }}>{ex.name}</span>
+              <span style={{ fontSize: '0.62rem', color: C.faint }}>{ex.group}</span>
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function PlanView() {
   const C = useThemeColors();
   const { isDark } = useTheme();
@@ -62,6 +136,8 @@ export default function PlanView() {
   const [expandedWeek, setExpandedWeek] = useState(null);
   const [expandedSession, setExpandedSession] = useState(null);
   const [cms, setCms] = useState(null);
+  const [editingSession, setEditingSession] = useState(null); // session.id being edited
+  const [editExercises, setEditExercises] = useState([]); // [{name, sets}]
 
   useEffect(() => {
     trackPageView('plan');
@@ -75,6 +151,40 @@ export default function PlanView() {
     }
     fetchPlanPage().then(doc => { if (doc) setCms(doc); }).catch(() => {});
   }, [navigate]);
+
+  function startEditing(session) {
+    const exercises = session.blocks?.find(b => b.type === 'main')
+      ? parseExercises(session.blocks.find(b => b.type === 'main').detail)
+      : [];
+    setEditExercises(exercises.map(e => ({ name: e.name, sets: e.sets })));
+    setEditingSession(session.id);
+  }
+
+  function saveEdits(sessionTitle) {
+    const detailStr = editExercises
+      .filter(e => e.name)
+      .map(e => e.sets ? `${e.name} ${e.sets}` : e.name)
+      .join(' | ');
+
+    const updated = updateData(d => {
+      const plan = d.plans.find(p => p.status === 'active');
+      if (!plan) return d;
+      for (const week of plan.weeks) {
+        for (const session of week.sessions) {
+          if (session.title !== sessionTitle) continue;
+          const mainBlock = session.blocks?.find(b => b.type === 'main');
+          if (mainBlock) mainBlock.detail = detailStr;
+          else if (!session.blocks) session.blocks = [{ type: 'main', detail: detailStr }];
+          else session.blocks.push({ type: 'main', detail: detailStr });
+        }
+      }
+      return d;
+    });
+    setData(updated);
+    setSelectedPlan(updated.plans.find(p => p.status === 'active'));
+    setEditingSession(null);
+    setEditExercises([]);
+  }
 
   if (!data || !selectedPlan) {
     return (
@@ -139,7 +249,8 @@ export default function PlanView() {
               <div
                 key={week.week_number}
                 style={{
-                  background: C.low, borderRadius: '16px', overflow: 'hidden',
+                  background: C.low, borderRadius: '16px',
+                  overflow: week.sessions.some(s => s.id === editingSession) ? 'visible' : 'hidden',
                   opacity: isExpanded ? 1 : 0.85,
                   transition: 'opacity 0.2s',
                 }}
@@ -287,22 +398,73 @@ export default function PlanView() {
                               )}
                               {exercises.length > 0 && (
                                 <div style={{ borderTop: `1px solid ${C.separator}`, paddingTop: '12px' }}>
-                                  <p style={{ fontSize: '0.58rem', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: C.faint, marginBottom: '12px' }}>Exercises</p>
-                                  <div>
-                                    {exercises.map((ex, i) => (
-                                      <div
-                                        key={i}
-                                        style={{
-                                          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-                                          padding: '10px 0',
-                                          borderBottom: i < exercises.length - 1 ? `1px solid ${C.separator}` : 'none',
-                                        }}
+                                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
+                                    <p style={{ fontSize: '0.58rem', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: C.faint, margin: 0 }}>Exercises</p>
+                                    {!isCompleted && editingSession !== session.id && (
+                                      <button
+                                        onClick={() => startEditing(session)}
+                                        style={{ background: 'none', border: `1px solid ${C.border}`, borderRadius: '6px', padding: '3px 10px', cursor: 'pointer', color: C.faint, fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase' }}
+                                        onMouseEnter={e => { e.currentTarget.style.color = C.text; e.currentTarget.style.borderColor = C.muted; }}
+                                        onMouseLeave={e => { e.currentTarget.style.color = C.faint; e.currentTarget.style.borderColor = C.border; }}
                                       >
-                                        <p style={{ fontSize: '0.9rem', color: C.text }}>{ex.name}</p>
-                                        <span style={{ fontFamily: 'Inter, monospace', fontSize: '0.85rem', fontWeight: 700, color: C.primary }}>{ex.sets || '—'}</span>
-                                      </div>
-                                    ))}
+                                        Edit
+                                      </button>
+                                    )}
                                   </div>
+
+                                  {editingSession === session.id ? (
+                                    <div>
+                                      {editExercises.map((ex, ei) => (
+                                        <div key={ei} style={{ display: 'grid', gridTemplateColumns: '1fr 80px 24px', gap: '6px', alignItems: 'center', marginBottom: '6px' }}>
+                                          <p style={{ fontSize: '0.85rem', color: C.text, margin: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }} title={ex.name}>{ex.name}</p>
+                                          <input
+                                            type="text"
+                                            value={ex.sets}
+                                            placeholder="3x8-12"
+                                            onChange={e => setEditExercises(prev => prev.map((x, i) => i === ei ? { ...x, sets: e.target.value } : x))}
+                                            style={{ padding: '5px 8px', borderRadius: '6px', border: `1px solid ${C.border}`, background: C.bg, color: C.text, fontSize: '0.8rem', outline: 'none', textAlign: 'center', width: '100%', boxSizing: 'border-box' }}
+                                          />
+                                          <button
+                                            onClick={() => setEditExercises(prev => prev.filter((_, i) => i !== ei))}
+                                            style={{ background: 'none', border: 'none', cursor: 'pointer', color: C.faint, fontSize: '1.1rem', lineHeight: 1, padding: 0 }}
+                                          >×</button>
+                                        </div>
+                                      ))}
+                                      <div style={{ marginTop: '10px', marginBottom: '12px' }}>
+                                        <ExerciseAddInput onAdd={name => setEditExercises(prev => [...prev, { name, sets: '' }])} C={C} />
+                                      </div>
+                                      <div style={{ display: 'flex', gap: '8px' }}>
+                                        <button
+                                          onClick={() => saveEdits(session.title)}
+                                          style={{ padding: '7px 20px', borderRadius: '8px', background: C.text, color: C.bg, border: 'none', fontSize: '0.82rem', fontWeight: 700, cursor: 'pointer' }}
+                                        >
+                                          Save
+                                        </button>
+                                        <button
+                                          onClick={() => { setEditingSession(null); setEditExercises([]); }}
+                                          style={{ padding: '7px 14px', borderRadius: '8px', background: 'transparent', color: C.faint, border: `1px solid ${C.border}`, fontSize: '0.82rem', cursor: 'pointer' }}
+                                        >
+                                          Cancel
+                                        </button>
+                                      </div>
+                                    </div>
+                                  ) : (
+                                    <div>
+                                      {exercises.map((ex, i) => (
+                                        <div
+                                          key={i}
+                                          style={{
+                                            display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                                            padding: '10px 0',
+                                            borderBottom: i < exercises.length - 1 ? `1px solid ${C.separator}` : 'none',
+                                          }}
+                                        >
+                                          <p style={{ fontSize: '0.9rem', color: C.text }}>{ex.name}</p>
+                                          <span style={{ fontFamily: 'Inter, monospace', fontSize: '0.85rem', fontWeight: 700, color: C.primary }}>{ex.sets || '—'}</span>
+                                        </div>
+                                      ))}
+                                    </div>
+                                  )}
                                 </div>
                               )}
                               {cooldown && (

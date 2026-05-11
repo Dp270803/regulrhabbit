@@ -7,7 +7,7 @@ import { estimateSessionCalories } from '../utils/calorieCalculator';
 export default function WorkoutLogger({ exercises, session, userId, onSave, onAnalysisResult }) {
   const C = useThemeColors();
   const [logs, setLogs] = useState(() =>
-    exercises.map(e => ({ exercise_name: e.name, sets: '', reps: '', weight_kg: '', rpe: '' }))
+    exercises.map(e => ({ exercise_name: e.name, sets: '', reps: '', weight_kg: '', rir: '' }))
   );
   const [saving, setSaving] = useState(false);
   const [analysisState, setAnalysisState] = useState('idle'); // 'idle' | 'loading' | 'done'
@@ -36,7 +36,7 @@ export default function WorkoutLogger({ exercises, session, userId, onSave, onAn
         sets: l.sets ? parseInt(l.sets) : null,
         reps: l.reps || null,
         weight_kg: l.weight_kg ? parseFloat(l.weight_kg) : null,
-        rpe: l.rpe ? parseInt(l.rpe) : null,
+        rir: l.rir !== '' ? parseInt(l.rir) : null,
       }))
       .filter(l => l.sets || l.reps || l.weight_kg);
 
@@ -135,6 +135,17 @@ export default function WorkoutLogger({ exercises, session, userId, onSave, onAn
             calorie_reasoning: result.reasoning || null,
             suggestions: result.suggestions || [],
           });
+          // Store plan_updates for the "Your plan was updated" banner
+          if (result.plan_adjustments?.length) {
+            if (!Array.isArray(d.plan_updates)) d.plan_updates = [];
+            d.plan_updates.push({
+              id: crypto.randomUUID(),
+              applied_at: new Date().toISOString(),
+              seen: false,
+              session_title: session.title || '',
+              changes: result.plan_adjustments,
+            });
+          }
           return d;
         });
 
@@ -174,7 +185,7 @@ export default function WorkoutLogger({ exercises, session, userId, onSave, onAn
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '16px' }}>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 50px 70px 80px 50px', gap: '6px', paddingBottom: '4px', borderBottom: `1px solid ${C.separator}` }}>
-          {['Exercise', 'Sets', 'Reps', 'kg', 'RPE'].map(h => (
+          {['Exercise', 'Sets', 'Reps', 'kg', 'RIR'].map(h => (
             <p key={h} style={{ fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: C.faint, margin: 0 }}>{h}</p>
           ))}
         </div>
@@ -184,12 +195,12 @@ export default function WorkoutLogger({ exercises, session, userId, onSave, onAn
             <p style={{ fontSize: '0.82rem', color: C.text, margin: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }} title={log.exercise_name}>
               {log.exercise_name}
             </p>
-            {['sets', 'reps', 'weight_kg', 'rpe'].map(field => (
+            {['sets', 'reps', 'weight_kg', 'rir'].map(field => (
               <input
                 key={field}
                 type={field === 'reps' ? 'text' : 'number'}
                 inputMode={field === 'reps' ? 'text' : 'decimal'}
-                placeholder={field === 'rpe' ? '1–10' : '—'}
+                placeholder={field === 'rir' ? '0–5' : '—'}
                 value={log[field]}
                 onChange={e => updateLog(i, field, e.target.value)}
                 style={{

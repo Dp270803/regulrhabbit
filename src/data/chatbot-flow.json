@@ -1,11 +1,12 @@
 {
   "steps": {
     "user_type_select": {
-      "bot_message": "How do you want to set up your training?",
+      "bot_message": "How do you want to start?",
       "field": "user_type",
       "options": [
-        { "label": "Guide me — build my plan through questions", "value": "guided", "next": "welcome" },
-        { "label": "I'll build my own — pick my own days and structure", "value": "self_directed", "next": "custom" }
+        { "label": "Build me a plan — I'll answer a few questions", "value": "guided", "next": "welcome" },
+        { "label": "I have my own plan — I'll enter my exercises", "value": "self_directed", "next": "import" },
+        { "label": "I have a plan — check it for me", "value": "validated", "next": "import_critique" }
       ]
     },
     "welcome": {

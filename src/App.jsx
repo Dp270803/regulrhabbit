@@ -8,14 +8,18 @@ import Dashboard from './screens/Dashboard';
 import PlanView from './screens/PlanView';
 import Profile from './screens/Profile';
 import Tips from './screens/Tips';
+import Progress from './screens/Progress';
+import PlanImporter from './screens/PlanImporter';
+import PlanCritique from './screens/PlanCritique';
 import SanityStudio from './screens/SanityStudio';
 import CustomPlanBuilder from './screens/CustomPlanBuilder';
 import BottomNav from './components/BottomNav';
 
-const NAV_SCREENS = ['/dashboard', '/plan', '/profile', '/tips'];
+const NAV_SCREENS = ['/dashboard', '/plan', '/progress', '/profile', '/tips'];
 const NAV_LINKS = [
   { to: '/dashboard', label: 'Dashboard' },
   { to: '/plan', label: 'Plan' },
+  { to: '/progress', label: 'Progress' },
   { to: '/tips', label: 'Tips' },
   { to: '/profile', label: 'Profile' },
 ];
@@ -88,8 +92,11 @@ export default function App() {
         <Route path="/" element={<Landing />} />
         <Route path="/onboarding" element={<PlanBuilder />} />
         <Route path="/onboarding/custom" element={<CustomPlanBuilder />} />
+        <Route path="/onboarding/import" element={<PlanImporter />} />
+        <Route path="/onboarding/critique" element={<PlanCritique />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/plan" element={<PlanView />} />
+        <Route path="/progress" element={<Progress />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/tips" element={<Tips />} />
         <Route path="/studio/*" element={<SanityStudio />} />
