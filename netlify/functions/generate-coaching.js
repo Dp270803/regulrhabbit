@@ -62,9 +62,12 @@ const TRIGGER_TEMPLATES = {
   weekly_summary: (ctx) => `User ${ctx.name || ''} completed their week. Streak: ${ctx.streak}. ${ctx.exercise_trend ? `Performance note: ${ctx.exercise_trend}.` : ''} Generate a weekly summary insight.`,
 };
 
-const POST_SESSION_SYSTEM = `You are an intelligent fitness advisor that analyses user workout data and returns structured JSON recommendations.
+import { buildBookSystemBlock } from './_book-context.js';
+
+const POST_SESSION_SYSTEM = `You are an intelligent fitness advisor grounded in The Muscle Ladder (Jeff Nippard). You analyse user workout data and return structured JSON recommendations.
+Every suggestion or plan_adjustment MUST include a book_reference (chapter) that supports it.
 You ONLY suggest — never override system logic or compute calorie baselines.
-Rules: Be specific. No fluff. Output valid JSON only. No markdown code blocks.`;
+Rules: Be specific. No fluff. Output valid JSON only. No markdown code blocks. If the book is silent on a topic, omit the suggestion rather than speculate.`;
 
 function buildPostSessionPrompt(ctx) {
   const state = ctx.fitness_state || {};
@@ -91,11 +94,11 @@ function buildPostSessionPrompt(ctx) {
 Return a JSON object with exactly these keys:
 {
   "state_update": {},
-  "suggestions": [{ "category": "exercise"|"diet"|"recovery", "text": "..." }],
-  "plan_adjustments": [{ "type": "reduce_volume"|"add_exercise"|"replace_exercise"|"adjust_frequency", "detail": "...", "old_exercise": "...", "new_exercise": { "name": "...", "sets": 3, "reps": "8-12" }, "exercise": { "name": "...", "sets": 3, "reps": "8-12" }, "delta": 0 }],
-  "diet_adjustments": [{ "delta": 0, "reason": "..." }]
+  "suggestions": [{ "category": "exercise"|"diet"|"recovery", "text": "...", "book_reference": "<chapter>" }],
+  "plan_adjustments": [{ "type": "reduce_volume"|"add_exercise"|"replace_exercise"|"adjust_frequency", "detail": "...", "old_exercise": "...", "new_exercise": { "name": "...", "sets": 3, "reps": "8-12" }, "exercise": { "name": "...", "sets": 3, "reps": "8-12" }, "delta": 0, "book_reference": "<chapter>" }],
+  "diet_adjustments": [{ "delta": 0, "reason": "...", "book_reference": "<chapter>" }]
 }
-Provide 1-3 suggestions. Only include plan_adjustments or diet_adjustments if genuinely warranted. Keep suggestion text under 20 words.`;
+Provide 1-3 suggestions. Only include plan_adjustments or diet_adjustments if genuinely warranted. Keep suggestion text under 20 words. Every suggestion/adjustment must include a book_reference.`;
 
 export const handler = async (event) => {
   if (event.httpMethod !== 'POST') {
@@ -139,13 +142,26 @@ export const handler = async (event) => {
       body: JSON.stringify({
         model: 'claude-haiku-4-5',
         max_tokens: maxTokens,
-        system: [
-          {
-            type: 'text',
-            text: systemPrompt,
-            cache_control: { type: 'ephemeral' },
-          },
-        ],
+        system: isPostSession
+          ? [
+              {
+                type: 'text',
+                text: buildBookSystemBlock(`${context.goal || ''} ${context.fitness_state?.phase || ''} ${context.fitness_state?.fatigue_level || ''}`, 3),
+                cache_control: { type: 'ephemeral' },
+              },
+              {
+                type: 'text',
+                text: systemPrompt,
+                cache_control: { type: 'ephemeral' },
+              },
+            ]
+          : [
+              {
+                type: 'text',
+                text: systemPrompt,
+                cache_control: { type: 'ephemeral' },
+              },
+            ],
         messages: [
           { role: 'user', content: userMessage },
         ],

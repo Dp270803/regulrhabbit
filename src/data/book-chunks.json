@@ -1,0 +1,153 @@
+{
+  "_meta": {
+    "version": "1.0",
+    "source": "The Muscle Ladder by Jeff Nippard",
+    "description": "Topic chunks for AI retrieval. Each chunk: ~200-400 tokens with keyword/topic metadata. Retrieved by keyword matching at AI call time."
+  },
+  "chunks": [
+    {
+      "id": "ch_hypertrophy_basics",
+      "topic": "hypertrophy fundamentals",
+      "chapter": "Ch. 2 — Hypertrophy Fundamentals",
+      "keywords": ["hypertrophy", "muscle growth", "mechanical tension", "effective reps", "stimulus"],
+      "applies_to": ["plan_generation", "exercise_selection", "general"],
+      "content": "Muscle hypertrophy is driven primarily by mechanical tension — the force a muscle fiber must produce against resistance. The rep range matters less than the proximity to failure. A set of 5 to 30 reps taken to within 0-3 reps of failure produces similar hypertrophy if total weekly volume is matched. The implication: rep ranges are a tool for managing fatigue and joint cost, not a determinant of growth. Lower reps (5-8) tend to suit compound lifts where joint health matters and fatigue is high per set. Higher reps (10-20) suit isolations where joint stress is low and pump-style fatigue is the limiting factor. The 'effective reps' concept argues that only the last 3-5 reps of a hard set drive growth — the early reps are the price you pay to reach the productive ones. This is why training to within 1-3 RIR is more productive than stopping at 5 RIR, even though the total work performed may be similar."
+    },
+    {
+      "id": "ch_progression",
+      "topic": "progression model",
+      "chapter": "Ch. 3 — Progression Models",
+      "keywords": ["progression", "double progression", "load", "reps", "linear", "stalled"],
+      "applies_to": ["plan_evolution", "weekly_mutation"],
+      "content": "Double progression is the most reliable progression model for intermediate lifters. The lifter chooses a rep range (e.g. 8-12) and a working weight. They aim to add one rep per session within the range; when they hit the top of the range on all prescribed sets, they add load — typically 2.5 kg for compounds, 1.25 kg for isolations — and drop reps back to the bottom of the range. This cycles indefinitely. Beginners can skip double progression and add weight every session (linear progression) for the first few months. Advanced lifters need block periodization or autoregulated RIR-based progression because they have run out of easy gains. A stall is defined as no rep PR and no load PR for 2+ consecutive weeks on the same lift. When stalls happen, the right move is usually to first verify recovery (sleep, food, deload), then change the rep range, and only then change the exercise."
+    },
+    {
+      "id": "ch_volume_landmarks",
+      "topic": "volume landmarks MEV MAV MRV",
+      "chapter": "Ch. 5 — Volume Landmarks",
+      "keywords": ["volume", "MEV", "MAV", "MRV", "sets per week", "junk volume"],
+      "applies_to": ["plan_generation", "plan_critique", "weekly_mutation"],
+      "content": "Weekly sets per muscle group is the most important volume variable. Three thresholds matter: MEV (Minimum Effective Volume) — the floor below which growth halts — usually 6-10 sets for most muscles; MAV (Maximum Adaptive Volume) — the sweet spot where each added set still produces growth — usually 12-18 sets; and MRV (Maximum Recoverable Volume) — the ceiling beyond which recovery breaks down and growth stalls — usually 18-26 sets. Past MRV, you add fatigue without adding growth — this is 'junk volume.' Different muscles have different landmarks: back and shoulders tolerate more volume than chest; biceps and triceps need less direct work because they get half-sets from compounds. Volume should start near MEV in a new training block and progress upward week by week until plateau or fatigue accumulation forces a deload. The goal is to spend most weeks in the MAV band."
+    },
+    {
+      "id": "ch_frequency",
+      "topic": "training frequency",
+      "chapter": "Ch. 4 — Training Frequency",
+      "keywords": ["frequency", "split", "twice a week", "bro split"],
+      "applies_to": ["plan_generation", "plan_critique"],
+      "content": "Each muscle group should be trained at least twice per week for optimal hypertrophy. Once-per-week 'bro splits' deliver less growth per session than higher-frequency splits when total weekly volume is matched, because muscle protein synthesis returns to baseline within 48-72 hours after a session. Splits that achieve 2x frequency: Upper/Lower (4 days), Push/Pull/Legs done twice (6 days), Full Body (3 days), and hybrid setups. The exception is when sessions become too long; if 2x frequency means 90+ minute sessions, splitting to 3x with shorter sessions is the better tradeoff. For most lifters, 3-5 sessions per week hitting each major muscle 2-3x is the sweet spot. Frequency above 3x per muscle per week shows diminishing returns and elevated injury risk."
+    },
+    {
+      "id": "ch_exercise_selection",
+      "topic": "exercise selection principles",
+      "chapter": "Ch. 6 — Exercise Selection",
+      "keywords": ["exercise selection", "compound", "isolation", "stretch", "ROM", "stability"],
+      "applies_to": ["plan_generation", "plan_critique", "swap"],
+      "content": "Good exercise selection balances four factors: stimulus magnitude (how much tension the muscle receives), fatigue cost (joint stress, systemic fatigue), skill demand (technical complexity), and stability (how much of the load goes to the target muscle vs stabilizers). Compound lifts (squat, deadlift, bench, row, press) score high on stimulus and fatigue. Machines score high on stability and low on skill demand — making them ideal for fatigue management late in a session and for beginners learning patterns. Stretch-mediated hypertrophy is real: exercises that load a muscle in its lengthened position (RDL for hamstrings, incline curl for biceps, deficit pushup for chest) produce more hypertrophy per set than short-position equivalents. Full range of motion (ROM) beats partial reps in nearly every comparison. Order exercises compound-first so heavy lifts get fresh muscles; finish with isolations and machines."
+    },
+    {
+      "id": "ch_fatigue_deload",
+      "topic": "fatigue management and deload",
+      "chapter": "Ch. 7 — Fatigue Management",
+      "keywords": ["fatigue", "deload", "stalled", "overreach", "recovery"],
+      "applies_to": ["weekly_mutation", "plan_critique"],
+      "content": "Fatigue accumulates over training blocks and eventually masks fitness gains. The signal that fatigue is becoming a problem: stalled e1RM despite trying hard, persistent soreness, elevated resting heart rate, sleep disruption, and motivation drop. A deload week — typically 40-50% volume reduction and 40% load reduction for 5-7 days — clears fatigue and lets adaptations express themselves. Programmed deloads every 4-6 weeks beat reactive deloads. The most common deload mistake is making it too intense; if you're sore after a deload session, it wasn't a deload. RIR is the cheapest fatigue measure: if your average RIR drifts down without load going up, fatigue is accumulating. Conversely, if RIR drifts up at the same load, you may be ready for more weight."
+    },
+    {
+      "id": "ch_recovery",
+      "topic": "recovery sleep nutrition",
+      "chapter": "Ch. 8 — Recovery",
+      "keywords": ["recovery", "sleep", "stress", "soreness"],
+      "applies_to": ["weekly_mutation", "tips"],
+      "content": "Sleep is the most powerful recovery variable. Below 7 hours per night, muscle protein synthesis declines, testosterone drops, and cortisol elevates — all anti-hypertrophy. Eight hours is the target. Daytime stress (work, relationships, financial) compounds with training stress; chronic life stress reduces the volume a lifter can recover from. Soreness is a poor measure of growth — soreness can occur from a single novel exercise even if no growth follows — but persistent soreness (3+ days) is a clear signal that recovery is compromised. Nutrition's role in recovery is primarily protein (1.6-2.2 g/kg) and total calories at or above maintenance. Active recovery (light walks, low-intensity cardio) modestly speeds recovery; massage and stretching show only short-term effects on perceived soreness."
+    },
+    {
+      "id": "ch_injuries",
+      "topic": "injuries and substitutions",
+      "chapter": "Ch. 9 — Injury Adjustments",
+      "keywords": ["injury", "pain", "shoulder", "knee", "back", "substitution", "swap"],
+      "applies_to": ["plan_generation", "swap", "plan_critique"],
+      "content": "Pain that persists after a warmup, alters movement quality, or worsens through a session is a problem. Pain that disappears with warmup and doesn't compromise the lift is usually fine. When an exercise causes problem-pain, the fix is to find a substitution that trains the same muscle without the offending motion. Common substitutions: shoulder impingement on overhead press → landmine press or seated dumbbell press at a lower angle; lower back pain on conventional deadlift → trap bar deadlift, Romanian deadlift, or rack pulls; knee discomfort on barbell back squat → hack squat, leg press, or front squat; wrist pain on flat bench → dumbbell bench press or floor press; elbow pain on curls → hammer curls or cable curls. The principle: same muscle, different angle. Never train through sharp or worsening pain. When in doubt, swap and consult a professional."
+    },
+    {
+      "id": "ch_diet_basics",
+      "topic": "diet basics BMR TDEE macros",
+      "chapter": "Ch. 10 — Diet Foundations",
+      "keywords": ["BMR", "TDEE", "calories", "protein", "macros", "Mifflin"],
+      "applies_to": ["diet_generation", "diet_adaptation"],
+      "content": "BMR (basal metabolic rate) is the calories your body burns at rest. The Mifflin-St Jeor formula is the most accurate general predictor: men: 10*W + 6.25*H - 5*A + 5; women: subtract 161 instead of adding 5 (W in kg, H in cm, A in years). TDEE (total daily energy expenditure) is BMR multiplied by an activity factor: 1.4 sedentary, 1.55 lightly active, 1.65 moderately active, 1.75 very active. Protein is the most important macro for muscle: 1.6-2.2 g/kg bodyweight, with the higher end during cuts to preserve lean mass. Fat should be at least 0.6 g/kg (preferably 0.8) — going lower hurts hormones. Carbs fill the rest of the calorie target; they're the cheapest fuel for training intensity. Calorie counting accuracy is ~10% on average; biweekly weigh-ins matter more than daily logs."
+    },
+    {
+      "id": "ch_cutting",
+      "topic": "cutting fat loss",
+      "chapter": "Ch. 11 — Cutting",
+      "keywords": ["cut", "fat loss", "deficit", "diet break", "refeed"],
+      "applies_to": ["diet_generation", "diet_adaptation"],
+      "content": "A 10-20% calorie deficit is the productive cutting range. Smaller deficits work but progress slowly; larger deficits accelerate muscle loss without accelerating fat loss meaningfully. The target weight loss rate is 0.5-1% of bodyweight per week. Faster than that, muscle loss accelerates and adherence collapses; slower, the deficit may not actually exist. TDEE drifts down as you lose weight (adaptive thermogenesis); expect to need 100-200 fewer calories per month into a cut. Diet breaks — one week at maintenance every 8-12 weeks — help restore leptin, training quality, and adherence. Refeeds (one-day carb spikes) work similarly on a shorter cycle. The biggest cutting mistake is starting too aggressive: most lifters need to maintain through one full mini-cycle before evaluating progress."
+    },
+    {
+      "id": "ch_bulking",
+      "topic": "lean bulking surplus",
+      "chapter": "Ch. 12 — Lean Bulking",
+      "keywords": ["bulk", "surplus", "weight gain", "lean mass"],
+      "applies_to": ["diet_generation", "diet_adaptation"],
+      "content": "Lean bulking aims to add muscle with minimal fat gain. A 5-15% calorie surplus is the productive range. The target weight gain rate is 0.25-0.5% of bodyweight per week — about 0.2-0.5 kg per week for most lifters. Faster gains are mostly fat. Beginners can gain faster (up to 1% per week) because newbie gains tolerate sloppier surpluses. Intermediates and advanced lifters should bulk slowly. Track weekly average weight, not daily; water and food retention obscure the trend. Bulks generally run 3-6 months before a mini-cut or maintenance phase. Protein stays at 1.8-2.2 g/kg through bulks. The biggest bulking mistake is staying in surplus too long without cutting; bodyfat above 18-20% reduces insulin sensitivity and makes future cuts harder."
+    },
+    {
+      "id": "ch_recomp",
+      "topic": "body recomposition",
+      "chapter": "Ch. 12 — Lean Bulking",
+      "keywords": ["recomp", "recomposition", "maintenance"],
+      "applies_to": ["diet_generation"],
+      "content": "Body recomposition — gaining muscle while losing fat — is real but slow. It works best for: new lifters (newbie gains are powerful enough to overcome the energy cost), returning lifters (muscle memory makes regaining lost muscle cheap), and lifters with significant fat to lose (the body has energy reserves to draw from). For everyone else, recomp is a small effect — you'd progress faster by alternating short cuts and short bulks. The recomp protocol: stay at or 0-5% below maintenance, push protein to 2.2 g/kg, train hard with progressive overload, and accept that the scale won't move dramatically. Body composition photos, waist measurements, and lifting numbers are better tracking tools than weight on a recomp."
+    },
+    {
+      "id": "ch_adherence",
+      "topic": "diet adherence consistency",
+      "chapter": "Ch. 13 — Adherence",
+      "keywords": ["adherence", "consistency", "habit", "meal prep"],
+      "applies_to": ["diet_generation", "diet_adaptation", "tips"],
+      "content": "The best diet is the one you actually follow. A 'perfect' plan with 60% adherence loses to an 'imperfect' plan with 95% adherence. Common adherence killers: too many forbidden foods, meal plans that don't fit your culture or cooking style, prep loads that exceed your time, and unrealistic restrictions during travel or social events. The fix is to design for compliance first and optimization second. The 90/10 rule works for most: 90% of calories from whole foods, 10% from whatever you actually enjoy. Track weekly adherence as a single percentage rather than per-meal logging — the friction of per-meal tracking collapses retention. If adherence drops below 50% for two weeks, simplify the plan rather than blaming the lifter."
+    },
+    {
+      "id": "ch_mistakes",
+      "topic": "common mistakes",
+      "chapter": "Ch. 14 — Common Mistakes",
+      "keywords": ["mistakes", "ego lifting", "program hopping", "form", "cardio"],
+      "applies_to": ["coaching", "tips", "warnings"],
+      "content": "The most common training mistakes: (1) ego lifting — using weights that force form to break down; reduces stimulus to the target muscle and elevates injury risk. (2) Program hopping — switching plans before any plan can prove itself; programs need 6-8 weeks minimum. (3) Excessive cardio in a bulk — 30+ minutes of cardio multiple times per week measurably reduces hypertrophy; cap at 2-3 short sessions for cardiovascular health. (4) Skipping legs — measurable mass loss in the lower body affects total muscle mass potential and creates aesthetic and functional imbalance. (5) Inconsistent training — three perfect sessions a month delivers less than four mediocre sessions a week. The unifying principle: small consistent stimuli beat occasional large ones. Most lifters are one year of consistency away from being unrecognizable."
+    },
+    {
+      "id": "ch_meal_structure",
+      "topic": "meal structure timing",
+      "chapter": "Ch. 10 — Diet Foundations",
+      "keywords": ["meal timing", "protein distribution", "frequency", "intermittent fasting"],
+      "applies_to": ["diet_generation"],
+      "content": "Meal timing is a small lever compared to total daily calories and protein. The most evidence-supported guideline: distribute protein into 3-5 meals of 20-40 grams each across the day, with no gap greater than 5-6 hours between meals. This pattern maximizes 24-hour muscle protein synthesis. Within that, intermittent fasting, three big meals, six small meals — all work if total daily macros are hit. Pre- and post-workout nutrition: have protein and carbs within the 1-2 hours surrounding the session. The 'anabolic window' was overstated — it's wider than 30 minutes — but eating around training does support performance and recovery. For body recomposition, protein per meal at 0.4-0.5 g/kg appears optimal."
+    },
+    {
+      "id": "ch_strength_vs_hypertrophy",
+      "topic": "strength vs hypertrophy",
+      "chapter": "Ch. 2 — Hypertrophy Fundamentals",
+      "keywords": ["strength", "hypertrophy", "rep range", "powerlifting"],
+      "applies_to": ["plan_generation", "general"],
+      "content": "Strength and hypertrophy overlap heavily but aren't identical. Pure strength training uses low reps (1-5), heavy loads (>85% 1RM), and long rests (3-5 min) to drive neural adaptations and motor unit recruitment. Pure hypertrophy training uses moderate reps (6-15), moderate loads (65-80% 1RM), and moderate rests (1-3 min) to drive cellular adaptations and fiber growth. The overlap zone (5-8 reps at 0-2 RIR) does both reasonably well — this is where most general lifters should live. Bigger muscles are not always stronger muscles at competition lifts because strength has a skill component (squat technique, bench setup). Hypertrophy without strength training is rare; you cannot grow a muscle without challenging it with progressively heavier loads."
+    },
+    {
+      "id": "ch_warmup",
+      "topic": "warmup",
+      "chapter": "Ch. 6 — Exercise Selection",
+      "keywords": ["warmup", "warm up", "preparation"],
+      "applies_to": ["coaching", "session"],
+      "content": "Warmup serves two purposes: rehearsing the movement pattern and elevating muscle temperature for performance. A good warmup is short: 5 minutes of light cardio to raise core temperature, then 2-3 ramp-up sets of the first exercise at progressively heavier loads (e.g. 50%, 70%, 85% of the working weight) before hitting the prescribed working sets. Stretching is not part of a productive warmup — static stretching before lifting reduces force production. Dynamic mobility work (leg swings, arm circles, banded movements) can help if a specific joint feels stiff. Skip the warmup at your own cost: cold muscles produce less force and tolerate less load, increasing both injury risk and the gap between RPE and real intensity."
+    },
+    {
+      "id": "ch_failure",
+      "topic": "training to failure",
+      "chapter": "Ch. 7 — Fatigue Management",
+      "keywords": ["failure", "RIR", "intensity", "AMRAP"],
+      "applies_to": ["weekly_mutation", "general"],
+      "content": "Training to failure (0 RIR) is more fatiguing than training near failure (1-3 RIR) but doesn't produce more growth per set when total volume is matched. The right balance: keep compounds at 1-3 RIR most of the time, push isolations closer to 0 RIR more often, save absolute failure for the last set of certain exercises if at all. Beginners benefit less from failure training because their technique often breaks down before true failure is reached; intermediates and advanced lifters can use it strategically. Reaching failure on every set every session is a marker of inexperience or poor programming. The phrase 'leave one rep in the tank' summarizes the modal optimal effort."
+    }
+  ]
+}

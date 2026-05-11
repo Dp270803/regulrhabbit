@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import { LayoutDashboard, CalendarDays, User, Lightbulb, TrendingUp } from 'lucide-react';
+import { LayoutDashboard, CalendarDays, User, TrendingUp, Apple } from 'lucide-react';
 import { useThemeColors } from '../hooks/useTheme';
 
 export default function BottomNav() {
@@ -20,8 +20,8 @@ export default function BottomNav() {
           {[
             { to: '/dashboard', icon: LayoutDashboard, label: 'Home' },
             { to: '/plan', icon: CalendarDays, label: 'Plan' },
+            { to: '/diet', icon: Apple, label: 'Diet' },
             { to: '/progress', icon: TrendingUp, label: 'Progress' },
-            { to: '/tips', icon: Lightbulb, label: 'Tips' },
             { to: '/profile', icon: User, label: 'Profile' },
           ].map(({ to, icon: Icon, label }) => (
             <NavLink

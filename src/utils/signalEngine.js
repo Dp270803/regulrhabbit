@@ -155,3 +155,169 @@ export function computeFitnessSignals(data, performanceLogs = []) {
     fatigue_proxy: computeFatigueProxy(performanceLogs),
   };
 }
+
+/* ─────────────────────────────────────────────────────────────
+ * Book-aligned signals (PRD §5.4 Step A)
+ * Feeds bookEngine.evaluateRules — keys match rule trigger schema.
+ * ───────────────────────────────────────────────────────────── */
+
+const MUSCLE_KEYWORDS = {
+  Chest:     ['bench', 'chest', 'fly', 'push-up', 'pushup', 'dip', 'pec'],
+  Back:      ['row', 'pulldown', 'pull-up', 'pullup', 'chin-up', 'chinup', 'deadlift', 'rack pull', 'lat'],
+  Legs:      ['squat', 'leg press', 'lunge', 'split squat', 'leg extension', 'leg curl', 'hack', 'rdl', 'romanian'],
+  Shoulders: ['shoulder press', 'overhead', 'lateral raise', 'front raise', 'arnold', 'landmine press'],
+  Biceps:    ['curl'],
+  Triceps:   ['tricep', 'skullcrusher', 'pushdown', 'close-grip'],
+  Glutes:    ['hip thrust', 'glute bridge'],
+  Calves:    ['calf'],
+};
+
+function classifyMuscle(name) {
+  const n = String(name || '').toLowerCase();
+  for (const [muscle, kws] of Object.entries(MUSCLE_KEYWORDS)) {
+    if (kws.some(k => n.includes(k))) return muscle;
+  }
+  return null;
+}
+
+function mean(arr) {
+  if (!arr.length) return 0;
+  return arr.reduce((a, b) => a + b, 0) / arr.length;
+}
+
+/**
+ * Returns the book-rule-trigger-compatible signal object.
+ * Reads from full localStorage data (plans, performance_log, weight_log, etc.).
+ */
+export function computeBookSignals(data) {
+  const user = data?.user || {};
+  const activePlan = (data?.plans || []).find(p => p.status === 'active');
+  const logs = data?.performance_log || data?.performance_logs || [];
+  const weightLog = data?.weight_log || [];
+
+  const cutoff14 = Date.now() - 14 * MS_PER_DAY;
+  const recentLogs = logs.filter(l => new Date(l.date || l.completed_at).getTime() >= cutoff14);
+
+  // RIR aggregates — recent 14 days, all logged exercises
+  const allRir = logs
+    .filter(l => new Date(l.date || l.completed_at).getTime() >= cutoff14)
+    .map(l => typeof l.rir === 'number' ? l.rir : null)
+    .filter(v => v !== null);
+  const avgRir = allRir.length ? mean(allRir) : null;
+
+  // Consecutive sessions ending at 0 RIR
+  const sortedByDate = [...recentLogs].sort((a, b) => new Date(b.date || b.completed_at) - new Date(a.date || a.completed_at));
+  let rirZeroStreak = 0;
+  for (const l of sortedByDate) {
+    if (l.rir === 0) rirZeroStreak += 1;
+    else break;
+  }
+
+  // e1RM per exercise (Epley) → stalled weeks
+  const byExercise = {};
+  for (const l of logs) {
+    if (!l.weight_kg || !l.reps || !l.exercise_name) continue;
+    const e1rm = l.weight_kg * (1 + l.reps / 30);
+    (byExercise[l.exercise_name] ||= []).push({ date: l.date || l.completed_at, e1rm });
+  }
+  let maxStalled = 0;
+  for (const arr of Object.values(byExercise)) {
+    if (arr.length < 3) continue;
+    arr.sort((a, b) => new Date(a.date) - new Date(b.date));
+    const recent = arr.slice(-4);
+    const slope = linearSlope(recent.map((p, i) => ({ x: i, y: p.e1rm })));
+    if (Math.abs(slope) < 0.5) {
+      const weeks = Math.floor((Date.now() - new Date(recent[0].date)) / (7 * MS_PER_DAY));
+      if (weeks > maxStalled) maxStalled = weeks;
+    }
+  }
+
+  // Adherence — sessions completed / scheduled in last 14 days
+  let scheduled14 = 0;
+  if (activePlan?.weeks) {
+    for (const week of activePlan.weeks) {
+      for (const s of week.sessions || []) {
+        const t = new Date(s.date).getTime();
+        if (t >= cutoff14 && t <= Date.now()) scheduled14 += 1;
+      }
+    }
+  }
+  const completed14 = recentLogs.length;
+  const adherencePct = scheduled14 > 0 ? Math.round((completed14 / scheduled14) * 100) : 100;
+
+  // Weekly muscle volume + frequency
+  const muscleSets = {};
+  const muscleDays = {};
+  for (const l of recentLogs) {
+    const m = classifyMuscle(l.exercise_name);
+    if (!m) continue;
+    muscleSets[m] = (muscleSets[m] || 0) + (l.sets || 0);
+    const day = (l.date || l.completed_at || '').slice(0, 10);
+    (muscleDays[m] ||= new Set()).add(day);
+  }
+  const muscleFreq = Object.fromEntries(
+    Object.entries(muscleDays).map(([k, v]) => [k, v.size])
+  );
+  const muscleFreqMin = Object.keys(muscleFreq).length
+    ? Math.min(...Object.values(muscleFreq))
+    : 0;
+
+  // Weight trend
+  const weightTrend = computeWeightTrendPct(weightLog);
+
+  return {
+    avg_rir:                          avgRir,
+    rir_zero_consecutive_sessions:    rirZeroStreak,
+    rir_negative_pattern:             rirZeroStreak >= 3,
+
+    stalled_weeks:                    maxStalled,
+    e1rm_by_exercise:                 byExercise,
+
+    adherence_pct:                    adherencePct,
+    sessions_completed_last_14d:      completed14,
+    sessions_scheduled_last_14d:      scheduled14,
+
+    muscle_weekly_sets:               muscleSets,
+    muscle_frequency_min:             muscleFreqMin,
+
+    weekly_weight_change_pct:         weightTrend,
+    weekly_weight_drop_pct:           weightTrend < 0 ? Math.abs(weightTrend) : 0,
+    weekly_weight_gain_pct:           weightTrend > 0 ? weightTrend : 0,
+
+    experience_level:                 activePlan?.experience_level || user.experience_level || 'Intermediate',
+    goal:                             activePlan?.gym_goal || user.goal || 'build_max',
+    sex:                              user?.diet_profile?.sex || 'male',
+    activity_level:                   user?.diet_profile?.activity_level || 'moderate',
+    injuries:                         user?.injuries || [],
+    diet_adherence_pct:               data?.diet?.last_weekly_adherence_pct ?? 100,
+    consecutive_cut_weeks:            data?.diet?.consecutive_cut_weeks ?? 0,
+    consecutive_deficit_weeks:        data?.diet?.consecutive_cut_weeks ?? 0,
+    weeks_since_deload:               data?.plan_state?.weeks_since_deload ?? 0,
+    plan_changes_per_month:           (data?.plan_updates || []).length,
+  };
+}
+
+/**
+ * Classifies the lifter's training state from book signals.
+ * Returns: 'progressing' | 'stalled' | 'under_recovering' | 'under_loading' | 'fresh'.
+ */
+export function classifyTrainingState(signals) {
+  if (signals.avg_rir === null) return 'fresh';
+  if (signals.stalled_weeks >= 2 && signals.avg_rir <= 1) return 'stalled';
+  if (signals.rir_zero_consecutive_sessions >= 3) return 'under_recovering';
+  if (signals.adherence_pct < 50) return 'under_recovering';
+  if (signals.avg_rir >= 3) return 'under_loading';
+  if (signals.avg_rir <= 2 && signals.stalled_weeks === 0) return 'progressing';
+  return 'fresh';
+}
+
+function computeWeightTrendPct(weightLog) {
+  if (!weightLog || weightLog.length < 2) return 0;
+  const sorted = [...weightLog].sort((a, b) => new Date(a.date) - new Date(b.date));
+  const last4 = sorted.filter(w => new Date(w.date).getTime() >= Date.now() - 28 * MS_PER_DAY);
+  if (last4.length < 2) return 0;
+  const first = last4[0].weight_kg;
+  const last = last4[last4.length - 1].weight_kg;
+  const daysSpan = Math.max(1, (new Date(last4[last4.length - 1].date) - new Date(last4[0].date)) / MS_PER_DAY);
+  return parseFloat((((last - first) / first) * 100 * (7 / daysSpan)).toFixed(2));
+}

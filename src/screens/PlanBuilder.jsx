@@ -17,6 +17,8 @@ const STEP_LABELS = {
   equipment: 'What equipment do you have?',
   split: 'Preferred training split?',
   schedule: 'Which specific days work for you?',
+  body_stats: 'Your biological sex?',
+  activity_level: 'Daily activity level?',
 };
 
 const STEP_SUBTITLES = {
@@ -63,10 +65,20 @@ export default function PlanBuilder() {
   }, [completedPairs, currentStep]);
 
   function advanceStep(newAnswers, selectedLabel, nextStep) {
-    setCompletedPairs(prev => [...prev, { stepKey: currentStep, selectedLabel }]);
+    setCompletedPairs(prev => [...prev, { stepKey: currentStep, selectedLabel, prevAnswers: answers }]);
     setAnswers(newAnswers);
     setStepIndex(prev => prev + 1);
     setCurrentStep(nextStep);
+  }
+
+  function handleBack() {
+    if (completedPairs.length === 0) return;
+    const last = completedPairs[completedPairs.length - 1];
+    setCompletedPairs(prev => prev.slice(0, -1));
+    setAnswers(last.prevAnswers || {});
+    setStepIndex(prev => Math.max(0, prev - 1));
+    setCurrentStep(last.stepKey);
+    setMultiSelect([]);
   }
 
   function handleOptionSelect(option) {
@@ -90,12 +102,12 @@ export default function PlanBuilder() {
     }
 
     if (option.next === 'complete') {
-      setCompletedPairs(prev => [...prev, { stepKey: currentStep, selectedLabel: option.label }]);
+      setCompletedPairs(prev => [...prev, { stepKey: currentStep, selectedLabel: option.label, prevAnswers: answers }]);
       setAnswers(newAnswers);
       handleComplete(newAnswers);
     } else if (currentStep === 'confirm') {
       // Confirm step — go to complete
-      setCompletedPairs(prev => [...prev, { stepKey: currentStep, selectedLabel: option.label }]);
+      setCompletedPairs(prev => [...prev, { stepKey: currentStep, selectedLabel: option.label, prevAnswers: answers }]);
       setAnswers(newAnswers);
       handleComplete(newAnswers);
     } else {
@@ -352,7 +364,26 @@ export default function PlanBuilder() {
         WebkitBackdropFilter: 'blur(20px)',
       }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '1rem 1.25rem' }}>
-          <span className="font-headline" style={{ fontSize: '1.3rem', fontWeight: 800, color: C.primary, letterSpacing: '-0.03em', textTransform: 'uppercase' }}>Regulr</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            {completedPairs.length > 0 && !isGenerating && (
+              <button
+                onClick={handleBack}
+                aria-label="Go back one step"
+                style={{
+                  width: '32px', height: '32px', borderRadius: '50%',
+                  background: C.high, color: C.text, border: 'none',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  cursor: 'pointer', fontSize: '1.1rem', lineHeight: 1,
+                  transition: 'background 0.15s',
+                }}
+                onMouseEnter={e => { e.currentTarget.style.background = C.primary; e.currentTarget.style.color = C.onPrimary; }}
+                onMouseLeave={e => { e.currentTarget.style.background = C.high; e.currentTarget.style.color = C.text; }}
+              >
+                ←
+              </button>
+            )}
+            <span className="font-headline" style={{ fontSize: '1.3rem', fontWeight: 800, color: C.primary, letterSpacing: '-0.03em', textTransform: 'uppercase' }}>Regulr</span>
+          </div>
           {visibleStepIndex >= 0 && (
             <span style={{ fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: C.faint }}>
               {String(Math.min(visibleStepIndex + 1, STEP_ORDER.length)).padStart(2, '0')} / {String(STEP_ORDER.length).padStart(2, '0')}

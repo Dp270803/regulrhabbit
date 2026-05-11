@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useThemeColors } from '../hooks/useTheme';
 import { updateData } from '../utils/storage';
+import { recordRejected } from '../utils/aiMemory';
 
 const CHANGE_TYPE_LABELS = {
   reduce_volume: 'Volume reduced',
@@ -32,6 +33,17 @@ export default function PlanUpdatesBanner({ updates = [], onDismissAll }) {
   }
 
   function revertChange(updateId, changeIndex) {
+    // Capture the change before mutation for memory
+    const update = unseen.find(u => u.id === updateId);
+    const change = update?.changes?.[changeIndex];
+    if (change) {
+      const exercise = change.exercise || change.old_exercise || change.detail || '';
+      recordRejected({
+        text: `${change.type || 'plan_update'}: ${exercise} — ${change.reason || ''}`.trim(),
+        category: 'plan_update',
+      });
+    }
+
     updateData(d => {
       if (!Array.isArray(d.plan_updates)) return d;
       const u = d.plan_updates.find(x => x.id === updateId);
@@ -104,6 +116,14 @@ export default function PlanUpdatesBanner({ updates = [], onDismissAll }) {
                     </div>
                     {reason && (
                       <p style={{ fontSize: '0.78rem', color: C.muted, lineHeight: 1.5, margin: 0 }}>{reason}</p>
+                    )}
+                    {change.book_reference && (
+                      <p style={{
+                        fontSize: '0.68rem', color: C.faint, lineHeight: 1.5,
+                        margin: '6px 0 0', fontStyle: 'italic',
+                      }}>
+                        — {change.book_reference}
+                      </p>
                     )}
                   </div>
                   <button

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useThemeColors } from '../hooks/useTheme';
 import { getData, updateData } from '../utils/storage';
+import { recordAccepted, recordRejected } from '../utils/aiMemory';
 import ConfettiEffect from '../components/ConfettiEffect';
 
 const W = { maxWidth: '680px', margin: '0 auto', padding: '0 clamp(16px, 4vw, 32px)' };
@@ -153,10 +154,21 @@ export default function PlanCritique() {
     const newPlan = applyEditToPlan(modifiedPlan, edit);
     setModifiedPlan(newPlan);
     setEditStates(prev => ({ ...prev, [index]: 'accepted' }));
+    recordAccepted({
+      text: `${edit.change_type}: ${edit.exercise || edit.to} — ${edit.rationale || ''}`.trim(),
+      category: 'critique_edit',
+    });
   }
 
   function handleDismissEdit(index) {
+    const edit = critique.proposed_edits[index];
     setEditStates(prev => ({ ...prev, [index]: 'dismissed' }));
+    if (edit) {
+      recordRejected({
+        text: `${edit.change_type}: ${edit.exercise || edit.to} — ${edit.rationale || ''}`.trim(),
+        category: 'critique_edit',
+      });
+    }
   }
 
   function handleSavePlan() {
@@ -291,6 +303,9 @@ export default function PlanCritique() {
                       <div>
                         <p style={{ fontSize: '0.88rem', fontWeight: 600, color: C.text, margin: '0 0 2px' }}>{s.observation}</p>
                         <p style={{ fontSize: '0.78rem', color: C.faint, margin: 0, lineHeight: 1.5 }}>{s.principle}</p>
+                        {s.book_reference && (
+                          <p style={{ fontSize: '0.68rem', color: C.faint, margin: '4px 0 0', fontStyle: 'italic' }}>— {s.book_reference}</p>
+                        )}
                       </div>
                     </div>
                   ))}
@@ -314,6 +329,9 @@ export default function PlanCritique() {
                           <p style={{ fontSize: '0.88rem', fontWeight: 600, color: C.text, margin: 0 }}>{issue.issue}</p>
                         </div>
                         <p style={{ fontSize: '0.78rem', color: C.faint, margin: 0, lineHeight: 1.5, paddingLeft: '2px' }}>{issue.explanation}</p>
+                        {issue.book_reference && (
+                          <p style={{ fontSize: '0.68rem', color: C.faint, margin: '4px 0 0', paddingLeft: '2px', fontStyle: 'italic' }}>— {issue.book_reference}</p>
+                        )}
                       </div>
                     );
                   })}
@@ -360,7 +378,10 @@ export default function PlanCritique() {
                               : edit.exercise}
                           </p>
                         </div>
-                        <p style={{ fontSize: '0.78rem', color: C.faint, margin: '0 0 10px', lineHeight: 1.5 }}>{edit.rationale}</p>
+                        <p style={{ fontSize: '0.78rem', color: C.faint, margin: '0 0 4px', lineHeight: 1.5 }}>{edit.rationale}</p>
+                        {edit.book_reference && (
+                          <p style={{ fontSize: '0.68rem', color: C.faint, margin: '0 0 10px', fontStyle: 'italic' }}>— {edit.book_reference}</p>
+                        )}
                         {!isAccepted && !isDismissed && (
                           <div style={{ display: 'flex', gap: '8px' }}>
                             <button

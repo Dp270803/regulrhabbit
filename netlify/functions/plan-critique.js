@@ -8,28 +8,30 @@
  * Response:  { overall_score, verdict, strengths, issues, proposed_edits }
  */
 
-const SYSTEM_PROMPT = `You are an evidence-based strength training coach. Analyze training plans using hypertrophy science:
+import { buildBookSystemBlock } from './_book-context.js';
 
-Key principles:
-- Rep ranges: 5-30 reps are all effective; 6-12 is the hypertrophy sweet spot
-- Weekly volume: 10-20 hard sets per muscle group per week for growth
-- Frequency: hit each muscle group 2x/week minimum for optimal hypertrophy
-- Progressive overload: systematic load or rep increases over time
-- Muscle balance: pair antagonists (push/pull, quad/ham, chest/back)
-- Compound-first exercise order for primary movements
-- Recovery: 48+ hours between same-muscle sessions
-- Session length: 60-90 min is practical; beyond 90 min suffers quality
-- Specificity: goal-aligned exercise and rep-range selection
+const SYSTEM_PROMPT_TASK = `You are an evidence-based strength training coach grounded in The Muscle Ladder by Jeff Nippard.
+
+When you reference a principle, cite the relevant chapter via the book_reference field. If the book is silent on a topic, say so rather than speculating.
 
 Analyze the submitted plan and return ONLY this JSON object — no prose, no markdown:
 {
   "overall_score": <integer 0-100>,
   "verdict": "<2-3 sentence overall assessment, honest and direct, no fluff>",
   "strengths": [
-    { "observation": "<specific strength in the plan>", "principle": "<why this is effective>" }
+    {
+      "observation": "<specific strength in the plan>",
+      "principle": "<why this is effective>",
+      "book_reference": "<chapter, e.g. 'Ch. 5 — Volume Landmarks'>"
+    }
   ],
   "issues": [
-    { "issue": "<specific problem>", "severity": "low|medium|high", "explanation": "<why this matters for results>" }
+    {
+      "issue": "<specific problem>",
+      "severity": "low|medium|high",
+      "explanation": "<why this matters for results>",
+      "book_reference": "<chapter>"
+    }
   ],
   "proposed_edits": [
     {
@@ -38,6 +40,7 @@ Analyze the submitted plan and return ONLY this JSON object — no prose, no mar
       "from": "<current value or null>",
       "to": "<proposed value — for add/swap: exercise name; for adjust_volume: 'NxRep-Range' e.g. '4x8-12'>",
       "rationale": "<one-sentence reason>",
+      "book_reference": "<chapter>",
       "session_day": "<day name this applies to, or null for all sessions>"
     }
   ]
@@ -46,6 +49,7 @@ Analyze the submitted plan and return ONLY this JSON object — no prose, no mar
 Rules:
 - overall_score: 40-60 = needs work, 60-75 = decent, 75-85 = good, 85+ = excellent
 - Max 3 strengths, max 4 issues, max 5 proposed_edits
+- Every strengths/issues/proposed_edits entry MUST include a book_reference
 - Be specific and actionable — reference actual exercise names from the plan
 - Return ONLY the JSON object, nothing else`;
 
@@ -97,6 +101,9 @@ exports.handler = async (event) => {
     },
   });
 
+  const bookContextQuery = `plan critique ${planSummary.goal} ${planSummary.experience} volume frequency exercise selection`;
+  const bookBlock = buildBookSystemBlock(bookContextQuery, 4);
+
   try {
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
@@ -111,7 +118,12 @@ exports.handler = async (event) => {
         system: [
           {
             type: 'text',
-            text: SYSTEM_PROMPT,
+            text: bookBlock,
+            cache_control: { type: 'ephemeral' },
+          },
+          {
+            type: 'text',
+            text: SYSTEM_PROMPT_TASK,
             cache_control: { type: 'ephemeral' },
           },
         ],

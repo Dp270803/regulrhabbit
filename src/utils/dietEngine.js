@@ -88,3 +88,48 @@ export function applyDietAdjustment(current_calories, delta) {
   const safeD = Math.max(-500, Math.min(500, delta));
   return Math.round(current_calories + safeD);
 }
+
+/**
+ * Macro split. Per book §10:
+ *   - Protein: 1.6-2.2 g/kg (default 1.8; bump to 2.2 during cuts)
+ *   - Fat: 0.8 g/kg (minimum 0.6)
+ *   - Carbs: remainder
+ *
+ * Returns macros in grams + kcal contribution.
+ */
+export function calculateMacros(profile = {}, target_calories) {
+  const {
+    weight_kg = 75,
+    goal = 'maintenance',
+  } = profile;
+
+  const protein_g_per_kg = goal === 'fat_loss' ? 2.2 : 1.8;
+  const fat_g_per_kg = 0.8;
+
+  const protein_g = Math.round(weight_kg * protein_g_per_kg);
+  const fat_g = Math.round(weight_kg * fat_g_per_kg);
+
+  const protein_kcal = protein_g * 4;
+  const fat_kcal = fat_g * 9;
+  const carb_kcal = Math.max(0, target_calories - protein_kcal - fat_kcal);
+  const carb_g = Math.round(carb_kcal / 4);
+
+  return {
+    protein_g,
+    fat_g,
+    carb_g,
+    protein_kcal,
+    fat_kcal,
+    carb_kcal,
+    total_kcal: target_calories,
+  };
+}
+
+/**
+ * Full diet target — combines baseline calories + macro split.
+ */
+export function calculateDietTarget(profile = {}) {
+  const baseline = calculateBaseline(profile);
+  const macros = calculateMacros(profile, baseline.baseline_calories);
+  return { ...baseline, macros };
+}

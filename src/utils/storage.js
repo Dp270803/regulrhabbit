@@ -10,7 +10,7 @@ import {
 const STORAGE_KEY = 'regulr_data';
 
 const DEFAULT_DATA = {
-  version: '1.2',
+  version: '1.3',
   created_at: null,
   last_opened: null,
   onboarding_complete: false,
@@ -63,6 +63,13 @@ const DEFAULT_DATA = {
     current_calories: null,
     last_adjustment_reason: null,
     last_updated: null,
+    macros: null,                   // { protein_g, fat_g, carb_g }
+    meal_plan: null,                // { week_plan: [...], notes, book_reference }
+    meal_plan_generated_at: null,
+    weekly_checkins: [],            // [{ date, weight_kg, adherence_pct }]
+    last_weekly_adherence_pct: null,
+    consecutive_cut_weeks: 0,
+    adaptations: [],                // [{ id, date, delta_kcal, reason, book_reference, accepted }]
   },
   ai_insights: [],
   ai_memory: {
@@ -85,6 +92,11 @@ function migrateData(data) {
     data.version = '1.2';
     if (!data.plan_updates) data.plan_updates = [];
     if (!data.weight_log) data.weight_log = [];
+    saveData(data);
+  }
+  if (data.version === '1.2') {
+    data.version = '1.3';
+    data.diet = { ...DEFAULT_DATA.diet, ...(data.diet || {}) };
     saveData(data);
   }
   return data;

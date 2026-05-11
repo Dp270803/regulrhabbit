@@ -315,7 +315,23 @@ export default function PlanImporter() {
         background: C.navBg, backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)',
       }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '1rem 1.25rem', maxWidth: '680px', margin: '0 auto' }}>
-          <span className="font-headline" style={{ fontSize: '1.3rem', fontWeight: 800, color: C.primary, letterSpacing: '-0.03em', textTransform: 'uppercase' }}>Regulr</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <button
+              onClick={() => {
+                if (step === 'exercises') setStep('days');
+                else if (step === 'days') setStep('profile');
+                else navigate('/onboarding');
+              }}
+              aria-label="Go back"
+              style={{
+                width: '32px', height: '32px', borderRadius: '50%',
+                background: C.high, color: C.text, border: 'none',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                cursor: 'pointer', fontSize: '1.1rem', lineHeight: 1,
+              }}
+            >←</button>
+            <span className="font-headline" style={{ fontSize: '1.3rem', fontWeight: 800, color: C.primary, letterSpacing: '-0.03em', textTransform: 'uppercase' }}>Regulr</span>
+          </div>
           <span style={{ fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: C.faint }}>
             {isCritique ? 'Plan Review' : 'Import Plan'}
           </span>

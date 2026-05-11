@@ -11,14 +11,16 @@ import Tips from './screens/Tips';
 import Progress from './screens/Progress';
 import PlanImporter from './screens/PlanImporter';
 import PlanCritique from './screens/PlanCritique';
+import Diet from './screens/Diet';
 import SanityStudio from './screens/SanityStudio';
 import CustomPlanBuilder from './screens/CustomPlanBuilder';
 import BottomNav from './components/BottomNav';
 
-const NAV_SCREENS = ['/dashboard', '/plan', '/progress', '/profile', '/tips'];
+const NAV_SCREENS = ['/dashboard', '/plan', '/diet', '/progress', '/profile', '/tips'];
 const NAV_LINKS = [
   { to: '/dashboard', label: 'Dashboard' },
   { to: '/plan', label: 'Plan' },
+  { to: '/diet', label: 'Diet' },
   { to: '/progress', label: 'Progress' },
   { to: '/tips', label: 'Tips' },
   { to: '/profile', label: 'Profile' },
@@ -96,6 +98,7 @@ export default function App() {
         <Route path="/onboarding/critique" element={<PlanCritique />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/plan" element={<PlanView />} />
+        <Route path="/diet" element={<Diet />} />
         <Route path="/progress" element={<Progress />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/tips" element={<Tips />} />
