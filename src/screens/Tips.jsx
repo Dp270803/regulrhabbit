@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getData } from '../utils/storage';
 import { selectTip } from '../utils/tipSelector';
+import { selectBookTip } from '../utils/tipFromBook';
 import { trackPageView } from '../utils/analytics';
 import { fetchTipsPage, sanityImageUrl } from '../utils/sanityClient';
 import { useThemeColors } from '../hooks/useTheme';
@@ -154,6 +155,7 @@ export default function Tips() {
   const FOOTER_DOTS = [C.primary, C.primary, C.green, C.highest, C.highest, C.primary, C.primary, C.green, C.primary, C.highest];
 
   const [todayTip, setTodayTip]         = useState(null);
+  const [bookTip, setBookTip]           = useState(null);
   const [copy, setCopy]                 = useState(DEFAULT_COPY);
   const [categoryLabels, setLabels]     = useState(DEFAULT_LABELS);
   const [categoryCards, setCards]       = useState(DEFAULT_CARDS);
@@ -167,6 +169,11 @@ export default function Tips() {
     const loadAll = async () => {
       const [tip, cmsData] = await Promise.all([selectTip(d), fetchTipsPage()]);
       setTodayTip(tip);
+      // Book-grounded tip — only useful for gym users where the book applies
+      const activePlan = d.plans?.find(p => p.status === 'active');
+      if (activePlan?.activity === 'gym') {
+        try { setBookTip(selectBookTip(d)); } catch { /* keep null */ }
+      }
 
       if (cmsData) {
         setCopy({
@@ -189,6 +196,53 @@ export default function Tips() {
   return (
     <div style={{ minHeight: '100dvh', background: C.bg, color: C.text, paddingTop: '56px' }}>
       <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '32px clamp(24px, 5vw, 48px) 8rem' }}>
+
+        {/* ── Book-grounded Coach Insight (gym users only) ───────────────── */}
+        {bookTip && (
+          <section style={{ marginBottom: '40px' }}>
+            <p style={{
+              fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.2em',
+              textTransform: 'uppercase', color: C.faint, marginBottom: '14px',
+            }}>
+              Coach Insight — From The Muscle Ladder
+            </p>
+            <div style={{
+              background: `rgba(${C.primaryRgb},0.04)`,
+              border: `1px solid rgba(${C.primaryRgb},0.18)`,
+              borderRadius: '14px', padding: 'clamp(24px, 4vw, 36px)',
+              display: 'flex', flexDirection: 'column', gap: '12px',
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
+                <span style={{
+                  fontSize: '0.58rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase',
+                  color: C.primary, background: `rgba(${C.primaryRgb},0.14)`,
+                  padding: '3px 9px', borderRadius: '4px',
+                }}>
+                  {bookTip.chapter || 'The Muscle Ladder'}
+                </span>
+                <span style={{
+                  fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase',
+                  color: C.faint,
+                }}>
+                  State: {bookTip.training_state || 'fresh'}
+                </span>
+              </div>
+              <h2 style={{
+                fontFamily: 'Manrope, sans-serif',
+                fontSize: 'clamp(1.4rem, 3vw, 2rem)',
+                fontWeight: 800, letterSpacing: '-0.02em', lineHeight: 1.15,
+                color: C.text, margin: 0,
+              }}>
+                {bookTip.topic.charAt(0).toUpperCase() + bookTip.topic.slice(1)}
+              </h2>
+              <p style={{
+                fontSize: '0.92rem', color: C.muted, lineHeight: 1.65, margin: 0,
+              }}>
+                {bookTip.content}
+              </p>
+            </div>
+          </section>
+        )}
 
         {/* ── Featured Hero ─────────────────────────────────────────────── */}
         <section style={{ marginBottom: '64px' }}>

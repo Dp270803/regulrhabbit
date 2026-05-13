@@ -27,6 +27,8 @@
  *   - trigger === 'post_session': { state_update, suggestions, plan_adjustments, diet_adjustments }
  */
 
+import { buildBookSystemBlock } from './_book-context.js';
+
 const PERSONA_SYSTEM_PROMPTS = {
   starter: `You are a supportive gym coaching assistant for a beginner who needs structure and direction.
 Tone: warm, encouraging, simple. Never use jargon. Focus on consistency over performance.
@@ -61,8 +63,6 @@ const TRIGGER_TEMPLATES = {
   return: (ctx) => `User ${ctx.name || ''} is returning after ${ctx.missed_days || 1} missed day(s). Streak: ${ctx.streak}. Generate a comeback message. Keep it short.`,
   weekly_summary: (ctx) => `User ${ctx.name || ''} completed their week. Streak: ${ctx.streak}. ${ctx.exercise_trend ? `Performance note: ${ctx.exercise_trend}.` : ''} Generate a weekly summary insight.`,
 };
-
-import { buildBookSystemBlock } from './_book-context.js';
 
 const POST_SESSION_SYSTEM = `You are an intelligent fitness advisor grounded in The Muscle Ladder (Jeff Nippard). You analyse user workout data and return structured JSON recommendations.
 Every suggestion or plan_adjustment MUST include a book_reference (chapter) that supports it.
@@ -99,6 +99,7 @@ Return a JSON object with exactly these keys:
   "diet_adjustments": [{ "delta": 0, "reason": "...", "book_reference": "<chapter>" }]
 }
 Provide 1-3 suggestions. Only include plan_adjustments or diet_adjustments if genuinely warranted. Keep suggestion text under 20 words. Every suggestion/adjustment must include a book_reference.`;
+}
 
 export const handler = async (event) => {
   if (event.httpMethod !== 'POST') {

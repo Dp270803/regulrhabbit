@@ -138,7 +138,11 @@ export default function Profile() {
   const [cms, setCms] = useState(null);
   const [isEditingName, setIsEditingName] = useState(false);
   const [nameInput, setNameInput] = useState('');
-  const [bodyStats, setBodyStats] = useState({ body_weight_kg: '', height_cm: '', age: '', sex: '', goal: '', activity_level: '' });
+  const [bodyStats, setBodyStats] = useState({
+    body_weight_kg: '', height_cm: '', age: '', sex: '', goal: '', activity_level: '',
+    training_experience: '', dietary_preference: '', cuisine: '', eating_habits: '',
+    injuries: [],
+  });
   const [statsSaved, setStatsSaved] = useState(false);
   const { user: authUser } = useAuth();
   const nameInputRef = useRef(null);
@@ -156,6 +160,11 @@ export default function Profile() {
       sex: d.user.sex ?? '',
       goal: d.user.goal ?? '',
       activity_level: d.user.activity_level ?? '',
+      training_experience: d.user.training_experience ?? '',
+      dietary_preference: d.user.dietary_preference ?? '',
+      cuisine: d.user.cuisine ?? '',
+      eating_habits: d.user.eating_habits ?? '',
+      injuries: Array.isArray(d.user.injuries) ? d.user.injuries : [],
     });
     fetchProfilePage().then(doc => { if (doc) setCms(doc); }).catch(() => {});
   }, [navigate]);
@@ -200,12 +209,23 @@ export default function Profile() {
       d.user.sex = bodyStats.sex || null;
       d.user.goal = bodyStats.goal || null;
       d.user.activity_level = bodyStats.activity_level || null;
-      // Phase 2: call calculateBaselineCalories(d.user) here and store to d.diet
+      d.user.training_experience = bodyStats.training_experience || null;
+      d.user.dietary_preference = bodyStats.dietary_preference || null;
+      d.user.cuisine = bodyStats.cuisine.trim() || null;
+      d.user.eating_habits = bodyStats.eating_habits.trim() || null;
+      d.user.injuries = Array.isArray(bodyStats.injuries) ? bodyStats.injuries : [];
       return d;
     });
     setData(updated);
     setStatsSaved(true);
     setTimeout(() => setStatsSaved(false), 2000);
+  }
+
+  function toggleInjury(key) {
+    setBodyStats(prev => {
+      const has = prev.injuries.includes(key);
+      return { ...prev, injuries: has ? prev.injuries.filter(i => i !== key) : [...prev.injuries, key] };
+    });
   }
 
   function handleImport() {
@@ -449,9 +469,12 @@ export default function Profile() {
 
             {/* Body Stats */}
             <div style={{ background: C.low, borderRadius: '12px', padding: 'clamp(20px, 3vw, 32px)' }}>
-              <h2 style={{ fontFamily: 'Manrope, sans-serif', fontSize: '1.05rem', fontWeight: 700, letterSpacing: '-0.02em', color: C.text, margin: '0 0 20px' }}>
-                Body Stats
+              <h2 style={{ fontFamily: 'Manrope, sans-serif', fontSize: '1.05rem', fontWeight: 700, letterSpacing: '-0.02em', color: C.text, margin: '0 0 6px' }}>
+                Body Stats &amp; Preferences
               </h2>
+              <p style={{ fontSize: '0.72rem', color: C.faint, margin: '0 0 18px' }}>
+                Used by the coach to personalise your plan and meals.
+              </p>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '10px', marginBottom: '10px' }}>
                 {[
                   { key: 'body_weight_kg', label: 'Weight (kg)', type: 'number', placeholder: '75' },
@@ -502,6 +525,77 @@ export default function Profile() {
                   </select>
                 </div>
               </div>
+
+              {/* Training experience + Diet preference */}
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '12px' }}>
+                <div>
+                  <p style={{ fontSize: '0.55rem', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: C.faint, marginBottom: '6px' }}>Training Experience</p>
+                  <select value={bodyStats.training_experience} onChange={e => setBodyStats(prev => ({ ...prev, training_experience: e.target.value }))}
+                    style={{ width: '100%', padding: '8px 10px', borderRadius: '6px', border: `1px solid ${C.border}`, background: C.container, color: bodyStats.training_experience ? C.text : C.faint, fontSize: '0.88rem', boxSizing: 'border-box', outline: 'none' }}>
+                    <option value="">—</option>
+                    <option value="beginner">Beginner (&lt;1 yr)</option>
+                    <option value="intermediate">Intermediate (1–5 yr)</option>
+                    <option value="advanced">Advanced (5+ yr)</option>
+                  </select>
+                </div>
+                <div>
+                  <p style={{ fontSize: '0.55rem', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: C.faint, marginBottom: '6px' }}>Diet Preference</p>
+                  <select value={bodyStats.dietary_preference} onChange={e => setBodyStats(prev => ({ ...prev, dietary_preference: e.target.value }))}
+                    style={{ width: '100%', padding: '8px 10px', borderRadius: '6px', border: `1px solid ${C.border}`, background: C.container, color: bodyStats.dietary_preference ? C.text : C.faint, fontSize: '0.88rem', boxSizing: 'border-box', outline: 'none' }}>
+                    <option value="">—</option>
+                    <option value="omnivore">Omnivore</option>
+                    <option value="pescatarian">Pescatarian</option>
+                    <option value="vegetarian">Vegetarian</option>
+                    <option value="vegan">Vegan</option>
+                  </select>
+                </div>
+              </div>
+
+              {/* Cuisine + Eating habits */}
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '12px' }}>
+                <div>
+                  <p style={{ fontSize: '0.55rem', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: C.faint, marginBottom: '6px' }}>Cuisine</p>
+                  <input type="text" placeholder="e.g. Indian, Mediterranean" value={bodyStats.cuisine}
+                    onChange={e => setBodyStats(prev => ({ ...prev, cuisine: e.target.value }))}
+                    style={{ width: '100%', padding: '8px 10px', borderRadius: '6px', border: `1px solid ${C.border}`, background: C.container, color: C.text, fontSize: '0.88rem', boxSizing: 'border-box', outline: 'none' }} />
+                </div>
+                <div>
+                  <p style={{ fontSize: '0.55rem', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: C.faint, marginBottom: '6px' }}>Eating Habits</p>
+                  <input type="text" placeholder="e.g. 16:8 IF, no breakfast" value={bodyStats.eating_habits}
+                    onChange={e => setBodyStats(prev => ({ ...prev, eating_habits: e.target.value }))}
+                    style={{ width: '100%', padding: '8px 10px', borderRadius: '6px', border: `1px solid ${C.border}`, background: C.container, color: C.text, fontSize: '0.88rem', boxSizing: 'border-box', outline: 'none' }} />
+                </div>
+              </div>
+
+              {/* Injuries — multi-select chips */}
+              <p style={{ fontSize: '0.55rem', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: C.faint, marginBottom: '8px' }}>Injuries / Limitations</p>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginBottom: '18px' }}>
+                {[
+                  { key: 'lower_back', label: 'Lower back' },
+                  { key: 'knee',       label: 'Knee'       },
+                  { key: 'shoulder',   label: 'Shoulder'   },
+                  { key: 'elbow',      label: 'Elbow'      },
+                  { key: 'wrist',      label: 'Wrist'      },
+                  { key: 'hip',        label: 'Hip'        },
+                  { key: 'neck',       label: 'Neck'       },
+                  { key: 'ankle',      label: 'Ankle'      },
+                ].map(({ key, label }) => {
+                  const on = bodyStats.injuries.includes(key);
+                  return (
+                    <button key={key} onClick={() => toggleInjury(key)} type="button"
+                      style={{
+                        padding: '6px 12px', borderRadius: '999px',
+                        background: on ? `rgba(${C.primaryRgb},0.18)` : C.container,
+                        border: `1px solid ${on ? C.primary : C.border}`,
+                        color: on ? C.primary : C.muted,
+                        fontSize: '0.72rem', fontWeight: 600, cursor: 'pointer',
+                      }}>
+                      {label}
+                    </button>
+                  );
+                })}
+              </div>
+
               <button
                 onClick={handleBodyStatsSave}
                 style={{ width: '100%', padding: '10px', borderRadius: '8px', background: statsSaved ? C.green : C.primary, color: statsSaved ? '#000' : C.onPrimary, fontWeight: 700, border: 'none', cursor: 'pointer', fontSize: '0.88rem', transition: 'background 0.2s' }}

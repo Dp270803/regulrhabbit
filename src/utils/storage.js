@@ -10,7 +10,7 @@ import {
 const STORAGE_KEY = 'regulr_data';
 
 const DEFAULT_DATA = {
-  version: '1.3',
+  version: '1.4',
   created_at: null,
   last_opened: null,
   onboarding_complete: false,
@@ -29,6 +29,11 @@ const DEFAULT_DATA = {
     goal: null,
     activity_level: null,
     preferred_unit: 'kg',
+    injuries: [],                // array of strings: ['lower_back', 'shoulder', 'knee', ...]
+    dietary_preference: null,    // 'omnivore' | 'vegetarian' | 'vegan' | 'pescatarian'
+    cuisine: null,               // free text: 'indian' | 'mediterranean' | 'asian' | etc
+    eating_habits: null,         // free text notes
+    training_experience: null,   // 'beginner' | 'intermediate' | 'advanced'
   },
   plans: [],
   streaks: {
@@ -97,6 +102,12 @@ function migrateData(data) {
   if (data.version === '1.2') {
     data.version = '1.3';
     data.diet = { ...DEFAULT_DATA.diet, ...(data.diet || {}) };
+    saveData(data);
+  }
+  if (data.version === '1.3') {
+    data.version = '1.4';
+    data.user = { ...DEFAULT_DATA.user, ...(data.user || {}) };
+    if (!Array.isArray(data.user.injuries)) data.user.injuries = [];
     saveData(data);
   }
   return data;

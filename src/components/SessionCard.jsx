@@ -263,10 +263,10 @@ export default function SessionCard({ session, onComplete, onPerformanceLogged, 
                         letterSpacing: '-0.01em',
                       }}>{ex.name}</p>
                       <a
-                        href={`https://www.youtube.com/results?search_query=${encodeURIComponent(ex.name + ' exercise form tutorial')}`}
+                        href={`https://www.youtube.com/results?search_query=${encodeURIComponent('Jeff Nippard ' + ex.name + ' form')}`}
                         target="_blank" rel="noopener noreferrer"
                         onClick={e => e.stopPropagation()}
-                        title={`How to: ${ex.name}`}
+                        title={`How to: ${ex.name} (Nippard form tutorial)`}
                         style={{ color: C.faint, display: 'flex', alignItems: 'center', flexShrink: 0, textDecoration: 'none', transition: 'color 0.15s' }}
                         onMouseEnter={e => e.currentTarget.style.color = '#FF0000'}
                         onMouseLeave={e => e.currentTarget.style.color = C.faint}

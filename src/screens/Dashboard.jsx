@@ -9,6 +9,7 @@ import ConfettiEffect from '../components/ConfettiEffect';
 import CoachMessage from '../components/CoachMessage';
 import InsightsCard from '../components/InsightsCard';
 import PlanUpdatesBanner from '../components/PlanUpdatesBanner';
+import AskCoach from '../components/AskCoach';
 import { getData, updateData } from '../utils/storage';
 import { fetchHeroImage, fetchDashboardPage } from '../utils/sanityClient';
 import { updatePersona } from '../utils/personaEngine';
@@ -24,6 +25,7 @@ import { trackPageView, trackSessionCompleted, trackReturnState, trackBadgeEarne
 import { calculateBaseline } from '../utils/dietEngine';
 import { applyPlanAdjustments, applyDietAdjustments } from '../utils/adaptationEngine';
 import { recordAccepted, recordRejected } from '../utils/aiMemory';
+import { runWeeklyMutation } from '../utils/weeklyMutation';
 import messagesData from '../data/messages.json';
 import levelsData from '../data/levels.json';
 import { useThemeColors } from '../hooks/useTheme';
@@ -149,6 +151,11 @@ export default function Dashboard() {
     }
     const t = await selectTip(d);
     if (t) { setTip(t); updateData(() => markTipSeen(d, t.id)); }
+
+    // Fire-and-forget weekly plan mutation. Internal guard prevents repeats.
+    runWeeklyMutation().then(update => {
+      if (update) setPlanUpdates(getData().plan_updates || []);
+    }).catch(() => {});
   }, [navigate]);
 
   useEffect(() => { trackPageView('dashboard'); loadDashboard(); }, [loadDashboard]);
@@ -286,6 +293,7 @@ export default function Dashboard() {
   return (
     <div className="min-h-dvh pb-32 md:pb-12 md:pt-14" style={{ background: C.bg, color: C.text }}>
       <ConfettiEffect trigger={showConfetti} />
+      <AskCoach currentExercise={todaySession?.exercises?.[0]?.name} />
       {levelUpInfo && <LevelUpModal level={levelUpInfo} onClose={() => setLevelUpInfo(null)} />}
       {newBadge && <BadgeModal badge={newBadge} onClose={() => setNewBadge(null)} />}
       {showBanner && returnMessage && <ReturnBanner message={returnMessage} state={returnStateNum} timeMessage={timeMessage} onDismiss={() => setShowBanner(false)} />}

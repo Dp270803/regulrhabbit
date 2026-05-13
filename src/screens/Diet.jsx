@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useThemeColors } from '../hooks/useTheme';
 import { getData, updateData } from '../utils/storage';
-import { calculateDietTarget } from '../utils/dietEngine';
+import { calculateDietTarget, calculateMacros } from '../utils/dietEngine';
+import { recordAccepted, recordRejected } from '../utils/aiMemory';
 
 const W = { maxWidth: '1200px', margin: '0 auto', padding: '0 clamp(16px, 4vw, 64px)' };
 const DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
@@ -43,6 +44,9 @@ export default function Diet() {
   const [weightInput, setWeightInput] = useState('');
   const [selectedAdherence, setSelectedAdherence] = useState(null);
   const [checkinSaved, setCheckinSaved] = useState(false);
+  const [adaptation, setAdaptation] = useState(null);
+  const [adapting, setAdapting] = useState(false);
+  const [adaptError, setAdaptError] = useState(null);
 
   useEffect(() => {
     const d = getData();
@@ -105,6 +109,111 @@ export default function Diet() {
     } finally {
       setGenerating(false);
     }
+  }
+
+  function computeTrend(d) {
+    const checkins = (d.diet?.weekly_checkins || []).slice(-6);
+    if (checkins.length < 2) return null;
+    const withWeight = checkins.filter(c => c.weight_kg);
+    let weekly_weight_change_pct = 0;
+    if (withWeight.length >= 2) {
+      const first = withWeight[0].weight_kg;
+      const last = withWeight[withWeight.length - 1].weight_kg;
+      const weeks = withWeight.length - 1;
+      weekly_weight_change_pct = ((last - first) / first / weeks) * 100;
+    }
+    const lastAdh = d.diet?.last_weekly_adherence_pct ?? 0;
+    return {
+      weekly_weight_change_pct: +weekly_weight_change_pct.toFixed(2),
+      weeks_in_phase: checkins.length,
+      last_adherence_pct: lastAdh,
+    };
+  }
+
+  async function handleRunAdaptation() {
+    setAdapting(true);
+    setAdaptError(null);
+    setAdaptation(null);
+    const d = getData();
+    const trend = computeTrend(d);
+    if (!trend) {
+      setAdaptError('Need at least 2 weekly check-ins to assess your trend.');
+      setAdapting(false);
+      return;
+    }
+    try {
+      const res = await fetch('/.netlify/functions/adapt-diet', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({
+          profile: {
+            sex: d.user?.sex || 'male',
+            goal: d.user?.goal || 'maintenance',
+            weight_kg: d.user?.body_weight_kg || target?.tdee && (target.tdee / 30) || 75,
+            current_calories: d.diet?.current_calories || target.baseline_calories,
+          },
+          trend,
+        }),
+      });
+      if (!res.ok) throw new Error('Network');
+      const result = await res.json();
+      setAdaptation(result);
+    } catch {
+      setAdaptError('Couldn\'t reach the coach. Try again in a moment.');
+    } finally {
+      setAdapting(false);
+    }
+  }
+
+  function acceptAdaptation() {
+    if (!adaptation) return;
+    const newCals = adaptation.new_calories;
+    recordAccepted({ text: `${adaptation.recommendation}: ${adaptation.reason}`, category: 'diet_adaptation' });
+    const profile = {
+      weight_kg: data.user?.body_weight_kg || 75,
+      goal: data.user?.goal || 'maintenance',
+    };
+    const newMacros = calculateMacros(profile, newCals);
+    const next = updateData(dd => {
+      dd.diet = dd.diet || {};
+      dd.diet.current_calories = newCals;
+      dd.diet.macros = { protein_g: newMacros.protein_g, fat_g: newMacros.fat_g, carb_g: newMacros.carb_g };
+      dd.diet.last_adjustment_reason = adaptation.reason;
+      dd.diet.last_updated = new Date().toISOString();
+      dd.diet.adaptations = dd.diet.adaptations || [];
+      dd.diet.adaptations.push({
+        id: `adapt_${Date.now()}`,
+        date: new Date().toISOString().split('T')[0],
+        delta_kcal: adaptation.delta_kcal,
+        reason: adaptation.reason,
+        book_reference: adaptation.book_reference,
+        accepted: true,
+      });
+      return dd;
+    });
+    setData(next);
+    setTarget({ ...target, baseline_calories: newCals, macros: { ...newMacros } });
+    setAdaptation(null);
+  }
+
+  function dismissAdaptation() {
+    if (adaptation) {
+      recordRejected({ text: `${adaptation.recommendation}: ${adaptation.reason}`, category: 'diet_adaptation' });
+      updateData(d => {
+        d.diet = d.diet || {};
+        d.diet.adaptations = d.diet.adaptations || [];
+        d.diet.adaptations.push({
+          id: `adapt_${Date.now()}`,
+          date: new Date().toISOString().split('T')[0],
+          delta_kcal: adaptation.delta_kcal,
+          reason: adaptation.reason,
+          book_reference: adaptation.book_reference,
+          accepted: false,
+        });
+        return d;
+      });
+    }
+    setAdaptation(null);
   }
 
   function handleCheckin() {
@@ -348,6 +457,92 @@ export default function Diet() {
           {data.diet?.weekly_checkins?.length > 0 && (
             <p style={{ fontSize: '0.72rem', color: C.faint, marginTop: '16px' }}>
               Last check-in: {data.diet.last_weekly_adherence_pct}% adherence · {data.diet.weekly_checkins.length} total
+            </p>
+          )}
+        </div>
+
+        {/* Weekly adaptation */}
+        <div style={{ background: C.low, borderRadius: '16px', padding: '24px', border: `1px solid ${C.border}`, marginBottom: '16px' }}>
+          <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: '8px', flexWrap: 'wrap', gap: '8px' }}>
+            <div>
+              <p style={{ fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: C.faint, marginBottom: '4px' }}>Weekly coach</p>
+              <h3 className="font-headline" style={{ fontSize: '1.2rem', fontWeight: 700, color: C.text, margin: 0 }}>Calorie adaptation</h3>
+            </div>
+            <button
+              onClick={handleRunAdaptation}
+              disabled={adapting}
+              style={{
+                padding: '8px 18px', borderRadius: '8px',
+                background: adapting ? C.separator : C.primary,
+                color: adapting ? C.faint : C.onPrimary,
+                border: 'none', fontWeight: 700, fontSize: '0.78rem',
+                cursor: adapting ? 'not-allowed' : 'pointer',
+              }}
+            >
+              {adapting ? 'Analysing…' : 'Run weekly review'}
+            </button>
+          </div>
+          <p style={{ fontSize: '0.78rem', color: C.muted, lineHeight: 1.5, margin: '0 0 12px' }}>
+            Pulls your last weeks of check-ins and weight to recommend a calorie adjustment based on Nippard's protocols.
+          </p>
+          {adaptError && (
+            <p style={{ fontSize: '0.78rem', color: '#ff6b6b', margin: '0 0 12px' }}>{adaptError}</p>
+          )}
+          {adaptation && (
+            <div style={{
+              background: `rgba(${C.primaryRgb},0.06)`, borderRadius: '12px',
+              padding: '16px', border: `1px solid rgba(${C.primaryRgb},0.18)`,
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+                <span style={{
+                  fontSize: '0.58rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase',
+                  color: C.primary, background: `rgba(${C.primaryRgb},0.14)`,
+                  padding: '3px 8px', borderRadius: '4px',
+                }}>{adaptation.recommendation}</span>
+                <span style={{ fontSize: '0.95rem', fontWeight: 700, color: C.text }}>
+                  {adaptation.delta_kcal === 0 ? 'No calorie change' :
+                    `${adaptation.delta_kcal > 0 ? '+' : ''}${adaptation.delta_kcal} kcal → ${adaptation.new_calories}`}
+                </span>
+              </div>
+              <p style={{ fontSize: '0.85rem', color: C.muted, lineHeight: 1.55, margin: '0 0 6px' }}>
+                {adaptation.reason}
+              </p>
+              {adaptation.book_reference && (
+                <p style={{ fontSize: '0.68rem', color: C.faint, fontStyle: 'italic', margin: '0 0 12px' }}>
+                  — {adaptation.book_reference}
+                </p>
+              )}
+              <div style={{ display: 'flex', gap: '8px' }}>
+                <button
+                  onClick={acceptAdaptation}
+                  disabled={adaptation.delta_kcal === 0}
+                  style={{
+                    flex: 1, padding: '9px', borderRadius: '8px',
+                    background: adaptation.delta_kcal === 0 ? C.separator : C.primary,
+                    color: adaptation.delta_kcal === 0 ? C.faint : C.onPrimary,
+                    border: 'none', fontWeight: 700, fontSize: '0.78rem',
+                    cursor: adaptation.delta_kcal === 0 ? 'not-allowed' : 'pointer',
+                  }}
+                >
+                  Apply
+                </button>
+                <button
+                  onClick={dismissAdaptation}
+                  style={{
+                    flex: 1, padding: '9px', borderRadius: '8px',
+                    background: 'transparent', color: C.muted,
+                    border: `1px solid ${C.border}`, fontWeight: 700, fontSize: '0.78rem', cursor: 'pointer',
+                  }}
+                >
+                  Dismiss
+                </button>
+              </div>
+            </div>
+          )}
+          {data.diet?.adaptations?.length > 0 && !adaptation && (
+            <p style={{ fontSize: '0.72rem', color: C.faint, marginTop: '12px' }}>
+              {data.diet.adaptations.length} adaptation{data.diet.adaptations.length !== 1 ? 's' : ''} on record.
+              Last: {data.diet.adaptations[data.diet.adaptations.length - 1].reason}
             </p>
           )}
         </div>

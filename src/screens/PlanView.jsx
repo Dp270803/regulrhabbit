@@ -6,6 +6,8 @@ import { trackPageView } from '../utils/analytics';
 import { fetchPlanPage } from '../utils/sanityClient';
 import { useThemeColors, useTheme } from '../hooks/useTheme';
 import exercisesData from '../data/exercises.json';
+import { replaceExercise } from '../utils/adaptationEngine';
+import { recordAccepted, recordRejected } from '../utils/aiMemory';
 
 const W = { maxWidth: '1200px', margin: '0 auto', padding: '0 clamp(16px, 4vw, 64px)' };
 
@@ -138,6 +140,9 @@ export default function PlanView() {
   const [cms, setCms] = useState(null);
   const [editingSession, setEditingSession] = useState(null); // session.id being edited
   const [editExercises, setEditExercises] = useState([]); // [{name, sets}]
+  const [personalising, setPersonalising] = useState(false);
+  const [personalisation, setPersonalisation] = useState(null);
+  const [personaliseError, setPersonaliseError] = useState(null);
 
   useEffect(() => {
     trackPageView('plan');
@@ -186,6 +191,114 @@ export default function PlanView() {
     setEditExercises([]);
   }
 
+  /**
+   * Extract unique exercise names across all sessions in the plan.
+   */
+  function collectExerciseNames(plan) {
+    const set = new Set();
+    for (const week of plan.weeks || []) {
+      for (const session of week.sessions || []) {
+        for (const block of session.blocks || []) {
+          if (!block.detail) continue;
+          for (const part of block.detail.split('|')) {
+            const name = part.trim().split(/\s+\d/)[0].trim();
+            if (name) set.add(name);
+          }
+        }
+      }
+    }
+    return [...set];
+  }
+
+  async function handlePersonalise() {
+    if (!selectedPlan || personalising) return;
+    setPersonalising(true);
+    setPersonaliseError(null);
+    setPersonalisation(null);
+    try {
+      const res = await fetch('/.netlify/functions/personalise-plan', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({
+          plan_name: selectedPlan.name || selectedPlan.activity || 'plan',
+          exercises: collectExerciseNames(selectedPlan),
+          profile: {
+            sex: data.user?.sex || 'male',
+            goal: data.user?.goal || selectedPlan.gym_goal || 'maintenance',
+            body_weight_kg: data.user?.body_weight_kg,
+            height_cm: data.user?.height_cm,
+            age: data.user?.age,
+            experience_level: data.user?.training_experience || selectedPlan.experience_level || 'intermediate',
+            injuries: data.user?.injuries || [],
+            dietary_preference: data.user?.dietary_preference,
+            cuisine: data.user?.cuisine,
+          },
+        }),
+      });
+      if (!res.ok) throw new Error('Network');
+      const result = await res.json();
+      setPersonalisation(result);
+    } catch {
+      setPersonaliseError('Coach is offline. Try again in a moment.');
+    } finally {
+      setPersonalising(false);
+    }
+  }
+
+  function acceptSubstitution(sub) {
+    if (!sub?.old_exercise || !sub?.new_exercise) return;
+    recordAccepted({
+      text: `Swap ${sub.old_exercise} → ${sub.new_exercise} (${sub.reason || ''})`,
+      category: 'personalise_plan',
+    });
+    const updated = updateData(d => {
+      const plan = d.plans.find(p => p.id === selectedPlan.id);
+      if (!plan) return d;
+      const newPlan = replaceExercise(plan, sub.old_exercise, {
+        name: sub.new_exercise,
+        sets: 3,
+        reps: '8-12',
+      });
+      const idx = d.plans.findIndex(p => p.id === plan.id);
+      if (idx >= 0) d.plans[idx] = newPlan;
+      // Track in plan_updates so the user sees it on Dashboard
+      d.plan_updates = d.plan_updates || [];
+      d.plan_updates.push({
+        id: `psub_${Date.now()}`,
+        date: new Date().toISOString(),
+        source: 'personalise_plan',
+        seen: true,            // already accepted, not a notification
+        changes: [{
+          type: 'replace_exercise',
+          old_exercise: sub.old_exercise,
+          new_exercise: sub.new_exercise,
+          exercise: sub.new_exercise,
+          reason: sub.reason || '',
+          book_reference: sub.book_reference || '',
+        }],
+      });
+      return d;
+    });
+    setData(updated);
+    setSelectedPlan(updated.plans.find(p => p.status === 'active'));
+    // Remove the accepted sub from the list
+    setPersonalisation(prev => prev ? {
+      ...prev,
+      substitutions: prev.substitutions.filter(s => s !== sub),
+    } : prev);
+  }
+
+  function dismissSubstitution(sub) {
+    recordRejected({
+      text: `Swap ${sub.old_exercise} → ${sub.new_exercise}`,
+      category: 'personalise_plan',
+    });
+    setPersonalisation(prev => prev ? {
+      ...prev,
+      substitutions: prev.substitutions.filter(s => s !== sub),
+    } : prev);
+  }
+
   if (!data || !selectedPlan) {
     return (
       <div className="min-h-dvh pb-32 md:pb-12 md:pt-14" style={{ background: C.bg, color: C.text }}>
@@ -217,7 +330,7 @@ export default function PlanView() {
           <h1 className="font-headline" style={{ fontSize: 'clamp(2.8rem, 6vw, 4.5rem)', fontWeight: 800, letterSpacing: '-0.035em', lineHeight: 1, marginBottom: '1rem' }}>
             {d(cms, 'pageTitle')}
           </h1>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap', marginBottom: '14px' }}>
             <span style={{
               fontSize: '0.65rem', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase',
               color: C.primary, background: `rgba(${C.primaryRgb},0.1)`,
@@ -232,7 +345,76 @@ export default function PlanView() {
             }}>
               {d(cms, 'durationLabel')}
             </span>
+            <button
+              onClick={handlePersonalise}
+              disabled={personalising}
+              style={{
+                padding: '6px 14px', borderRadius: '100px',
+                background: personalising ? C.separator : C.primary,
+                color: personalising ? C.faint : C.onPrimary,
+                border: 'none', fontSize: '0.7rem', fontWeight: 700,
+                letterSpacing: '0.1em', textTransform: 'uppercase',
+                cursor: personalising ? 'not-allowed' : 'pointer',
+              }}
+            >
+              {personalising ? 'Analysing…' : '✨ Personalise for me'}
+            </button>
           </div>
+          {personaliseError && (
+            <p style={{ fontSize: '0.78rem', color: '#ff6b6b', margin: '0 0 12px' }}>{personaliseError}</p>
+          )}
+          {personalisation && (
+            <div style={{
+              background: `rgba(${C.primaryRgb},0.06)`, border: `1px solid rgba(${C.primaryRgb},0.18)`,
+              borderRadius: '14px', padding: '18px 20px', marginBottom: '12px',
+            }}>
+              <p style={{ fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: C.primary, margin: '0 0 6px' }}>
+                Coach personalisation
+              </p>
+              <p style={{ fontSize: '0.92rem', fontWeight: 700, color: C.text, margin: '0 0 10px' }}>
+                {personalisation.summary}
+              </p>
+              {personalisation.notes && (
+                <p style={{ fontSize: '0.82rem', color: C.muted, lineHeight: 1.55, margin: '0 0 14px' }}>
+                  {personalisation.notes}
+                </p>
+              )}
+              {personalisation.substitutions?.length > 0 ? (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                  {personalisation.substitutions.map((sub, i) => (
+                    <div key={i} style={{
+                      background: C.lowest, borderRadius: '10px', padding: '12px 14px',
+                      display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '12px', flexWrap: 'wrap',
+                    }}>
+                      <div style={{ flex: 1, minWidth: '240px' }}>
+                        <p style={{ fontSize: '0.85rem', fontWeight: 700, color: C.text, margin: '0 0 4px' }}>
+                          {sub.old_exercise} <span style={{ color: C.faint, fontWeight: 500 }}>→</span> {sub.new_exercise}
+                        </p>
+                        <p style={{ fontSize: '0.78rem', color: C.muted, margin: '0 0 4px', lineHeight: 1.4 }}>{sub.reason}</p>
+                        {sub.book_reference && (
+                          <p style={{ fontSize: '0.66rem', color: C.faint, margin: 0, fontStyle: 'italic' }}>— {sub.book_reference}</p>
+                        )}
+                      </div>
+                      <div style={{ display: 'flex', gap: '6px', flexShrink: 0 }}>
+                        <button onClick={() => acceptSubstitution(sub)}
+                          style={{ padding: '6px 13px', borderRadius: '8px', background: C.primary, color: C.onPrimary, border: 'none', fontWeight: 700, fontSize: '0.72rem', cursor: 'pointer' }}>
+                          Apply
+                        </button>
+                        <button onClick={() => dismissSubstitution(sub)}
+                          style={{ padding: '6px 13px', borderRadius: '8px', background: 'transparent', color: C.muted, border: `1px solid ${C.border}`, fontWeight: 700, fontSize: '0.72rem', cursor: 'pointer' }}>
+                          Skip
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p style={{ fontSize: '0.82rem', color: C.faint, margin: 0, fontStyle: 'italic' }}>
+                  No substitutions needed — your plan suits your profile.
+                </p>
+              )}
+            </div>
+          )}
         </div>
 
         {/* ── Week Accordions ── */}
