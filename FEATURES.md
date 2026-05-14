@@ -1,4 +1,4 @@
-# REGULR — How Every Button Works (Plain English)
+# REGULR — How Everything Works (Plain English)
 
 > A feature-by-feature, button-by-button walkthrough of what happens behind the scenes when the user interacts with the app. Written for product, design, and non-technical readers.
 
