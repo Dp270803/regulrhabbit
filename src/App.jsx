@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { Routes, Route, Navigate, useLocation, NavLink } from 'react-router-dom';
+import { trackPage } from './utils/analytics.js';
 import { useThemeColors } from './hooks/useTheme';
 import { AuthProvider } from './hooks/useAuth';
 import Landing from './screens/Landing';
@@ -86,6 +87,10 @@ export default function App() {
       document.documentElement.classList.add('dark');
     }
   }, []);
+
+  useEffect(() => {
+    trackPage(location.pathname);
+  }, [location.pathname]);
 
   return (
     <AuthProvider>

@@ -4,6 +4,7 @@ import { useThemeColors } from '../hooks/useTheme';
 import { getData, updateData } from '../utils/storage';
 import { calculateDietTarget, calculateMacros } from '../utils/dietEngine';
 import { recordAccepted, recordRejected } from '../utils/aiMemory';
+import { analytics } from '../utils/analytics';
 
 const W = { maxWidth: '1200px', margin: '0 auto', padding: '0 clamp(16px, 4vw, 64px)' };
 const DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
@@ -95,6 +96,12 @@ export default function Diet() {
       const result = await res.json();
       if (!result.week_plan?.length) throw new Error('Empty plan');
       setMealPlan(result);
+      analytics.mealPlanGenerated({
+        calories: target.baseline_calories,
+        goal: data.user?.goal || 'maintenance',
+        cuisine: data.user?.cuisine || 'neutral',
+        dietary_preference: data.user?.dietary_preference || 'omnivore',
+      });
       updateData(d => {
         d.diet = d.diet || {};
         d.diet.meal_plan = result;
@@ -191,6 +198,7 @@ export default function Diet() {
       });
       return dd;
     });
+    analytics.dietAdaptationAccepted({ recommendation: adaptation.recommendation, delta_kcal: adaptation.delta_kcal });
     setData(next);
     setTarget({ ...target, baseline_calories: newCals, macros: { ...newMacros } });
     setAdaptation(null);
@@ -198,6 +206,7 @@ export default function Diet() {
 
   function dismissAdaptation() {
     if (adaptation) {
+      analytics.dietAdaptationDismissed();
       recordRejected({ text: `${adaptation.recommendation}: ${adaptation.reason}`, category: 'diet_adaptation' });
       updateData(d => {
         d.diet = d.diet || {};

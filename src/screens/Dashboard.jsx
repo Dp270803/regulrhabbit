@@ -21,7 +21,7 @@ import { calculateSessionXP, checkLevelUp, getLevelFromXP, getXPToNextLevel } fr
 import { checkBadges } from '../utils/badgeChecker';
 import { selectTip, markTipSeen } from '../utils/tipSelector';
 import { getToday, formatDate } from '../utils/dateUtils';
-import { trackPageView, trackSessionCompleted, trackReturnState, trackBadgeEarned, trackLevelUp } from '../utils/analytics';
+import { trackPageView, trackSessionCompleted, trackReturnState, trackBadgeEarned, trackLevelUp, identify } from '../utils/analytics';
 import { calculateBaseline } from '../utils/dietEngine';
 import { applyPlanAdjustments, applyDietAdjustments } from '../utils/adaptationEngine';
 import { recordAccepted, recordRejected } from '../utils/aiMemory';
@@ -128,6 +128,11 @@ export default function Dashboard() {
   const loadDashboard = useCallback(async () => {
     const d = getData();
     if (!d.onboarding_complete) { navigate('/'); return; }
+    identify(d.user?.id || d.user?.name || 'anonymous', {
+      goal: d.user?.goal,
+      experience_level: d.user?.training_experience,
+      activity: d.plans?.find(p => p.status === 'active')?.activity,
+    });
     setData(d);
     setPlanUpdates(d.plan_updates || []);
     setWeightInput(d.user?.body_weight_kg ? String(d.user.body_weight_kg) : '');

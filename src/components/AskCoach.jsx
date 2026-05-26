@@ -13,6 +13,7 @@ import { useState, useRef, useEffect } from 'react';
 import { MessageCircleQuestion, X, Send } from 'lucide-react';
 import { useThemeColors } from '../hooks/useTheme';
 import { getData } from '../utils/storage';
+import { analytics } from '../utils/analytics';
 
 const SUGGESTED_QUESTIONS = [
   'How do I fix lower back rounding on RDLs?',
@@ -36,6 +37,9 @@ export default function AskCoach({ currentExercise = null }) {
   async function ask(question) {
     const trimmed = question.trim();
     if (!trimmed || busy) return;
+    analytics.askCoachQuestion({
+      has_substitution_request: /sub(stitut|stitue|stitution)|swap|replace|instead of/i.test(trimmed),
+    });
     setInput('');
     setMessages(prev => [...prev, { role: 'user', content: trimmed }]);
     setBusy(true);

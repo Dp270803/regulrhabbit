@@ -3,6 +3,7 @@ import { useThemeColors } from '../hooks/useTheme';
 import { logPerformanceToSupabase } from '../utils/supabaseSync';
 import { getData, updateData } from '../utils/storage';
 import { estimateSessionCalories } from '../utils/calorieCalculator';
+import { analytics } from '../utils/analytics';
 
 export default function WorkoutLogger({ exercises, session, userId, onSave, onAnalysisResult }) {
   const C = useThemeColors();
@@ -76,6 +77,11 @@ export default function WorkoutLogger({ exercises, session, userId, onSave, onAn
       return d;
     });
 
+    analytics.workoutLogged({
+      session_day: session.day || null,
+      exercises_count: filled.length,
+      sets_logged: filled.reduce((sum, l) => sum + (l.sets || 0), 0),
+    });
     setSaving(false);
     onSave();
 
