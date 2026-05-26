@@ -20,7 +20,7 @@
               "blocks": [
                 { "type": "warmup", "detail": "5min brisk walk + high knees, butt kicks, leg swings", "duration_minutes": 5 },
                 { "type": "main", "detail": "3km easy run at conversational pace (you should be able to hold a full conversation). Aim for roughly 6:30-7:30/km depending on fitness.", "duration_minutes": 20 },
-                { "type": "cooldown", "detail": "5min walk + static stretch calves, quads, hamstrings, hip flexors — hold 30s each", "duration_minutes": 5 }
+                { "type": "cooldown", "detail": "5min walk + static stretch calves, quads, hamstrings, hip flexors - hold 30s each", "duration_minutes": 5 }
               ]
             },
             {
@@ -29,7 +29,7 @@
               "duration_minutes": 40,
               "blocks": [
                 { "type": "warmup", "detail": "5min brisk walk + gentle jog to loosen up", "duration_minutes": 5 },
-                { "type": "main", "detail": "5km at easy pace — slower than your easy run. Focus on steady breathing and relaxed shoulders. Walk breaks are fine if needed.", "duration_minutes": 30 },
+                { "type": "main", "detail": "5km at easy pace - slower than your easy run. Focus on steady breathing and relaxed shoulders. Walk breaks are fine if needed.", "duration_minutes": 30 },
                 { "type": "cooldown", "detail": "5min walk + full lower body stretch routine", "duration_minutes": 5 }
               ]
             }
@@ -55,7 +55,7 @@
               "duration_minutes": 45,
               "blocks": [
                 { "type": "warmup", "detail": "5min brisk walk + light jog", "duration_minutes": 5 },
-                { "type": "main", "detail": "5.5km at easy pace — aim to run the whole distance without stopping. Keep effort low.", "duration_minutes": 35 },
+                { "type": "main", "detail": "5.5km at easy pace - aim to run the whole distance without stopping. Keep effort low.", "duration_minutes": 35 },
                 { "type": "cooldown", "detail": "5min walk + stretch + foam roll if available", "duration_minutes": 5 }
               ]
             }
@@ -81,7 +81,7 @@
               "duration_minutes": 50,
               "blocks": [
                 { "type": "warmup", "detail": "5min brisk walk", "duration_minutes": 5 },
-                { "type": "main", "detail": "6km at easy pace — this is your longest run yet. Stay patient and keep the effort low.", "duration_minutes": 40 },
+                { "type": "main", "detail": "6km at easy pace - this is your longest run yet. Stay patient and keep the effort low.", "duration_minutes": 40 },
                 { "type": "cooldown", "detail": "5min walk + deep stretching + foam rolling recommended", "duration_minutes": 5 }
               ]
             }
@@ -97,7 +97,7 @@
               "duration_minutes": 25,
               "blocks": [
                 { "type": "warmup", "detail": "5min walk", "duration_minutes": 5 },
-                { "type": "main", "detail": "2km very easy pace — deload week. Keep it genuinely easy, this is active recovery.", "duration_minutes": 15 },
+                { "type": "main", "detail": "2km very easy pace - deload week. Keep it genuinely easy, this is active recovery.", "duration_minutes": 15 },
                 { "type": "cooldown", "detail": "5min walk + full stretch routine", "duration_minutes": 5 }
               ]
             },
@@ -107,7 +107,7 @@
               "duration_minutes": 40,
               "blocks": [
                 { "type": "warmup", "detail": "5min easy jog + 4x strides", "duration_minutes": 5 },
-                { "type": "main", "detail": "5km at best sustainable pace — see how you have improved. Start conservative and build into it.", "duration_minutes": 30 },
+                { "type": "main", "detail": "5km at best sustainable pace - see how you have improved. Start conservative and build into it.", "duration_minutes": 30 },
                 { "type": "cooldown", "detail": "5min walk + deep stretching", "duration_minutes": 5 }
               ]
             }
@@ -128,7 +128,7 @@
               "duration_minutes": 30,
               "blocks": [
                 { "type": "warmup", "detail": "5min walk + dynamic stretches (high knees, butt kicks, leg swings)", "duration_minutes": 5 },
-                { "type": "main", "detail": "3km easy conversational pace — relaxed breathing, loose shoulders", "duration_minutes": 20 },
+                { "type": "main", "detail": "3km easy conversational pace - relaxed breathing, loose shoulders", "duration_minutes": 20 },
                 { "type": "cooldown", "detail": "5min walk + static stretch calves, quads, hamstrings", "duration_minutes": 5 }
               ]
             },
@@ -138,7 +138,7 @@
               "duration_minutes": 35,
               "blocks": [
                 { "type": "warmup", "detail": "5min easy jog + 4x20m strides to wake up the legs", "duration_minutes": 5 },
-                { "type": "main", "detail": "1.5km easy + 1.5km at tempo pace (comfortably hard — you can speak in short phrases but not full sentences) + 1km easy", "duration_minutes": 25 },
+                { "type": "main", "detail": "1.5km easy + 1.5km at tempo pace (comfortably hard - you can speak in short phrases but not full sentences) + 1km easy", "duration_minutes": 25 },
                 { "type": "cooldown", "detail": "5min walk + stretching", "duration_minutes": 5 }
               ]
             },
@@ -148,7 +148,7 @@
               "duration_minutes": 45,
               "blocks": [
                 { "type": "warmup", "detail": "5min brisk walk", "duration_minutes": 5 },
-                { "type": "main", "detail": "5km easy pace — slower than your easy run. Focus on time on feet, not speed.", "duration_minutes": 35 },
+                { "type": "main", "detail": "5km easy pace - slower than your easy run. Focus on time on feet, not speed.", "duration_minutes": 35 },
                 { "type": "cooldown", "detail": "5min walk + full stretch routine", "duration_minutes": 5 }
               ]
             }
@@ -164,7 +164,7 @@
               "duration_minutes": 30,
               "blocks": [
                 { "type": "warmup", "detail": "5min walk + dynamic stretches + 4 strides", "duration_minutes": 5 },
-                { "type": "main", "detail": "3.5km easy pace — focus on cadence (aim for 170-180 steps/min)", "duration_minutes": 20 },
+                { "type": "main", "detail": "3.5km easy pace - focus on cadence (aim for 170-180 steps/min)", "duration_minutes": 20 },
                 { "type": "cooldown", "detail": "5min walk + stretching", "duration_minutes": 5 }
               ]
             },
@@ -174,7 +174,7 @@
               "duration_minutes": 35,
               "blocks": [
                 { "type": "warmup", "detail": "5min easy jog + 4 strides", "duration_minutes": 5 },
-                { "type": "main", "detail": "1.5km easy + 2km at tempo pace + 1km easy. Try to hold tempo pace steady — don't start too fast.", "duration_minutes": 25 },
+                { "type": "main", "detail": "1.5km easy + 2km at tempo pace + 1km easy. Try to hold tempo pace steady - don't start too fast.", "duration_minutes": 25 },
                 { "type": "cooldown", "detail": "5min walk + stretching", "duration_minutes": 5 }
               ]
             },
@@ -184,7 +184,7 @@
               "duration_minutes": 50,
               "blocks": [
                 { "type": "warmup", "detail": "5min brisk walk", "duration_minutes": 5 },
-                { "type": "main", "detail": "5.5km at easy pace — try negative splitting (run second half slightly faster than first)", "duration_minutes": 40 },
+                { "type": "main", "detail": "5.5km at easy pace - try negative splitting (run second half slightly faster than first)", "duration_minutes": 40 },
                 { "type": "cooldown", "detail": "5min walk + deep stretching + foam rolling", "duration_minutes": 5 }
               ]
             }
@@ -200,7 +200,7 @@
               "duration_minutes": 35,
               "blocks": [
                 { "type": "warmup", "detail": "5min jog + dynamic stretches", "duration_minutes": 5 },
-                { "type": "main", "detail": "4km easy pace — include 6x20s strides in the last km (fast but controlled, full recovery jog between)", "duration_minutes": 25 },
+                { "type": "main", "detail": "4km easy pace - include 6x20s strides in the last km (fast but controlled, full recovery jog between)", "duration_minutes": 25 },
                 { "type": "cooldown", "detail": "5min walk + stretching", "duration_minutes": 5 }
               ]
             },
@@ -210,7 +210,7 @@
               "duration_minutes": 40,
               "blocks": [
                 { "type": "warmup", "detail": "5min easy jog + 4 strides", "duration_minutes": 5 },
-                { "type": "main", "detail": "1.5km easy + 3km at tempo pace + 1km easy. This is the longest tempo effort so far — stay disciplined on pace.", "duration_minutes": 30 },
+                { "type": "main", "detail": "1.5km easy + 3km at tempo pace + 1km easy. This is the longest tempo effort so far - stay disciplined on pace.", "duration_minutes": 30 },
                 { "type": "cooldown", "detail": "5min walk + stretching", "duration_minutes": 5 }
               ]
             },
@@ -220,7 +220,7 @@
               "duration_minutes": 55,
               "blocks": [
                 { "type": "warmup", "detail": "5min brisk walk", "duration_minutes": 5 },
-                { "type": "main", "detail": "6.5km at easy pace — your longest run. Take it slow and focus on form when fatigued.", "duration_minutes": 45 },
+                { "type": "main", "detail": "6.5km at easy pace - your longest run. Take it slow and focus on form when fatigued.", "duration_minutes": 45 },
                 { "type": "cooldown", "detail": "5min walk + deep stretching + foam rolling recommended", "duration_minutes": 5 }
               ]
             }
@@ -236,7 +236,7 @@
               "duration_minutes": 25,
               "blocks": [
                 { "type": "warmup", "detail": "5min walk", "duration_minutes": 5 },
-                { "type": "main", "detail": "2.5km very easy pace — deload week, this should feel effortless", "duration_minutes": 15 },
+                { "type": "main", "detail": "2.5km very easy pace - deload week, this should feel effortless", "duration_minutes": 15 },
                 { "type": "cooldown", "detail": "5min walk + full stretch routine", "duration_minutes": 5 }
               ]
             },
@@ -256,7 +256,7 @@
               "duration_minutes": 40,
               "blocks": [
                 { "type": "warmup", "detail": "5min easy jog + 4 strides", "duration_minutes": 5 },
-                { "type": "main", "detail": "5km at best sustainable pace — test your fitness. Start at tempo and build if you feel good.", "duration_minutes": 30 },
+                { "type": "main", "detail": "5km at best sustainable pace - test your fitness. Start at tempo and build if you feel good.", "duration_minutes": 30 },
                 { "type": "cooldown", "detail": "5min walk + deep stretching", "duration_minutes": 5 }
               ]
             }
@@ -277,7 +277,7 @@
               "duration_minutes": 30,
               "blocks": [
                 { "type": "warmup", "detail": "5min walk + dynamic stretches (high knees, butt kicks, leg swings, ankle circles)", "duration_minutes": 5 },
-                { "type": "main", "detail": "3km easy conversational pace — focus on relaxed form and steady breathing", "duration_minutes": 20 },
+                { "type": "main", "detail": "3km easy conversational pace - focus on relaxed form and steady breathing", "duration_minutes": 20 },
                 { "type": "cooldown", "detail": "5min walk + static stretch calves, quads, hamstrings, hip flexors", "duration_minutes": 5 }
               ]
             },
@@ -297,7 +297,7 @@
               "duration_minutes": 35,
               "blocks": [
                 { "type": "warmup", "detail": "5min easy jog + 4 strides", "duration_minutes": 5 },
-                { "type": "main", "detail": "1.5km easy + 2km at tempo pace (comfortably hard — you can speak in short phrases) + 1km easy", "duration_minutes": 25 },
+                { "type": "main", "detail": "1.5km easy + 2km at tempo pace (comfortably hard - you can speak in short phrases) + 1km easy", "duration_minutes": 25 },
                 { "type": "cooldown", "detail": "5min walk + stretching", "duration_minutes": 5 }
               ]
             },
@@ -307,7 +307,7 @@
               "duration_minutes": 50,
               "blocks": [
                 { "type": "warmup", "detail": "5min brisk walk", "duration_minutes": 5 },
-                { "type": "main", "detail": "6.5km at easy pace — slower than your easy run days. This builds aerobic base. Stay patient.", "duration_minutes": 40 },
+                { "type": "main", "detail": "6.5km at easy pace - slower than your easy run days. This builds aerobic base. Stay patient.", "duration_minutes": 40 },
                 { "type": "cooldown", "detail": "5min walk + full stretch routine + foam rolling recommended", "duration_minutes": 5 }
               ]
             }
@@ -323,7 +323,7 @@
               "duration_minutes": 30,
               "blocks": [
                 { "type": "warmup", "detail": "5min walk + dynamic stretches + strides", "duration_minutes": 5 },
-                { "type": "main", "detail": "3.5km easy pace — focus on cadence (170-180 steps/min) and landing under your center of gravity", "duration_minutes": 20 },
+                { "type": "main", "detail": "3.5km easy pace - focus on cadence (170-180 steps/min) and landing under your center of gravity", "duration_minutes": 20 },
                 { "type": "cooldown", "detail": "5min walk + stretching", "duration_minutes": 5 }
               ]
             },
@@ -343,7 +343,7 @@
               "duration_minutes": 40,
               "blocks": [
                 { "type": "warmup", "detail": "5min easy jog + 4 strides", "duration_minutes": 5 },
-                { "type": "main", "detail": "1.5km easy + 2.5km at tempo pace + 1km easy. Hold tempo steady — don't surge.", "duration_minutes": 30 },
+                { "type": "main", "detail": "1.5km easy + 2.5km at tempo pace + 1km easy. Hold tempo steady - don't surge.", "duration_minutes": 30 },
                 { "type": "cooldown", "detail": "5min walk + stretching", "duration_minutes": 5 }
               ]
             },
@@ -353,7 +353,7 @@
               "duration_minutes": 55,
               "blocks": [
                 { "type": "warmup", "detail": "5min brisk walk", "duration_minutes": 5 },
-                { "type": "main", "detail": "7km at easy pace — try negative splitting (second half slightly faster). Stay relaxed through the middle kms.", "duration_minutes": 45 },
+                { "type": "main", "detail": "7km at easy pace - try negative splitting (second half slightly faster). Stay relaxed through the middle kms.", "duration_minutes": 45 },
                 { "type": "cooldown", "detail": "5min walk + deep stretching + foam rolling", "duration_minutes": 5 }
               ]
             }
@@ -389,7 +389,7 @@
               "duration_minutes": 45,
               "blocks": [
                 { "type": "warmup", "detail": "5min easy jog + 4 strides", "duration_minutes": 5 },
-                { "type": "main", "detail": "1.5km easy + 3.5km at tempo pace + 1km easy. Longest tempo block yet — stay disciplined and trust your pacing.", "duration_minutes": 35 },
+                { "type": "main", "detail": "1.5km easy + 3.5km at tempo pace + 1km easy. Longest tempo block yet - stay disciplined and trust your pacing.", "duration_minutes": 35 },
                 { "type": "cooldown", "detail": "5min walk + stretching", "duration_minutes": 5 }
               ]
             },
@@ -399,7 +399,7 @@
               "duration_minutes": 60,
               "blocks": [
                 { "type": "warmup", "detail": "5min brisk walk", "duration_minutes": 5 },
-                { "type": "main", "detail": "8km at easy pace — your longest run. Start very easy and settle into rhythm. Take walk breaks if needed rather than pushing through bad form.", "duration_minutes": 50 },
+                { "type": "main", "detail": "8km at easy pace - your longest run. Start very easy and settle into rhythm. Take walk breaks if needed rather than pushing through bad form.", "duration_minutes": 50 },
                 { "type": "cooldown", "detail": "5min walk + deep stretching + foam rolling strongly recommended", "duration_minutes": 5 }
               ]
             }
@@ -415,7 +415,7 @@
               "duration_minutes": 25,
               "blocks": [
                 { "type": "warmup", "detail": "5min walk", "duration_minutes": 5 },
-                { "type": "main", "detail": "2.5km very easy pace — deload week. This should feel almost too easy. Let your body recover.", "duration_minutes": 15 },
+                { "type": "main", "detail": "2.5km very easy pace - deload week. This should feel almost too easy. Let your body recover.", "duration_minutes": 15 },
                 { "type": "cooldown", "detail": "5min walk + full stretch routine", "duration_minutes": 5 }
               ]
             },
@@ -435,7 +435,7 @@
               "duration_minutes": 25,
               "blocks": [
                 { "type": "warmup", "detail": "5min walk + light dynamic stretches", "duration_minutes": 5 },
-                { "type": "main", "detail": "2.5km easy relaxed pace — shake out the legs before your test run", "duration_minutes": 15 },
+                { "type": "main", "detail": "2.5km easy relaxed pace - shake out the legs before your test run", "duration_minutes": 15 },
                 { "type": "cooldown", "detail": "5min walk + stretching", "duration_minutes": 5 }
               ]
             },
@@ -445,7 +445,7 @@
               "duration_minutes": 40,
               "blocks": [
                 { "type": "warmup", "detail": "5min easy jog + 4x strides, building to fast", "duration_minutes": 5 },
-                { "type": "main", "detail": "5km at best sustainable pace — this is your benchmark. Start at tempo effort and build in the last 2km if you feel strong. Record your time.", "duration_minutes": 30 },
+                { "type": "main", "detail": "5km at best sustainable pace - this is your benchmark. Start at tempo effort and build in the last 2km if you feel strong. Record your time.", "duration_minutes": 30 },
                 { "type": "cooldown", "detail": "5min walk + deep stretching and celebration", "duration_minutes": 5 }
               ]
             }

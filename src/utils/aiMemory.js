@@ -2,7 +2,7 @@
  * aiMemory.js
  *
  * Tracks accepted and rejected AI suggestions in localStorage.
- * Used to personalize future AI context — avoid repeating rejected ideas,
+ * Used to personalize future AI context - avoid repeating rejected ideas,
  * build on accepted ones.
  */
 

@@ -1,5 +1,5 @@
 /**
- * adapt-diet — Netlify Function
+ * adapt-diet - Netlify Function
  *
  * Weekly diet adaptation. Reads the user's recent weight trend, adherence,
  * and current target, and returns a calorie/macro adjustment proposal
@@ -38,7 +38,7 @@ Deterministic rules to apply first (don't deviate):
 - Recomp (goal=recomp) → keep calories stable; protein focus
 - Any goal + adherence < 50% for 2+ weeks → recommend "simplify" not a calorie change
 
-Return ONLY this JSON — no prose, no markdown:
+Return ONLY this JSON - no prose, no markdown:
 {
   "recommendation": "maintain|increase|decrease|diet_break|simplify",
   "delta_kcal": <integer, can be 0>,
@@ -58,7 +58,7 @@ const FALLBACK = {
   delta_kcal: 0,
   new_calories: 0,
   reason: 'No adjustment needed this week.',
-  book_reference: 'Ch. 10 — Diet Foundations',
+  book_reference: 'Ch. 10 - Diet Foundations',
 };
 
 export const handler = async (event) => {

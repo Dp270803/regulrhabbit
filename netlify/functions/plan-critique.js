@@ -1,5 +1,5 @@
 /**
- * plan-critique — Netlify Function
+ * plan-critique - Netlify Function
  *
  * Receives a training plan + user profile, returns a structured critique
  * grounded in evidence-based hypertrophy principles.
@@ -10,9 +10,9 @@
 
 import { buildBookSystemBlock } from './_book-context.js';
 
-const SYSTEM_PROMPT_TASK = `You are an evidence-based strength training coach. Use The Muscle Ladder by Jeff Nippard (provided in the book context) as your primary reference. When the book covers a principle, cite it. When it doesn't, use general evidence-based training science and set book_reference to "General evidence-based practice" — never leave a field blank or say "the book doesn't cover this".
+const SYSTEM_PROMPT_TASK = `You are an evidence-based strength training coach. Use The Muscle Ladder by Jeff Nippard (provided in the book context) as your primary reference. When the book covers a principle, cite it. When it doesn't, use general evidence-based training science and set book_reference to "General evidence-based practice" - never leave a field blank or say "the book doesn't cover this".
 
-Analyze the submitted plan and return ONLY this JSON object — no prose, no markdown:
+Analyze the submitted plan and return ONLY this JSON object - no prose, no markdown:
 {
   "overall_score": <integer 0-100>,
   "verdict": "<2-3 sentence overall assessment, honest and direct, no fluff>",
@@ -36,7 +36,7 @@ Analyze the submitted plan and return ONLY this JSON object — no prose, no mar
       "exercise": "<exercise name, or 'Structure' for session-level changes>",
       "change_type": "add|remove|swap|adjust_volume",
       "from": "<current value or null>",
-      "to": "<proposed value — for add/swap: exercise name; for adjust_volume: 'NxRep-Range' e.g. '4x8-12'>",
+      "to": "<proposed value - for add/swap: exercise name; for adjust_volume: 'NxRep-Range' e.g. '4x8-12'>",
       "rationale": "<one-sentence reason>",
       "book_reference": "<chapter OR 'General evidence-based practice'>",
       "session_day": "<day name this applies to, or null for all sessions>"
@@ -48,12 +48,12 @@ Rules:
 - overall_score: 40-60 = needs work, 60-75 = decent, 75-85 = good, 85+ = excellent
 - Max 3 strengths, max 4 issues, max 5 proposed_edits
 - Every entry MUST include a book_reference (chapter or "General evidence-based practice")
-- Be specific and actionable — reference actual exercise names from the plan
+- Be specific and actionable - reference actual exercise names from the plan
 - Return ONLY the JSON object, nothing else`;
 
 const FALLBACK = {
   overall_score: 70,
-  verdict: 'Your plan looks solid. Analysis is temporarily unavailable — try again in a moment.',
+  verdict: 'Your plan looks solid. Analysis is temporarily unavailable - try again in a moment.',
   strengths: [{ observation: 'Plan structure submitted successfully', principle: 'Ready for detailed review' }],
   issues: [],
   proposed_edits: [],

@@ -39,7 +39,7 @@ export default function PlanUpdatesBanner({ updates = [], onDismissAll }) {
     if (change) {
       const exercise = change.exercise || change.old_exercise || change.detail || '';
       recordRejected({
-        text: `${change.type || 'plan_update'}: ${exercise} — ${change.reason || ''}`.trim(),
+        text: `${change.type || 'plan_update'}: ${exercise} - ${change.reason || ''}`.trim(),
         category: 'plan_update',
       });
     }
@@ -77,7 +77,7 @@ export default function PlanUpdatesBanner({ updates = [], onDismissAll }) {
             boxShadow: `0 0 6px rgba(${C.primaryRgb},0.6)`, flexShrink: 0,
           }} />
           <span style={{ fontSize: '0.82rem', fontWeight: 700, color: C.text }}>
-            Your plan was updated — {totalChanges} change{totalChanges !== 1 ? 's' : ''} this week
+            Your plan was updated - {totalChanges} change{totalChanges !== 1 ? 's' : ''} this week
           </span>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -122,7 +122,7 @@ export default function PlanUpdatesBanner({ updates = [], onDismissAll }) {
                         fontSize: '0.68rem', color: C.faint, lineHeight: 1.5,
                         margin: '6px 0 0', fontStyle: 'italic',
                       }}>
-                        — {change.book_reference}
+                        - {change.book_reference}
                       </p>
                     )}
                   </div>

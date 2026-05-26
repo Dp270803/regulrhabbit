@@ -35,10 +35,10 @@ const DAY_KEYS = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'satur
 
 function getMotivationalNote(streak, sessionsLeft, isCompleted) {
   if (isCompleted) return 'Session done. Recovery starts now.';
-  if (streak >= 14) return `${streak}-day streak — elite consistency.`;
-  if (streak >= 7) return `${streak} days straight — momentum is everything.`;
-  if (streak >= 3) return `${streak} days in a row — the habit is forming.`;
-  if (sessionsLeft === 1) return 'One session left this week — finish strong.';
+  if (streak >= 14) return `${streak}-day streak - elite consistency.`;
+  if (streak >= 7) return `${streak} days straight - momentum is everything.`;
+  if (streak >= 3) return `${streak} days in a row - the habit is forming.`;
+  if (sessionsLeft === 1) return 'One session left this week - finish strong.';
   if (sessionsLeft > 1) return `${sessionsLeft} sessions remaining this week.`;
   return 'New day, new opportunity to build.';
 }
@@ -63,7 +63,7 @@ function getNextSession(plan) {
   return null;
 }
 
-// Consistency dot grid — last 20 days mapped to green/gold/grey
+// Consistency dot grid - last 20 days mapped to green/gold/grey
 function ConsistencyDots({ checkIns, scheduledDays, plan }) {
   const C = useThemeColors();
   const today = getToday();
@@ -86,7 +86,7 @@ function ConsistencyDots({ checkIns, scheduledDays, plan }) {
         let bg;
         if (done) bg = C.green;
         else if (isToday) bg = C.primary;
-        else if (isPast && isScheduled) bg = C.redSoft; // missed — muted red
+        else if (isPast && isScheduled) bg = C.redSoft; // missed - muted red
         else bg = C.highest;
         return (
           <div key={dateStr} style={{
@@ -145,7 +145,7 @@ export default function Dashboard() {
       setCoachTrigger('return');
       setShowCoach(true);
     } else if (state === 1 && todayInfo) {
-      // Normal day with a session — show session_start coach message
+      // Normal day with a session - show session_start coach message
       setCoachTrigger('session_start');
       setShowCoach(true);
     }
@@ -177,7 +177,7 @@ export default function Dashboard() {
   const nextInfo = !displaySession && activePlan ? getNextSession(activePlan) : null;
   const sessionForCard = displaySession || nextInfo?.session;
   const isNextSession = !displaySession && !!nextInfo;
-  const nextLabel = nextInfo ? `Up Next — ${formatDate(nextInfo.session.date)}` : null;
+  const nextLabel = nextInfo ? `Up Next - ${formatDate(nextInfo.session.date)}` : null;
 
   const scheduledDays = activePlan?.scheduled_days || [];
 
@@ -223,7 +223,7 @@ export default function Dashboard() {
   }
 
   function handlePerformanceLogged(analysisResult) {
-    // WorkoutLogger already wrote to workout_logs — read the latest entry for display
+    // WorkoutLogger already wrote to workout_logs - read the latest entry for display
     const d = getData();
     const latestLog = d.workout_logs?.[d.workout_logs.length - 1];
     if (latestLog) {
@@ -326,7 +326,7 @@ export default function Dashboard() {
                 }} />
               </div>
               <span className="font-headline" style={{ fontWeight: 700, color: C.primary, whiteSpace: 'nowrap', position: 'relative', fontSize: '0.9rem' }}>
-                {data.user.total_xp.toLocaleString()} / {nextLevel ? nextLevel.xp_required.toLocaleString() : '—'} XP
+                {data.user.total_xp.toLocaleString()} / {nextLevel ? nextLevel.xp_required.toLocaleString() : '-'} XP
                 {xpFlash && recentXP > 0 && (
                   <span className="animate-fade-in-up" style={{ position: 'absolute', top: '-22px', right: 0, fontSize: '0.85rem', color: C.primary }}>
                     +{recentXP}

@@ -1,5 +1,5 @@
 /**
- * weekly-mutation — Netlify Function
+ * weekly-mutation - Netlify Function
  *
  * Runs once a week (client-triggered) to propose plan mutations grounded in
  * The Muscle Ladder by Jeff Nippard. Reads training signals + matched rules
@@ -67,7 +67,7 @@ Output ONLY valid JSON, no prose:
       "muscle": "<optional>",
       "delta_sets": <integer optional>,
       "reason": "<1 sentence>",
-      "book_reference": "<chapter, e.g. 'Ch. 8 — Volume'>"
+      "book_reference": "<chapter, e.g. 'Ch. 8 - Volume'>"
     }
   ]
 }`;

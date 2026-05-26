@@ -2,7 +2,7 @@
  * stateEngine.js
  *
  * Converts raw fitness signals into a structured fitness_state object.
- * Non-AI — all rules are deterministic.
+ * Non-AI - all rules are deterministic.
  *
  * Input:  signals from signalEngine.computeFitnessSignals()
  * Output: fitness_state

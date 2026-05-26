@@ -249,8 +249,8 @@ export default function Progress() {
           <div className="progress-stats-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px' }}>
             {[
               { label: 'This Week', value: weekSummary.sessions, suffix: 'sessions', accent: C.primary },
-              { label: 'Volume', value: weekSummary.volume > 0 ? `${(weekSummary.volume / 1000).toFixed(1)}k` : '—', suffix: 'kg lifted', accent: C.green },
-              { label: 'Calories', value: weekSummary.calories > 0 ? weekSummary.calories.toLocaleString() : '—', suffix: 'kcal burned', accent: '#a855f7' },
+              { label: 'Volume', value: weekSummary.volume > 0 ? `${(weekSummary.volume / 1000).toFixed(1)}k` : '-', suffix: 'kg lifted', accent: C.green },
+              { label: 'Calories', value: weekSummary.calories > 0 ? weekSummary.calories.toLocaleString() : '-', suffix: 'kcal burned', accent: '#a855f7' },
             ].map(stat => (
               <div key={stat.label} style={{
                 background: C.low, borderRadius: '14px', padding: '20px',
@@ -265,7 +265,7 @@ export default function Progress() {
         )}
 
         {/* ── Adherence ── */}
-        <Card title="Adherence — Last 8 Weeks" accent={C.primary}>
+        <Card title="Adherence - Last 8 Weeks" accent={C.primary}>
           <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px', marginBottom: '20px' }}>
             <span className="font-headline" style={{ fontSize: '2.8rem', fontWeight: 800, color: adherencePct >= 80 ? C.green : adherencePct >= 50 ? C.primary : C.red, lineHeight: 1 }}>
               {adherencePct}%
@@ -306,7 +306,7 @@ export default function Progress() {
 
         {/* ── Strength trends (e1RM) ── */}
         {topLifts.length > 0 ? (
-          <Card title="Strength Trends — e1RM per lift" accent={C.primary}>
+          <Card title="Strength Trends - e1RM per lift" accent={C.primary}>
             <p style={{ fontSize: '0.75rem', color: C.faint, marginBottom: '20px', marginTop: '-8px' }}>
               Epley formula: weight × (1 + reps ÷ 30)
             </p>

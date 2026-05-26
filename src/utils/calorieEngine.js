@@ -2,7 +2,7 @@
  * calorieEngine.js
  *
  * MET-based session calorie estimation with signal-based adjustments.
- * Non-AI — all calculations are deterministic.
+ * Non-AI - all calculations are deterministic.
  *
  * Formula: calories = MET × body_weight_kg × duration_hours
  */
@@ -40,7 +40,7 @@ function classifyExercise(name = '') {
 /**
  * Compute total volume (kg) from a list of logged exercises.
  * Each exercise: { sets, reps, weight_kg }
- * reps may be a range string like "8-12" — use the lower bound.
+ * reps may be a range string like "8-12" - use the lower bound.
  */
 export function computeTotalVolume(exercises = []) {
   return exercises.reduce((total, ex) => {

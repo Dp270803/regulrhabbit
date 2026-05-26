@@ -4,7 +4,7 @@
       "name": "same_day",
       "messages": [
         "You already showed up today. That's the whole game.",
-        "Done for the day. Rest up — tomorrow's session is ready when you are.",
+        "Done for the day. Rest up - tomorrow's session is ready when you are.",
         "Nothing left to do but recover. See you tomorrow."
       ]
     },
@@ -32,7 +32,7 @@
     "4": {
       "name": "missed_a_few",
       "messages": [
-        "It's been {duration}. No judgment — just a session waiting for you.",
+        "It's been {duration}. No judgment - just a session waiting for you.",
         "You've been away {duration}. The plan didn't go anywhere. Neither did your progress.",
         "A few days off. It happens to everyone. Your next session is ready.",
         "{duration} since your last session. Let's not make it longer.",

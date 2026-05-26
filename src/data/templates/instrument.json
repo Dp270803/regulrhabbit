@@ -9,7 +9,7 @@
     "2x": {
       "weeks": [
         { "week_number": 1, "sessions": [
-          { "day_index": 0, "title": "Foundations", "duration_minutes": 25, "blocks": [{ "type": "warmup", "detail": "5 min finger stretches + chromatic exercise (slow, focus on clean notes)", "duration_minutes": 5 }, { "type": "main", "detail": "Learn C major scale (or equivalent for your instrument). Practice ascending/descending ×10. Learn 2 basic chords/patterns.", "duration_minutes": 15 }, { "type": "cooldown", "detail": "5 min: play something fun — any song, any speed. End on enjoyment.", "duration_minutes": 5 }] },
+          { "day_index": 0, "title": "Foundations", "duration_minutes": 25, "blocks": [{ "type": "warmup", "detail": "5 min finger stretches + chromatic exercise (slow, focus on clean notes)", "duration_minutes": 5 }, { "type": "main", "detail": "Learn C major scale (or equivalent for your instrument). Practice ascending/descending ×10. Learn 2 basic chords/patterns.", "duration_minutes": 15 }, { "type": "cooldown", "detail": "5 min: play something fun - any song, any speed. End on enjoyment.", "duration_minutes": 5 }] },
           { "day_index": 1, "title": "Chord Practice", "duration_minutes": 25, "blocks": [{ "type": "warmup", "detail": "Chromatic exercise + C major scale review", "duration_minutes": 5 }, { "type": "main", "detail": "Practice chord transitions: 2 chords, switch every 4 beats with metronome at 60 BPM. Simple strumming/picking pattern.", "duration_minutes": 15 }, { "type": "cooldown", "detail": "Play along with a simple backing track or song", "duration_minutes": 5 }] }
         ]},
         { "week_number": 2, "sessions": [
@@ -22,7 +22,7 @@
         ]},
         { "week_number": 4, "sessions": [
           { "day_index": 0, "title": "Speed & Clean", "duration_minutes": 30, "blocks": [{ "type": "warmup", "detail": "Scales at 75 BPM, focus on clean execution", "duration_minutes": 5 }, { "type": "main", "detail": "Increase metronome 5 BPM from comfort zone. Clean up chord transitions. New chord/pattern introduction.", "duration_minutes": 20 }, { "type": "cooldown", "detail": "Play something you enjoy", "duration_minutes": 5 }] },
-          { "day_index": 1, "title": "Performance", "duration_minutes": 30, "blocks": [{ "type": "warmup", "detail": "Full warm-up", "duration_minutes": 5 }, { "type": "main", "detail": "Full song play-through ×3. Record best take. Compare to week 1 — hear your progress.", "duration_minutes": 20 }, { "type": "cooldown", "detail": "Jam freely, celebrate", "duration_minutes": 5 }] }
+          { "day_index": 1, "title": "Performance", "duration_minutes": 30, "blocks": [{ "type": "warmup", "detail": "Full warm-up", "duration_minutes": 5 }, { "type": "main", "detail": "Full song play-through ×3. Record best take. Compare to week 1 - hear your progress.", "duration_minutes": 20 }, { "type": "cooldown", "detail": "Jam freely, celebrate", "duration_minutes": 5 }] }
         ]}
       ]
     },

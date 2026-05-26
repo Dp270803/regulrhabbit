@@ -92,7 +92,7 @@ function ExerciseAddInput({ onAdd, C }) {
         onKeyDown={handleKeyDown}
         onFocus={() => setFocused(true)}
         onBlur={() => setTimeout(() => setFocused(false), 150)}
-        placeholder="Add exercise — search or type…"
+        placeholder="Add exercise - search or type…"
         style={{
           width: '100%', padding: '9px 12px', borderRadius: '8px',
           border: `1px solid ${focused ? C.primary : C.border}`,
@@ -392,7 +392,7 @@ export default function PlanView() {
                         </p>
                         <p style={{ fontSize: '0.78rem', color: C.muted, margin: '0 0 4px', lineHeight: 1.4 }}>{sub.reason}</p>
                         {sub.book_reference && (
-                          <p style={{ fontSize: '0.66rem', color: C.faint, margin: 0, fontStyle: 'italic' }}>— {sub.book_reference}</p>
+                          <p style={{ fontSize: '0.66rem', color: C.faint, margin: 0, fontStyle: 'italic' }}>- {sub.book_reference}</p>
                         )}
                       </div>
                       <div style={{ display: 'flex', gap: '6px', flexShrink: 0 }}>
@@ -410,7 +410,7 @@ export default function PlanView() {
                 </div>
               ) : (
                 <p style={{ fontSize: '0.82rem', color: C.faint, margin: 0, fontStyle: 'italic' }}>
-                  No substitutions needed — your plan suits your profile.
+                  No substitutions needed - your plan suits your profile.
                 </p>
               )}
             </div>
@@ -642,7 +642,7 @@ export default function PlanView() {
                                           }}
                                         >
                                           <p style={{ fontSize: '0.9rem', color: C.text }}>{ex.name}</p>
-                                          <span style={{ fontFamily: 'Inter, monospace', fontSize: '0.85rem', fontWeight: 700, color: C.primary }}>{ex.sets || '—'}</span>
+                                          <span style={{ fontFamily: 'Inter, monospace', fontSize: '0.85rem', fontWeight: 700, color: C.primary }}>{ex.sets || '-'}</span>
                                         </div>
                                       ))}
                                     </div>

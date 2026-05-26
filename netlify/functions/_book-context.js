@@ -40,7 +40,7 @@ const CORE_PRINCIPLES = `Core principles from The Muscle Ladder (Jeff Nippard):
 - Cut: 10-20% deficit, 0.5-1% bw/week | Bulk: 5-15% surplus, 0.25-0.5% bw/week | Recomp: maintenance + high protein
 - Protein 1.6-2.2 g/kg (higher during cuts); fat ≥0.6 g/kg, preferably 0.8; carbs fill the rest
 - Adherence > optimization. The "perfect" plan at 60% adherence loses to the "imperfect" one at 95%.
-If the book is silent on a topic, say so — don't speculate.`;
+If the book is silent on a topic, say so - don't speculate.`;
 
 /**
  * Retrieve top-N chunks by keyword overlap with the query string.

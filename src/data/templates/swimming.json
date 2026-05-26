@@ -47,7 +47,7 @@
               "duration_minutes": 40,
               "blocks": [
                 { "type": "warmup", "detail": "250m easy mixed stroke (100 free, 100 back, 50 breast)", "duration_minutes": 6 },
-                { "type": "main", "detail": "6x50m freestyle, 25s rest — aim for consistent pace across all reps", "duration_minutes": 15 },
+                { "type": "main", "detail": "6x50m freestyle, 25s rest - aim for consistent pace across all reps", "duration_minutes": 15 },
                 { "type": "drill", "detail": "4x25m single-arm freestyle drill (breathe to stroking side), alternate arms each 25", "duration_minutes": 6 },
                 { "type": "cooldown", "detail": "150m easy backstroke", "duration_minutes": 5 }
               ]
@@ -58,7 +58,7 @@
               "duration_minutes": 40,
               "blocks": [
                 { "type": "warmup", "detail": "250m easy freestyle with focus on exhaling underwater", "duration_minutes": 6 },
-                { "type": "main", "detail": "3x100m freestyle, 40s rest — try to negative split each 100 (second 50 faster)", "duration_minutes": 15 },
+                { "type": "main", "detail": "3x100m freestyle, 40s rest - try to negative split each 100 (second 50 faster)", "duration_minutes": 15 },
                 { "type": "drill", "detail": "4x25m kick on side drill (rotate body 90 degrees, bottom arm extended)", "duration_minutes": 6 },
                 { "type": "cooldown", "detail": "150m easy choice stroke", "duration_minutes": 5 }
               ]
@@ -86,7 +86,7 @@
               "duration_minutes": 40,
               "blocks": [
                 { "type": "warmup", "detail": "300m easy freestyle", "duration_minutes": 7 },
-                { "type": "main", "detail": "1x400m continuous freestyle at steady pace — focus on rhythm and breathing", "duration_minutes": 12 },
+                { "type": "main", "detail": "1x400m continuous freestyle at steady pace - focus on rhythm and breathing", "duration_minutes": 12 },
                 { "type": "drill", "detail": "4x25m sculling drill at front of stroke", "duration_minutes": 6 },
                 { "type": "cooldown", "detail": "200m easy mixed stroke", "duration_minutes": 5 }
               ]
@@ -114,7 +114,7 @@
               "duration_minutes": 45,
               "blocks": [
                 { "type": "warmup", "detail": "300m easy freestyle with bilateral breathing", "duration_minutes": 7 },
-                { "type": "main", "detail": "1x500m continuous freestyle — aim for non-stop even pace", "duration_minutes": 16 },
+                { "type": "main", "detail": "1x500m continuous freestyle - aim for non-stop even pace", "duration_minutes": 16 },
                 { "type": "drill", "detail": "4x25m bilateral breathing drill (every 3, then every 5 strokes)", "duration_minutes": 6 },
                 { "type": "cooldown", "detail": "200m easy backstroke", "duration_minutes": 6 }
               ]
@@ -136,7 +136,7 @@
               "duration_minutes": 35,
               "blocks": [
                 { "type": "warmup", "detail": "200m easy mixed stroke", "duration_minutes": 5 },
-                { "type": "main", "detail": "4x50m freestyle, 30s rest — focus on stroke count consistency", "duration_minutes": 12 },
+                { "type": "main", "detail": "4x50m freestyle, 30s rest - focus on stroke count consistency", "duration_minutes": 12 },
                 { "type": "drill", "detail": "4x25m catch-up drill", "duration_minutes": 5 },
                 { "type": "cooldown", "detail": "100m easy backstroke", "duration_minutes": 5 }
               ]
@@ -175,7 +175,7 @@
               "duration_minutes": 40,
               "blocks": [
                 { "type": "warmup", "detail": "250m easy mixed stroke", "duration_minutes": 6 },
-                { "type": "main", "detail": "6x50m freestyle, 25s rest — hold steady pace", "duration_minutes": 15 },
+                { "type": "main", "detail": "6x50m freestyle, 25s rest - hold steady pace", "duration_minutes": 15 },
                 { "type": "drill", "detail": "4x25m catch-up drill with focus on rotation", "duration_minutes": 5 },
                 { "type": "cooldown", "detail": "150m easy backstroke", "duration_minutes": 5 }
               ]
@@ -197,7 +197,7 @@
               "duration_minutes": 40,
               "blocks": [
                 { "type": "warmup", "detail": "250m easy mixed", "duration_minutes": 6 },
-                { "type": "main", "detail": "3x100m freestyle, 35s rest — try to hold same split time each 100", "duration_minutes": 15 },
+                { "type": "main", "detail": "3x100m freestyle, 35s rest - try to hold same split time each 100", "duration_minutes": 15 },
                 { "type": "drill", "detail": "4x25m bilateral breathing drill", "duration_minutes": 5 },
                 { "type": "cooldown", "detail": "150m easy backstroke", "duration_minutes": 5 }
               ]
@@ -214,7 +214,7 @@
               "duration_minutes": 45,
               "blocks": [
                 { "type": "warmup", "detail": "300m easy mixed with 4x25m build sprints", "duration_minutes": 7 },
-                { "type": "main", "detail": "8x50m freestyle descending 1-4, 20s rest — last rep in each set should be near max effort", "duration_minutes": 18 },
+                { "type": "main", "detail": "8x50m freestyle descending 1-4, 20s rest - last rep in each set should be near max effort", "duration_minutes": 18 },
                 { "type": "drill", "detail": "4x25m high-elbow catch drill (pause at front, emphasize vertical forearm)", "duration_minutes": 5 },
                 { "type": "cooldown", "detail": "200m easy backstroke", "duration_minutes": 5 }
               ]
@@ -275,7 +275,7 @@
               "duration_minutes": 45,
               "blocks": [
                 { "type": "warmup", "detail": "300m easy mixed", "duration_minutes": 7 },
-                { "type": "main", "detail": "1x600m continuous freestyle — aim for non-stop, even splits", "duration_minutes": 18 },
+                { "type": "main", "detail": "1x600m continuous freestyle - aim for non-stop, even splits", "duration_minutes": 18 },
                 { "type": "drill", "detail": "4x25m bilateral breathing (breathe every 5 strokes)", "duration_minutes": 5 },
                 { "type": "cooldown", "detail": "200m easy choice stroke", "duration_minutes": 6 }
               ]
@@ -347,7 +347,7 @@
               "duration_minutes": 40,
               "blocks": [
                 { "type": "warmup", "detail": "250m easy mixed stroke", "duration_minutes": 6 },
-                { "type": "main", "detail": "8x50m freestyle, 25s rest — hold consistent splits", "duration_minutes": 18 },
+                { "type": "main", "detail": "8x50m freestyle, 25s rest - hold consistent splits", "duration_minutes": 18 },
                 { "type": "drill", "detail": "4x25m catch-up drill with pause", "duration_minutes": 5 },
                 { "type": "cooldown", "detail": "150m easy backstroke", "duration_minutes": 5 }
               ]
@@ -380,7 +380,7 @@
               "duration_minutes": 40,
               "blocks": [
                 { "type": "warmup", "detail": "250m easy freestyle", "duration_minutes": 6 },
-                { "type": "main", "detail": "3x150m freestyle, 35s rest — aim for even pace throughout", "duration_minutes": 18 },
+                { "type": "main", "detail": "3x150m freestyle, 35s rest - aim for even pace throughout", "duration_minutes": 18 },
                 { "type": "drill", "detail": "4x25m bilateral breathing drill", "duration_minutes": 5 },
                 { "type": "cooldown", "detail": "150m easy mixed", "duration_minutes": 5 }
               ]
@@ -397,7 +397,7 @@
               "duration_minutes": 45,
               "blocks": [
                 { "type": "warmup", "detail": "300m easy mixed with 4x25m build", "duration_minutes": 7 },
-                { "type": "main", "detail": "4x100m freestyle at strong pace, 25s rest — track your splits", "duration_minutes": 18 },
+                { "type": "main", "detail": "4x100m freestyle at strong pace, 25s rest - track your splits", "duration_minutes": 18 },
                 { "type": "drill", "detail": "4x25m catch-up drill", "duration_minutes": 5 },
                 { "type": "cooldown", "detail": "200m easy backstroke", "duration_minutes": 6 }
               ]
@@ -430,7 +430,7 @@
               "duration_minutes": 45,
               "blocks": [
                 { "type": "warmup", "detail": "300m easy mixed", "duration_minutes": 7 },
-                { "type": "main", "detail": "1x500m continuous freestyle — focus on stroke efficiency and breathing rhythm", "duration_minutes": 16 },
+                { "type": "main", "detail": "1x500m continuous freestyle - focus on stroke efficiency and breathing rhythm", "duration_minutes": 16 },
                 { "type": "drill", "detail": "4x25m fist drill", "duration_minutes": 5 },
                 { "type": "cooldown", "detail": "200m easy choice", "duration_minutes": 6 }
               ]
@@ -447,7 +447,7 @@
               "duration_minutes": 50,
               "blocks": [
                 { "type": "warmup", "detail": "300m easy mixed with 4x50m build", "duration_minutes": 8 },
-                { "type": "main", "detail": "6x100m freestyle at race pace, 20s rest — push through the fatigue", "duration_minutes": 22 },
+                { "type": "main", "detail": "6x100m freestyle at race pace, 20s rest - push through the fatigue", "duration_minutes": 22 },
                 { "type": "drill", "detail": "4x25m fast turns practice (flip turns or open turns)", "duration_minutes": 5 },
                 { "type": "cooldown", "detail": "200m easy backstroke", "duration_minutes": 6 }
               ]
@@ -480,7 +480,7 @@
               "duration_minutes": 50,
               "blocks": [
                 { "type": "warmup", "detail": "300m easy mixed stroke", "duration_minutes": 8 },
-                { "type": "main", "detail": "1x800m continuous freestyle — your longest swim yet, focus on even pacing", "duration_minutes": 22 },
+                { "type": "main", "detail": "1x800m continuous freestyle - your longest swim yet, focus on even pacing", "duration_minutes": 22 },
                 { "type": "drill", "detail": "4x25m bilateral breathing (alternate every 3 and every 5 strokes)", "duration_minutes": 5 },
                 { "type": "cooldown", "detail": "200m very easy backstroke and freestyle", "duration_minutes": 6 }
               ]
@@ -492,7 +492,7 @@
   },
   "pool_variants": {
     "25m": {
-      "description": "Standard 25-meter pool — more turns, good for beginners",
+      "description": "Standard 25-meter pool - more turns, good for beginners",
       "adjustments": {
         "rest_modifier": 1.0,
         "turn_practice": "More wall push-offs; use turns for streamline practice",
@@ -500,11 +500,11 @@
       }
     },
     "50m": {
-      "description": "Olympic-length 50-meter pool — fewer turns, more continuous swimming",
+      "description": "Olympic-length 50-meter pool - fewer turns, more continuous swimming",
       "adjustments": {
         "rest_modifier": 1.15,
-        "turn_practice": "Fewer walls — focus on pacing and bilateral breathing mid-pool",
-        "notes": "Add 5-10s extra rest on interval sets. Pace yourself for the longer lengths — start conservatively."
+        "turn_practice": "Fewer walls - focus on pacing and bilateral breathing mid-pool",
+        "notes": "Add 5-10s extra rest on interval sets. Pace yourself for the longer lengths - start conservatively."
       }
     }
   }

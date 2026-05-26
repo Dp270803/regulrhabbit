@@ -2,7 +2,7 @@
  * dietEngine.js
  *
  * Mifflin-St Jeor BMR + TDEE + goal-based calorie baseline.
- * Non-AI — all calculations are deterministic.
+ * Non-AI - all calculations are deterministic.
  *
  * AI is only allowed to suggest delta adjustments on top of this baseline.
  */
@@ -126,7 +126,7 @@ export function calculateMacros(profile = {}, target_calories) {
 }
 
 /**
- * Full diet target — combines baseline calories + macro split.
+ * Full diet target - combines baseline calories + macro split.
  */
 export function calculateDietTarget(profile = {}) {
   const baseline = calculateBaseline(profile);

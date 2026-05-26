@@ -297,7 +297,7 @@ export default function SessionCard({ session, onComplete, onPerformanceLogged, 
                     )}
                   </div>
 
-                  {/* Muscle tags — hidden on mobile to prevent overflow */}
+                  {/* Muscle tags - hidden on mobile to prevent overflow */}
                   {tags.length > 0 && (
                     <div className="session-exercise-tags" style={{ display: 'flex', gap: '4px', flexShrink: 0, paddingTop: '2px' }}>
                       {tags.map(tag => (
@@ -340,7 +340,7 @@ export default function SessionCard({ session, onComplete, onPerformanceLogged, 
           {isCooldown ? (
             <div style={{ padding: '16px', borderRadius: '10px', background: C.separator, textAlign: 'center' }}>
               <p style={{ fontSize: '0.9rem', color: C.faint, letterSpacing: '0.02em' }}>
-                {cms?.sessionDoneLabel || 'Session logged — come back tomorrow'}
+                {cms?.sessionDoneLabel || 'Session logged - come back tomorrow'}
               </p>
             </div>
           ) : (
@@ -361,7 +361,7 @@ export default function SessionCard({ session, onComplete, onPerformanceLogged, 
               onMouseLeave={e => e.currentTarget.style.opacity = '1'}
             >
               {allDone
-                ? `✓ All done — ${cms?.markCompleteLabel || 'Mark Complete'}`
+                ? `✓ All done - ${cms?.markCompleteLabel || 'Mark Complete'}`
                 : doneCount > 0
                 ? `${cms?.markCompleteLabel || 'Mark Complete'} (${doneCount}/${exercises.length} done)`
                 : cms?.markCompleteLabel || 'Mark Complete'}

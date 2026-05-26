@@ -1,9 +1,9 @@
 /**
- * ai-workout-analysis — Netlify Function
+ * ai-workout-analysis - Netlify Function
  *
  * Receives pre-computed calorie estimates (base + adjusted) from the client-side
  * MET pipeline and returns a refinement multiplier. Never outputs absolute calorie
- * numbers — the client applies: final_calories = adjusted_calories × adjustment_factor.
+ * numbers - the client applies: final_calories = adjusted_calories × adjustment_factor.
  *
  * POST body:
  * {
@@ -26,7 +26,7 @@
 
 const SYSTEM_PROMPT = `You are a workout analysis engine. You receive a pre-calculated calorie estimate alongside workout signals.
 
-Return ONLY this JSON object — no prose, no markdown:
+Return ONLY this JSON object - no prose, no markdown:
 {
   "adjustment_factor": <float 0.85-1.20>,
   "reasoning": "<1 sentence, conversational, user-facing, e.g. 'High-volume compound session with heavy loading'>",
@@ -133,11 +133,11 @@ exports.handler = async (event) => {
       return { statusCode: 200, body: JSON.stringify(FALLBACK) };
     }
 
-    // Enforce safe values — never trust AI to stay in bounds
+    // Enforce safe values - never trust AI to stay in bounds
     result.adjustment_factor = Math.max(0.85, Math.min(1.20, Number(result.adjustment_factor) || 1.0));
     result.reasoning = typeof result.reasoning === 'string' ? result.reasoning : 'Analysis complete';
     result.suggestions = Array.isArray(result.suggestions) ? result.suggestions.slice(0, 3) : [];
-    // Phase 1 stubs — always override these
+    // Phase 1 stubs - always override these
     result.state_update = {};
     result.plan_adjustments = [];
     result.diet_adjustments = [];

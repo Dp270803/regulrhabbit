@@ -5,9 +5,9 @@
  * Each suggestion can be accepted (triggers adaptation) or dismissed (recorded in memory).
  *
  * Props:
- *   suggestions  — [{ category: 'exercise'|'diet'|'recovery', text: string }]
- *   onAccept     — (suggestion) => void
- *   onDismiss    — (suggestion) => void
+ *   suggestions  - [{ category: 'exercise'|'diet'|'recovery', text: string }]
+ *   onAccept     - (suggestion) => void
+ *   onDismiss    - (suggestion) => void
  */
 
 import { useState } from 'react';

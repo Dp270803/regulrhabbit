@@ -378,7 +378,7 @@ export default function Diet() {
                 </p>
               )}
               {mealPlan.book_reference && (
-                <p style={{ fontSize: '0.68rem', color: C.faint, marginTop: '6px', fontStyle: 'italic' }}>— {mealPlan.book_reference}</p>
+                <p style={{ fontSize: '0.68rem', color: C.faint, marginTop: '6px', fontStyle: 'italic' }}>- {mealPlan.book_reference}</p>
               )}
             </div>
 
@@ -509,7 +509,7 @@ export default function Diet() {
               </p>
               {adaptation.book_reference && (
                 <p style={{ fontSize: '0.68rem', color: C.faint, fontStyle: 'italic', margin: '0 0 12px' }}>
-                  — {adaptation.book_reference}
+                  - {adaptation.book_reference}
                 </p>
               )}
               <div style={{ display: 'flex', gap: '8px' }}>

@@ -4,8 +4,8 @@
  * Client-side persona detection and coaching message fetching.
  *
  * Persona is determined by:
- *   1. Onboarding answer (training_style field) — used for first 10 sessions
- *   2. Behavior signals — takes over after 10+ sessions
+ *   1. Onboarding answer (training_style field) - used for first 10 sessions
+ *   2. Behavior signals - takes over after 10+ sessions
  *
  * The server-side /detect-persona function mirrors this logic and also
  * persists the result to Supabase.

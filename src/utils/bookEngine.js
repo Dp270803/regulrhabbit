@@ -5,7 +5,7 @@ const RULES = bookRules.rules;
 const CHUNKS = bookChunks.chunks;
 
 /**
- * Tier 1 — Rule evaluation.
+ * Tier 1 - Rule evaluation.
  * Returns rules whose `trigger` conditions match the provided signals/state.
  *
  * Signals shape:
@@ -26,7 +26,7 @@ export function evaluateRules(signals) {
 }
 
 /**
- * Get rules by domain — e.g. only diet rules, or only progression rules.
+ * Get rules by domain - e.g. only diet rules, or only progression rules.
  */
 export function rulesByDomain(domain) {
   return RULES.filter(r => r.domain === domain);
@@ -40,7 +40,7 @@ export function getRule(id) {
 }
 
 /**
- * Tier 2 — Topic chunk retrieval.
+ * Tier 2 - Topic chunk retrieval.
  * Returns the top N chunks ranked by keyword overlap with the query terms
  * and `applies_to` tag matching the context.
  *
@@ -104,7 +104,7 @@ export function buildBookContext(query, context, limit = 4) {
 }
 
 /**
- * Trigger matching — handles the variety of comparison shapes the rules use.
+ * Trigger matching - handles the variety of comparison shapes the rules use.
  * Supported keys:
  *   - direct equality:        { goal: 'fat_loss' }
  *   - numeric comparisons:    foo_lt, foo_lte, foo_gt, foo_gte, foo_eq

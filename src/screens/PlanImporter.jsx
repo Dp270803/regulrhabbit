@@ -168,7 +168,7 @@ function DayExercises({ day, exercises, onChange, C }) {
               >×</button>
             </div>
           ))}
-          {/* Column headers — shown once above */}
+          {/* Column headers - shown once above */}
         </div>
       )}
       <ExerciseInput onAdd={addEx} C={C} />
@@ -344,7 +344,7 @@ export default function PlanImporter() {
         {step === 'profile' && (
           <div>
             <p style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: C.primary, marginBottom: '12px' }}>
-              {isCritique ? 'Your Profile — for analysis' : 'Quick setup'}
+              {isCritique ? 'Your Profile - for analysis' : 'Quick setup'}
             </p>
             <h2 className="font-headline" style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', fontWeight: 800, letterSpacing: '-0.02em', marginBottom: '2rem', lineHeight: 1.1 }}>
               {isCritique ? 'Tell us about yourself' : 'A few quick questions'}
@@ -397,7 +397,7 @@ export default function PlanImporter() {
               When do you train?
             </h2>
             <p style={{ fontSize: '0.9rem', color: C.faint, marginBottom: '1.75rem', lineHeight: 1.6 }}>
-              Select your days — or pick a template to pre-fill exercises.
+              Select your days - or pick a template to pre-fill exercises.
             </p>
 
             {/* Day grid */}
@@ -502,7 +502,7 @@ export default function PlanImporter() {
               <div style={{ background: C.low, borderRadius: '14px', padding: '20px', marginBottom: '1.5rem' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
                   <p style={{ fontSize: '0.88rem', fontWeight: 700, color: C.text, margin: 0, textTransform: 'capitalize' }}>
-                    {activeDay} — {(dayExercises[activeDay]?.length || 0)} exercises
+                    {activeDay} - {(dayExercises[activeDay]?.length || 0)} exercises
                   </p>
                   {dayExercises[activeDay]?.length > 0 && (
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 52px 72px 72px 28px', gap: '6px', width: '100%', maxWidth: '480px' }}>

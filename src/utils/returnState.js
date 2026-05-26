@@ -61,7 +61,7 @@ export function getReducedSession(session, state) {
         : undefined,
     })),
     reduced: true,
-    reduction_note: 'Reduced session — getting back is more important than going hard.',
+    reduction_note: 'Reduced session - getting back is more important than going hard.',
   };
 
   return reduced;

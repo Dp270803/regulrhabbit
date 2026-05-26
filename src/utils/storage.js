@@ -154,7 +154,7 @@ async function syncToSupabase(data) {
       pushSettingsToSupabase(user.id, data.settings),
     ]);
   } catch {
-    // Silent — local data is always the source of truth
+    // Silent - local data is always the source of truth
   }
 }
 

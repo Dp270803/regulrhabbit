@@ -66,7 +66,7 @@ export default function AskCoach({ currentExercise = null }) {
       const result = await res.json();
       setMessages(prev => [...prev, {
         role: 'assistant',
-        content: result.answer || 'Try again — I couldn\'t respond just now.',
+        content: result.answer || 'Try again - I couldn\'t respond just now.',
         book_reference: result.book_reference,
         subs: result.suggested_substitutions || [],
       }]);
@@ -137,7 +137,7 @@ export default function AskCoach({ currentExercise = null }) {
         {messages.length === 0 && (
           <>
             <p style={{ fontSize: '0.82rem', color: C.muted, margin: '0 0 6px', lineHeight: 1.5 }}>
-              Ask about form, substitutions, programming — anything from the book.
+              Ask about form, substitutions, programming - anything from the book.
             </p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
               {SUGGESTED_QUESTIONS.map(q => (
@@ -169,7 +169,7 @@ export default function AskCoach({ currentExercise = null }) {
             </div>
             {m.role === 'assistant' && m.book_reference && (
               <p style={{ fontSize: '0.65rem', color: C.faint, marginTop: 4, fontStyle: 'italic' }}>
-                — {m.book_reference}
+                - {m.book_reference}
               </p>
             )}
             {m.role === 'assistant' && m.subs?.length > 0 && (
@@ -180,7 +180,7 @@ export default function AskCoach({ currentExercise = null }) {
                     fontSize: '0.78rem', color: C.text, border: `1px solid rgba(${C.primaryRgb},0.18)`,
                   }}>
                     <span style={{ fontWeight: 700, color: C.primary }}>{s.name}</span>
-                    {s.reason && <span style={{ color: C.muted }}> — {s.reason}</span>}
+                    {s.reason && <span style={{ color: C.muted }}> - {s.reason}</span>}
                   </div>
                 ))}
               </div>

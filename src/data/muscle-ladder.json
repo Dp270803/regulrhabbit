@@ -1,7 +1,7 @@
 {
   "title": "The Muscle Ladder – Program Selector",
   "source": "Jeff Nippard – The Muscle Ladder: Get Jacked Using Science (Chapter 15)",
-  "description": "4 required questions + 1 optional question. Each answer filters the 20 programs from Chapter 15 down to the one best suited to you. Q5 (split preference) is optional — it only comes into play when your first 4 answers result in a tie between 2 programs.",
+  "description": "4 required questions + 1 optional question. Each answer filters the 20 programs from Chapter 15 down to the one best suited to you. Q5 (split preference) is optional - it only comes into play when your first 4 answers result in a tie between 2 programs.",
   "questions": [
     {
       "id": "Q1",
@@ -41,10 +41,10 @@
       "order": 4,
       "question": "What equipment do you have access to?",
       "options": [
-        { "id": "Q4A", "label": "Full commercial gym (barbells, dumbbells, cables, machines)", "constraint": "none — all 20 programs are available" },
-        { "id": "Q4B", "label": "Home gym with barbell, dumbbells, rack and bench", "constraint": "minor — cable and machine exercises need free-weight substitutions" },
-        { "id": "Q4C", "label": "Dumbbells only (home or limited gym)", "constraint": "moderate — barbell lifts need dumbbell substitutions, full-body splits work best" },
-        { "id": "Q4D", "label": "Bodyweight only", "constraint": "significant — the book is designed around resistance training with weights" }
+        { "id": "Q4A", "label": "Full commercial gym (barbells, dumbbells, cables, machines)", "constraint": "none - all 20 programs are available" },
+        { "id": "Q4B", "label": "Home gym with barbell, dumbbells, rack and bench", "constraint": "minor - cable and machine exercises need free-weight substitutions" },
+        { "id": "Q4C", "label": "Dumbbells only (home or limited gym)", "constraint": "moderate - barbell lifts need dumbbell substitutions, full-body splits work best" },
+        { "id": "Q4D", "label": "Bodyweight only", "constraint": "significant - the book is designed around resistance training with weights" }
       ]
     },
     {
@@ -52,13 +52,13 @@
       "order": 5,
       "optional": true,
       "question": "Do you have a preferred training split structure?",
-      "note": "Only matters when your other answers return a tie between 2 programs. If you have no preference, skip it — both options are equally effective.",
+      "note": "Only matters when your other answers return a tie between 2 programs. If you have no preference, skip it - both options are equally effective.",
       "options": [
         { "id": "Q5A", "label": "Full Body", "description": "Every session trains all major muscle groups. Best for beginners and those who want scheduling flexibility." },
         { "id": "Q5B", "label": "Upper / Lower", "description": "Alternates upper and lower body days. Popular and well-supported at 4–6 days/week." },
-        { "id": "Q5C", "label": "Push / Pull / Legs (PPL)", "description": "Push, Pull, Legs days — cycled twice over 6 days. Clear muscle group separation." },
+        { "id": "Q5C", "label": "Push / Pull / Legs (PPL)", "description": "Push, Pull, Legs days - cycled twice over 6 days. Clear muscle group separation." },
         { "id": "Q5D", "label": "Hybrid (Upper/Lower + PPL)", "description": "Combines Upper/Lower and PPL across 5 days. Best for intermediate+ lifters wanting variety." },
-        { "id": "Q5E", "label": "No preference — just recommend one", "description": "We'll pick the best fit. Both tied programs are equally effective." }
+        { "id": "Q5E", "label": "No preference - just recommend one", "description": "We'll pick the best fit. Both tied programs are equally effective." }
       ],
       "how_it_resolves_ties": {
         "ties": [

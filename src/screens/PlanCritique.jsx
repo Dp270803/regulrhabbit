@@ -155,7 +155,7 @@ export default function PlanCritique() {
     setModifiedPlan(newPlan);
     setEditStates(prev => ({ ...prev, [index]: 'accepted' }));
     recordAccepted({
-      text: `${edit.change_type}: ${edit.exercise || edit.to} — ${edit.rationale || ''}`.trim(),
+      text: `${edit.change_type}: ${edit.exercise || edit.to} - ${edit.rationale || ''}`.trim(),
       category: 'critique_edit',
     });
   }
@@ -165,7 +165,7 @@ export default function PlanCritique() {
     setEditStates(prev => ({ ...prev, [index]: 'dismissed' }));
     if (edit) {
       recordRejected({
-        text: `${edit.change_type}: ${edit.exercise || edit.to} — ${edit.rationale || ''}`.trim(),
+        text: `${edit.change_type}: ${edit.exercise || edit.to} - ${edit.rationale || ''}`.trim(),
         category: 'critique_edit',
       });
     }
@@ -223,7 +223,7 @@ export default function PlanCritique() {
         {/* Plan preview card */}
         <div style={{ background: C.low, borderRadius: '14px', padding: '20px', marginBottom: '2rem', border: `1px solid ${C.border}` }}>
           <p style={{ fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: C.faint, marginBottom: '12px' }}>
-            Your plan — {week1Sessions.length} training day{week1Sessions.length !== 1 ? 's' : ''}/week
+            Your plan - {week1Sessions.length} training day{week1Sessions.length !== 1 ? 's' : ''}/week
           </p>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
             {week1Sessions.map((s, i) => {
@@ -304,7 +304,7 @@ export default function PlanCritique() {
                         <p style={{ fontSize: '0.88rem', fontWeight: 600, color: C.text, margin: '0 0 2px' }}>{s.observation}</p>
                         <p style={{ fontSize: '0.78rem', color: C.faint, margin: 0, lineHeight: 1.5 }}>{s.principle}</p>
                         {s.book_reference && (
-                          <p style={{ fontSize: '0.68rem', color: C.faint, margin: '4px 0 0', fontStyle: 'italic' }}>— {s.book_reference}</p>
+                          <p style={{ fontSize: '0.68rem', color: C.faint, margin: '4px 0 0', fontStyle: 'italic' }}>- {s.book_reference}</p>
                         )}
                       </div>
                     </div>
@@ -330,7 +330,7 @@ export default function PlanCritique() {
                         </div>
                         <p style={{ fontSize: '0.78rem', color: C.faint, margin: 0, lineHeight: 1.5, paddingLeft: '2px' }}>{issue.explanation}</p>
                         {issue.book_reference && (
-                          <p style={{ fontSize: '0.68rem', color: C.faint, margin: '4px 0 0', paddingLeft: '2px', fontStyle: 'italic' }}>— {issue.book_reference}</p>
+                          <p style={{ fontSize: '0.68rem', color: C.faint, margin: '4px 0 0', paddingLeft: '2px', fontStyle: 'italic' }}>- {issue.book_reference}</p>
                         )}
                       </div>
                     );
@@ -380,7 +380,7 @@ export default function PlanCritique() {
                         </div>
                         <p style={{ fontSize: '0.78rem', color: C.faint, margin: '0 0 4px', lineHeight: 1.5 }}>{edit.rationale}</p>
                         {edit.book_reference && (
-                          <p style={{ fontSize: '0.68rem', color: C.faint, margin: '0 0 10px', fontStyle: 'italic' }}>— {edit.book_reference}</p>
+                          <p style={{ fontSize: '0.68rem', color: C.faint, margin: '0 0 10px', fontStyle: 'italic' }}>- {edit.book_reference}</p>
                         )}
                         {!isAccepted && !isDismissed && (
                           <div style={{ display: 'flex', gap: '8px' }}>
@@ -441,7 +441,7 @@ export default function PlanCritique() {
               fontSize: '0.9rem', fontWeight: 600, cursor: 'pointer',
             }}
           >
-            Skip analysis — save plan as-is
+            Skip analysis - save plan as-is
           </button>
         )}
 

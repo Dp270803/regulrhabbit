@@ -6,10 +6,10 @@
  * otherwise renders a template message from TEMPLATE_MESSAGES.
  *
  * Props:
- *   persona  — current user persona string
- *   trigger  — 'session_complete' | 'session_start' | 'return' | etc.
- *   context  — { name, streak, goal, total_sessions, missed_days, milestone }
- *   visible  — boolean, whether to show at all
+ *   persona  - current user persona string
+ *   trigger  - 'session_complete' | 'session_start' | 'return' | etc.
+ *   context  - { name, streak, goal, total_sessions, missed_days, milestone }
+ *   visible  - boolean, whether to show at all
  */
 
 import { useState, useEffect, useRef } from 'react';
@@ -20,7 +20,7 @@ import { fetchCoachingMessage, shouldCallAI, PERSONA_META } from '../utils/perso
 const TEMPLATE_MESSAGES = {
   session_start: {
     starter:      'Today counts. Just show up.',
-    follower:     "Time for your session. Same plan — let's go.",
+    follower:     "Time for your session. Same plan - let's go.",
     optimizer:    'Focus on form and progressive overload today.',
     struggler:    "Just start. Five minutes in, you'll be glad you did.",
     self_directed: 'Your session is ready when you are.',
@@ -34,7 +34,7 @@ const TEMPLATE_MESSAGES = {
   },
   return: {
     starter:      "You're back. That's what the 2-Day Rule is for.",
-    follower:     "Let's keep it moving — short session today.",
+    follower:     "Let's keep it moving - short session today.",
     optimizer:    'Returning after a gap. Reduce load by 10-15% today.',
     struggler:    "Welcome back. One session at a time.",
     self_directed: "Back at it.",

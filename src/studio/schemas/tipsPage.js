@@ -87,7 +87,7 @@ export const tipsPage = defineType({
       title: 'Tip cards (2 per category)',
       type: 'array',
       group: 'cards',
-      description: 'Exactly 2 cards per category — 8 total. These populate the grid beneath the hero.',
+      description: 'Exactly 2 cards per category - 8 total. These populate the grid beneath the hero.',
       of: [defineArrayMember({
         type: 'object',
         fields: [

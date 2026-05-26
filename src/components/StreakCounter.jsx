@@ -14,12 +14,12 @@ export default function StreakCounter({ current, best, consecutiveMisses }) {
     },
     warning: {
       color: 'var(--color-gold)',
-      label: "1 miss — don't miss tomorrow",
+      label: "1 miss - don't miss tomorrow",
       dotActive: 'var(--color-gold)',
     },
     danger: {
       color: 'var(--color-red)',
-      label: '2 in a row — today matters',
+      label: '2 in a row - today matters',
       dotActive: 'var(--color-red)',
     },
   };
@@ -60,7 +60,7 @@ export default function StreakCounter({ current, best, consecutiveMisses }) {
                     : 'none',
               }}
             >
-              {current === 0 ? '—' : current}
+              {current === 0 ? '-' : current}
             </span>
             {current > 0 && (
               <span

@@ -9,7 +9,7 @@
     "2x": {
       "weeks": [
         { "week_number": 1, "sessions": [
-          { "day_index": 0, "title": "Foundation Flow", "duration_minutes": 30, "blocks": [{ "type": "warmup", "detail": "Cat-Cow, gentle twists, neck rolls — 5 min", "duration_minutes": 5 }, { "type": "main", "detail": "Sun Salutation A ×3, Warrior I & II holds (30s each side), Triangle Pose, Tree Pose", "duration_minutes": 20 }, { "type": "cooldown", "detail": "Seated forward fold, Savasana — 5 min", "duration_minutes": 5 }] },
+          { "day_index": 0, "title": "Foundation Flow", "duration_minutes": 30, "blocks": [{ "type": "warmup", "detail": "Cat-Cow, gentle twists, neck rolls - 5 min", "duration_minutes": 5 }, { "type": "main", "detail": "Sun Salutation A ×3, Warrior I & II holds (30s each side), Triangle Pose, Tree Pose", "duration_minutes": 20 }, { "type": "cooldown", "detail": "Seated forward fold, Savasana - 5 min", "duration_minutes": 5 }] },
           { "day_index": 1, "title": "Flexibility Flow", "duration_minutes": 30, "blocks": [{ "type": "warmup", "detail": "Child's Pose, Cat-Cow, gentle hip circles", "duration_minutes": 5 }, { "type": "main", "detail": "Low Lunge holds (45s each), Pigeon Pose (60s each), Seated Straddle, Butterfly Pose", "duration_minutes": 20 }, { "type": "cooldown", "detail": "Supine twist, Savasana", "duration_minutes": 5 }] }
         ]},
         { "week_number": 2, "sessions": [

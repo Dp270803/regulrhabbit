@@ -48,7 +48,7 @@ export const dashboardPage = defineType({
       type: 'string',
       group: 'session',
       description: 'Shown when a session was completed earlier the same day.',
-      initialValue: 'Session logged — come back tomorrow',
+      initialValue: 'Session logged - come back tomorrow',
     }),
 
     // ── Weekly grid ──

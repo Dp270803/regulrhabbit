@@ -126,7 +126,7 @@ export default function XPBar({ totalXP, recentXP }) {
       )}
       {level.level === ALL_LEVELS.length && (
         <p style={{ fontSize: '0.75rem', color: C.primary, textAlign: 'center', letterSpacing: '0.06em', fontWeight: 700 }}>
-          Max level — Legend
+          Max level - Legend
         </p>
       )}
     </div>

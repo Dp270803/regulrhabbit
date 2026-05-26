@@ -23,10 +23,10 @@ const STEP_LABELS = {
 
 const STEP_SUBTITLES = {
   user_type_select: 'Guided builds a structured plan for you. Self-directed lets you pick your own days and exercises.',
-  welcome: 'All 20 programs build muscle. Goal determines session length — not a different program.',
-  experience: "Be honest — it shapes your program's volume and structure.",
+  welcome: 'All 20 programs build muscle. Goal determines session length - not a different program.',
+  experience: "Be honest - it shapes your program's volume and structure.",
   days: "A lower frequency you can stick to beats a higher one you can't.",
-  split: 'Optional — only matters if your answers result in a tie between two equally good programs.',
+  split: 'Optional - only matters if your answers result in a tie between two equally good programs.',
   schedule: "We'll optimize your recovery based on your availability.",
 };
 
@@ -106,7 +106,7 @@ export default function PlanBuilder() {
       setAnswers(newAnswers);
       handleComplete(newAnswers);
     } else if (currentStep === 'confirm') {
-      // Confirm step — go to complete
+      // Confirm step - go to complete
       setCompletedPairs(prev => [...prev, { stepKey: currentStep, selectedLabel: option.label, prevAnswers: answers }]);
       setAnswers(newAnswers);
       handleComplete(newAnswers);
@@ -182,11 +182,11 @@ export default function PlanBuilder() {
         <div>
           {/* Plan summary card */}
           <div style={{ background: C.low, borderRadius: '16px', padding: '2rem', marginBottom: '2rem', maxWidth: '520px', boxShadow: C.cardShadow }}>
-            {/* Program recommendation — hero row */}
+            {/* Program recommendation - hero row */}
             {selectedProgram && (
               <div style={{ marginBottom: '1.5rem', padding: '1.25rem', background: `rgba(${C.primaryRgb},0.06)`, borderRadius: '12px', border: `1px solid rgba(${C.primaryRgb},0.15)` }}>
                 <p style={{ fontSize: '0.55rem', fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: C.primary, marginBottom: '6px' }}>
-                  Muscle Ladder — Program {selectedProgram.number}
+                  Muscle Ladder - Program {selectedProgram.number}
                 </p>
                 <p className="font-headline" style={{ fontSize: '1.15rem', fontWeight: 800, color: C.text, marginBottom: '4px', lineHeight: 1.2 }}>
                   {selectedProgram.name}
@@ -230,7 +230,7 @@ export default function PlanBuilder() {
                 <span style={{ color: C.primary, flexShrink: 0, marginTop: '1px' }}>ⓘ</span>
                 <p style={{ fontSize: '0.78rem', color: C.faint, lineHeight: 1.6 }}>
                   {answers.gym_goal === 'fat_loss'
-                    ? 'Fat loss is achieved through a 10–20% caloric deficit — not a different training program. Follow this program and adjust your nutrition.'
+                    ? 'Fat loss is achieved through a 10–20% caloric deficit - not a different training program. Follow this program and adjust your nutrition.'
                     : 'Recomposition works best at or near maintenance calories with high protein. Same training program as muscle-building.'}
                 </p>
               </div>
@@ -320,7 +320,7 @@ export default function PlanBuilder() {
               }}
             >
               {multiSelect.length === limit
-                ? `Confirm — ${multiSelect.slice(0, 3).map(d => d.charAt(0).toUpperCase() + d.slice(1, 3)).join(', ')}${multiSelect.length > 3 ? '…' : ''}`
+                ? `Confirm - ${multiSelect.slice(0, 3).map(d => d.charAt(0).toUpperCase() + d.slice(1, 3)).join(', ')}${multiSelect.length > 3 ? '…' : ''}`
                 : `Pick ${limit - multiSelect.length} more`}
             </button>
           )}

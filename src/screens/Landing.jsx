@@ -19,7 +19,7 @@ const DEFAULTS = {
   ],
   scienceEyebrow: 'The Science',
   scienceHeading: 'The high cost of missing twice.',
-  scienceBody: 'One miss is an accident. Two misses is the start of a new habit. Our system is built around the "2-Day Rule" — never let a lapse happen twice in a row. This prevents the spiral of failure and keeps your identity intact.',
+  scienceBody: 'One miss is an accident. Two misses is the start of a new habit. Our system is built around the "2-Day Rule" - never let a lapse happen twice in a row. This prevents the spiral of failure and keeps your identity intact.',
   scienceBullets: [
     { title: 'Psychological Safety',  body: 'Eliminate the guilt that usually follows a missed day.' },
     { title: 'Momentum Retention',    body: 'Recover 90% of your habit strength by showing up the next day.' },

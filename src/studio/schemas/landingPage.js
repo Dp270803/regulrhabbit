@@ -36,7 +36,7 @@ export const landingPage = defineType({
     // ── Science ──
     defineField({ name: 'scienceEyebrow', title: 'Eyebrow label', type: 'string', group: 'science', initialValue: 'The Science' }),
     defineField({ name: 'scienceHeading', title: 'Heading', type: 'string', group: 'science', initialValue: 'The high cost of missing twice.' }),
-    defineField({ name: 'scienceBody', title: 'Body text', type: 'text', group: 'science', initialValue: 'One miss is an accident. Two misses is the start of a new habit. Our system is built around the "2-Day Rule" — never let a lapse happen twice in a row. This prevents the spiral of failure and keeps your identity intact.' }),
+    defineField({ name: 'scienceBody', title: 'Body text', type: 'text', group: 'science', initialValue: 'One miss is an accident. Two misses is the start of a new habit. Our system is built around the "2-Day Rule" - never let a lapse happen twice in a row. This prevents the spiral of failure and keeps your identity intact.' }),
     defineField({
       name: 'scienceBullets',
       title: 'Bullet points',

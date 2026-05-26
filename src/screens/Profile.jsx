@@ -343,7 +343,7 @@ export default function Profile() {
                   {cms?.activePlanLabel || 'Active Plan'}
                 </p>
                 <p style={{ fontFamily: 'Manrope, sans-serif', fontSize: 'clamp(1rem, 2vw, 1.5rem)', fontWeight: 700, color: C.text, margin: 0 }}>
-                  {ACTIVITY_LABELS[activePlan?.activity] || activePlan?.activity || '—'}
+                  {ACTIVITY_LABELS[activePlan?.activity] || activePlan?.activity || '-'}
                 </p>
               </div>
               <div className="profile-hero-divider" style={{ width: '1px', height: '38px', background: C.separator, flexShrink: 0 }} />
@@ -429,7 +429,7 @@ export default function Profile() {
           {/* Right: Account + Appearance + Data Vault */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
 
-            {/* Account — Save your progress (shown when signed out) */}
+            {/* Account - Save your progress (shown when signed out) */}
             {!authUser && (
               <div style={{ background: C.low, borderRadius: '12px', padding: 'clamp(20px, 3vw, 32px)' }}>
                 <h2 style={{ fontFamily: 'Manrope, sans-serif', fontSize: '1.05rem', fontWeight: 700, letterSpacing: '-0.02em', color: C.text, margin: '0 0 8px' }}>
@@ -447,7 +447,7 @@ export default function Profile() {
               </div>
             )}
 
-            {/* Account — signed in state */}
+            {/* Account - signed in state */}
             {authUser && (
               <div style={{ background: C.low, borderRadius: '12px', padding: 'clamp(20px, 3vw, 32px)' }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -498,7 +498,7 @@ export default function Profile() {
                   <p style={{ fontSize: '0.55rem', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: C.faint, marginBottom: '6px' }}>Sex</p>
                   <select value={bodyStats.sex} onChange={e => setBodyStats(prev => ({ ...prev, sex: e.target.value }))}
                     style={{ width: '100%', padding: '8px 10px', borderRadius: '6px', border: `1px solid ${C.border}`, background: C.container, color: bodyStats.sex ? C.text : C.faint, fontSize: '0.88rem', boxSizing: 'border-box', outline: 'none' }}>
-                    <option value="">—</option>
+                    <option value="">-</option>
                     <option value="male">Male</option>
                     <option value="female">Female</option>
                   </select>
@@ -507,7 +507,7 @@ export default function Profile() {
                   <p style={{ fontSize: '0.55rem', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: C.faint, marginBottom: '6px' }}>Goal</p>
                   <select value={bodyStats.goal} onChange={e => setBodyStats(prev => ({ ...prev, goal: e.target.value }))}
                     style={{ width: '100%', padding: '8px 10px', borderRadius: '6px', border: `1px solid ${C.border}`, background: C.container, color: bodyStats.goal ? C.text : C.faint, fontSize: '0.88rem', boxSizing: 'border-box', outline: 'none' }}>
-                    <option value="">—</option>
+                    <option value="">-</option>
                     <option value="fat_loss">Fat Loss</option>
                     <option value="muscle_gain">Muscle Gain</option>
                     <option value="maintenance">Maintenance</option>
@@ -517,7 +517,7 @@ export default function Profile() {
                   <p style={{ fontSize: '0.55rem', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: C.faint, marginBottom: '6px' }}>Activity Level</p>
                   <select value={bodyStats.activity_level} onChange={e => setBodyStats(prev => ({ ...prev, activity_level: e.target.value }))}
                     style={{ width: '100%', padding: '8px 10px', borderRadius: '6px', border: `1px solid ${C.border}`, background: C.container, color: bodyStats.activity_level ? C.text : C.faint, fontSize: '0.88rem', boxSizing: 'border-box', outline: 'none' }}>
-                    <option value="">—</option>
+                    <option value="">-</option>
                     <option value="sedentary">Sedentary</option>
                     <option value="lightly_active">Lightly Active (1–3x/wk)</option>
                     <option value="moderately_active">Moderately Active (3–5x/wk)</option>
@@ -532,7 +532,7 @@ export default function Profile() {
                   <p style={{ fontSize: '0.55rem', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: C.faint, marginBottom: '6px' }}>Training Experience</p>
                   <select value={bodyStats.training_experience} onChange={e => setBodyStats(prev => ({ ...prev, training_experience: e.target.value }))}
                     style={{ width: '100%', padding: '8px 10px', borderRadius: '6px', border: `1px solid ${C.border}`, background: C.container, color: bodyStats.training_experience ? C.text : C.faint, fontSize: '0.88rem', boxSizing: 'border-box', outline: 'none' }}>
-                    <option value="">—</option>
+                    <option value="">-</option>
                     <option value="beginner">Beginner (&lt;1 yr)</option>
                     <option value="intermediate">Intermediate (1–5 yr)</option>
                     <option value="advanced">Advanced (5+ yr)</option>
@@ -542,7 +542,7 @@ export default function Profile() {
                   <p style={{ fontSize: '0.55rem', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: C.faint, marginBottom: '6px' }}>Diet Preference</p>
                   <select value={bodyStats.dietary_preference} onChange={e => setBodyStats(prev => ({ ...prev, dietary_preference: e.target.value }))}
                     style={{ width: '100%', padding: '8px 10px', borderRadius: '6px', border: `1px solid ${C.border}`, background: C.container, color: bodyStats.dietary_preference ? C.text : C.faint, fontSize: '0.88rem', boxSizing: 'border-box', outline: 'none' }}>
-                    <option value="">—</option>
+                    <option value="">-</option>
                     <option value="omnivore">Omnivore</option>
                     <option value="pescatarian">Pescatarian</option>
                     <option value="vegetarian">Vegetarian</option>
@@ -567,7 +567,7 @@ export default function Profile() {
                 </div>
               </div>
 
-              {/* Injuries — multi-select chips */}
+              {/* Injuries - multi-select chips */}
               <p style={{ fontSize: '0.55rem', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: C.faint, marginBottom: '8px' }}>Injuries / Limitations</p>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginBottom: '18px' }}>
                 {[

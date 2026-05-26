@@ -2,7 +2,7 @@
  * adaptationEngine.js
  *
  * Applies AI-suggested plan and diet adjustments to the active plan.
- * Operates purely on data — no UI concerns.
+ * Operates purely on data - no UI concerns.
  *
  * AI suggests; this engine applies.
  */
@@ -98,7 +98,7 @@ export function adjustFrequency(plan, delta) {
     // Remove the last future session
     futureSessions[futureSessions.length - 1].status = 'rest';
   }
-  // delta > 0 (adding frequency) is complex without template data — skip for now
+  // delta > 0 (adding frequency) is complex without template data - skip for now
   return updated;
 }
 

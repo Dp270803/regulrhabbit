@@ -4,13 +4,13 @@ import muscleLadder from '../data/muscle-ladder.json';
 // ─── Session block content per split type ────────────────────────────────────
 
 const BLOCKS = {
-  // Full Body — standard (60–90 min)
+  // Full Body - standard (60–90 min)
   'FB-A': {
     title: 'Full Body A',
     blocks: [
       { type: 'warmup', detail: '5–8 min: row or bike + bodyweight squats, band pull-aparts, hip circles', duration_minutes: 8 },
       { type: 'main', detail: 'Squat pattern 4×8 | Horizontal push (bench press) 3×10 | Horizontal pull (barbell row) 3×10 | Romanian deadlift 3×10 | Shoulder press 3×12', duration_minutes: 47 },
-      { type: 'cooldown', detail: 'Foam roll quads, lats | Static: hip flexors, chest, hamstrings — 30s each', duration_minutes: 8 },
+      { type: 'cooldown', detail: 'Foam roll quads, lats | Static: hip flexors, chest, hamstrings - 30s each', duration_minutes: 8 },
     ],
   },
   'FB-B': {
@@ -18,7 +18,7 @@ const BLOCKS = {
     blocks: [
       { type: 'warmup', detail: '5–8 min: light cardio + hip mobility, shoulder circles, cat-cow', duration_minutes: 8 },
       { type: 'main', detail: 'Deadlift 4×6 | Incline press 3×10 | Lat pulldown / pull-up 3×10 | Split squat / lunge 3×10 each | Lateral raise 3×15', duration_minutes: 47 },
-      { type: 'cooldown', detail: 'Foam roll thoracic spine, glutes | Static: shoulder, quad, lat — 30s each', duration_minutes: 8 },
+      { type: 'cooldown', detail: 'Foam roll thoracic spine, glutes | Static: shoulder, quad, lat - 30s each', duration_minutes: 8 },
     ],
   },
   'FB-C': {
@@ -26,7 +26,7 @@ const BLOCKS = {
     blocks: [
       { type: 'warmup', detail: '5–8 min: treadmill walk + band activations (clamshell, glute bridge)', duration_minutes: 8 },
       { type: 'main', detail: 'Front squat / hack squat 4×8 | Close-grip bench / dip 3×10 | Cable row / chest-supported row 3×12 | Hip thrust 3×15 | Face pull 3×15 | Bicep curl 3×12', duration_minutes: 47 },
-      { type: 'cooldown', detail: 'Static stretch: full lower body and upper back — 30s each position', duration_minutes: 8 },
+      { type: 'cooldown', detail: 'Static stretch: full lower body and upper back - 30s each position', duration_minutes: 8 },
     ],
   },
   'FB-D': {
@@ -34,7 +34,7 @@ const BLOCKS = {
     blocks: [
       { type: 'warmup', detail: '5–8 min: row machine + dynamic leg swings, arm swings, 90/90 hip stretch', duration_minutes: 8 },
       { type: 'main', detail: 'Leg press 4×10 | DB bench press 3×12 | Seated row / one-arm row 3×12 | Leg curl 3×10 | Seated DB overhead press 3×12 | Tricep pushdown 3×12', duration_minutes: 47 },
-      { type: 'cooldown', detail: 'Foam roll and stretch — focus on areas that feel tight today', duration_minutes: 8 },
+      { type: 'cooldown', detail: 'Foam roll and stretch - focus on areas that feel tight today', duration_minutes: 8 },
     ],
   },
   'FB-E': {
@@ -45,7 +45,7 @@ const BLOCKS = {
       { type: 'cooldown', detail: '10 min full-body stretch and breathing work', duration_minutes: 8 },
     ],
   },
-  // Full Body — time-efficient (45–60 min)
+  // Full Body - time-efficient (45–60 min)
   'FB-TE-A': {
     title: 'Full Body A',
     blocks: [
@@ -82,17 +82,17 @@ const BLOCKS = {
     title: 'Full Body E',
     blocks: [
       { type: 'warmup', detail: '3–5 min warm-up', duration_minutes: 5 },
-      { type: 'main', detail: 'Circuit: Goblet squat + DB press + DB row + RDL + Lateral raise — 3 rounds × 12 reps each', duration_minutes: 40 },
+      { type: 'main', detail: 'Circuit: Goblet squat + DB press + DB row + RDL + Lateral raise - 3 rounds × 12 reps each', duration_minutes: 40 },
       { type: 'cooldown', detail: '5 min cool down', duration_minutes: 5 },
     ],
   },
-  // Upper / Lower — standard (60–90 min)
+  // Upper / Lower - standard (60–90 min)
   'UL-UA': {
     title: 'Upper Body A',
     blocks: [
       { type: 'warmup', detail: 'Band pull-aparts 2×15, arm circles, 2 light sets bench press', duration_minutes: 8 },
       { type: 'main', detail: 'Flat bench press 4×8 | Barbell / DB row 4×8 | Overhead press 3×10 | Lat pulldown 3×10 | Incline DB fly 3×12 | Face pull 3×15 | Bicep curl 3×12 | Tricep pushdown 3×12', duration_minutes: 54 },
-      { type: 'cooldown', detail: 'Chest, shoulder, lat stretch — 30s each', duration_minutes: 8 },
+      { type: 'cooldown', detail: 'Chest, shoulder, lat stretch - 30s each', duration_minutes: 8 },
     ],
   },
   'UL-LA': {
@@ -100,7 +100,7 @@ const BLOCKS = {
     blocks: [
       { type: 'warmup', detail: 'Hip circles, glute bridges 2×10, 2 light sets goblet squat', duration_minutes: 8 },
       { type: 'main', detail: 'Back squat 4×8 | Romanian deadlift 4×8 | Leg press 3×12 | Leg curl (lying/seated) 3×12 | Walking lunges 3×10 each leg | Calf raise 4×15', duration_minutes: 54 },
-      { type: 'cooldown', detail: 'Quad, hip flexor, hamstring stretch — 30s each', duration_minutes: 8 },
+      { type: 'cooldown', detail: 'Quad, hip flexor, hamstring stretch - 30s each', duration_minutes: 8 },
     ],
   },
   'UL-UB': {
@@ -108,7 +108,7 @@ const BLOCKS = {
     blocks: [
       { type: 'warmup', detail: 'Scapular movements, 2 warm-up sets', duration_minutes: 8 },
       { type: 'main', detail: 'Incline bench press 4×8 | Cable / chest-supported row 4×8 | DB shoulder press 3×10 | Pull-up / assisted pull-up 3×8 | Cable fly 3×12 | Rear delt fly 3×15 | Hammer curl 3×12 | Skullcrusher 3×12', duration_minutes: 54 },
-      { type: 'cooldown', detail: 'Upper body stretch — shoulders, triceps, chest', duration_minutes: 8 },
+      { type: 'cooldown', detail: 'Upper body stretch - shoulders, triceps, chest', duration_minutes: 8 },
     ],
   },
   'UL-LB': {
@@ -116,7 +116,7 @@ const BLOCKS = {
     blocks: [
       { type: 'warmup', detail: 'Hip mobility, 2 warm-up sets', duration_minutes: 8 },
       { type: 'main', detail: 'Conventional deadlift 4×5 | Hack squat / leg press 3×12 | Nordic curl / lying leg curl 3×10 | Hip thrust 3×12 | Bulgarian split squat 3×10 each | Seated calf raise 4×15', duration_minutes: 54 },
-      { type: 'cooldown', detail: 'Lower body stretch — quads, hamstrings, glutes, calves', duration_minutes: 8 },
+      { type: 'cooldown', detail: 'Lower body stretch - quads, hamstrings, glutes, calves', duration_minutes: 8 },
     ],
   },
   'UL-UC': {
@@ -135,7 +135,7 @@ const BLOCKS = {
       { type: 'cooldown', detail: 'Lower body stretch', duration_minutes: 8 },
     ],
   },
-  // Upper / Lower — time-efficient (45–60 min)
+  // Upper / Lower - time-efficient (45–60 min)
   'UL-TE-UA': {
     title: 'Upper Body A',
     blocks: [
@@ -184,13 +184,13 @@ const BLOCKS = {
       { type: 'cooldown', detail: '5 min stretch', duration_minutes: 5 },
     ],
   },
-  // Push / Pull / Legs — standard (60–90 min)
+  // Push / Pull / Legs - standard (60–90 min)
   'PPL-PA': {
     title: 'Push Day A',
     blocks: [
       { type: 'warmup', detail: 'Shoulder warm-up: arm circles, band pull-aparts, 2 light sets bench', duration_minutes: 8 },
       { type: 'main', detail: 'Flat bench press 4×8 | Overhead press 4×8 | Incline DB press 3×12 | Cable / DB lateral raise 3×15 | Tricep pushdown 3×12 | Overhead tricep extension 3×12', duration_minutes: 54 },
-      { type: 'cooldown', detail: 'Chest + shoulder stretch — 30s each', duration_minutes: 8 },
+      { type: 'cooldown', detail: 'Chest + shoulder stretch - 30s each', duration_minutes: 8 },
     ],
   },
   'PPL-PLA': {
@@ -198,7 +198,7 @@ const BLOCKS = {
     blocks: [
       { type: 'warmup', detail: 'Scapular pull-ups 2×8, band pull-aparts 2×15', duration_minutes: 8 },
       { type: 'main', detail: 'Barbell row / deadlift 4×6–8 | Lat pulldown / pull-up 4×8 | Seated cable row 3×12 | Face pull 3×15 | Incline DB curl 3×12 | Hammer curl 3×12', duration_minutes: 54 },
-      { type: 'cooldown', detail: 'Lat, bicep, rear delt stretch — 30s each', duration_minutes: 8 },
+      { type: 'cooldown', detail: 'Lat, bicep, rear delt stretch - 30s each', duration_minutes: 8 },
     ],
   },
   'PPL-LA': {
@@ -206,7 +206,7 @@ const BLOCKS = {
     blocks: [
       { type: 'warmup', detail: 'Hip circles, glute bridges, 2 light squat sets', duration_minutes: 8 },
       { type: 'main', detail: 'Back squat 4×8 | Romanian deadlift 4×8 | Leg press 3×12 | Leg curl 3×12 | Walking lunge 3×10 each | Calf raise 4×15', duration_minutes: 54 },
-      { type: 'cooldown', detail: 'Quad, hamstring, glute, calf stretch — 30s each', duration_minutes: 8 },
+      { type: 'cooldown', detail: 'Quad, hamstring, glute, calf stretch - 30s each', duration_minutes: 8 },
     ],
   },
   'PPL-PB': {
@@ -233,7 +233,7 @@ const BLOCKS = {
       { type: 'cooldown', detail: 'Full lower body stretch', duration_minutes: 8 },
     ],
   },
-  // Push / Pull / Legs — time-efficient (45–60 min)
+  // Push / Pull / Legs - time-efficient (45–60 min)
   'PPL-TE-PA': {
     title: 'Push Day A',
     blocks: [
@@ -282,7 +282,7 @@ const BLOCKS = {
       { type: 'cooldown', detail: '5 min stretch', duration_minutes: 5 },
     ],
   },
-  // Hybrid Upper/Lower + PPL — standard (60–90 min)
+  // Hybrid Upper/Lower + PPL - standard (60–90 min)
   'HY-UA': {
     title: 'Upper Body A',
     blocks: [
@@ -323,7 +323,7 @@ const BLOCKS = {
       { type: 'cooldown', detail: 'Full lower body stretch', duration_minutes: 8 },
     ],
   },
-  // Hybrid — time-efficient (45–60 min)
+  // Hybrid - time-efficient (45–60 min)
   'HY-TE-UA': {
     title: 'Upper Body A',
     blocks: [
@@ -411,7 +411,7 @@ function findDecisionEntry(level, days, durationKey, equipment) {
   );
   if (entry) return entry;
 
-  // 2. Equipment fallback — try 'Dumbbells only' as proxy for 'Bodyweight'
+  // 2. Equipment fallback - try 'Dumbbells only' as proxy for 'Bodyweight'
   if (equipment === 'Bodyweight') {
     entry = entries.find(e =>
       (e.level === level || e.level === 'Any') &&
@@ -422,7 +422,7 @@ function findDecisionEntry(level, days, durationKey, equipment) {
     if (entry) return entry;
   }
 
-  // 3. Equipment fallback — limited equipment at high days (5-6 day programs require Full gym)
+  // 3. Equipment fallback - limited equipment at high days (5-6 day programs require Full gym)
   if (equipment !== 'Full gym' && days >= 5) {
     entry = entries.find(e =>
       (e.level === level || e.level === 'Any') &&
@@ -433,7 +433,7 @@ function findDecisionEntry(level, days, durationKey, equipment) {
     if (entry) return entry;
   }
 
-  // 4. Level fallback — Beginner at 5 days not in map, use Intermediate
+  // 4. Level fallback - Beginner at 5 days not in map, use Intermediate
   if (level === 'Beginner') {
     entry = entries.find(e =>
       e.level === 'Intermediate' &&

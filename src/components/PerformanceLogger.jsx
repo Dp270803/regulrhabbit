@@ -6,11 +6,11 @@
  * Supabase (performance_log table) for Optimizer persona insights.
  *
  * Props:
- *   exercises    — array of { name, sets } from parseExercises()
- *   sessionId    — session ID string
- *   date         — YYYY-MM-DD
- *   userId       — Supabase user ID (null if anonymous)
- *   onSave       — called after save (or skip)
+ *   exercises    - array of { name, sets } from parseExercises()
+ *   sessionId    - session ID string
+ *   date         - YYYY-MM-DD
+ *   userId       - Supabase user ID (null if anonymous)
+ *   onSave       - called after save (or skip)
  */
 
 import { useState } from 'react';
@@ -123,7 +123,7 @@ export default function PerformanceLogger({ exercises, sessionId, date, userId, 
                 key={field}
                 type={field === 'reps' ? 'text' : 'number'}
                 inputMode={field === 'reps' ? 'text' : 'decimal'}
-                placeholder={field === 'rpe' ? '1–10' : '—'}
+                placeholder={field === 'rpe' ? '1–10' : '-'}
                 value={log[field]}
                 onChange={e => updateLog(i, field, e.target.value)}
                 style={{

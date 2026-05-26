@@ -1,5 +1,5 @@
 /**
- * detect-persona — Netlify Function
+ * detect-persona - Netlify Function
  *
  * Recalculates a user's persona from behavior signals and updates Supabase.
  * Called server-side so the deterministic logic runs consistently.
@@ -30,7 +30,7 @@ function detectPersona(signals) {
     onboarding_persona = 'follower',
   } = signals;
 
-  // Not enough data yet — trust what the user told us at onboarding
+  // Not enough data yet - trust what the user told us at onboarding
   if (total_sessions < 10) return onboarding_persona;
 
   // Behavior-based detection (overrides onboarding after 10+ sessions)
@@ -71,7 +71,7 @@ export const handler = async (event) => {
       });
     } catch (err) {
       console.error('Supabase update error:', err);
-      // Non-fatal — return persona anyway
+      // Non-fatal - return persona anyway
     }
   }
 

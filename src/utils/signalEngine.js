@@ -2,14 +2,14 @@
  * signalEngine.js
  *
  * Extracts objective behavior signals from stored workout data.
- * Non-AI — all calculations are deterministic.
+ * Non-AI - all calculations are deterministic.
  *
  * Returns:
- *   adherence_score   — completed / planned sessions (last 28 days)
- *   total_volume      — Σ(sets × reps × weight) across recent sessions
- *   strength_trend    — linear regression slope on max weight per exercise
- *   weight_trend      — slope of body_weight_kg history
- *   fatigue_proxy     — recent 7d volume / avg 28d daily volume
+ *   adherence_score   - completed / planned sessions (last 28 days)
+ *   total_volume      - Σ(sets × reps × weight) across recent sessions
+ *   strength_trend    - linear regression slope on max weight per exercise
+ *   weight_trend      - slope of body_weight_kg history
+ *   fatigue_proxy     - recent 7d volume / avg 28d daily volume
  */
 
 import { computeTotalVolume } from './calorieEngine';
@@ -21,7 +21,7 @@ function daysBetween(dateStrA, dateStrB) {
 }
 
 /**
- * Simple linear regression — returns slope (dy/dx).
+ * Simple linear regression - returns slope (dy/dx).
  * points: [{ x, y }]
  */
 function linearSlope(points) {
@@ -158,7 +158,7 @@ export function computeFitnessSignals(data, performanceLogs = []) {
 
 /* ─────────────────────────────────────────────────────────────
  * Book-aligned signals (PRD §5.4 Step A)
- * Feeds bookEngine.evaluateRules — keys match rule trigger schema.
+ * Feeds bookEngine.evaluateRules - keys match rule trigger schema.
  * ───────────────────────────────────────────────────────────── */
 
 const MUSCLE_KEYWORDS = {
@@ -198,7 +198,7 @@ export function computeBookSignals(data) {
   const cutoff14 = Date.now() - 14 * MS_PER_DAY;
   const recentLogs = logs.filter(l => new Date(l.date || l.completed_at).getTime() >= cutoff14);
 
-  // RIR aggregates — recent 14 days, all logged exercises
+  // RIR aggregates - recent 14 days, all logged exercises
   const allRir = logs
     .filter(l => new Date(l.date || l.completed_at).getTime() >= cutoff14)
     .map(l => typeof l.rir === 'number' ? l.rir : null)
@@ -232,7 +232,7 @@ export function computeBookSignals(data) {
     }
   }
 
-  // Adherence — sessions completed / scheduled in last 14 days
+  // Adherence - sessions completed / scheduled in last 14 days
   let scheduled14 = 0;
   if (activePlan?.weeks) {
     for (const week of activePlan.weeks) {

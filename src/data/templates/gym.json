@@ -19,7 +19,7 @@
               "blocks": [
                 { "type": "warmup", "detail": "5min light cardio (bike or rowing) + arm circles, leg swings, hip openers", "duration_minutes": 5 },
                 { "type": "main", "detail": "Barbell Back Squat 3x8, Flat Bench Press 3x8, Bent-Over Barbell Row 3x8, Dumbbell Lunges 2x10 each leg, Overhead Press 2x10", "duration_minutes": 35 },
-                { "type": "cooldown", "detail": "Foam roll quads, hamstrings, upper back; static stretch hip flexors, chest, lats — hold 30s each", "duration_minutes": 10 }
+                { "type": "cooldown", "detail": "Foam roll quads, hamstrings, upper back; static stretch hip flexors, chest, lats - hold 30s each", "duration_minutes": 10 }
               ]
             },
             {
@@ -29,7 +29,7 @@
               "blocks": [
                 { "type": "warmup", "detail": "5min jump rope + bodyweight squats, push-ups, band pull-aparts", "duration_minutes": 5 },
                 { "type": "main", "detail": "Romanian Deadlift 3x8, Incline Dumbbell Press 3x8, Lat Pulldown 3x10, Leg Press 2x10, Dumbbell Lateral Raise 2x12", "duration_minutes": 35 },
-                { "type": "cooldown", "detail": "Foam roll glutes, calves, thoracic spine; static stretch hamstrings, shoulders, triceps — hold 30s each", "duration_minutes": 10 }
+                { "type": "cooldown", "detail": "Foam roll glutes, calves, thoracic spine; static stretch hamstrings, shoulders, triceps - hold 30s each", "duration_minutes": 10 }
               ]
             }
           ]
@@ -39,22 +39,22 @@
           "sessions": [
             {
               "day_index": 0,
-              "title": "Full Body A — Volume Up",
+              "title": "Full Body A - Volume Up",
               "duration_minutes": 50,
               "blocks": [
                 { "type": "warmup", "detail": "5min light cardio + dynamic stretches, 2 sets goblet squats with light weight", "duration_minutes": 5 },
                 { "type": "main", "detail": "Barbell Back Squat 3x10, Flat Bench Press 3x10, Bent-Over Barbell Row 3x10, Dumbbell Lunges 3x10 each leg, Overhead Press 3x10", "duration_minutes": 35 },
-                { "type": "cooldown", "detail": "Foam roll quads, hamstrings, upper back; static stretch hip flexors, chest, lats — hold 30s each", "duration_minutes": 10 }
+                { "type": "cooldown", "detail": "Foam roll quads, hamstrings, upper back; static stretch hip flexors, chest, lats - hold 30s each", "duration_minutes": 10 }
               ]
             },
             {
               "day_index": 1,
-              "title": "Full Body B — Volume Up",
+              "title": "Full Body B - Volume Up",
               "duration_minutes": 50,
               "blocks": [
                 { "type": "warmup", "detail": "5min jump rope + bodyweight squats, push-ups, band pull-aparts", "duration_minutes": 5 },
                 { "type": "main", "detail": "Romanian Deadlift 3x10, Incline Dumbbell Press 3x10, Lat Pulldown 3x10, Leg Press 3x10, Dumbbell Lateral Raise 3x12", "duration_minutes": 35 },
-                { "type": "cooldown", "detail": "Foam roll glutes, calves, thoracic spine; static stretch hamstrings, shoulders, triceps — hold 30s each", "duration_minutes": 10 }
+                { "type": "cooldown", "detail": "Foam roll glutes, calves, thoracic spine; static stretch hamstrings, shoulders, triceps - hold 30s each", "duration_minutes": 10 }
               ]
             }
           ]
@@ -64,22 +64,22 @@
           "sessions": [
             {
               "day_index": 0,
-              "title": "Full Body A — Add Sets",
+              "title": "Full Body A - Add Sets",
               "duration_minutes": 55,
               "blocks": [
                 { "type": "warmup", "detail": "5min light cardio + dynamic stretches, 2 warm-up sets on squat", "duration_minutes": 5 },
                 { "type": "main", "detail": "Barbell Back Squat 4x8, Flat Bench Press 4x8, Bent-Over Barbell Row 4x8, Dumbbell Lunges 3x10 each leg, Overhead Press 3x10, Face Pulls 2x15", "duration_minutes": 40 },
-                { "type": "cooldown", "detail": "Foam roll full body; static stretch major muscle groups — hold 30s each", "duration_minutes": 10 }
+                { "type": "cooldown", "detail": "Foam roll full body; static stretch major muscle groups - hold 30s each", "duration_minutes": 10 }
               ]
             },
             {
               "day_index": 1,
-              "title": "Full Body B — Add Sets",
+              "title": "Full Body B - Add Sets",
               "duration_minutes": 55,
               "blocks": [
                 { "type": "warmup", "detail": "5min jump rope + activation drills, 2 warm-up sets on deadlift", "duration_minutes": 5 },
                 { "type": "main", "detail": "Romanian Deadlift 4x8, Incline Dumbbell Press 4x8, Lat Pulldown 4x10, Leg Press 3x10, Dumbbell Lateral Raise 3x12, Hammer Curl 2x12", "duration_minutes": 40 },
-                { "type": "cooldown", "detail": "Foam roll full body; static stretch major muscle groups — hold 30s each", "duration_minutes": 10 }
+                { "type": "cooldown", "detail": "Foam roll full body; static stretch major muscle groups - hold 30s each", "duration_minutes": 10 }
               ]
             }
           ]
@@ -89,22 +89,22 @@
           "sessions": [
             {
               "day_index": 0,
-              "title": "Full Body A — Peak",
+              "title": "Full Body A - Peak",
               "duration_minutes": 55,
               "blocks": [
                 { "type": "warmup", "detail": "5min light cardio + dynamic stretches, 2 warm-up sets on squat", "duration_minutes": 5 },
                 { "type": "main", "detail": "Barbell Back Squat 4x10, Flat Bench Press 4x10, Bent-Over Barbell Row 4x10, Dumbbell Lunges 3x12 each leg, Overhead Press 3x12, Face Pulls 3x15", "duration_minutes": 40 },
-                { "type": "cooldown", "detail": "Foam roll full body; static stretch major muscle groups — hold 30s each", "duration_minutes": 10 }
+                { "type": "cooldown", "detail": "Foam roll full body; static stretch major muscle groups - hold 30s each", "duration_minutes": 10 }
               ]
             },
             {
               "day_index": 1,
-              "title": "Full Body B — Peak",
+              "title": "Full Body B - Peak",
               "duration_minutes": 55,
               "blocks": [
                 { "type": "warmup", "detail": "5min jump rope + activation drills, 2 warm-up sets on deadlift", "duration_minutes": 5 },
                 { "type": "main", "detail": "Romanian Deadlift 4x10, Incline Dumbbell Press 4x10, Lat Pulldown 4x10, Leg Press 3x12, Dumbbell Lateral Raise 3x15, Hammer Curl 3x12", "duration_minutes": 40 },
-                { "type": "cooldown", "detail": "Foam roll full body; static stretch major muscle groups — hold 30s each", "duration_minutes": 10 }
+                { "type": "cooldown", "detail": "Foam roll full body; static stretch major muscle groups - hold 30s each", "duration_minutes": 10 }
               ]
             }
           ]
@@ -124,7 +124,7 @@
               "blocks": [
                 { "type": "warmup", "detail": "5min light cardio + band pull-aparts, arm circles, push-up walkouts", "duration_minutes": 5 },
                 { "type": "main", "detail": "Flat Bench Press 3x8, Overhead Press 3x8, Incline Dumbbell Press 2x10, Dumbbell Lateral Raise 2x12, Tricep Rope Pushdown 2x12", "duration_minutes": 35 },
-                { "type": "cooldown", "detail": "Static stretch chest, shoulders, triceps — hold 30s each", "duration_minutes": 10 }
+                { "type": "cooldown", "detail": "Static stretch chest, shoulders, triceps - hold 30s each", "duration_minutes": 10 }
               ]
             },
             {
@@ -134,7 +134,7 @@
               "blocks": [
                 { "type": "warmup", "detail": "5min rowing machine + band pull-aparts, cat-cow, thoracic rotations", "duration_minutes": 5 },
                 { "type": "main", "detail": "Barbell Deadlift 3x5, Barbell Row 3x8, Lat Pulldown 3x10, Face Pulls 2x15, Dumbbell Bicep Curl 2x12", "duration_minutes": 35 },
-                { "type": "cooldown", "detail": "Static stretch lats, biceps, lower back — hold 30s each", "duration_minutes": 10 }
+                { "type": "cooldown", "detail": "Static stretch lats, biceps, lower back - hold 30s each", "duration_minutes": 10 }
               ]
             },
             {
@@ -144,7 +144,7 @@
               "blocks": [
                 { "type": "warmup", "detail": "5min bike + leg swings, bodyweight squats, glute bridges, ankle circles", "duration_minutes": 5 },
                 { "type": "main", "detail": "Barbell Back Squat 3x8, Romanian Deadlift 3x10, Leg Press 3x10, Walking Lunges 2x10 each leg, Calf Raises 3x15", "duration_minutes": 35 },
-                { "type": "cooldown", "detail": "Foam roll quads, hamstrings, glutes, calves; static stretch — hold 30s each", "duration_minutes": 10 }
+                { "type": "cooldown", "detail": "Foam roll quads, hamstrings, glutes, calves; static stretch - hold 30s each", "duration_minutes": 10 }
               ]
             }
           ]
@@ -154,32 +154,32 @@
           "sessions": [
             {
               "day_index": 0,
-              "title": "Push — Volume Up",
+              "title": "Push - Volume Up",
               "duration_minutes": 55,
               "blocks": [
                 { "type": "warmup", "detail": "5min light cardio + band pull-aparts, arm circles, push-up walkouts", "duration_minutes": 5 },
                 { "type": "main", "detail": "Flat Bench Press 3x10, Overhead Press 3x10, Incline Dumbbell Press 3x10, Dumbbell Lateral Raise 3x12, Tricep Rope Pushdown 3x12, Overhead Tricep Extension 2x12", "duration_minutes": 40 },
-                { "type": "cooldown", "detail": "Static stretch chest, shoulders, triceps — hold 30s each", "duration_minutes": 10 }
+                { "type": "cooldown", "detail": "Static stretch chest, shoulders, triceps - hold 30s each", "duration_minutes": 10 }
               ]
             },
             {
               "day_index": 1,
-              "title": "Pull — Volume Up",
+              "title": "Pull - Volume Up",
               "duration_minutes": 55,
               "blocks": [
                 { "type": "warmup", "detail": "5min rowing machine + band pull-aparts, cat-cow, thoracic rotations", "duration_minutes": 5 },
                 { "type": "main", "detail": "Barbell Deadlift 3x5, Barbell Row 3x10, Lat Pulldown 3x10, Cable Seated Row 3x10, Face Pulls 3x15, Dumbbell Bicep Curl 3x12", "duration_minutes": 40 },
-                { "type": "cooldown", "detail": "Static stretch lats, biceps, lower back — hold 30s each", "duration_minutes": 10 }
+                { "type": "cooldown", "detail": "Static stretch lats, biceps, lower back - hold 30s each", "duration_minutes": 10 }
               ]
             },
             {
               "day_index": 2,
-              "title": "Legs — Volume Up",
+              "title": "Legs - Volume Up",
               "duration_minutes": 55,
               "blocks": [
                 { "type": "warmup", "detail": "5min bike + leg swings, bodyweight squats, glute bridges, ankle circles", "duration_minutes": 5 },
                 { "type": "main", "detail": "Barbell Back Squat 3x10, Romanian Deadlift 3x10, Leg Press 3x12, Walking Lunges 3x10 each leg, Leg Curl 3x10, Calf Raises 3x15", "duration_minutes": 40 },
-                { "type": "cooldown", "detail": "Foam roll quads, hamstrings, glutes, calves; static stretch — hold 30s each", "duration_minutes": 10 }
+                { "type": "cooldown", "detail": "Foam roll quads, hamstrings, glutes, calves; static stretch - hold 30s each", "duration_minutes": 10 }
               ]
             }
           ]
@@ -189,32 +189,32 @@
           "sessions": [
             {
               "day_index": 0,
-              "title": "Push — Intensity",
+              "title": "Push - Intensity",
               "duration_minutes": 55,
               "blocks": [
                 { "type": "warmup", "detail": "5min light cardio + band pull-aparts, warm-up sets on bench", "duration_minutes": 5 },
                 { "type": "main", "detail": "Flat Bench Press 4x8, Overhead Press 4x8, Incline Dumbbell Press 3x10, Cable Fly 3x12, Dumbbell Lateral Raise 3x15, Tricep Rope Pushdown 3x12, Overhead Tricep Extension 2x12", "duration_minutes": 40 },
-                { "type": "cooldown", "detail": "Static stretch chest, shoulders, triceps — hold 30s each", "duration_minutes": 10 }
+                { "type": "cooldown", "detail": "Static stretch chest, shoulders, triceps - hold 30s each", "duration_minutes": 10 }
               ]
             },
             {
               "day_index": 1,
-              "title": "Pull — Intensity",
+              "title": "Pull - Intensity",
               "duration_minutes": 55,
               "blocks": [
                 { "type": "warmup", "detail": "5min rowing machine + band pull-aparts, warm-up sets on deadlift", "duration_minutes": 5 },
                 { "type": "main", "detail": "Barbell Deadlift 4x5, Barbell Row 4x8, Weighted Pull-Ups 3x6, Cable Seated Row 3x10, Face Pulls 3x15, Barbell Bicep Curl 3x10, Hammer Curl 2x12", "duration_minutes": 40 },
-                { "type": "cooldown", "detail": "Static stretch lats, biceps, lower back — hold 30s each", "duration_minutes": 10 }
+                { "type": "cooldown", "detail": "Static stretch lats, biceps, lower back - hold 30s each", "duration_minutes": 10 }
               ]
             },
             {
               "day_index": 2,
-              "title": "Legs — Intensity",
+              "title": "Legs - Intensity",
               "duration_minutes": 55,
               "blocks": [
                 { "type": "warmup", "detail": "5min bike + leg swings, warm-up sets on squat", "duration_minutes": 5 },
                 { "type": "main", "detail": "Barbell Back Squat 4x8, Romanian Deadlift 3x10, Bulgarian Split Squat 3x8 each leg, Leg Press 3x12, Leg Curl 3x10, Calf Raises 4x15", "duration_minutes": 40 },
-                { "type": "cooldown", "detail": "Foam roll quads, hamstrings, glutes, calves; static stretch — hold 30s each", "duration_minutes": 10 }
+                { "type": "cooldown", "detail": "Foam roll quads, hamstrings, glutes, calves; static stretch - hold 30s each", "duration_minutes": 10 }
               ]
             }
           ]
@@ -224,32 +224,32 @@
           "sessions": [
             {
               "day_index": 0,
-              "title": "Push — Peak",
+              "title": "Push - Peak",
               "duration_minutes": 60,
               "blocks": [
                 { "type": "warmup", "detail": "5min light cardio + band pull-aparts, warm-up sets on bench", "duration_minutes": 5 },
                 { "type": "main", "detail": "Flat Bench Press 4x10, Overhead Press 4x10, Incline Dumbbell Press 3x12, Cable Fly 3x12, Dumbbell Lateral Raise 4x15, Tricep Rope Pushdown 3x15, Overhead Tricep Extension 3x12", "duration_minutes": 45 },
-                { "type": "cooldown", "detail": "Static stretch chest, shoulders, triceps — hold 30s each", "duration_minutes": 10 }
+                { "type": "cooldown", "detail": "Static stretch chest, shoulders, triceps - hold 30s each", "duration_minutes": 10 }
               ]
             },
             {
               "day_index": 1,
-              "title": "Pull — Peak",
+              "title": "Pull - Peak",
               "duration_minutes": 60,
               "blocks": [
                 { "type": "warmup", "detail": "5min rowing machine + band pull-aparts, warm-up sets on deadlift", "duration_minutes": 5 },
                 { "type": "main", "detail": "Barbell Deadlift 4x5 (heaviest weight), Barbell Row 4x10, Weighted Pull-Ups 3x8, Cable Seated Row 3x12, Face Pulls 3x15, Barbell Bicep Curl 3x12, Hammer Curl 3x12", "duration_minutes": 45 },
-                { "type": "cooldown", "detail": "Static stretch lats, biceps, lower back — hold 30s each", "duration_minutes": 10 }
+                { "type": "cooldown", "detail": "Static stretch lats, biceps, lower back - hold 30s each", "duration_minutes": 10 }
               ]
             },
             {
               "day_index": 2,
-              "title": "Legs — Peak",
+              "title": "Legs - Peak",
               "duration_minutes": 60,
               "blocks": [
                 { "type": "warmup", "detail": "5min bike + leg swings, warm-up sets on squat", "duration_minutes": 5 },
                 { "type": "main", "detail": "Barbell Back Squat 4x10, Romanian Deadlift 4x10, Bulgarian Split Squat 3x10 each leg, Leg Press 3x12, Leg Curl 3x12, Calf Raises 4x20", "duration_minutes": 45 },
-                { "type": "cooldown", "detail": "Foam roll quads, hamstrings, glutes, calves; static stretch — hold 30s each", "duration_minutes": 10 }
+                { "type": "cooldown", "detail": "Foam roll quads, hamstrings, glutes, calves; static stretch - hold 30s each", "duration_minutes": 10 }
               ]
             }
           ]
@@ -264,42 +264,42 @@
           "sessions": [
             {
               "day_index": 0,
-              "title": "Upper A — Horizontal Focus",
+              "title": "Upper A - Horizontal Focus",
               "duration_minutes": 50,
               "blocks": [
                 { "type": "warmup", "detail": "5min light cardio + band pull-aparts, arm circles, push-ups", "duration_minutes": 5 },
                 { "type": "main", "detail": "Flat Bench Press 3x8, Barbell Row 3x8, Incline Dumbbell Press 2x10, Cable Seated Row 2x10, Dumbbell Lateral Raise 2x12, Tricep Pushdown 2x12, Dumbbell Curl 2x12", "duration_minutes": 35 },
-                { "type": "cooldown", "detail": "Static stretch chest, back, arms — hold 30s each", "duration_minutes": 10 }
+                { "type": "cooldown", "detail": "Static stretch chest, back, arms - hold 30s each", "duration_minutes": 10 }
               ]
             },
             {
               "day_index": 1,
-              "title": "Lower A — Squat Focus",
+              "title": "Lower A - Squat Focus",
               "duration_minutes": 50,
               "blocks": [
                 { "type": "warmup", "detail": "5min bike + leg swings, glute bridges, bodyweight squats", "duration_minutes": 5 },
                 { "type": "main", "detail": "Barbell Back Squat 3x8, Romanian Deadlift 3x10, Leg Press 3x10, Walking Lunges 2x10 each leg, Calf Raises 3x15", "duration_minutes": 35 },
-                { "type": "cooldown", "detail": "Foam roll legs; static stretch quads, hamstrings, hip flexors — hold 30s each", "duration_minutes": 10 }
+                { "type": "cooldown", "detail": "Foam roll legs; static stretch quads, hamstrings, hip flexors - hold 30s each", "duration_minutes": 10 }
               ]
             },
             {
               "day_index": 2,
-              "title": "Upper B — Vertical Focus",
+              "title": "Upper B - Vertical Focus",
               "duration_minutes": 50,
               "blocks": [
                 { "type": "warmup", "detail": "5min rowing machine + shoulder dislocates, cat-cow, thoracic rotations", "duration_minutes": 5 },
                 { "type": "main", "detail": "Overhead Press 3x8, Lat Pulldown 3x8, Dumbbell Bench Press 2x10, Face Pulls 2x15, Dumbbell Lateral Raise 2x12, Overhead Tricep Extension 2x12, Hammer Curl 2x12", "duration_minutes": 35 },
-                { "type": "cooldown", "detail": "Static stretch shoulders, lats, triceps — hold 30s each", "duration_minutes": 10 }
+                { "type": "cooldown", "detail": "Static stretch shoulders, lats, triceps - hold 30s each", "duration_minutes": 10 }
               ]
             },
             {
               "day_index": 3,
-              "title": "Lower B — Hinge Focus",
+              "title": "Lower B - Hinge Focus",
               "duration_minutes": 50,
               "blocks": [
                 { "type": "warmup", "detail": "5min bike + hip circles, glute bridges, light kettlebell swings", "duration_minutes": 5 },
                 { "type": "main", "detail": "Barbell Deadlift 3x5, Front Squat 3x8, Leg Curl 3x10, Bulgarian Split Squat 2x8 each leg, Calf Raises 3x15", "duration_minutes": 35 },
-                { "type": "cooldown", "detail": "Foam roll legs; static stretch glutes, hamstrings, lower back — hold 30s each", "duration_minutes": 10 }
+                { "type": "cooldown", "detail": "Foam roll legs; static stretch glutes, hamstrings, lower back - hold 30s each", "duration_minutes": 10 }
               ]
             }
           ]
@@ -309,42 +309,42 @@
           "sessions": [
             {
               "day_index": 0,
-              "title": "Upper A — Horizontal Volume",
+              "title": "Upper A - Horizontal Volume",
               "duration_minutes": 55,
               "blocks": [
                 { "type": "warmup", "detail": "5min light cardio + band pull-aparts, warm-up sets on bench", "duration_minutes": 5 },
                 { "type": "main", "detail": "Flat Bench Press 3x10, Barbell Row 3x10, Incline Dumbbell Press 3x10, Cable Seated Row 3x10, Dumbbell Lateral Raise 3x12, Tricep Pushdown 3x12, Dumbbell Curl 3x12", "duration_minutes": 40 },
-                { "type": "cooldown", "detail": "Static stretch chest, back, arms — hold 30s each", "duration_minutes": 10 }
+                { "type": "cooldown", "detail": "Static stretch chest, back, arms - hold 30s each", "duration_minutes": 10 }
               ]
             },
             {
               "day_index": 1,
-              "title": "Lower A — Squat Volume",
+              "title": "Lower A - Squat Volume",
               "duration_minutes": 55,
               "blocks": [
                 { "type": "warmup", "detail": "5min bike + leg swings, glute bridges, warm-up sets on squat", "duration_minutes": 5 },
                 { "type": "main", "detail": "Barbell Back Squat 3x10, Romanian Deadlift 3x10, Leg Press 3x12, Walking Lunges 3x10 each leg, Leg Extension 2x12, Calf Raises 3x15", "duration_minutes": 40 },
-                { "type": "cooldown", "detail": "Foam roll legs; static stretch quads, hamstrings, hip flexors — hold 30s each", "duration_minutes": 10 }
+                { "type": "cooldown", "detail": "Foam roll legs; static stretch quads, hamstrings, hip flexors - hold 30s each", "duration_minutes": 10 }
               ]
             },
             {
               "day_index": 2,
-              "title": "Upper B — Vertical Volume",
+              "title": "Upper B - Vertical Volume",
               "duration_minutes": 55,
               "blocks": [
                 { "type": "warmup", "detail": "5min rowing machine + shoulder dislocates, warm-up sets on overhead press", "duration_minutes": 5 },
                 { "type": "main", "detail": "Overhead Press 3x10, Lat Pulldown 3x10, Dumbbell Bench Press 3x10, Face Pulls 3x15, Dumbbell Lateral Raise 3x12, Overhead Tricep Extension 3x12, Hammer Curl 3x12", "duration_minutes": 40 },
-                { "type": "cooldown", "detail": "Static stretch shoulders, lats, triceps — hold 30s each", "duration_minutes": 10 }
+                { "type": "cooldown", "detail": "Static stretch shoulders, lats, triceps - hold 30s each", "duration_minutes": 10 }
               ]
             },
             {
               "day_index": 3,
-              "title": "Lower B — Hinge Volume",
+              "title": "Lower B - Hinge Volume",
               "duration_minutes": 55,
               "blocks": [
                 { "type": "warmup", "detail": "5min bike + hip circles, glute bridges, warm-up sets on deadlift", "duration_minutes": 5 },
                 { "type": "main", "detail": "Barbell Deadlift 3x5, Front Squat 3x10, Leg Curl 3x12, Bulgarian Split Squat 3x8 each leg, Hip Thrust 2x10, Calf Raises 3x15", "duration_minutes": 40 },
-                { "type": "cooldown", "detail": "Foam roll legs; static stretch glutes, hamstrings, lower back — hold 30s each", "duration_minutes": 10 }
+                { "type": "cooldown", "detail": "Foam roll legs; static stretch glutes, hamstrings, lower back - hold 30s each", "duration_minutes": 10 }
               ]
             }
           ]
@@ -354,42 +354,42 @@
           "sessions": [
             {
               "day_index": 0,
-              "title": "Upper A — Horizontal Intensity",
+              "title": "Upper A - Horizontal Intensity",
               "duration_minutes": 55,
               "blocks": [
                 { "type": "warmup", "detail": "5min light cardio + band pull-aparts, warm-up sets on bench", "duration_minutes": 5 },
                 { "type": "main", "detail": "Flat Bench Press 4x8, Barbell Row 4x8, Incline Dumbbell Press 3x10, Cable Seated Row 3x10, Cable Fly 2x12, Dumbbell Lateral Raise 3x15, Tricep Pushdown 3x12, Dumbbell Curl 3x12", "duration_minutes": 40 },
-                { "type": "cooldown", "detail": "Static stretch chest, back, arms — hold 30s each", "duration_minutes": 10 }
+                { "type": "cooldown", "detail": "Static stretch chest, back, arms - hold 30s each", "duration_minutes": 10 }
               ]
             },
             {
               "day_index": 1,
-              "title": "Lower A — Squat Intensity",
+              "title": "Lower A - Squat Intensity",
               "duration_minutes": 55,
               "blocks": [
                 { "type": "warmup", "detail": "5min bike + leg swings, warm-up sets on squat", "duration_minutes": 5 },
                 { "type": "main", "detail": "Barbell Back Squat 4x8, Romanian Deadlift 3x10, Leg Press 3x12, Walking Lunges 3x12 each leg, Leg Extension 3x12, Calf Raises 4x15", "duration_minutes": 40 },
-                { "type": "cooldown", "detail": "Foam roll legs; static stretch quads, hamstrings, hip flexors — hold 30s each", "duration_minutes": 10 }
+                { "type": "cooldown", "detail": "Foam roll legs; static stretch quads, hamstrings, hip flexors - hold 30s each", "duration_minutes": 10 }
               ]
             },
             {
               "day_index": 2,
-              "title": "Upper B — Vertical Intensity",
+              "title": "Upper B - Vertical Intensity",
               "duration_minutes": 55,
               "blocks": [
                 { "type": "warmup", "detail": "5min rowing machine + shoulder dislocates, warm-up sets on overhead press", "duration_minutes": 5 },
                 { "type": "main", "detail": "Overhead Press 4x8, Weighted Pull-Ups 3x6, Dumbbell Bench Press 3x10, Face Pulls 3x15, Dumbbell Lateral Raise 3x15, Overhead Tricep Extension 3x12, Hammer Curl 3x12", "duration_minutes": 40 },
-                { "type": "cooldown", "detail": "Static stretch shoulders, lats, triceps — hold 30s each", "duration_minutes": 10 }
+                { "type": "cooldown", "detail": "Static stretch shoulders, lats, triceps - hold 30s each", "duration_minutes": 10 }
               ]
             },
             {
               "day_index": 3,
-              "title": "Lower B — Hinge Intensity",
+              "title": "Lower B - Hinge Intensity",
               "duration_minutes": 55,
               "blocks": [
                 { "type": "warmup", "detail": "5min bike + hip circles, warm-up sets on deadlift", "duration_minutes": 5 },
                 { "type": "main", "detail": "Barbell Deadlift 4x5, Front Squat 3x10, Leg Curl 3x12, Bulgarian Split Squat 3x10 each leg, Hip Thrust 3x10, Calf Raises 4x15", "duration_minutes": 40 },
-                { "type": "cooldown", "detail": "Foam roll legs; static stretch glutes, hamstrings, lower back — hold 30s each", "duration_minutes": 10 }
+                { "type": "cooldown", "detail": "Foam roll legs; static stretch glutes, hamstrings, lower back - hold 30s each", "duration_minutes": 10 }
               ]
             }
           ]
@@ -399,42 +399,42 @@
           "sessions": [
             {
               "day_index": 0,
-              "title": "Upper A — Horizontal Peak",
+              "title": "Upper A - Horizontal Peak",
               "duration_minutes": 60,
               "blocks": [
                 { "type": "warmup", "detail": "5min light cardio + band pull-aparts, warm-up sets on bench", "duration_minutes": 5 },
                 { "type": "main", "detail": "Flat Bench Press 4x10, Barbell Row 4x10, Incline Dumbbell Press 3x12, Cable Seated Row 3x12, Cable Fly 3x12, Dumbbell Lateral Raise 3x15, Tricep Pushdown 3x15, Dumbbell Curl 3x12", "duration_minutes": 45 },
-                { "type": "cooldown", "detail": "Static stretch chest, back, arms — hold 30s each", "duration_minutes": 10 }
+                { "type": "cooldown", "detail": "Static stretch chest, back, arms - hold 30s each", "duration_minutes": 10 }
               ]
             },
             {
               "day_index": 1,
-              "title": "Lower A — Squat Peak",
+              "title": "Lower A - Squat Peak",
               "duration_minutes": 60,
               "blocks": [
                 { "type": "warmup", "detail": "5min bike + leg swings, warm-up sets on squat", "duration_minutes": 5 },
                 { "type": "main", "detail": "Barbell Back Squat 4x10, Romanian Deadlift 4x10, Leg Press 4x12, Walking Lunges 3x12 each leg, Leg Extension 3x12, Calf Raises 4x20", "duration_minutes": 45 },
-                { "type": "cooldown", "detail": "Foam roll legs; static stretch quads, hamstrings, hip flexors — hold 30s each", "duration_minutes": 10 }
+                { "type": "cooldown", "detail": "Foam roll legs; static stretch quads, hamstrings, hip flexors - hold 30s each", "duration_minutes": 10 }
               ]
             },
             {
               "day_index": 2,
-              "title": "Upper B — Vertical Peak",
+              "title": "Upper B - Vertical Peak",
               "duration_minutes": 60,
               "blocks": [
                 { "type": "warmup", "detail": "5min rowing machine + shoulder dislocates, warm-up sets on overhead press", "duration_minutes": 5 },
                 { "type": "main", "detail": "Overhead Press 4x10, Weighted Pull-Ups 4x6, Dumbbell Bench Press 3x12, Face Pulls 3x15, Dumbbell Lateral Raise 4x15, Overhead Tricep Extension 3x15, Hammer Curl 3x12", "duration_minutes": 45 },
-                { "type": "cooldown", "detail": "Static stretch shoulders, lats, triceps — hold 30s each", "duration_minutes": 10 }
+                { "type": "cooldown", "detail": "Static stretch shoulders, lats, triceps - hold 30s each", "duration_minutes": 10 }
               ]
             },
             {
               "day_index": 3,
-              "title": "Lower B — Hinge Peak",
+              "title": "Lower B - Hinge Peak",
               "duration_minutes": 60,
               "blocks": [
                 { "type": "warmup", "detail": "5min bike + hip circles, warm-up sets on deadlift", "duration_minutes": 5 },
                 { "type": "main", "detail": "Barbell Deadlift 4x5 (heaviest weight), Front Squat 4x8, Leg Curl 3x12, Bulgarian Split Squat 3x10 each leg, Hip Thrust 3x12, Calf Raises 4x20", "duration_minutes": 45 },
-                { "type": "cooldown", "detail": "Foam roll legs; static stretch glutes, hamstrings, lower back — hold 30s each", "duration_minutes": 10 }
+                { "type": "cooldown", "detail": "Foam roll legs; static stretch glutes, hamstrings, lower back - hold 30s each", "duration_minutes": 10 }
               ]
             }
           ]
@@ -471,7 +471,7 @@
       }
     },
     "bodyweight": {
-      "description": "No equipment — bodyweight exercises only, optional pull-up bar",
+      "description": "No equipment - bodyweight exercises only, optional pull-up bar",
       "substitutions": {
         "Barbell Back Squat": "Pistol Squat Progression (or Bulgarian Split Squat)",
         "Barbell Deadlift": "Single-Leg Deadlift (bodyweight)",

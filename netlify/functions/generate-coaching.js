@@ -1,5 +1,5 @@
 /**
- * generate-coaching — Netlify Function
+ * generate-coaching - Netlify Function
  *
  * Calls Claude Haiku to generate a short persona-aware coaching message
  * or a structured post-session insights response.
@@ -48,7 +48,7 @@ Context: This app tracks gym habits, XP, streaks, and exercise performance logs.
   struggler: `You are a compassionate gym coaching assistant for someone who struggles with consistency.
 Tone: empathetic, supportive, low-pressure. Reduce barriers. Focus on showing up, not performance.
 Rules: max 2 sentences. Never guilt-trip. Frame everything as momentum, not failure.
-Context: This app uses a 2-Day Rule — never miss two days in a row. Shorter sessions are always better than skipping.`,
+Context: This app uses a 2-Day Rule - never miss two days in a row. Shorter sessions are always better than skipping.`,
 
   self_directed: `You are a minimal gym coaching assistant for an experienced, self-directed lifter who has their own system.
 Tone: neutral, brief, non-intrusive. Offer observations, not advice. Never be prescriptive.
@@ -64,8 +64,8 @@ const TRIGGER_TEMPLATES = {
   weekly_summary: (ctx) => `User ${ctx.name || ''} completed their week. Streak: ${ctx.streak}. ${ctx.exercise_trend ? `Performance note: ${ctx.exercise_trend}.` : ''} Generate a weekly summary insight.`,
 };
 
-const POST_SESSION_SYSTEM = `You are an intelligent fitness advisor. Use The Muscle Ladder by Jeff Nippard (provided in the book context) as your primary reference. When the book covers a principle, cite it. When it doesn't, use general evidence-based training science and set book_reference to "General evidence-based practice" — never omit a suggestion just because the book is silent.
-You ONLY suggest — never override system logic or compute calorie baselines.
+const POST_SESSION_SYSTEM = `You are an intelligent fitness advisor. Use The Muscle Ladder by Jeff Nippard (provided in the book context) as your primary reference. When the book covers a principle, cite it. When it doesn't, use general evidence-based training science and set book_reference to "General evidence-based practice" - never omit a suggestion just because the book is silent.
+You ONLY suggest - never override system logic or compute calorie baselines.
 Rules: Be specific. No fluff. Output valid JSON only. No markdown code blocks. Every suggestion/adjustment must include a book_reference (chapter OR "General evidence-based practice").`;
 
 function buildPostSessionPrompt(ctx) {

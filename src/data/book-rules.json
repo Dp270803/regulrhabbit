@@ -13,7 +13,7 @@
       "trigger": { "avg_rir_lt": 1, "stalled_weeks": 0 },
       "action": { "type": "add_reps_then_load", "step_kg": 2.5 },
       "rationale": "Add reps within the target range first; when the top end is hit on all sets, add load and drop reps to the bottom.",
-      "book_reference": { "chapter": "Ch. 3 — Progression Models", "quote": "Double progression — adding reps within a range before adding load — produces consistent progress without form breakdown." }
+      "book_reference": { "chapter": "Ch. 3 - Progression Models", "quote": "Double progression - adding reps within a range before adding load - produces consistent progress without form breakdown." }
     },
     {
       "id": "prog_002",
@@ -22,16 +22,16 @@
       "trigger": { "experience_level": "Beginner", "avg_rir_gte": 2 },
       "action": { "type": "add_load", "delta_kg_compound": 2.5, "delta_kg_isolation": 1.25 },
       "rationale": "Beginners progress fastest with linear load increases each session until form fails.",
-      "book_reference": { "chapter": "Ch. 3 — Progression Models", "quote": "Novices add weight nearly every session — they have not yet earned the right to need autoregulation." }
+      "book_reference": { "chapter": "Ch. 3 - Progression Models", "quote": "Novices add weight nearly every session - they have not yet earned the right to need autoregulation." }
     },
     {
       "id": "prog_003",
       "domain": "progression",
-      "name": "Stalled lifter — reps before load",
+      "name": "Stalled lifter - reps before load",
       "trigger": { "stalled_weeks_gte": 2, "avg_rir_gte": 1 },
       "action": { "type": "add_reps", "delta": 1 },
       "rationale": "If load has stalled, accumulate reps before forcing more weight.",
-      "book_reference": { "chapter": "Ch. 3 — Progression Models", "quote": "When the bar stops moving up, make it move more times before you try to move it up again." }
+      "book_reference": { "chapter": "Ch. 3 - Progression Models", "quote": "When the bar stops moving up, make it move more times before you try to move it up again." }
     },
     {
       "id": "deload_001",
@@ -40,7 +40,7 @@
       "trigger": { "stalled_weeks_gte": 2, "avg_rir_lte": 1 },
       "action": { "type": "deload", "load_drop_pct": 40, "volume_drop_pct": 50 },
       "rationale": "Two weeks of stalled e1RM with RIR ≤ 1 indicates accumulated fatigue masking fitness gains. Deload one week.",
-      "book_reference": { "chapter": "Ch. 7 — Fatigue Management", "quote": "When you stop progressing and feel beat up, you don't need more training — you need less." }
+      "book_reference": { "chapter": "Ch. 7 - Fatigue Management", "quote": "When you stop progressing and feel beat up, you don't need more training - you need less." }
     },
     {
       "id": "deload_002",
@@ -48,8 +48,8 @@
       "name": "Adherence collapse triggers light week",
       "trigger": { "adherence_pct_lt": 50, "weeks_lt_50_gte": 2 },
       "action": { "type": "reduce_volume", "pct": 30 },
-      "rationale": "If life is overwhelming the plan, the plan must shrink — not the user's discipline.",
-      "book_reference": { "chapter": "Ch. 7 — Fatigue Management", "quote": "Missed sessions are signal, not noise. The plan should bend before the lifter breaks." }
+      "rationale": "If life is overwhelming the plan, the plan must shrink - not the user's discipline.",
+      "book_reference": { "chapter": "Ch. 7 - Fatigue Management", "quote": "Missed sessions are signal, not noise. The plan should bend before the lifter breaks." }
     },
     {
       "id": "deload_003",
@@ -58,7 +58,7 @@
       "trigger": { "weeks_since_deload_gte": 5, "avg_rir_lte": 1 },
       "action": { "type": "deload", "load_drop_pct": 40, "volume_drop_pct": 40 },
       "rationale": "Most intermediate lifters benefit from a planned deload every 4-6 weeks even without obvious stall.",
-      "book_reference": { "chapter": "Ch. 7 — Fatigue Management", "quote": "A scheduled step back is cheaper than a forced one." }
+      "book_reference": { "chapter": "Ch. 7 - Fatigue Management", "quote": "A scheduled step back is cheaper than a forced one." }
     },
     {
       "id": "vol_001",
@@ -67,7 +67,7 @@
       "trigger": { "muscle": "Chest" },
       "action": { "type": "volume_landmark", "mev_sets": 8, "mav_sets": 14, "mrv_sets": 22 },
       "rationale": "Weekly hard sets per muscle: minimum effective ~8, maximum adaptive ~14, maximum recoverable ~22.",
-      "book_reference": { "chapter": "Ch. 5 — Volume Landmarks", "quote": "More sets work, until they don't. The MRV is the point where recovery breaks down." }
+      "book_reference": { "chapter": "Ch. 5 - Volume Landmarks", "quote": "More sets work, until they don't. The MRV is the point where recovery breaks down." }
     },
     {
       "id": "vol_002",
@@ -76,7 +76,7 @@
       "trigger": { "muscle": "Back" },
       "action": { "type": "volume_landmark", "mev_sets": 10, "mav_sets": 16, "mrv_sets": 25 },
       "rationale": "Back tolerates and benefits from higher weekly volume than chest.",
-      "book_reference": { "chapter": "Ch. 5 — Volume Landmarks", "quote": "Back is famously volume-hungry — give it more sets than you give chest." }
+      "book_reference": { "chapter": "Ch. 5 - Volume Landmarks", "quote": "Back is famously volume-hungry - give it more sets than you give chest." }
     },
     {
       "id": "vol_003",
@@ -85,7 +85,7 @@
       "trigger": { "muscle": "Legs" },
       "action": { "type": "volume_landmark", "mev_sets": 8, "mav_sets": 14, "mrv_sets": 20 },
       "rationale": "Quads recover from less volume than back but more than smaller groups.",
-      "book_reference": { "chapter": "Ch. 5 — Volume Landmarks", "quote": "Heavy compound lower-body work generates outsized fatigue — count squat work cautiously." }
+      "book_reference": { "chapter": "Ch. 5 - Volume Landmarks", "quote": "Heavy compound lower-body work generates outsized fatigue - count squat work cautiously." }
     },
     {
       "id": "vol_004",
@@ -93,8 +93,8 @@
       "name": "Biceps MEV/MAV/MRV",
       "trigger": { "muscle": "Biceps" },
       "action": { "type": "volume_landmark", "mev_sets": 8, "mav_sets": 14, "mrv_sets": 22 },
-      "rationale": "Biceps already get indirect work from back movements — count those as 0.5 sets.",
-      "book_reference": { "chapter": "Ch. 5 — Volume Landmarks", "quote": "Indirect work counts. A row gives the biceps half a set whether you wanted it to or not." }
+      "rationale": "Biceps already get indirect work from back movements - count those as 0.5 sets.",
+      "book_reference": { "chapter": "Ch. 5 - Volume Landmarks", "quote": "Indirect work counts. A row gives the biceps half a set whether you wanted it to or not." }
     },
     {
       "id": "vol_005",
@@ -103,7 +103,7 @@
       "trigger": { "muscle": "Triceps" },
       "action": { "type": "volume_landmark", "mev_sets": 6, "mav_sets": 12, "mrv_sets": 18 },
       "rationale": "Triceps also receive indirect work from all pressing movements.",
-      "book_reference": { "chapter": "Ch. 5 — Volume Landmarks", "quote": "If pressing volume is high, direct tricep work can stay low." }
+      "book_reference": { "chapter": "Ch. 5 - Volume Landmarks", "quote": "If pressing volume is high, direct tricep work can stay low." }
     },
     {
       "id": "vol_006",
@@ -112,7 +112,7 @@
       "trigger": { "muscle": "Shoulders" },
       "action": { "type": "volume_landmark", "mev_sets": 8, "mav_sets": 16, "mrv_sets": 26 },
       "rationale": "Side delts respond extremely well to high-frequency, high-volume work.",
-      "book_reference": { "chapter": "Ch. 5 — Volume Landmarks", "quote": "Side delts are nearly impossible to overtrain — train them frequently and with high reps." }
+      "book_reference": { "chapter": "Ch. 5 - Volume Landmarks", "quote": "Side delts are nearly impossible to overtrain - train them frequently and with high reps." }
     },
     {
       "id": "vol_007",
@@ -121,7 +121,7 @@
       "trigger": { "muscle_weekly_sets_gt_mrv": true },
       "action": { "type": "reduce_volume", "to": "MAV" },
       "rationale": "Sets above MRV degrade recovery and add no hypertrophy.",
-      "book_reference": { "chapter": "Ch. 5 — Volume Landmarks", "quote": "Past MRV, every additional set is taxing recovery without adding stimulus." }
+      "book_reference": { "chapter": "Ch. 5 - Volume Landmarks", "quote": "Past MRV, every additional set is taxing recovery without adding stimulus." }
     },
     {
       "id": "vol_008",
@@ -130,7 +130,7 @@
       "trigger": { "muscle_weekly_sets_lt_mev": true },
       "action": { "type": "add_volume", "to": "MAV" },
       "rationale": "If weekly volume is below MEV, the muscle stops growing.",
-      "book_reference": { "chapter": "Ch. 5 — Volume Landmarks", "quote": "The MEV is the floor — go below it and you maintain at best." }
+      "book_reference": { "chapter": "Ch. 5 - Volume Landmarks", "quote": "The MEV is the floor - go below it and you maintain at best." }
     },
     {
       "id": "freq_001",
@@ -139,7 +139,7 @@
       "trigger": { "muscle_freq_lt": 2 },
       "action": { "type": "split_volume_across_sessions" },
       "rationale": "Each muscle group should be hit at least twice per week for optimal hypertrophy.",
-      "book_reference": { "chapter": "Ch. 4 — Training Frequency", "quote": "Hitting a muscle twice a week beats once-a-week-bro-splits for nearly all natural lifters." }
+      "book_reference": { "chapter": "Ch. 4 - Training Frequency", "quote": "Hitting a muscle twice a week beats once-a-week-bro-splits for nearly all natural lifters." }
     },
     {
       "id": "exsel_001",
@@ -148,7 +148,7 @@
       "trigger": { "session_starts_with": "isolation" },
       "action": { "type": "reorder_compound_first" },
       "rationale": "Compound movements should appear early in the session when fatigue is lowest.",
-      "book_reference": { "chapter": "Ch. 6 — Exercise Selection", "quote": "Big lifts go first. Fresh muscles move heavy weight; tired muscles waste it." }
+      "book_reference": { "chapter": "Ch. 6 - Exercise Selection", "quote": "Big lifts go first. Fresh muscles move heavy weight; tired muscles waste it." }
     },
     {
       "id": "exsel_002",
@@ -157,7 +157,7 @@
       "trigger": { "muscle": "any" },
       "action": { "type": "prefer_stretched_position" },
       "rationale": "Exercises that load the muscle in a stretched position (RDL, incline curl, deficit pushup) drive more hypertrophy per set.",
-      "book_reference": { "chapter": "Ch. 6 — Exercise Selection", "quote": "Loading a muscle when it is lengthened is one of the most efficient hypertrophy levers we have." }
+      "book_reference": { "chapter": "Ch. 6 - Exercise Selection", "quote": "Loading a muscle when it is lengthened is one of the most efficient hypertrophy levers we have." }
     },
     {
       "id": "exsel_003",
@@ -166,7 +166,7 @@
       "trigger": { "injuries_contains": "shoulder" },
       "action": { "type": "swap", "from": "Overhead Press", "to": "Landmine Press" },
       "rationale": "Landmine press has a more shoulder-friendly arc and reduces impingement risk.",
-      "book_reference": { "chapter": "Ch. 9 — Injury Adjustments", "quote": "If a movement hurts, find one that trains the same muscle without the hurt." }
+      "book_reference": { "chapter": "Ch. 9 - Injury Adjustments", "quote": "If a movement hurts, find one that trains the same muscle without the hurt." }
     },
     {
       "id": "exsel_004",
@@ -175,7 +175,7 @@
       "trigger": { "injuries_contains": "lower back" },
       "action": { "type": "swap", "from": "Barbell Deadlift", "to": "Trap Bar Deadlift" },
       "rationale": "Trap bar deadlifts reduce lumbar shear stress while preserving most of the stimulus.",
-      "book_reference": { "chapter": "Ch. 9 — Injury Adjustments", "quote": "Trap bar deadlifts let you train heavy without forcing perfect spinal control under fatigue." }
+      "book_reference": { "chapter": "Ch. 9 - Injury Adjustments", "quote": "Trap bar deadlifts let you train heavy without forcing perfect spinal control under fatigue." }
     },
     {
       "id": "exsel_005",
@@ -184,7 +184,7 @@
       "trigger": { "injuries_contains": "knee" },
       "action": { "type": "swap", "from": "Barbell Back Squat", "to": "Hack Squat" },
       "rationale": "Hack squats lock in a more knee-friendly torso angle and bar path.",
-      "book_reference": { "chapter": "Ch. 9 — Injury Adjustments", "quote": "Machine alternatives often produce the same growth with less joint cost." }
+      "book_reference": { "chapter": "Ch. 9 - Injury Adjustments", "quote": "Machine alternatives often produce the same growth with less joint cost." }
     },
     {
       "id": "exsel_006",
@@ -193,7 +193,7 @@
       "trigger": { "session_imbalance": true },
       "action": { "type": "add_antagonist_work" },
       "rationale": "Push and pull volume should be roughly balanced over the week to prevent posture issues and shoulder pain.",
-      "book_reference": { "chapter": "Ch. 6 — Exercise Selection", "quote": "If you bench, you row. The body doesn't reward asymmetry." }
+      "book_reference": { "chapter": "Ch. 6 - Exercise Selection", "quote": "If you bench, you row. The body doesn't reward asymmetry." }
     },
     {
       "id": "rep_001",
@@ -202,7 +202,7 @@
       "trigger": { "goal": "build_max" },
       "action": { "type": "rep_range", "min": 6, "max": 15 },
       "rationale": "6-15 reps to 0-2 RIR is the hypertrophy sweet spot for most exercises.",
-      "book_reference": { "chapter": "Ch. 2 — Hypertrophy Fundamentals", "quote": "Effective reps live in the last few of any set near failure — most rep ranges work if you push them hard enough." }
+      "book_reference": { "chapter": "Ch. 2 - Hypertrophy Fundamentals", "quote": "Effective reps live in the last few of any set near failure - most rep ranges work if you push them hard enough." }
     },
     {
       "id": "rep_002",
@@ -211,7 +211,7 @@
       "trigger": { "goal": "strength" },
       "action": { "type": "rep_range", "min": 3, "max": 6 },
       "rationale": "3-6 reps at moderate RIR builds maximal strength while preserving hypertrophy.",
-      "book_reference": { "chapter": "Ch. 2 — Hypertrophy Fundamentals", "quote": "Lower reps build pure strength; higher reps build pure size; the middle does both." }
+      "book_reference": { "chapter": "Ch. 2 - Hypertrophy Fundamentals", "quote": "Lower reps build pure strength; higher reps build pure size; the middle does both." }
     },
     {
       "id": "rir_001",
@@ -219,8 +219,8 @@
       "name": "Compound RIR target",
       "trigger": { "exercise_type": "compound" },
       "action": { "type": "rir_target", "value": 2 },
-      "rationale": "Compounds carry more fatigue cost — leaving 1-2 reps in reserve preserves recovery.",
-      "book_reference": { "chapter": "Ch. 7 — Fatigue Management", "quote": "On heavy compounds, the last rep is the most expensive — sometimes the smart move is to skip it." }
+      "rationale": "Compounds carry more fatigue cost - leaving 1-2 reps in reserve preserves recovery.",
+      "book_reference": { "chapter": "Ch. 7 - Fatigue Management", "quote": "On heavy compounds, the last rep is the most expensive - sometimes the smart move is to skip it." }
     },
     {
       "id": "rir_002",
@@ -229,7 +229,7 @@
       "trigger": { "exercise_type": "isolation" },
       "action": { "type": "rir_target", "value": 0 },
       "rationale": "Isolations can be pushed closer to failure with minimal fatigue cost.",
-      "book_reference": { "chapter": "Ch. 7 — Fatigue Management", "quote": "Curls and lateral raises taken to 0 RIR cost little and give a lot." }
+      "book_reference": { "chapter": "Ch. 7 - Fatigue Management", "quote": "Curls and lateral raises taken to 0 RIR cost little and give a lot." }
     },
     {
       "id": "diet_001",
@@ -238,7 +238,7 @@
       "trigger": { "sex": "male" },
       "action": { "type": "bmr_formula", "formula": "10*W + 6.25*H - 5*A + 5" },
       "rationale": "Most accurate BMR formula for general population per ISSN.",
-      "book_reference": { "chapter": "Ch. 10 — Diet Foundations", "quote": "Mifflin-St Jeor is the consensus formula; old Harris-Benedict numbers run high." }
+      "book_reference": { "chapter": "Ch. 10 - Diet Foundations", "quote": "Mifflin-St Jeor is the consensus formula; old Harris-Benedict numbers run high." }
     },
     {
       "id": "diet_002",
@@ -247,7 +247,7 @@
       "trigger": { "sex": "female" },
       "action": { "type": "bmr_formula", "formula": "10*W + 6.25*H - 5*A - 161" },
       "rationale": "Mifflin-St Jeor variant for biologically female individuals.",
-      "book_reference": { "chapter": "Ch. 10 — Diet Foundations", "quote": "Use Mifflin for both sexes; the offset is the only difference." }
+      "book_reference": { "chapter": "Ch. 10 - Diet Foundations", "quote": "Use Mifflin for both sexes; the offset is the only difference." }
     },
     {
       "id": "diet_003",
@@ -256,7 +256,7 @@
       "trigger": { "goal": "fat_loss" },
       "action": { "type": "calorie_target", "deficit_pct_min": 10, "deficit_pct_max": 20 },
       "rationale": "10-20% deficit preserves muscle while losing fat at a sustainable rate.",
-      "book_reference": { "chapter": "Ch. 11 — Cutting", "quote": "Bigger deficits don't lose more muscle — they just lose muscle faster." }
+      "book_reference": { "chapter": "Ch. 11 - Cutting", "quote": "Bigger deficits don't lose more muscle - they just lose muscle faster." }
     },
     {
       "id": "diet_004",
@@ -265,7 +265,7 @@
       "trigger": { "goal": "build_max" },
       "action": { "type": "calorie_target", "surplus_pct_min": 5, "surplus_pct_max": 15 },
       "rationale": "Small surplus minimizes fat gain while supporting muscle synthesis.",
-      "book_reference": { "chapter": "Ch. 12 — Lean Bulking", "quote": "You cannot build a kilogram of muscle from ten kilograms of food — anything above a modest surplus turns to fat." }
+      "book_reference": { "chapter": "Ch. 12 - Lean Bulking", "quote": "You cannot build a kilogram of muscle from ten kilograms of food - anything above a modest surplus turns to fat." }
     },
     {
       "id": "diet_005",
@@ -274,7 +274,7 @@
       "trigger": { "goal": "recomp" },
       "action": { "type": "calorie_target", "delta_pct": 0 },
       "rationale": "Body recomposition works best at or near maintenance with high protein.",
-      "book_reference": { "chapter": "Ch. 12 — Lean Bulking", "quote": "Recomp is real, but it is slow — most pronounced in new lifters or those returning from a layoff." }
+      "book_reference": { "chapter": "Ch. 12 - Lean Bulking", "quote": "Recomp is real, but it is slow - most pronounced in new lifters or those returning from a layoff." }
     },
     {
       "id": "diet_006",
@@ -283,7 +283,7 @@
       "trigger": { "any": true },
       "action": { "type": "macro_target", "macro": "protein", "g_per_kg_min": 1.6, "g_per_kg_max": 2.2 },
       "rationale": "1.6-2.2 g/kg covers MPS needs for nearly all lifters; lean mass-based is more precise.",
-      "book_reference": { "chapter": "Ch. 10 — Diet Foundations", "quote": "1.6 g per kg is the floor for muscle building; above 2.2 yields diminishing returns." }
+      "book_reference": { "chapter": "Ch. 10 - Diet Foundations", "quote": "1.6 g per kg is the floor for muscle building; above 2.2 yields diminishing returns." }
     },
     {
       "id": "diet_007",
@@ -292,7 +292,7 @@
       "trigger": { "any": true },
       "action": { "type": "macro_target", "macro": "fat", "g_per_kg_min": 0.6, "g_per_kg_max": 1.0 },
       "rationale": "Fats below 0.6 g/kg risk hormonal disruption.",
-      "book_reference": { "chapter": "Ch. 10 — Diet Foundations", "quote": "Cutting fats too low hurts testosterone and satiety; keep 0.8 g/kg as a floor." }
+      "book_reference": { "chapter": "Ch. 10 - Diet Foundations", "quote": "Cutting fats too low hurts testosterone and satiety; keep 0.8 g/kg as a floor." }
     },
     {
       "id": "diet_008",
@@ -301,7 +301,7 @@
       "trigger": { "goal": "fat_loss", "weekly_weight_drop_pct_gt": 1.0 },
       "action": { "type": "increase_calories", "delta_kcal": 150 },
       "rationale": "Losing >1% bodyweight per week increases muscle loss risk.",
-      "book_reference": { "chapter": "Ch. 11 — Cutting", "quote": "0.5-1% of bodyweight per week is the sweet spot — faster than that and you bleed muscle." }
+      "book_reference": { "chapter": "Ch. 11 - Cutting", "quote": "0.5-1% of bodyweight per week is the sweet spot - faster than that and you bleed muscle." }
     },
     {
       "id": "diet_009",
@@ -310,7 +310,7 @@
       "trigger": { "goal": "fat_loss", "weekly_weight_drop_pct_lt": 0.1, "weeks": 2 },
       "action": { "type": "decrease_calories", "delta_kcal": 200 },
       "rationale": "Two flat weeks indicates the deficit has shrunk via TDEE adaptation.",
-      "book_reference": { "chapter": "Ch. 11 — Cutting", "quote": "TDEE drifts down as you lose weight — you must drift calories down with it." }
+      "book_reference": { "chapter": "Ch. 11 - Cutting", "quote": "TDEE drifts down as you lose weight - you must drift calories down with it." }
     },
     {
       "id": "diet_010",
@@ -319,7 +319,7 @@
       "trigger": { "goal": "fat_loss", "consecutive_cut_weeks_gte": 12 },
       "action": { "type": "diet_break", "duration_weeks": 1, "calories": "maintenance" },
       "rationale": "Strategic diet breaks at maintenance restore hormones and adherence.",
-      "book_reference": { "chapter": "Ch. 11 — Cutting", "quote": "A week at maintenance every 8-12 weeks gives your body — and your willpower — a chance to reset." }
+      "book_reference": { "chapter": "Ch. 11 - Cutting", "quote": "A week at maintenance every 8-12 weeks gives your body - and your willpower - a chance to reset." }
     },
     {
       "id": "diet_011",
@@ -328,16 +328,16 @@
       "trigger": { "goal": "build_max", "weekly_weight_gain_pct_gt": 0.5 },
       "action": { "type": "decrease_calories", "delta_kcal": 200 },
       "rationale": "Gaining >0.5% bodyweight/week is overwhelmingly fat.",
-      "book_reference": { "chapter": "Ch. 12 — Lean Bulking", "quote": "Beyond about 0.25-0.5% per week, you're not building muscle faster — just gaining fat faster." }
+      "book_reference": { "chapter": "Ch. 12 - Lean Bulking", "quote": "Beyond about 0.25-0.5% per week, you're not building muscle faster - just gaining fat faster." }
     },
     {
       "id": "diet_012",
       "domain": "diet",
-      "name": "Adherence collapse — simplify",
+      "name": "Adherence collapse - simplify",
       "trigger": { "diet_adherence_pct_lt": 50, "weeks": 2 },
       "action": { "type": "simplify_meal_plan" },
       "rationale": "Low adherence indicates the plan is too complex or restrictive.",
-      "book_reference": { "chapter": "Ch. 13 — Adherence", "quote": "The best diet is the one you actually follow — complexity is the enemy of consistency." }
+      "book_reference": { "chapter": "Ch. 13 - Adherence", "quote": "The best diet is the one you actually follow - complexity is the enemy of consistency." }
     },
     {
       "id": "recov_001",
@@ -346,7 +346,7 @@
       "trigger": { "any": true },
       "action": { "type": "lifestyle", "sleep_hours_min": 7, "sleep_hours_optimal": 8 },
       "rationale": "Sleep below 7 hours suppresses MPS and increases cortisol.",
-      "book_reference": { "chapter": "Ch. 8 — Recovery", "quote": "Sleep is the most underrated anabolic in the toolkit; nothing replaces it." }
+      "book_reference": { "chapter": "Ch. 8 - Recovery", "quote": "Sleep is the most underrated anabolic in the toolkit; nothing replaces it." }
     },
     {
       "id": "recov_002",
@@ -355,7 +355,7 @@
       "trigger": { "soreness_persistent_days_gt": 3 },
       "action": { "type": "reduce_volume", "pct": 20 },
       "rationale": "Soreness lasting >3 days indicates excessive volume or eccentric overload.",
-      "book_reference": { "chapter": "Ch. 8 — Recovery", "quote": "Soreness is a poor measure of growth — but persistent soreness is a clear measure of overreach." }
+      "book_reference": { "chapter": "Ch. 8 - Recovery", "quote": "Soreness is a poor measure of growth - but persistent soreness is a clear measure of overreach." }
     },
     {
       "id": "recov_003",
@@ -364,16 +364,16 @@
       "trigger": { "same_muscle_consecutive_days": true },
       "action": { "type": "redistribute_split" },
       "rationale": "Hitting the same muscle on consecutive days compromises recovery for both sessions.",
-      "book_reference": { "chapter": "Ch. 4 — Training Frequency", "quote": "48 hours between same-muscle sessions is the minimum for meaningful recovery." }
+      "book_reference": { "chapter": "Ch. 4 - Training Frequency", "quote": "48 hours between same-muscle sessions is the minimum for meaningful recovery." }
     },
     {
       "id": "mistake_001",
       "domain": "common_mistakes",
       "name": "Ego lifting warning",
       "trigger": { "rir_negative_pattern": true },
-      "action": { "type": "warning", "message": "Form likely breaking down — drop 10% load." },
+      "action": { "type": "warning", "message": "Form likely breaking down - drop 10% load." },
       "rationale": "Consistently failing reps with bad form indicates ego lifting.",
-      "book_reference": { "chapter": "Ch. 14 — Common Mistakes", "quote": "If you have to cheat the weight up, the weight isn't yours yet." }
+      "book_reference": { "chapter": "Ch. 14 - Common Mistakes", "quote": "If you have to cheat the weight up, the weight isn't yours yet." }
     },
     {
       "id": "mistake_002",
@@ -382,25 +382,25 @@
       "trigger": { "plan_changes_per_month_gt": 2 },
       "action": { "type": "warning", "message": "Stick with the plan for 6+ weeks before judging it." },
       "rationale": "Programs need 6-8 weeks to express their results.",
-      "book_reference": { "chapter": "Ch. 14 — Common Mistakes", "quote": "Stop switching programs every two weeks — no plan can prove itself in fourteen days." }
+      "book_reference": { "chapter": "Ch. 14 - Common Mistakes", "quote": "Stop switching programs every two weeks - no plan can prove itself in fourteen days." }
     },
     {
       "id": "mistake_003",
       "domain": "common_mistakes",
       "name": "Excessive cardio in a bulk",
       "trigger": { "goal": "build_max", "cardio_min_per_week_gt": 180 },
-      "action": { "type": "warning", "message": "High cardio volume conflicts with hypertrophy — cap at 2-3 short sessions." },
+      "action": { "type": "warning", "message": "High cardio volume conflicts with hypertrophy - cap at 2-3 short sessions." },
       "rationale": "Excessive cardio interferes with muscle protein synthesis recovery.",
-      "book_reference": { "chapter": "Ch. 14 — Common Mistakes", "quote": "Cardio doesn't kill gains; too much cardio kills gains." }
+      "book_reference": { "chapter": "Ch. 14 - Common Mistakes", "quote": "Cardio doesn't kill gains; too much cardio kills gains." }
     },
     {
       "id": "mistake_004",
       "domain": "common_mistakes",
       "name": "Skipping legs",
       "trigger": { "leg_weekly_sets_lt_mev": true },
-      "action": { "type": "warning", "message": "Lower body undertrained — add at least one leg session." },
+      "action": { "type": "warning", "message": "Lower body undertrained - add at least one leg session." },
       "rationale": "Leg training drives systemic hormonal response and total muscle balance.",
-      "book_reference": { "chapter": "Ch. 14 — Common Mistakes", "quote": "Skipping legs isn't a meme — it's a measurable loss in your total muscle mass potential." }
+      "book_reference": { "chapter": "Ch. 14 - Common Mistakes", "quote": "Skipping legs isn't a meme - it's a measurable loss in your total muscle mass potential." }
     },
     {
       "id": "session_001",
@@ -409,79 +409,79 @@
       "trigger": { "session_duration_min_gt": 90 },
       "action": { "type": "shorten_session" },
       "rationale": "Sessions over 90 minutes show diminishing returns and elevated cortisol.",
-      "book_reference": { "chapter": "Ch. 5 — Volume Landmarks", "quote": "Past 75-90 minutes, you're paying recovery debt for marginal new stimulus." }
+      "book_reference": { "chapter": "Ch. 5 - Volume Landmarks", "quote": "Past 75-90 minutes, you're paying recovery debt for marginal new stimulus." }
     },
     {
       "id": "session_002",
       "domain": "volume",
-      "name": "Rest interval — compounds",
+      "name": "Rest interval - compounds",
       "trigger": { "exercise_type": "compound" },
       "action": { "type": "rest_seconds", "value": 180 },
       "rationale": "Compounds need 2-3 minutes rest for full ATP recovery.",
-      "book_reference": { "chapter": "Ch. 6 — Exercise Selection", "quote": "Short rests on big lifts cost you reps — and reps are the currency of growth." }
+      "book_reference": { "chapter": "Ch. 6 - Exercise Selection", "quote": "Short rests on big lifts cost you reps - and reps are the currency of growth." }
     },
     {
       "id": "session_003",
       "domain": "volume",
-      "name": "Rest interval — isolations",
+      "name": "Rest interval - isolations",
       "trigger": { "exercise_type": "isolation" },
       "action": { "type": "rest_seconds", "value": 90 },
-      "rationale": "Isolations recover faster — 60-90s rest preserves intensity without inflating session length.",
-      "book_reference": { "chapter": "Ch. 6 — Exercise Selection", "quote": "Curls don't need three-minute rests; that time is better spent on the next set." }
+      "rationale": "Isolations recover faster - 60-90s rest preserves intensity without inflating session length.",
+      "book_reference": { "chapter": "Ch. 6 - Exercise Selection", "quote": "Curls don't need three-minute rests; that time is better spent on the next set." }
     },
     {
       "id": "prog_004",
       "domain": "progression",
-      "name": "RIR drift — increase load",
+      "name": "RIR drift - increase load",
       "trigger": { "avg_rir_gte": 3, "weeks": 1 },
       "action": { "type": "increase_load", "delta_pct": 5 },
       "rationale": "RIR consistently ≥ 3 indicates the weight is too light.",
-      "book_reference": { "chapter": "Ch. 3 — Progression Models", "quote": "If you finish every set with three reps in the tank, you're warming up, not training." }
+      "book_reference": { "chapter": "Ch. 3 - Progression Models", "quote": "If you finish every set with three reps in the tank, you're warming up, not training." }
     },
     {
       "id": "prog_005",
       "domain": "progression",
-      "name": "Negative RIR pattern — reduce load",
+      "name": "Negative RIR pattern - reduce load",
       "trigger": { "rir_zero_consecutive_sessions_gte": 3 },
       "action": { "type": "reduce_load", "delta_pct": 5 },
       "rationale": "Consistent 0 RIR with form breakdown signals overreach on the working weight.",
-      "book_reference": { "chapter": "Ch. 7 — Fatigue Management", "quote": "Three sessions in a row at failure usually means the weight, not the lifter, is the problem." }
+      "book_reference": { "chapter": "Ch. 7 - Fatigue Management", "quote": "Three sessions in a row at failure usually means the weight, not the lifter, is the problem." }
     },
     {
       "id": "diet_013",
       "domain": "diet",
-      "name": "Activity factor — sedentary",
+      "name": "Activity factor - sedentary",
       "trigger": { "activity_level": "sedentary" },
       "action": { "type": "tdee_multiplier", "value": 1.4 },
       "rationale": "Sedentary lifestyle plus training: 1.4× BMR.",
-      "book_reference": { "chapter": "Ch. 10 — Diet Foundations", "quote": "Sedentary doesn't mean lazy — it means non-training movement is minimal." }
+      "book_reference": { "chapter": "Ch. 10 - Diet Foundations", "quote": "Sedentary doesn't mean lazy - it means non-training movement is minimal." }
     },
     {
       "id": "diet_014",
       "domain": "diet",
-      "name": "Activity factor — light",
+      "name": "Activity factor - light",
       "trigger": { "activity_level": "light" },
       "action": { "type": "tdee_multiplier", "value": 1.55 },
       "rationale": "Light daily activity plus training: 1.55× BMR.",
-      "book_reference": { "chapter": "Ch. 10 — Diet Foundations", "quote": "A daily walk and gym training puts most people here." }
+      "book_reference": { "chapter": "Ch. 10 - Diet Foundations", "quote": "A daily walk and gym training puts most people here." }
     },
     {
       "id": "diet_015",
       "domain": "diet",
-      "name": "Activity factor — moderate",
+      "name": "Activity factor - moderate",
       "trigger": { "activity_level": "moderate" },
       "action": { "type": "tdee_multiplier", "value": 1.65 },
       "rationale": "Moderate daily activity: 1.65× BMR.",
-      "book_reference": { "chapter": "Ch. 10 — Diet Foundations", "quote": "Moderate means consistently active outside the gym — most service workers fit here." }
+      "book_reference": { "chapter": "Ch. 10 - Diet Foundations", "quote": "Moderate means consistently active outside the gym - most service workers fit here." }
     },
     {
       "id": "diet_016",
       "domain": "diet",
-      "name": "Activity factor — active",
+      "name": "Activity factor - active",
       "trigger": { "activity_level": "active" },
       "action": { "type": "tdee_multiplier", "value": 1.75 },
       "rationale": "Very active daily life plus training: 1.75× BMR.",
-      "book_reference": { "chapter": "Ch. 10 — Diet Foundations", "quote": "Physical jobs and daily cardio land you in the active band." }
+      "book_reference": { "chapter": "Ch. 10 - Diet Foundations", "quote": "Physical jobs and daily cardio land you in the active band." }
     },
     {
       "id": "diet_017",
@@ -490,16 +490,16 @@
       "trigger": { "goal": "fat_loss", "consecutive_deficit_weeks_gte": 4 },
       "action": { "type": "refeed", "carb_g_per_kg": 4, "duration_days": 1 },
       "rationale": "Strategic carb refeed restores leptin and training performance.",
-      "book_reference": { "chapter": "Ch. 11 — Cutting", "quote": "A one-day carb refeed every couple of weeks helps adherence more than physiology, but both matter." }
+      "book_reference": { "chapter": "Ch. 11 - Cutting", "quote": "A one-day carb refeed every couple of weeks helps adherence more than physiology, but both matter." }
     },
     {
       "id": "exsel_007",
       "domain": "exercise_selection",
-      "name": "ROM — full range preferred",
+      "name": "ROM - full range preferred",
       "trigger": { "any": true },
       "action": { "type": "prefer_full_rom" },
       "rationale": "Full range of motion produces more hypertrophy than partials in nearly every comparison.",
-      "book_reference": { "chapter": "Ch. 6 — Exercise Selection", "quote": "Train the muscle through every degree it owns — not just the comfortable ones." }
+      "book_reference": { "chapter": "Ch. 6 - Exercise Selection", "quote": "Train the muscle through every degree it owns - not just the comfortable ones." }
     },
     {
       "id": "exsel_008",
@@ -508,7 +508,7 @@
       "trigger": { "experience_level": "Beginner" },
       "action": { "type": "machine_first_for_compounds" },
       "rationale": "Machines reduce stability cost, letting beginners learn movement patterns safely.",
-      "book_reference": { "chapter": "Ch. 6 — Exercise Selection", "quote": "Machines aren't training wheels — they're tools that let you focus on the muscle, not the balance." }
+      "book_reference": { "chapter": "Ch. 6 - Exercise Selection", "quote": "Machines aren't training wheels - they're tools that let you focus on the muscle, not the balance." }
     }
   ]
 }

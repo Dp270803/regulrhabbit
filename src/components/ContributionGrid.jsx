@@ -67,7 +67,7 @@ export default function ContributionGrid({ plan, checkIns }) {
         className="text-[10px] font-medium uppercase tracking-[0.18em] mb-4"
         style={{ color: 'var(--color-text-3)' }}
       >
-        Activity — 12 Weeks
+        Activity - 12 Weeks
       </p>
 
       <div className="flex gap-[3px] overflow-x-auto pb-1" style={{ scrollbarWidth: 'none' }}>

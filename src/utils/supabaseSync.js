@@ -3,7 +3,7 @@
  *
  * Syncs localStorage data to/from Supabase.
  * Called after sign-in (pull from Supabase) and after each data mutation
- * (push to Supabase). The app always reads from localStorage first — Supabase
+ * (push to Supabase). The app always reads from localStorage first - Supabase
  * is the cloud backup, not the primary read layer.
  *
  * Strategy:
@@ -56,7 +56,7 @@ export async function pushCheckInToSupabase(userId, checkIn, planId) {
 
 export async function pushBadgeToSupabase(userId, badge) {
   if (!supabase) return;
-  // Upsert — ignore if already exists (UNIQUE constraint handles it)
+  // Upsert - ignore if already exists (UNIQUE constraint handles it)
   await supabase.from('badges').upsert({
     user_id: userId,
     badge_id: badge.id,

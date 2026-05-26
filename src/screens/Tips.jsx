@@ -169,7 +169,7 @@ export default function Tips() {
     const loadAll = async () => {
       const [tip, cmsData] = await Promise.all([selectTip(d), fetchTipsPage()]);
       setTodayTip(tip);
-      // Book-grounded tip — only useful for gym users where the book applies
+      // Book-grounded tip - only useful for gym users where the book applies
       const activePlan = d.plans?.find(p => p.status === 'active');
       if (activePlan?.activity === 'gym') {
         try { setBookTip(selectBookTip(d)); } catch { /* keep null */ }
@@ -204,7 +204,7 @@ export default function Tips() {
               fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.2em',
               textTransform: 'uppercase', color: C.faint, marginBottom: '14px',
             }}>
-              Coach Insight — From The Muscle Ladder
+              Coach Insight - From The Muscle Ladder
             </p>
             <div style={{
               background: `rgba(${C.primaryRgb},0.04)`,
@@ -273,7 +273,7 @@ export default function Tips() {
               transition: 'transform 0.7s ease',
             }} />
 
-            {/* Dark gradient scrim — bottom-heavy so text stays legible */}
+            {/* Dark gradient scrim - bottom-heavy so text stays legible */}
             <div style={{
               position: 'absolute', inset: 0,
               background: `linear-gradient(to top, ${C.bg} 0%, ${C.bg}70 50%, transparent 100%)`,

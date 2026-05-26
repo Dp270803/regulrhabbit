@@ -21,7 +21,7 @@
           { "day_index": 1, "title": "Full Song Build", "duration_minutes": 30, "blocks": [{ "type": "warmup", "detail": "Warm-up routine", "duration_minutes": 5 }, { "type": "main", "detail": "Full verse + chorus connected. Work on transitions. Add simple dynamics (softer verse, bigger chorus). Record.", "duration_minutes": 20 }, { "type": "cooldown", "detail": "Cool-down + hydrate", "duration_minutes": 5 }] }
         ]},
         { "week_number": 4, "sessions": [
-          { "day_index": 0, "title": "Performance Prep", "duration_minutes": 30, "blocks": [{ "type": "warmup", "detail": "Full warm-up", "duration_minutes": 5 }, { "type": "main", "detail": "Full song run-through ×3. Work on weak sections. Add personal style — riffs, holds, dynamics.", "duration_minutes": 20 }, { "type": "cooldown", "detail": "Cool-down", "duration_minutes": 5 }] },
+          { "day_index": 0, "title": "Performance Prep", "duration_minutes": 30, "blocks": [{ "type": "warmup", "detail": "Full warm-up", "duration_minutes": 5 }, { "type": "main", "detail": "Full song run-through ×3. Work on weak sections. Add personal style - riffs, holds, dynamics.", "duration_minutes": 20 }, { "type": "cooldown", "detail": "Cool-down", "duration_minutes": 5 }] },
           { "day_index": 1, "title": "Recording Session", "duration_minutes": 30, "blocks": [{ "type": "warmup", "detail": "Full warm-up", "duration_minutes": 5 }, { "type": "main", "detail": "Record full performance ×3 takes. Listen back and note improvements from week 1. Choose best take.", "duration_minutes": 20 }, { "type": "cooldown", "detail": "Cool-down, celebrate progress", "duration_minutes": 5 }] }
         ]}
       ]

@@ -1,9 +1,9 @@
 /**
- * personalise-plan — Netlify Function
+ * personalise-plan - Netlify Function
  *
  * Persona C entry point: after the user selects a pre-built Nippard program,
  * this function returns a list of exercise substitutions tailored to their
- * body stats, training experience, and injuries — grounded in The Muscle Ladder.
+ * body stats, training experience, and injuries - grounded in The Muscle Ladder.
  *
  * The function does NOT rewrite the plan structure (days, sets, reps); it only
  * proposes 1-1 exercise swaps that the client applies via the existing
@@ -38,7 +38,7 @@ const SYSTEM_PROMPT_TASK = `You are a strength coach personalising a pre-built N
 Your job: given the plan's exercise list and the user's profile (especially injuries), recommend AT MOST 4 exercise substitutions that:
 1. Train the same primary muscle as the original
 2. Avoid the user's injuries (e.g., lower-back issue → swap conventional deadlift for trap-bar; knee issue → swap back squat for hack squat or leg press)
-3. Match the user's experience level — beginners get simpler/safer variations
+3. Match the user's experience level - beginners get simpler/safer variations
 4. Cite a book_reference (chapter OR "General evidence-based practice")
 
 If the user has no injuries and is intermediate or advanced, you may return zero substitutions and just include a short "notes" field about how the plan suits them.
@@ -59,7 +59,7 @@ Output ONLY valid JSON, no markdown:
 
 Hard rules:
 - Never suggest an exercise that's likely to aggravate the listed injuries.
-- Never invent new exercises — stay within standard barbell/dumbbell/machine vocabulary.
+- Never invent new exercises - stay within standard barbell/dumbbell/machine vocabulary.
 - Cap substitutions at 4.
 - If the input exercise list is empty, return empty substitutions.`;
 

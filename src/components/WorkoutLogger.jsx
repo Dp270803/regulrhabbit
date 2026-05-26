@@ -200,7 +200,7 @@ export default function WorkoutLogger({ exercises, session, userId, onSave, onAn
                 key={field}
                 type={field === 'reps' ? 'text' : 'number'}
                 inputMode={field === 'reps' ? 'text' : 'decimal'}
-                placeholder={field === 'rir' ? '0–5' : '—'}
+                placeholder={field === 'rir' ? '0–5' : '-'}
                 value={log[field]}
                 onChange={e => updateLog(i, field, e.target.value)}
                 style={{

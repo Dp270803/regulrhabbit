@@ -6,7 +6,7 @@ const DAY_KEYS = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'satur
 
 function abbrev(title) {
   if (!title) return '';
-  const short = title.split('—')[0].trim().split(' ').slice(0, 2).join(' ');
+  const short = title.split('-')[0].trim().split(' ').slice(0, 2).join(' ');
   return short.length > 10 ? short.slice(0, 9) + '…' : short;
 }
 

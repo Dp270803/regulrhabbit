@@ -4,9 +4,9 @@
       "bot_message": "How do you want to start?",
       "field": "user_type",
       "options": [
-        { "label": "Build me a plan — I'll answer a few questions", "value": "guided", "next": "welcome" },
-        { "label": "I have my own plan — I'll enter my exercises", "value": "self_directed", "next": "import" },
-        { "label": "I have a plan — check it for me", "value": "validated", "next": "import_critique" }
+        { "label": "Build me a plan - I'll answer a few questions", "value": "guided", "next": "welcome" },
+        { "label": "I have my own plan - I'll enter my exercises", "value": "self_directed", "next": "import" },
+        { "label": "I have a plan - check it for me", "value": "validated", "next": "import_critique" }
       ]
     },
     "welcome": {
@@ -14,16 +14,16 @@
       "field": "gym_goal",
       "options": [
         { "label": "Build muscle and gain strength", "value": "build_max", "next": "experience" },
-        { "label": "Build muscle — limited time (45–60 min sessions)", "value": "build_efficient", "next": "experience" },
+        { "label": "Build muscle - limited time (45–60 min sessions)", "value": "build_efficient", "next": "experience" },
         { "label": "Lose fat while maintaining muscle", "value": "fat_loss", "next": "experience" },
-        { "label": "Body recomposition — lose fat and gain muscle", "value": "recomp", "next": "experience" }
+        { "label": "Body recomposition - lose fat and gain muscle", "value": "recomp", "next": "experience" }
       ]
     },
     "experience": {
       "bot_message": "How long have you been lifting consistently?",
       "field": "experience_level",
       "options": [
-        { "label": "Brand new — never trained before", "value": "Beginner", "next": "days" },
+        { "label": "Brand new - never trained before", "value": "Beginner", "next": "days" },
         { "label": "Less than a year, still learning", "value": "Beginner", "next": "days" },
         { "label": "1–3 years, decent base", "value": "Intermediate", "next": "days" },
         { "label": "3+ years, advanced lifter", "value": "Advanced", "next": "days" }
@@ -33,20 +33,20 @@
       "bot_message": "How many days a week can you realistically commit?",
       "field": "frequency",
       "options": [
-        { "label": "2 days — minimum effective dose", "value": 2, "next": "equipment" },
-        { "label": "3 days — ideal for most people", "value": 3, "next": "equipment" },
-        { "label": "4 days — solid split option", "value": 4, "next": "equipment" },
-        { "label": "5 days — high commitment", "value": 5, "next": "equipment" },
-        { "label": "6 days — maximum frequency", "value": 6, "next": "equipment" }
+        { "label": "2 days - minimum effective dose", "value": 2, "next": "equipment" },
+        { "label": "3 days - ideal for most people", "value": 3, "next": "equipment" },
+        { "label": "4 days - solid split option", "value": 4, "next": "equipment" },
+        { "label": "5 days - high commitment", "value": 5, "next": "equipment" },
+        { "label": "6 days - maximum frequency", "value": 6, "next": "equipment" }
       ]
     },
     "equipment": {
       "bot_message": "What equipment do you have access to?",
       "field": "equipment",
       "options": [
-        { "label": "Full gym — barbells, dumbbells, cables, machines", "value": "Full gym", "next": "split" },
-        { "label": "Home gym — barbell, dumbbells, rack and bench", "value": "Home gym", "next": "split" },
-        { "label": "Dumbbells only — home or limited gym", "value": "Dumbbells only", "next": "split" },
+        { "label": "Full gym - barbells, dumbbells, cables, machines", "value": "Full gym", "next": "split" },
+        { "label": "Home gym - barbell, dumbbells, rack and bench", "value": "Home gym", "next": "split" },
+        { "label": "Dumbbells only - home or limited gym", "value": "Dumbbells only", "next": "split" },
         { "label": "Bodyweight only", "value": "Bodyweight", "next": "split" }
       ]
     },
@@ -55,11 +55,11 @@
       "field": "split_preference",
       "optional": true,
       "options": [
-        { "label": "Full Body — trains all muscle groups every session", "value": "Full Body", "next": "schedule" },
-        { "label": "Upper / Lower — alternates upper and lower body days", "value": "Upper / Lower", "next": "schedule" },
-        { "label": "Push / Pull / Legs — focused sessions per muscle group", "value": "Push / Pull / Legs", "next": "schedule" },
-        { "label": "Hybrid — Upper/Lower + PPL across 5 days", "value": "Hybrid (Upper/Lower + PPL)", "next": "schedule" },
-        { "label": "No preference — recommend the best one", "value": "none", "next": "schedule" }
+        { "label": "Full Body - trains all muscle groups every session", "value": "Full Body", "next": "schedule" },
+        { "label": "Upper / Lower - alternates upper and lower body days", "value": "Upper / Lower", "next": "schedule" },
+        { "label": "Push / Pull / Legs - focused sessions per muscle group", "value": "Push / Pull / Legs", "next": "schedule" },
+        { "label": "Hybrid - Upper/Lower + PPL across 5 days", "value": "Hybrid (Upper/Lower + PPL)", "next": "schedule" },
+        { "label": "No preference - recommend the best one", "value": "none", "next": "schedule" }
       ]
     },
     "schedule": {
@@ -89,10 +89,10 @@
       "bot_message": "Outside of gym sessions, how active is your daily life?",
       "field": "activity_level",
       "options": [
-        { "label": "Sedentary — mostly desk job, little movement", "value": "sedentary", "next": "summary" },
-        { "label": "Lightly active — some walking, light movement", "value": "light", "next": "summary" },
-        { "label": "Moderately active — on feet often or occasional cardio", "value": "moderate", "next": "summary" },
-        { "label": "Very active — physical job or daily cardio", "value": "active", "next": "summary" }
+        { "label": "Sedentary - mostly desk job, little movement", "value": "sedentary", "next": "summary" },
+        { "label": "Lightly active - some walking, light movement", "value": "light", "next": "summary" },
+        { "label": "Moderately active - on feet often or occasional cardio", "value": "moderate", "next": "summary" },
+        { "label": "Very active - physical job or daily cardio", "value": "active", "next": "summary" }
       ]
     },
     "summary": {

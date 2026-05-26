@@ -1,5 +1,5 @@
 /**
- * generate-meal-plan — Netlify Function
+ * generate-meal-plan - Netlify Function
  *
  * Generates a 7-day meal template adapted to the user's macros, cuisine,
  * cooking style, and dietary preferences. Macro math is deterministic
@@ -20,11 +20,11 @@
 
 import { buildBookSystemBlock } from './_book-context.js';
 
-const TASK_PROMPT = `You are a professional nutritionist building a realistic 7-day meal plan. Use the book context (The Muscle Ladder by Jeff Nippard) for macro distribution and meal timing principles. For actual meal construction — ingredients, cuisine, recipes — use your general nutrition knowledge freely.
+const TASK_PROMPT = `You are a professional nutritionist building a realistic 7-day meal plan. Use the book context (The Muscle Ladder by Jeff Nippard) for macro distribution and meal timing principles. For actual meal construction - ingredients, cuisine, recipes - use your general nutrition knowledge freely.
 
 Your job is realism, not novelty. Match the user's actual culture, cuisine, and cooking style. Avoid generic chicken-and-broccoli unless the user has indicated that preference.
 
-Return ONLY this JSON — no prose, no markdown:
+Return ONLY this JSON - no prose, no markdown:
 {
   "week_plan": [
     {
@@ -43,17 +43,17 @@ Return ONLY this JSON — no prose, no markdown:
     }
   ],
   "notes": "<1-2 sentences on adherence / prep / culture fit>",
-  "book_reference": "Ch. 10 — Diet Foundations"
+  "book_reference": "Ch. 10 - Diet Foundations"
 }
 
 Rules:
 - 3-5 meals per day. Daily total must come within ±5% of the target calories and ±10% of each macro.
-- Repeat 2-3 staple meals across the week — real people don't cook 21 unique meals.
+- Repeat 2-3 staple meals across the week - real people don't cook 21 unique meals.
 - All 7 days must be present (Mon through Sun).
 - Protein distributed roughly evenly across meals (3-5 meals, 20-40g protein each).
 - Include simple item lists (e.g. "100g chicken breast", "1 cup rice"), not recipes.
 - If cuisine is unspecified, default to a globally-neutral pantry mix.
-- Return only the JSON object. Do not truncate — all 7 days must be complete.`;
+- Return only the JSON object. Do not truncate - all 7 days must be complete.`;
 
 const FALLBACK = {
   week_plan: [],
@@ -138,7 +138,7 @@ export const handler = async (event) => {
       meals: Array.isArray(d.meals) ? d.meals.slice(0, 5) : [],
     }));
     if (typeof result.notes !== 'string') result.notes = '';
-    if (typeof result.book_reference !== 'string') result.book_reference = 'Ch. 10 — Diet Foundations';
+    if (typeof result.book_reference !== 'string') result.book_reference = 'Ch. 10 - Diet Foundations';
 
     return { statusCode: 200, body: JSON.stringify(result) };
   } catch {
