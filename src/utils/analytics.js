@@ -1,42 +1,74 @@
-import posthog from 'posthog-js';
+/**
+ * Analytics — Supabase-backed event tracking.
+ *
+ * All data stays in your Supabase project (India region if configured there).
+ * No third-party analytics services; no data leaves your infrastructure.
+ *
+ * Usage:
+ *   import { analytics } from './analytics';
+ *   analytics.workoutLogged({ exercises_count: 5, sets_logged: 20 });
+ *
+ * To view data: Supabase dashboard -> SQL editor -> query analytics_events
+ * (requires service_role key; anon users cannot SELECT this table).
+ */
 
-export function initAnalytics() {
-  const key = import.meta.env.VITE_POSTHOG_KEY;
-  if (!key) return;
-  posthog.init(key, {
-    api_host: import.meta.env.VITE_POSTHOG_HOST || 'https://us.i.posthog.com',
-    capture_pageview: false,  // manual via trackPage()
-    capture_pageleave: true,
-    persistence: 'localStorage+cookie',
-    autocapture: false,       // we instrument manually for clean data
+import { supabase } from './supabaseClient.js';
+
+// ── Identity helpers ──────────────────────────────────────────────────────────
+
+function getAnonId() {
+  try {
+    let id = localStorage.getItem('regulr_anon_id');
+    if (!id) {
+      id = crypto.randomUUID();
+      localStorage.setItem('regulr_anon_id', id);
+    }
+    return id;
+  } catch { return 'unknown'; }
+}
+
+function getSessionId() {
+  try {
+    let id = sessionStorage.getItem('regulr_session_id');
+    if (!id) {
+      id = crypto.randomUUID();
+      sessionStorage.setItem('regulr_session_id', id);
+    }
+    return id;
+  } catch { return 'unknown'; }
+}
+
+let _userId = null;
+
+export function identify(userId, _traits = {}) {
+  _userId = userId ? String(userId) : null;
+}
+
+export function resetIdentity() {
+  _userId = null;
+}
+
+// ── Core track function ───────────────────────────────────────────────────────
+
+export function track(event, props = {}) {
+  if (!supabase) return;
+  supabase.from('analytics_events').insert({
+    event_name:   event,
+    properties:   props,
+    anonymous_id: getAnonId(),
+    session_id:   getSessionId(),
+    user_id:      _userId,
+    path:         typeof window !== 'undefined' ? window.location.pathname : null,
+  }).then(({ error }) => {
+    if (error) console.debug('[analytics] insert error:', error.message);
   });
 }
 
 export function trackPage(path) {
-  posthog.capture('$pageview', { path });
+  track('$pageview', { path });
 }
 
-export function identify(userId, traits = {}) {
-  posthog.identify(userId, traits);
-}
-
-export function resetIdentity() {
-  posthog.reset();
-}
-
-export function track(event, props = {}) {
-  posthog.capture(event, props);
-}
-
-export function optOut() {
-  posthog.opt_out_capturing();
-}
-
-export function optIn() {
-  posthog.opt_in_capturing();
-}
-
-// ── Backward-compat named exports (used by existing screens) ─────────────────
+// ── Backward-compat named exports (used by existing screens) ──────────────────
 
 export const trackPageView = (screenName) => track('screen_viewed', { screen_name: screenName });
 export const trackOnboardingStarted = () => track('onboarding_started');
@@ -51,70 +83,46 @@ export const trackLevelUp = (newLevel, totalXP) => track('level_up', { new_level
 export const trackAppOpened = (returnState, daysSinceLastVisit) =>
   track('app_opened', { return_state: returnState, days_since_last_visit: daysSinceLastVisit, time_of_day: new Date().getHours() });
 
-// ── Named events (single source of truth for all event names) ─────────────────
+// ── Named events ──────────────────────────────────────────────────────────────
 
 export const analytics = {
   // Onboarding
-  onboardingStarted: () => track('onboarding_started'),
-  onboardingCompleted: (props) => track('onboarding_completed', props),
-  // props: { activity_type, experience_level, goal, plan_type: 'generated'|'imported'|'custom' }
-
-  planTypeChosen: (planType) => track('plan_type_chosen', { plan_type: planType }),
+  onboardingStarted:    ()     => track('onboarding_started'),
+  onboardingCompleted:  (p)    => track('onboarding_completed', p),
+  planTypeChosen:       (type) => track('plan_type_chosen', { plan_type: type }),
 
   // Workout
-  workoutLogged: (props) => track('workout_logged', props),
-  // props: { session_day, exercises_count, sets_logged }
-
-  sessionCompleted: (props) => track('session_completed', props),
-  // props: { plan_id, activity, week_number, xp_earned, streak_count }
+  workoutLogged:        (p) => track('workout_logged', p),
+  sessionCompleted:     (p) => track('session_completed', p),
 
   // Diet
-  mealPlanGenerated: (props) => track('meal_plan_generated', props),
-  // props: { calories, goal, cuisine, dietary_preference }
-
-  dietAdaptationAccepted: (props) => track('diet_adaptation_accepted', props),
-  // props: { recommendation, delta_kcal }
-
-  dietAdaptationDismissed: () => track('diet_adaptation_dismissed'),
-
-  dietCheckinLogged: (adherence) => track('diet_checkin_logged', { adherence }),
+  mealPlanGenerated:       (p)  => track('meal_plan_generated', p),
+  dietAdaptationAccepted:  (p)  => track('diet_adaptation_accepted', p),
+  dietAdaptationDismissed: ()   => track('diet_adaptation_dismissed'),
+  dietCheckinLogged:       (v)  => track('diet_checkin_logged', { adherence: v }),
 
   // Plan
-  planCritiqueRequested: () => track('plan_critique_requested'),
-  planCritiqueViewed: (score) => track('plan_critique_viewed', { overall_score: score }),
+  planCritiqueRequested: ()      => track('plan_critique_requested'),
+  planCritiqueViewed:    (score) => track('plan_critique_viewed', { overall_score: score }),
+  weeklyMutationAccepted:  (n)   => track('weekly_mutation_accepted', { changes_count: n }),
+  weeklyMutationDismissed: ()    => track('weekly_mutation_dismissed'),
 
-  weeklyMutationAccepted: (changesCount) => track('weekly_mutation_accepted', { changes_count: changesCount }),
-  weeklyMutationDismissed: () => track('weekly_mutation_dismissed'),
-
-  // Coach / Q&A
-  askCoachQuestion: (props) => track('ask_coach_question', props),
-  // props: { has_substitution_request }
+  // Coach
+  askCoachQuestion: (p) => track('ask_coach_question', p),
 
   // Profile
-  profileSaved: (props) => track('profile_saved', props),
-  // props: { goal, experience_level, has_injuries }
-
-  weightLogged: () => track('weight_logged'),
-
-  badgeEarned: (props) => track('badge_earned', props),
-  levelUp: (newLevel, totalXP) => track('level_up', { new_level: newLevel, total_xp: totalXP }),
-
-  themeToggled: (theme) => track('theme_toggled', { theme }),
+  profileSaved:  (p)     => track('profile_saved', p),
+  weightLogged:  ()      => track('weight_logged'),
+  badgeEarned:   (p)     => track('badge_earned', p),
+  levelUp:       (l, xp) => track('level_up', { new_level: l, total_xp: xp }),
+  themeToggled:  (t)     => track('theme_toggled', { theme: t }),
 
   // Auth
-  signedUp: () => track('signed_up'),
-  signedIn: () => track('signed_in'),
+  signedUp:  () => track('signed_up'),
+  signedIn:  () => track('signed_in'),
   signedOut: () => track('signed_out'),
 
-  // App open / return
-  appOpened: (props) => track('app_opened', props),
-  // props: { return_state, days_since_last_visit, time_of_day }
-
-  // Engagement
-  tipViewed: (props) => track('tip_viewed', props),
-  // props: { activity_type, tip_index }
-
-  progressTabViewed: () => track('progress_tab_viewed'),
-
-  screenViewed: (screenName) => track('screen_viewed', { screen_name: screenName }),
+  // App lifecycle
+  appOpened:     (p)    => track('app_opened', p),
+  screenViewed:  (name) => track('screen_viewed', { screen_name: name }),
 };

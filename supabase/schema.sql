@@ -154,6 +154,35 @@ CREATE POLICY "Users can delete own performance_log" ON public.performance_log F
 -- Index for fast trend queries
 CREATE INDEX IF NOT EXISTS perf_log_user_exercise ON public.performance_log (user_id, exercise_name, date DESC);
 
+-- ─── Analytics events ────────────────────────────────────────────────────────
+-- Append-only event log. Works for anonymous users (no sign-in required).
+-- INSERT is open to anon + authenticated; SELECT is restricted to service_role
+-- only (query via Supabase dashboard or a backend function with service key).
+CREATE TABLE IF NOT EXISTS public.analytics_events (
+  id            UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  event_name    TEXT NOT NULL,
+  properties    JSONB DEFAULT '{}',
+  anonymous_id  TEXT,         -- persists across sessions (localStorage)
+  session_id    TEXT,         -- resets on tab close (sessionStorage)
+  user_id       TEXT,         -- set after identify(); nullable for anon users
+  path          TEXT,         -- window.location.pathname at time of event
+  created_at    TIMESTAMPTZ DEFAULT NOW()
+);
+
+ALTER TABLE public.analytics_events ENABLE ROW LEVEL SECURITY;
+
+-- Anyone (anon or signed-in) can insert events
+CREATE POLICY "Allow event inserts" ON public.analytics_events
+  FOR INSERT TO anon, authenticated
+  WITH CHECK (true);
+
+-- No SELECT policy - only service_role (bypasses RLS) can read analytics data
+-- Query via: Supabase dashboard > SQL editor, or a server function using service key
+
+CREATE INDEX IF NOT EXISTS analytics_events_name_idx       ON public.analytics_events (event_name);
+CREATE INDEX IF NOT EXISTS analytics_events_created_at_idx ON public.analytics_events (created_at DESC);
+CREATE INDEX IF NOT EXISTS analytics_events_anon_id_idx    ON public.analytics_events (anonymous_id);
+
 -- ─── Migration: add new columns to existing tables ────────────────────────────
 -- Run these ALTER statements if you already have the schema applied:
 --
