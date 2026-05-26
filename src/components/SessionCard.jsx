@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Clock, Check, ChevronDown } from 'lucide-react';
+import { Clock, Check, ChevronDown, ArrowUp } from 'lucide-react';
 import { useThemeColors } from '../hooks/useTheme';
 import { getData, updateData } from '../utils/storage';
 import { estimateSessionCalories } from '../utils/calorieCalculator';
@@ -269,7 +269,21 @@ export default function SessionCard({ session, onComplete, onPerformanceLogged, 
       const current = Array.isArray(prev[name]) && prev[name].length > 0
         ? [...prev[name]]
         : Array.from({ length: plannedCount }, () => ({ reps: '', weight_kg: '' }));
-      return { ...prev, [name]: [...current, { reps: '', weight_kg: '' }] };
+      // Pre-fill the new set with the last set's values so the user doesn't re-type
+      const lastFilled = [...current].reverse().find(s => s.reps || s.weight_kg);
+      const seed = lastFilled ? { reps: lastFilled.reps, weight_kg: lastFilled.weight_kg } : { reps: '', weight_kg: '' };
+      return { ...prev, [name]: [...current, seed] };
+    });
+  };
+
+  const copyFromAbove = (name, idx, plannedCount) => {
+    setLogs(prev => {
+      const current = Array.isArray(prev[name]) && prev[name].length > 0
+        ? [...prev[name]]
+        : Array.from({ length: plannedCount }, () => ({ reps: '', weight_kg: '' }));
+      if (idx <= 0) return prev;
+      current[idx] = { reps: current[idx - 1].reps, weight_kg: current[idx - 1].weight_kg };
+      return { ...prev, [name]: current };
     });
   };
 
@@ -594,6 +608,17 @@ export default function SessionCard({ session, onComplete, onPerformanceLogged, 
                             onChange={e => updateSetRow(ex.name, si, 'weight_kg', e.target.value)}
                             style={inputStyle(C)}
                           />
+                          {si > 0 && (
+                            <button
+                              onClick={() => copyFromAbove(ex.name, si, plannedCount)}
+                              style={{ background: 'none', border: 'none', cursor: 'pointer', color: C.faint, display: 'flex', alignItems: 'center', gap: '2px', padding: '2px 4px', fontSize: '0.62rem', fontWeight: 600 }}
+                              title="Same as previous set"
+                              onMouseEnter={e => e.currentTarget.style.color = C.primary}
+                              onMouseLeave={e => e.currentTarget.style.color = C.faint}
+                            >
+                              <ArrowUp size={12} strokeWidth={2.2} /> Same
+                            </button>
+                          )}
                           {setRows.length > 1 && (
                             <button
                               onClick={() => removeSet(ex.name, si)}
@@ -643,7 +668,7 @@ export default function SessionCard({ session, onComplete, onPerformanceLogged, 
       {cooldown && <CollapsibleBlock label="Cool Down" duration={cooldown.duration_minutes} text={cooldown.detail} />}
 
       {/* Log Workout CTA */}
-      {!isCompleted && !isNextSession && (
+      {!isCompleted && (
         <div style={{ padding: '20px 28px 28px', borderTop: `1px solid ${C.separator}` }}>
           {isCooldown ? (
             <div style={{ padding: '16px', borderRadius: '10px', background: C.separator, textAlign: 'center' }}>
@@ -654,7 +679,9 @@ export default function SessionCard({ session, onComplete, onPerformanceLogged, 
           ) : (
             <>
               <p style={{ fontSize: '0.72rem', color: C.faint, textAlign: 'center', marginBottom: '12px' }}>
-                {doneCount === 0
+                {isNextSession
+                  ? 'Training this session today? Log your sets below and tap to save it.'
+                  : doneCount === 0
                   ? 'Tick each exercise as you complete it, then log your workout'
                   : allDone
                   ? 'All exercises done - ready to log'

@@ -196,12 +196,12 @@ export default function Dashboard() {
     const isComeback = missedCount > 0;
     const newStreaks = updateStreak(d);
     const xpResult = calculateSessionXP(newStreaks.current, false, isComeback);
-    const checkIn = { date: today, plan_id: activePlan?.id, session_id: todaySession?.id, completed: true, completed_at: new Date().toISOString(), xp_earned: xpResult.total, bonus_xp: xpResult.comebackBonus };
+    const checkIn = { date: today, plan_id: activePlan?.id, session_id: sessionForCard?.id, completed: true, completed_at: new Date().toISOString(), xp_earned: xpResult.total, bonus_xp: xpResult.comebackBonus };
     const updated = updateData(data => {
       data.streaks = newStreaks; data.user.total_xp += xpResult.total; data.check_ins.push(checkIn);
       if (activePlan) {
         const plan = data.plans.find(p => p.id === activePlan.id);
-        if (plan) { for (const week of plan.weeks) for (const s of week.sessions) if (s.id === todaySession?.id || s.date === today) { s.status = 'completed'; s.completed_at = new Date().toISOString(); } }
+        if (plan) { for (const week of plan.weeks) for (const s of week.sessions) if (s.id === sessionForCard?.id || s.date === today) { s.status = 'completed'; s.completed_at = new Date().toISOString(); } }
       }
       const badges = checkBadges(data);
       for (const b of badges) { const ex = data.badges.findIndex(x => x.id === b.id); if (ex >= 0) data.badges[ex] = b; else data.badges.push(b); }
@@ -220,7 +220,7 @@ export default function Dashboard() {
     if (getStreakMilestone(withPersona.streaks.current) >= 7) setShowConfetti(true);
     const celMsg = getCelebrationMessage(messagesData, { totalSessions: withPersona.check_ins.filter(c => c.completed).length, streak: withPersona.streaks.current });
     setCelebrationMsg(celMsg);
-    trackSessionCompleted({ planId: activePlan?.id, activity: activePlan?.activity, sessionId: todaySession?.id, weekNumber: todayInfo?.weekNumber, xpEarned: xpResult.total, streakCount: withPersona.streaks.current });
+    trackSessionCompleted({ planId: activePlan?.id, activity: activePlan?.activity, sessionId: sessionForCard?.id, weekNumber: todayInfo?.weekNumber, xpEarned: xpResult.total, streakCount: withPersona.streaks.current });
     setTimeout(() => { setCelebrationMsg(null); setRecentXP(0); }, 4000);
     // Show post-session coaching message
     setCoachTrigger('session_complete');
