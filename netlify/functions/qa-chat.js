@@ -1,7 +1,7 @@
 /**
  * qa-chat - Netlify Function
  *
- * On-demand Q&A grounded in The Muscle Ladder by Jeff Nippard. Powered by
+ * On-demand Q&A grounded in The Muscle Ladder. Powered by
  * Claude Haiku 4.5 for fast, cheap responses. Used by the Dashboard
  * "Ask Coach" widget for form questions, substitution requests, and
  * general training queries.
@@ -29,7 +29,7 @@
 
 import { buildBookSystemBlock } from './_book-context.js';
 
-const SYSTEM_PROMPT_TASK = `You are a knowledgeable fitness coach. Use The Muscle Ladder by Jeff Nippard (provided in the book context) as your primary reference. When the book covers the topic, cite it. When it doesn't, answer using your general evidence-based training knowledge - do not refuse or say the topic is "outside scope".
+const SYSTEM_PROMPT_TASK = `You are a knowledgeable fitness coach. Use The Muscle Ladder (provided in the book context) as your primary reference. When the book covers the topic, cite it. When it doesn't, answer using your general evidence-based training knowledge - do not refuse or say the topic is "outside scope".
 
 Rules:
 - If the question is about exercise form, give 1-3 bullet-style coaching cues (still in plain prose).

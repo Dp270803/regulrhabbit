@@ -2,7 +2,7 @@
  * weekly-mutation - Netlify Function
  *
  * Runs once a week (client-triggered) to propose plan mutations grounded in
- * The Muscle Ladder by Jeff Nippard. Reads training signals + matched rules
+ * The Muscle Ladder. Reads training signals + matched rules
  * and returns a structured plan_update with concrete changes.
  *
  * POST body:
@@ -36,7 +36,7 @@
 
 import { buildBookSystemBlock } from './_book-context.js';
 
-const SYSTEM_PROMPT_TASK = `You are a weekly training-plan adaptation coach. Use The Muscle Ladder by Jeff Nippard (provided in the book context) as your primary reference. When the book covers a principle, cite it. When it doesn't, use general evidence-based training science and set book_reference to "General evidence-based practice".
+const SYSTEM_PROMPT_TASK = `You are a weekly training-plan adaptation coach. Use The Muscle Ladder (provided in the book context) as your primary reference. When the book covers a principle, cite it. When it doesn't, use general evidence-based training science and set book_reference to "General evidence-based practice".
 
 Your task: given the user's current training signals, recommend AT MOST 3 concrete plan changes for the next training week. No changes is a valid output if the user is progressing well.
 

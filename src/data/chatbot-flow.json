@@ -5,8 +5,7 @@
       "field": "user_type",
       "options": [
         { "label": "Build me a plan - I'll answer a few questions", "value": "guided", "next": "welcome" },
-        { "label": "I have my own plan - I'll enter my exercises", "value": "self_directed", "next": "import" },
-        { "label": "I have a plan - check it for me", "value": "validated", "next": "import_critique" }
+        { "label": "I have my own plan - I'll enter my exercises", "value": "self_directed", "next": "import" }
       ]
     },
     "welcome": {

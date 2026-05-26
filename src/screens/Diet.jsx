@@ -6,6 +6,41 @@ import { calculateDietTarget, calculateMacros } from '../utils/dietEngine';
 import { recordAccepted, recordRejected } from '../utils/aiMemory';
 import { analytics } from '../utils/analytics';
 
+function DietProfileGate({ missing, navigate, C }) {
+  return (
+    <div className="min-h-dvh pb-32 md:pb-12 md:pt-14" style={{ background: C.bg, color: C.text }}>
+      <div style={{ maxWidth: '560px', margin: '0 auto', padding: 'clamp(48px, 8vw, 96px) clamp(24px, 5vw, 48px)', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+        <div style={{ width: '64px', height: '64px', borderRadius: '50%', background: `rgba(${C.primaryRgb},0.1)`, border: `1px solid rgba(${C.primaryRgb},0.2)`, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '28px' }}>
+          <span className="material-symbols-outlined" style={{ color: C.primary, fontSize: '28px' }}>lock</span>
+        </div>
+        <h2 className="font-headline" style={{ fontSize: 'clamp(1.8rem, 4vw, 2.6rem)', fontWeight: 800, letterSpacing: '-0.02em', marginBottom: '16px', lineHeight: 1.1 }}>
+          Complete your profile first
+        </h2>
+        <p style={{ fontSize: '0.95rem', color: C.muted, lineHeight: 1.65, marginBottom: '12px' }}>
+          Your diet plan and calorie targets are calculated from your body measurements. Without this information, any number we show you would just be a guess.
+        </p>
+        <p style={{ fontSize: '0.88rem', color: C.faint, lineHeight: 1.6, marginBottom: '32px' }}>
+          Missing: <strong style={{ color: C.text }}>{missing.join(', ')}</strong>
+        </p>
+        <button
+          onClick={() => navigate('/profile')}
+          style={{
+            padding: '14px 36px', borderRadius: '100px',
+            background: C.primary, color: C.onPrimary,
+            border: 'none', fontSize: '0.9rem', fontWeight: 700,
+            cursor: 'pointer', letterSpacing: '0.04em',
+          }}
+        >
+          Go to Profile
+        </button>
+        <p style={{ marginTop: '16px', fontSize: '0.78rem', color: C.faint }}>
+          Takes 30 seconds - height, age, and weight
+        </p>
+      </div>
+    </div>
+  );
+}
+
 const W = { maxWidth: '1200px', margin: '0 auto', padding: '0 clamp(16px, 4vw, 64px)' };
 const DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 const MEAL_TYPE_ORDER = { breakfast: 0, snack: 1, lunch: 2, dinner: 3 };
@@ -265,6 +300,13 @@ export default function Diet() {
 
   if (!data || !target) return null;
 
+  // Gate: require real body measurements before showing any diet numbers
+  const missing = [];
+  if (!data.user?.body_weight_kg) missing.push('body weight');
+  if (!data.user?.diet_profile?.height_cm && !data.user?.height_cm) missing.push('height');
+  if (!data.user?.diet_profile?.age && !data.user?.age) missing.push('age');
+  if (missing.length > 0) return <DietProfileGate missing={missing} navigate={navigate} C={C} />;
+
   const dayPlan = mealPlan?.week_plan?.find(d => d.day === DAYS[activeDayIdx]) || mealPlan?.week_plan?.[activeDayIdx];
   const dayTotals = dayPlan?.meals?.reduce(
     (acc, m) => ({
@@ -310,7 +352,7 @@ export default function Diet() {
         {!mealPlan ? (
           <div style={{ background: C.low, borderRadius: '16px', padding: '24px', border: `1px solid ${C.border}`, marginBottom: '16px' }}>
             <p style={{ fontSize: '0.95rem', color: C.muted, lineHeight: 1.6, marginBottom: '16px' }}>
-              Generate a 7-day meal plan tailored to your macros, cuisine, and cooking style. Built on Jeff Nippard's diet framework.
+              Generate a 7-day meal plan tailored to your macros, cuisine, and cooking style. Built on evidence-based nutrition science.
             </p>
             {error && <p style={{ fontSize: '0.85rem', color: '#ff6b6b', marginBottom: '12px' }}>{error}</p>}
             <button
@@ -492,7 +534,7 @@ export default function Diet() {
             </button>
           </div>
           <p style={{ fontSize: '0.78rem', color: C.muted, lineHeight: 1.5, margin: '0 0 12px' }}>
-            Pulls your last weeks of check-ins and weight to recommend a calorie adjustment based on Nippard's protocols.
+            Pulls your last weeks of check-ins and weight to recommend a calorie adjustment based on your trend data.
           </p>
           {adaptError && (
             <p style={{ fontSize: '0.78rem', color: '#ff6b6b', margin: '0 0 12px' }}>{adaptError}</p>

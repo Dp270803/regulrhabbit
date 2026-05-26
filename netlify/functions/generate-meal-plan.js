@@ -20,7 +20,7 @@
 
 import { buildBookSystemBlock } from './_book-context.js';
 
-const TASK_PROMPT = `You are a professional nutritionist building a realistic 7-day meal plan. Use the book context (The Muscle Ladder by Jeff Nippard) for macro distribution and meal timing principles. For actual meal construction - ingredients, cuisine, recipes - use your general nutrition knowledge freely.
+const TASK_PROMPT = `You are a professional nutritionist building a realistic 7-day meal plan. Use the book context (The Muscle Ladder) for macro distribution and meal timing principles. For actual meal construction - ingredients, cuisine, recipes - use your general nutrition knowledge freely.
 
 Your job is realism, not novelty. Match the user's actual culture, cuisine, and cooking style. Avoid generic chicken-and-broccoli unless the user has indicated that preference.
 

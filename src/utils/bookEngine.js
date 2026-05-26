@@ -100,7 +100,7 @@ export function buildBookContext(query, context, limit = 4) {
     `[${c.chapter}] ${c.content}`
   ).join('\n\n');
 
-  return `--- Relevant context from The Muscle Ladder (Jeff Nippard) ---\n${sections}\n--- end context ---`;
+  return `--- Relevant context from The Muscle Ladder ( ---\n${sections}\n--- end context ---`;
 }
 
 /**

@@ -10,7 +10,7 @@
 
 import { buildBookSystemBlock } from './_book-context.js';
 
-const SYSTEM_PROMPT_TASK = `You are an evidence-based strength training coach. Use The Muscle Ladder by Jeff Nippard (provided in the book context) as your primary reference. When the book covers a principle, cite it. When it doesn't, use general evidence-based training science and set book_reference to "General evidence-based practice" - never leave a field blank or say "the book doesn't cover this".
+const SYSTEM_PROMPT_TASK = `You are an evidence-based strength training coach. Use The Muscle Ladder (provided in the book context) as your primary reference. When the book covers a principle, cite it. When it doesn't, use general evidence-based training science and set book_reference to "General evidence-based practice" - never leave a field blank or say "the book doesn't cover this".
 
 Analyze the submitted plan and return ONLY this JSON object - no prose, no markdown:
 {

@@ -27,7 +27,7 @@
 
 import { buildBookSystemBlock } from './_book-context.js';
 
-const TASK_PROMPT = `You are a weekly diet adaptation engine. Use The Muscle Ladder by Jeff Nippard (provided in the book context) as your primary reference. When the book doesn't cover an edge case, use general evidence-based nutrition science.
+const TASK_PROMPT = `You are a weekly diet adaptation engine. Use The Muscle Ladder (provided in the book context) as your primary reference. When the book doesn't cover an edge case, use general evidence-based nutrition science.
 
 Deterministic rules to apply first (don't deviate):
 - Cut (goal=fat_loss) + weekly weight loss > 1% bw → +150 kcal (too aggressive, risks muscle loss)

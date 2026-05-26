@@ -29,7 +29,7 @@ const RULE_LIBRARY = (bookRulesJson?.rules || []).map(r => ({
   summary: r.rationale || r.action?.detail || '',
 }));
 
-const CORE_PRINCIPLES = `Core principles from The Muscle Ladder (Jeff Nippard):
+const CORE_PRINCIPLES = `Core principles from The Muscle Ladder:
 - Hypertrophy = mechanical tension × proximity to failure × frequency × volume in the productive zone
 - Weekly sets per muscle (MEV/MAV/MRV): chest 8/14/22; back 10/16/25; quads 8/14/20; hams 8/12/15; glutes 10/16/22; biceps 8/14/22; triceps 6/12/18; side delts 8/16/26
 - Each muscle hit 2x/week minimum for optimal hypertrophy

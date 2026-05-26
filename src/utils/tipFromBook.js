@@ -1,7 +1,7 @@
 /**
  * tipFromBook.js
  *
- * Picks a daily Nippard-grounded tip for the Tips feed.
+ * Picks a daily evidence-based tip for the Tips feed.
  * - Computes the user's training state from signals.
  * - Retrieves the most relevant book chunk for that state.
  * - Returns a card-shaped object: { id, topic, chapter, content, applies_to }.

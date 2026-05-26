@@ -1,7 +1,7 @@
 /**
  * personalise-plan - Netlify Function
  *
- * Persona C entry point: after the user selects a pre-built Nippard program,
+ * Persona C entry point: after the user selects a pre-built evidence-based program,
  * this function returns a list of exercise substitutions tailored to their
  * body stats, training experience, and injuries - grounded in The Muscle Ladder.
  *
@@ -33,7 +33,7 @@
 
 import { buildBookSystemBlock } from './_book-context.js';
 
-const SYSTEM_PROMPT_TASK = `You are a strength coach personalising a pre-built Nippard program for a real user. Use The Muscle Ladder by Jeff Nippard (provided in the book context) as your primary reference. When the book covers an exercise or principle, cite it. When it doesn't, use general evidence-based training science and set book_reference to "General evidence-based practice".
+const SYSTEM_PROMPT_TASK = `You are a strength coach personalising a pre-built evidence-based program for a real user. Use The Muscle Ladder (provided in the book context) as your primary reference. When the book covers an exercise or principle, cite it. When it doesn't, use general evidence-based training science and set book_reference to "General evidence-based practice".
 
 Your job: given the plan's exercise list and the user's profile (especially injuries), recommend AT MOST 4 exercise substitutions that:
 1. Train the same primary muscle as the original
