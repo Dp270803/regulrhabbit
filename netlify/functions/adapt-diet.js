@@ -27,7 +27,7 @@
 
 import { buildBookSystemBlock } from './_book-context.js';
 
-const TASK_PROMPT = `You are a weekly diet adaptation engine grounded in The Muscle Ladder by Jeff Nippard.
+const TASK_PROMPT = `You are a weekly diet adaptation engine. Use The Muscle Ladder by Jeff Nippard (provided in the book context) as your primary reference. When the book doesn't cover an edge case, use general evidence-based nutrition science.
 
 Deterministic rules to apply first (don't deviate):
 - Cut (goal=fat_loss) + weekly weight loss > 1% bw → +150 kcal (too aggressive, risks muscle loss)
@@ -44,11 +44,11 @@ Return ONLY this JSON — no prose, no markdown:
   "delta_kcal": <integer, can be 0>,
   "new_calories": <integer, current + delta>,
   "reason": "<1-2 sentence human-readable explanation>",
-  "book_reference": "<chapter, e.g. 'Ch. 11 — Cutting'>"
+  "book_reference": "<chapter OR 'General evidence-based practice'>"
 }
 
 Rules:
-- delta_kcal must be in [-300, 300]; book caps single adjustments
+- delta_kcal must be in [-300, 300]
 - For diet_break: delta_kcal = (maintenance - current_calories), recommendation = 'diet_break'
 - For simplify: delta_kcal = 0
 - Always include book_reference`;

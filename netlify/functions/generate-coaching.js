@@ -64,10 +64,9 @@ const TRIGGER_TEMPLATES = {
   weekly_summary: (ctx) => `User ${ctx.name || ''} completed their week. Streak: ${ctx.streak}. ${ctx.exercise_trend ? `Performance note: ${ctx.exercise_trend}.` : ''} Generate a weekly summary insight.`,
 };
 
-const POST_SESSION_SYSTEM = `You are an intelligent fitness advisor grounded in The Muscle Ladder (Jeff Nippard). You analyse user workout data and return structured JSON recommendations.
-Every suggestion or plan_adjustment MUST include a book_reference (chapter) that supports it.
+const POST_SESSION_SYSTEM = `You are an intelligent fitness advisor. Use The Muscle Ladder by Jeff Nippard (provided in the book context) as your primary reference. When the book covers a principle, cite it. When it doesn't, use general evidence-based training science and set book_reference to "General evidence-based practice" — never omit a suggestion just because the book is silent.
 You ONLY suggest — never override system logic or compute calorie baselines.
-Rules: Be specific. No fluff. Output valid JSON only. No markdown code blocks. If the book is silent on a topic, omit the suggestion rather than speculate.`;
+Rules: Be specific. No fluff. Output valid JSON only. No markdown code blocks. Every suggestion/adjustment must include a book_reference (chapter OR "General evidence-based practice").`;
 
 function buildPostSessionPrompt(ctx) {
   const state = ctx.fitness_state || {};

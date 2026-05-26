@@ -20,7 +20,7 @@
 
 import { buildBookSystemBlock } from './_book-context.js';
 
-const TASK_PROMPT = `You generate realistic 7-day meal templates grounded in The Muscle Ladder by Jeff Nippard.
+const TASK_PROMPT = `You are a professional nutritionist building a realistic 7-day meal plan. Use the book context (The Muscle Ladder by Jeff Nippard) for macro distribution and meal timing principles. For actual meal construction — ingredients, cuisine, recipes — use your general nutrition knowledge freely.
 
 Your job is realism, not novelty. Match the user's actual culture, cuisine, and cooking style. Avoid generic chicken-and-broccoli unless the user has indicated that preference.
 
@@ -49,11 +49,11 @@ Return ONLY this JSON — no prose, no markdown:
 Rules:
 - 3-5 meals per day. Daily total must come within ±5% of the target calories and ±10% of each macro.
 - Repeat 2-3 staple meals across the week — real people don't cook 21 unique meals.
-- All 7 days present.
-- Protein distributed roughly evenly across meals (per book §10: 3-5 meals, 20-40g protein each).
+- All 7 days must be present (Mon through Sun).
+- Protein distributed roughly evenly across meals (3-5 meals, 20-40g protein each).
 - Include simple item lists (e.g. "100g chicken breast", "1 cup rice"), not recipes.
 - If cuisine is unspecified, default to a globally-neutral pantry mix.
-- Return only the JSON object.`;
+- Return only the JSON object. Do not truncate — all 7 days must be complete.`;
 
 const FALLBACK = {
   week_plan: [],
@@ -108,7 +108,7 @@ export const handler = async (event) => {
       },
       body: JSON.stringify({
         model: 'claude-sonnet-4-6',
-        max_tokens: 3000,
+        max_tokens: 4096,
         system: [
           { type: 'text', text: bookBlock, cache_control: { type: 'ephemeral' } },
           { type: 'text', text: TASK_PROMPT, cache_control: { type: 'ephemeral' } },
