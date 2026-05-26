@@ -58,6 +58,11 @@ function formatSets(sets) {
   return `${m[1]} Sets x ${m[2]} Reps`;
 }
 
+function getPlannedSetCount(sets) {
+  const m = sets?.match(/^(\d+)x/);
+  return m ? parseInt(m[1]) : 3;
+}
+
 function CollapsibleBlock({ label, duration, text }) {
   const C = useThemeColors();
   const [open, setOpen] = useState(false);
@@ -82,29 +87,87 @@ function CollapsibleBlock({ label, duration, text }) {
   );
 }
 
+function CelebrationOverlay({ C }) {
+  const colors = ['#2FF801', '#00E5FF', '#FFD600', '#FF6B35', '#E040FB', '#FF4081', '#2FF801', '#00E5FF', '#FFD600', '#FF6B35', '#2FF801', '#00E5FF'];
+  return (
+    <div style={{
+      position: 'absolute', inset: 0, borderRadius: '16px',
+      background: 'rgba(10,10,10,0.94)',
+      display: 'flex', flexDirection: 'column',
+      alignItems: 'center', justifyContent: 'center',
+      zIndex: 20, padding: '40px',
+    }}>
+      <style>{`
+        @keyframes celIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        @keyframes confettiFall { 0% { transform: translateY(0) rotate(0deg); opacity: 1; } 100% { transform: translateY(130px) rotate(720deg); opacity: 0; } }
+        @keyframes popCheck { 0% { transform: scale(0); } 60% { transform: scale(1.18); } 100% { transform: scale(1); } }
+        .cel-card { animation: celIn 0.25s ease both; }
+        .cel-check { animation: popCheck 0.4s cubic-bezier(.34,1.56,.64,1) 0.1s both; }
+      `}</style>
+      {colors.map((color, i) => (
+        <div key={i} style={{
+          position: 'absolute', top: '18%', left: `${4 + i * 8}%`,
+          width: i % 3 === 0 ? 9 : 6, height: i % 3 === 0 ? 14 : 9,
+          background: color, borderRadius: '2px',
+          animation: `confettiFall 1.5s ease-out ${i * 0.055}s both`,
+          transform: `rotate(${i * 47}deg)`,
+        }} />
+      ))}
+      <div className="cel-card" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <div className="cel-check" style={{
+          width: 72, height: 72, borderRadius: '50%',
+          background: 'rgba(47,248,1,0.12)',
+          border: '2px solid rgba(47,248,1,0.45)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          marginBottom: '20px',
+        }}>
+          <Check size={32} strokeWidth={2.5} style={{ color: C.green }} />
+        </div>
+        <h2 style={{ fontSize: '1.8rem', fontWeight: 800, color: '#fff', marginBottom: '8px', letterSpacing: '-0.02em', textAlign: 'center' }}>
+          Workout Logged
+        </h2>
+        <p style={{ fontSize: '0.9rem', color: 'rgba(255,255,255,0.5)', textAlign: 'center', maxWidth: '240px', lineHeight: 1.6 }}>
+          Great session. Rest up and come back stronger.
+        </p>
+      </div>
+    </div>
+  );
+}
+
 export default function SessionCard({ session, onComplete, onPerformanceLogged, isCompleted, isCooldown, isRestDay, equipment, isNextSession, nextLabel, heroImg, cms }) {
   const C = useThemeColors();
 
   const storageKey = session?.id ? `wdraft_${session.id}` : null;
 
-  // Persist checked state across tab switches
   const [checked, setChecked] = useState(() => {
     if (!storageKey) return {};
     try { return JSON.parse(localStorage.getItem(`${storageKey}_chk`) || '{}'); }
     catch { return {}; }
   });
 
-  // Per-exercise log: { exerciseName: { actual_reps, weight_kg } }
+  // Per-set logs: { [exerciseName]: [{ reps: string, weight_kg: string }] }
   const [logs, setLogs] = useState(() => {
     if (!storageKey) return {};
-    try { return JSON.parse(localStorage.getItem(`${storageKey}_logs`) || '{}'); }
+    try {
+      const stored = JSON.parse(localStorage.getItem(`${storageKey}_logs`) || '{}');
+      // Migrate old single-row format ({ actual_reps, weight_kg }) to array-of-sets
+      const result = {};
+      for (const [name, val] of Object.entries(stored)) {
+        if (Array.isArray(val)) {
+          result[name] = val;
+        } else if (val && typeof val === 'object') {
+          result[name] = [{ reps: val.actual_reps || '', weight_kg: val.weight_kg || '' }];
+        }
+      }
+      return result;
+    }
     catch { return {}; }
   });
 
   const [alts, setAlts] = useState({});
   const [saving, setSaving] = useState(false);
+  const [showCelebration, setShowCelebration] = useState(false);
 
-  // Snapshot of prior logs + profile for last-time / starting-weight / overload hints
   const [history] = useState(() => {
     const d = getData();
     return {
@@ -128,21 +191,18 @@ export default function SessionCard({ session, onComplete, onPerformanceLogged, 
     }).catch(() => {});
   }, [equipment]);
 
-  // Persist checked to localStorage whenever it changes
   useEffect(() => {
     if (!storageKey || isCompleted) return;
     try { localStorage.setItem(`${storageKey}_chk`, JSON.stringify(checked)); }
     catch {}
   }, [checked, storageKey, isCompleted]);
 
-  // Persist logs to localStorage whenever they change
   useEffect(() => {
     if (!storageKey || isCompleted) return;
     try { localStorage.setItem(`${storageKey}_logs`, JSON.stringify(logs)); }
     catch {}
   }, [logs, storageKey, isCompleted]);
 
-  // Clear draft when session is marked complete
   useEffect(() => {
     if (isCompleted && storageKey) {
       try {
@@ -152,7 +212,7 @@ export default function SessionCard({ session, onComplete, onPerformanceLogged, 
     }
   }, [isCompleted, storageKey]);
 
-  const cardStyle = { background: C.low, borderRadius: '16px', overflow: 'hidden', boxShadow: C.cardShadow };
+  const cardStyle = { position: 'relative', background: C.low, borderRadius: '16px', overflow: 'hidden', boxShadow: C.cardShadow };
 
   if (isRestDay) {
     return (
@@ -188,29 +248,81 @@ export default function SessionCard({ session, onComplete, onPerformanceLogged, 
     setChecked(prev => ({ ...prev, [name]: !prev[name] }));
   };
 
-  const updateLog = (name, field, value) => {
-    setLogs(prev => ({ ...prev, [name]: { ...prev[name], [field]: value } }));
+  const getSetRows = (name, plannedCount) => {
+    const existing = logs[name];
+    if (Array.isArray(existing) && existing.length > 0) return existing;
+    return Array.from({ length: plannedCount }, () => ({ reps: '', weight_kg: '' }));
+  };
+
+  const updateSetRow = (name, idx, field, value) => {
+    setLogs(prev => {
+      const current = Array.isArray(prev[name]) && prev[name].length > 0
+        ? [...prev[name]]
+        : Array.from({ length: getPlannedSetCount(exercises.find(e => e.name === name)?.sets) }, () => ({ reps: '', weight_kg: '' }));
+      current[idx] = { ...current[idx], [field]: value };
+      return { ...prev, [name]: current };
+    });
+  };
+
+  const addSet = (name, plannedCount) => {
+    setLogs(prev => {
+      const current = Array.isArray(prev[name]) && prev[name].length > 0
+        ? [...prev[name]]
+        : Array.from({ length: plannedCount }, () => ({ reps: '', weight_kg: '' }));
+      return { ...prev, [name]: [...current, { reps: '', weight_kg: '' }] };
+    });
+  };
+
+  const removeSet = (name, idx) => {
+    setLogs(prev => {
+      const current = [...(prev[name] || [])];
+      if (current.length <= 1) return prev;
+      current.splice(idx, 1);
+      return { ...prev, [name]: current };
+    });
   };
 
   const heroImgUrl = heroImg ? sanityImageUrl(heroImg.image, { width: 900 }) : null;
 
-  async function handleMarkComplete() {
+  async function handleLogWorkout() {
     if (saving) return;
     setSaving(true);
 
-    // Build filled log from inline inputs
     const d = getData();
     const filled = exercises.map(ex => {
-      const log = logs[ex.name] || {};
+      const plannedCount = getPlannedSetCount(ex.sets);
+      const setRows = getSetRows(ex.name, plannedCount);
+      const filledSets = setRows.filter(s => s.reps || s.weight_kg);
       const setsMatch = ex.sets?.match(/^(\d+)x(\d+(?:-\d+)?)$/);
+
+      if (filledSets.length === 0) {
+        if (!checked[ex.name]) return null;
+        return {
+          exercise_name: ex.name,
+          sets: setsMatch ? parseInt(setsMatch[1]) : null,
+          reps: setsMatch ? setsMatch[2] : null,
+          weight_kg: null,
+          sets_data: [],
+        };
+      }
+
+      // Use the heaviest set as the summary weight (for signal engine / last-time lookups)
+      const bestSet = filledSets.reduce((b, s) =>
+        parseFloat(s.weight_kg || 0) >= parseFloat(b.weight_kg || 0) ? s : b,
+        filledSets[filledSets.length - 1]
+      );
+
       return {
         exercise_name: ex.name,
-        sets: setsMatch ? parseInt(setsMatch[1]) : null,
-        reps: log.actual_reps || (setsMatch ? setsMatch[2] : null),
-        weight_kg: log.weight_kg ? parseFloat(log.weight_kg) : null,
-        rir: null,
+        sets: filledSets.length,
+        reps: bestSet.reps || (setsMatch ? setsMatch[2] : null),
+        weight_kg: bestSet.weight_kg ? parseFloat(bestSet.weight_kg) : null,
+        sets_data: filledSets.map(s => ({
+          reps: s.reps || null,
+          weight_kg: s.weight_kg ? parseFloat(s.weight_kg) : null,
+        })),
       };
-    }).filter(l => l.sets || l.weight_kg || l.reps);
+    }).filter(Boolean).filter(l => l.sets || l.weight_kg || l.reps);
 
     const { adjusted_calories } = estimateSessionCalories({
       duration_minutes: session.duration_minutes || null,
@@ -244,10 +356,21 @@ export default function SessionCard({ session, onComplete, onPerformanceLogged, 
       });
     }
 
+    setShowCelebration(true);
+    setTimeout(() => setShowCelebration(false), 2800);
     onComplete();
     onPerformanceLogged?.({ suggestions: [], plan_adjustments: [], diet_adjustments: [] });
     setSaving(false);
   }
+
+  const inputStyle = (C) => ({
+    width: '58px', padding: '6px 4px',
+    borderRadius: '8px',
+    border: `1.5px solid ${C.border}`,
+    background: C.bg,
+    color: C.text, fontSize: '0.82rem', textAlign: 'center', outline: 'none',
+    fontFamily: 'Inter, monospace', fontWeight: 600,
+  });
 
   return (
     <div style={{
@@ -255,6 +378,8 @@ export default function SessionCard({ session, onComplete, onPerformanceLogged, 
       background: isCompleted ? `linear-gradient(145deg, rgba(47,248,1,0.06) 0%, ${C.low} 60%)` : C.low,
       outline: isCompleted ? `1px solid rgba(47,248,1,0.18)` : 'none',
     }}>
+      {showCelebration && <CelebrationOverlay C={C} />}
+
       {/* Hero image header */}
       {heroImgUrl ? (
         <div style={{ position: 'relative', height: 'clamp(220px, 28vw, 380px)', overflow: 'hidden' }}>
@@ -304,7 +429,7 @@ export default function SessionCard({ session, onComplete, onPerformanceLogged, 
 
       {warmup && <CollapsibleBlock label="Warm Up" duration={warmup.duration_minutes} text={warmup.detail} />}
 
-      {/* Exercise list with inline logging */}
+      {/* Exercise list */}
       {exercises.length > 0 && (
         <div style={{ borderTop: `1px solid ${C.separator}` }}>
           <div style={{ padding: '18px clamp(16px,5vw,28px) 0', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -318,26 +443,28 @@ export default function SessionCard({ session, onComplete, onPerformanceLogged, 
             )}
           </div>
 
-          {/* Column headers for weight/reps - only when not completed */}
-          {!isCompleted && (
-            <div style={{ padding: '10px clamp(16px,5vw,28px) 4px', display: 'flex', justifyContent: 'flex-end', gap: '4px' }}>
-              <span style={{ fontSize: '0.58rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: C.faint, width: '70px', textAlign: 'center' }}>Reps</span>
-              <span style={{ fontSize: '0.58rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: C.faint, width: '70px', textAlign: 'center' }}>Weight kg</span>
-            </div>
-          )}
-
-          <div style={{ padding: `4px clamp(16px,5vw,28px) 20px` }}>
+          <div style={{ padding: `8px clamp(16px,5vw,28px) 20px` }}>
             {exercises.map((ex, i) => {
               const isDone = !!checked[ex.name];
               const alt = alts[ex.name];
               const tags = EXERCISE_TAGS[ex.name] || [];
               const setsLabel = formatSets(ex.sets);
-              const log = logs[ex.name] || {};
+              const plannedCount = getPlannedSetCount(ex.sets);
+              const setRows = getSetRows(ex.name, plannedCount);
 
-              // Feedback loop: what did they lift last time, or where to start?
               const last = getLastPerformance(history.workoutLogs, ex.name);
               const overload = last ? getProgressionSuggestion(history.workoutLogs, ex.name, ex.sets) : null;
               const startWeight = !last ? suggestStartingWeight(ex.name, history.profile) : null;
+
+              const weightPlaceholder = overload
+                ? `${overload.to}`
+                : last
+                ? `${last.weight_kg}`
+                : startWeight
+                ? `${startWeight}`
+                : 'kg';
+
+              const repsPlaceholder = ex.sets?.match(/x(\d+(?:-\d+)?)/)?.[1] || '-';
 
               return (
                 <div
@@ -347,15 +474,14 @@ export default function SessionCard({ session, onComplete, onPerformanceLogged, 
                     borderBottom: i < exercises.length - 1 ? `1px solid ${C.separator}` : 'none',
                   }}
                 >
+                  {/* Top row: checkbox + name + tags (clickable to toggle) */}
                   <div
                     style={{
                       display: 'flex', alignItems: 'flex-start', gap: '14px',
                       cursor: isCompleted ? 'default' : 'pointer',
-                      transition: 'opacity 0.15s',
                     }}
                     onClick={() => toggle(ex.name)}
                   >
-                    {/* Checkbox */}
                     <div style={{
                       width: '20px', height: '20px', borderRadius: '6px', flexShrink: 0, marginTop: '3px',
                       border: isDone ? 'none' : `1.5px solid ${C.border}`,
@@ -366,7 +492,6 @@ export default function SessionCard({ session, onComplete, onPerformanceLogged, 
                       {isDone && <Check size={12} strokeWidth={3} style={{ color: C.onPrimary }} />}
                     </div>
 
-                    {/* Name + sets */}
                     <div style={{ flex: 1, minWidth: 0 }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                         <p className="font-headline" style={{
@@ -394,13 +519,13 @@ export default function SessionCard({ session, onComplete, onPerformanceLogged, 
                         </p>
                       )}
 
-                      {/* Feedback loop: last time / overload nudge / starting weight */}
+                      {/* Last time / overload nudge / starting weight */}
                       {!isCompleted && last && (
                         <p style={{ fontSize: '0.72rem', color: C.muted, marginTop: '4px', display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap' }}>
-                          <span>Last time: <strong style={{ color: C.text }}>{last.weight_kg}kg × {last.reps}</strong></span>
+                          <span>Last time: <strong style={{ color: C.text }}>{last.weight_kg}kg x {last.reps}</strong></span>
                           {overload && (
                             <span style={{ color: C.green, fontWeight: 700 }}>
-                              ↑ try {overload.to}kg
+                              + try {overload.to}kg today
                             </span>
                           )}
                         </p>
@@ -429,7 +554,6 @@ export default function SessionCard({ session, onComplete, onPerformanceLogged, 
                       )}
                     </div>
 
-                    {/* Muscle tags */}
                     {tags.length > 0 && (
                       <div className="session-exercise-tags" style={{ display: 'flex', gap: '4px', flexShrink: 0, paddingTop: '2px' }}>
                         {tags.map(tag => (
@@ -437,43 +561,63 @@ export default function SessionCard({ session, onComplete, onPerformanceLogged, 
                         ))}
                       </div>
                     )}
-
-                    {/* Inline weight/reps inputs - always visible when not completed */}
-                    {!isCompleted && (
-                      <div style={{ display: 'flex', gap: '4px', flexShrink: 0 }} onClick={e => e.stopPropagation()}>
-                        <input
-                          type="number"
-                          inputMode="decimal"
-                          placeholder={ex.sets?.match(/x(\d+)/)?.[1] || '-'}
-                          value={log.actual_reps || ''}
-                          onChange={e => updateLog(ex.name, 'actual_reps', e.target.value)}
-                          style={{
-                            width: '70px', padding: '7px 6px',
-                            borderRadius: '8px',
-                            border: `1.5px solid ${isDone ? `rgba(${C.primaryRgb},0.5)` : C.border}`,
-                            background: isDone ? `rgba(${C.primaryRgb},0.06)` : C.bg,
-                            color: C.text, fontSize: '0.85rem', textAlign: 'center', outline: 'none',
-                            fontFamily: 'Inter, monospace', fontWeight: 600,
-                          }}
-                        />
-                        <input
-                          type="number"
-                          inputMode="decimal"
-                          placeholder={overload ? `${overload.to}` : last ? `${last.weight_kg}` : startWeight ? `${startWeight}` : 'kg'}
-                          value={log.weight_kg || ''}
-                          onChange={e => updateLog(ex.name, 'weight_kg', e.target.value)}
-                          style={{
-                            width: '70px', padding: '7px 6px',
-                            borderRadius: '8px',
-                            border: `1.5px solid ${isDone && log.weight_kg ? `rgba(${C.primaryRgb},0.5)` : C.border}`,
-                            background: isDone && log.weight_kg ? `rgba(${C.primaryRgb},0.06)` : C.bg,
-                            color: C.text, fontSize: '0.85rem', textAlign: 'center', outline: 'none',
-                            fontFamily: 'Inter, monospace', fontWeight: 600,
-                          }}
-                        />
-                      </div>
-                    )}
                   </div>
+
+                  {/* Per-set logging rows */}
+                  {!isCompleted && (
+                    <div style={{ paddingLeft: '34px', marginTop: '10px' }} onClick={e => e.stopPropagation()}>
+                      <div style={{ display: 'flex', gap: '4px', marginBottom: '6px', paddingLeft: '46px' }}>
+                        <span style={{ fontSize: '0.58rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: C.faint, width: '58px', textAlign: 'center' }}>Reps</span>
+                        <span style={{ fontSize: '0.58rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: C.faint, width: '58px', textAlign: 'center' }}>Weight kg</span>
+                      </div>
+                      {setRows.map((setRow, si) => (
+                        <div key={si} style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+                          <span style={{
+                            fontSize: '0.68rem', fontWeight: 600, color: setRow.reps || setRow.weight_kg ? C.primary : C.faint,
+                            width: '38px', flexShrink: 0, textAlign: 'right',
+                          }}>
+                            Set {si + 1}
+                          </span>
+                          <input
+                            type="number"
+                            inputMode="decimal"
+                            placeholder={repsPlaceholder}
+                            value={setRow.reps}
+                            onChange={e => updateSetRow(ex.name, si, 'reps', e.target.value)}
+                            style={inputStyle(C)}
+                          />
+                          <input
+                            type="number"
+                            inputMode="decimal"
+                            placeholder={weightPlaceholder}
+                            value={setRow.weight_kg}
+                            onChange={e => updateSetRow(ex.name, si, 'weight_kg', e.target.value)}
+                            style={inputStyle(C)}
+                          />
+                          {setRows.length > 1 && (
+                            <button
+                              onClick={() => removeSet(ex.name, si)}
+                              style={{ background: 'none', border: 'none', cursor: 'pointer', color: C.faint, fontSize: '1.1rem', lineHeight: 1, padding: '0 4px', opacity: 0.7 }}
+                              title="Remove set"
+                            >
+                              x
+                            </button>
+                          )}
+                        </div>
+                      ))}
+                      <button
+                        onClick={() => addSet(ex.name, plannedCount)}
+                        style={{
+                          background: 'none', border: 'none', cursor: 'pointer',
+                          color: C.primary, fontSize: '0.72rem', fontWeight: 600,
+                          padding: '4px 0 0 46px', letterSpacing: '0.04em',
+                          display: 'flex', alignItems: 'center', gap: '4px',
+                        }}
+                      >
+                        + Add set
+                      </button>
+                    </div>
+                  )}
                 </div>
               );
             })}
@@ -498,7 +642,7 @@ export default function SessionCard({ session, onComplete, onPerformanceLogged, 
 
       {cooldown && <CollapsibleBlock label="Cool Down" duration={cooldown.duration_minutes} text={cooldown.detail} />}
 
-      {/* Complete / Log button */}
+      {/* Log Workout CTA */}
       {!isCompleted && !isNextSession && (
         <div style={{ padding: '20px 28px 28px', borderTop: `1px solid ${C.separator}` }}>
           {isCooldown ? (
@@ -511,13 +655,13 @@ export default function SessionCard({ session, onComplete, onPerformanceLogged, 
             <>
               <p style={{ fontSize: '0.72rem', color: C.faint, textAlign: 'center', marginBottom: '12px' }}>
                 {doneCount === 0
-                  ? 'Tick each exercise and log reps + weight as you go'
+                  ? 'Tick each exercise as you complete it, then log your workout'
                   : allDone
-                  ? 'All exercises done - ready to complete'
+                  ? 'All exercises done - ready to log'
                   : `${exercises.length - doneCount} exercise${exercises.length - doneCount > 1 ? 's' : ''} remaining`}
               </p>
               <button
-                onClick={handleMarkComplete}
+                onClick={handleLogWorkout}
                 disabled={saving}
                 style={{
                   width: '100%', padding: '18px',
@@ -534,10 +678,10 @@ export default function SessionCard({ session, onComplete, onPerformanceLogged, 
                 }}
               >
                 {saving ? 'Saving...' : allDone
-                  ? `All done - ${cms?.markCompleteLabel || 'Mark Complete'}`
+                  ? 'Log Workout'
                   : doneCount > 0
-                  ? `${cms?.markCompleteLabel || 'Mark Complete'} (${doneCount}/${exercises.length})`
-                  : cms?.markCompleteLabel || 'Mark Complete'}
+                  ? `Log Workout (${doneCount}/${exercises.length})`
+                  : 'Log Workout'}
               </button>
             </>
           )}

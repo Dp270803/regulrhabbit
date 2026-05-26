@@ -118,14 +118,15 @@ const BW_RATIO = [
 ];
 
 // fixed dumbbell/cable starting weight (kg) for isolations, male beginner
+// These are conservative "last 2 reps hard" starting points for a complete beginner
 const FIXED_ISO = [
-  { kw: ['lateral raise', 'front raise'], kg: 5 },
-  { kw: ['bicep curl', 'hammer curl', 'barbell curl', 'curl'], kg: 10 },
-  { kw: ['tricep', 'pushdown', 'skullcrusher'], kg: 12.5 },
-  { kw: ['face pull'], kg: 15 },
-  { kw: ['fly', 'flye', 'pec deck'], kg: 10 },
-  { kw: ['calf'], kg: 30 },
-  { kw: ['leg curl', 'leg extension'], kg: 25 },
+  { kw: ['lateral raise', 'front raise'], kg: 3 },
+  { kw: ['bicep curl', 'hammer curl', 'barbell curl', 'curl'], kg: 5 },
+  { kw: ['tricep', 'pushdown', 'skullcrusher'], kg: 10 },
+  { kw: ['face pull'], kg: 10 },
+  { kw: ['fly', 'flye', 'pec deck'], kg: 7.5 },
+  { kw: ['calf'], kg: 20 },
+  { kw: ['leg curl', 'leg extension'], kg: 20 },
 ];
 
 const EXP_MULT = { Beginner: 1.0, Intermediate: 1.45, Advanced: 1.9 };
