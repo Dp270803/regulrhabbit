@@ -13,6 +13,7 @@
  */
 
 import { computeTotalVolume } from './calorieEngine';
+import { flattenWorkoutLogs } from './performanceHistory';
 
 const MS_PER_DAY = 86400000;
 
@@ -143,9 +144,11 @@ function computeFatigueProxy(performanceLogs = []) {
  * @param {Array}  performanceLogs - from Supabase or localStorage performance_log
  * @returns {object} signals
  */
-export function computeFitnessSignals(data, performanceLogs = []) {
+export function computeFitnessSignals(data, performanceLogs) {
   const checkIns = data.check_ins || [];
   const plans = data.plans || [];
+  // Default to logs flattened from workout_logs when caller passes nothing.
+  if (!performanceLogs) performanceLogs = flattenWorkoutLogs(data);
 
   return {
     adherence_score: computeAdherence(checkIns, plans),
@@ -192,7 +195,12 @@ function mean(arr) {
 export function computeBookSignals(data) {
   const user = data?.user || {};
   const activePlan = (data?.plans || []).find(p => p.status === 'active');
-  const logs = data?.performance_log || data?.performance_logs || [];
+  // Logged sessions live in workout_logs (nested). Flatten them to the flat
+  // per-exercise shape this engine expects. Fall back to any legacy
+  // performance_log array if present.
+  const logs = (data?.performance_log?.length || data?.performance_logs?.length)
+    ? (data.performance_log || data.performance_logs)
+    : flattenWorkoutLogs(data);
   const weightLog = data?.weight_log || [];
 
   const cutoff14 = Date.now() - 14 * MS_PER_DAY;

@@ -5,6 +5,7 @@ import { getData, updateData } from '../utils/storage';
 import { estimateSessionCalories } from '../utils/calorieCalculator';
 import { analytics } from '../utils/analytics';
 import { sanityImageUrl } from '../utils/sanityClient';
+import { getLastPerformance, getProgressionSuggestion, suggestStartingWeight } from '../utils/performanceHistory';
 
 function YtIcon({ size = 13 }) {
   return (
@@ -102,6 +103,19 @@ export default function SessionCard({ session, onComplete, onPerformanceLogged, 
 
   const [alts, setAlts] = useState({});
   const [saving, setSaving] = useState(false);
+
+  // Snapshot of prior logs + profile for last-time / starting-weight / overload hints
+  const [history] = useState(() => {
+    const d = getData();
+    return {
+      workoutLogs: d.workout_logs || [],
+      profile: {
+        body_weight_kg: d.user?.body_weight_kg,
+        sex: d.user?.sex || d.user?.diet_profile?.sex,
+        experience_level: d.user?.training_experience || d.plans?.find(p => p.status === 'active')?.experience_level || 'Beginner',
+      },
+    };
+  });
 
   useEffect(() => {
     import('../data/templates/gym.json').then(mod => {
@@ -320,6 +334,11 @@ export default function SessionCard({ session, onComplete, onPerformanceLogged, 
               const setsLabel = formatSets(ex.sets);
               const log = logs[ex.name] || {};
 
+              // Feedback loop: what did they lift last time, or where to start?
+              const last = getLastPerformance(history.workoutLogs, ex.name);
+              const overload = last ? getProgressionSuggestion(history.workoutLogs, ex.name, ex.sets) : null;
+              const startWeight = !last ? suggestStartingWeight(ex.name, history.profile) : null;
+
               return (
                 <div
                   key={i}
@@ -374,6 +393,25 @@ export default function SessionCard({ session, onComplete, onPerformanceLogged, 
                           {setsLabel} <span style={{ color: C.faint, fontWeight: 400, fontSize: '0.7rem' }}>(planned)</span>
                         </p>
                       )}
+
+                      {/* Feedback loop: last time / overload nudge / starting weight */}
+                      {!isCompleted && last && (
+                        <p style={{ fontSize: '0.72rem', color: C.muted, marginTop: '4px', display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap' }}>
+                          <span>Last time: <strong style={{ color: C.text }}>{last.weight_kg}kg × {last.reps}</strong></span>
+                          {overload && (
+                            <span style={{ color: C.green, fontWeight: 700 }}>
+                              ↑ try {overload.to}kg
+                            </span>
+                          )}
+                        </p>
+                      )}
+                      {!isCompleted && !last && startWeight && (
+                        <p style={{ fontSize: '0.72rem', color: C.muted, marginTop: '4px' }}>
+                          Suggested start: <strong style={{ color: C.text }}>~{startWeight}kg</strong>
+                          <span style={{ color: C.faint }}> — adjust so the last 2 reps are hard</span>
+                        </p>
+                      )}
+
                       {ex.note && <p style={{ fontSize: '0.72rem', color: C.faint, marginTop: '2px' }}>{ex.note}</p>}
                       {alt && (
                         <div style={{ marginTop: '5px' }}>
@@ -421,7 +459,7 @@ export default function SessionCard({ session, onComplete, onPerformanceLogged, 
                         <input
                           type="number"
                           inputMode="decimal"
-                          placeholder="kg"
+                          placeholder={overload ? `${overload.to}` : last ? `${last.weight_kg}` : startWeight ? `${startWeight}` : 'kg'}
                           value={log.weight_kg || ''}
                           onChange={e => updateLog(ex.name, 'weight_kg', e.target.value)}
                           style={{
