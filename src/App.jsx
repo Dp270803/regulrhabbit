@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, lazy, Suspense } from 'react';
 import { Routes, Route, Navigate, useLocation, NavLink } from 'react-router-dom';
 import { trackPage } from './utils/analytics.js';
 import { useThemeColors } from './hooks/useTheme';
@@ -15,6 +15,19 @@ import Diet from './screens/Diet';
 import SanityStudio from './screens/SanityStudio';
 import CustomPlanBuilder from './screens/CustomPlanBuilder';
 import BottomNav from './components/BottomNav';
+
+const NutriPlanLayout = lazy(() => import('./nutriplan/NutriPlanLayout'));
+const NPOnboardingGoal = lazy(() => import('./nutriplan/screens/OnboardingGoal'));
+const NPOnboardingStats = lazy(() => import('./nutriplan/screens/OnboardingStats'));
+const NPOnboardingActivity = lazy(() => import('./nutriplan/screens/OnboardingActivity'));
+const NPOnboardingDiet = lazy(() => import('./nutriplan/screens/OnboardingDiet'));
+const NPOnboardingMeals = lazy(() => import('./nutriplan/screens/OnboardingMeals'));
+const NPDashboard = lazy(() => import('./nutriplan/screens/Dashboard'));
+const NPPlanView = lazy(() => import('./nutriplan/screens/PlanView'));
+const NPGroceryList = lazy(() => import('./nutriplan/screens/GroceryList'));
+const NPPaywall = lazy(() => import('./nutriplan/screens/Paywall'));
+const NPLoading = lazy(() => import('./nutriplan/screens/Loading'));
+const NPProfile = lazy(() => import('./nutriplan/screens/Profile'));
 
 const NAV_SCREENS = ['/dashboard', '/plan', '/diet', '/progress', '/profile', '/tips'];
 const NAV_LINKS = [
@@ -74,7 +87,8 @@ function TopNav() {
 
 export default function App() {
   const location = useLocation();
-  const showNav = NAV_SCREENS.some(path => location.pathname.startsWith(path));
+  const isNutriPlan = location.pathname.startsWith('/nutriplan');
+  const showNav = !isNutriPlan && NAV_SCREENS.some(path => location.pathname.startsWith(path));
 
   useEffect(() => {
     try {
@@ -106,6 +120,22 @@ export default function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/tips" element={<Tips />} />
         <Route path="/studio/*" element={<SanityStudio />} />
+
+        {/* NutriPlan — separate app */}
+        <Route path="/nutriplan" element={<Suspense fallback={null}><NutriPlanLayout /></Suspense>}>
+          <Route index element={<NPOnboardingGoal />} />
+          <Route path="onboarding/stats" element={<NPOnboardingStats />} />
+          <Route path="onboarding/activity" element={<NPOnboardingActivity />} />
+          <Route path="onboarding/diet" element={<NPOnboardingDiet />} />
+          <Route path="onboarding/meals" element={<NPOnboardingMeals />} />
+          <Route path="dashboard" element={<NPDashboard />} />
+          <Route path="plan" element={<NPPlanView />} />
+          <Route path="grocery" element={<NPGroceryList />} />
+          <Route path="paywall" element={<NPPaywall />} />
+          <Route path="loading" element={<NPLoading />} />
+          <Route path="profile" element={<NPProfile />} />
+        </Route>
+
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
       {/* Bottom nav: mobile only */}

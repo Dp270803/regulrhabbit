@@ -1,0 +1,101 @@
+@theme {
+  --color-surface-paper: #FFFDF5;
+  --color-surface-cream: #F9F3E5;
+  --color-surface-dim: #dcdad2;
+  --color-surface-container: #f0eee6;
+  --color-surface-container-low: #f5f4ec;
+  --color-surface-container-high: #eae8e0;
+  --color-surface-container-highest: #e4e3db;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-variant: #e4e3db;
+  --color-surface-bright: #fbf9f1;
+
+  --color-primary: #9b2f00;
+  --color-primary-container: #c2410c;
+  --color-primary-fixed: #ffdbd0;
+  --color-primary-fixed-dim: #ffb59d;
+  --color-on-primary-container: #ffece7;
+  --color-on-primary-fixed: #390c00;
+  --color-on-primary-fixed-variant: #832600;
+  --color-inverse-primary: #ffb59d;
+  --color-surface-tint: #ac3400;
+
+  --color-secondary: #45645e;
+  --color-secondary-container: #c7eae1;
+  --color-secondary-fixed: #c7eae1;
+  --color-secondary-fixed-dim: #accec5;
+  --color-on-secondary-container: #4b6a63;
+  --color-on-secondary-fixed: #00201b;
+  --color-on-secondary-fixed-variant: #2d4c46;
+
+  --color-tertiary: #824500;
+  --color-tertiary-container: #a65900;
+  --color-tertiary-fixed: #ffdcc3;
+  --color-tertiary-fixed-dim: #ffb77d;
+  --color-on-tertiary-container: #ffede1;
+  --color-on-tertiary-fixed: #2f1500;
+  --color-on-tertiary-fixed-variant: #6e3900;
+
+  --color-error: #ba1a1a;
+  --color-error-container: #ffdad6;
+  --color-on-error-container: #93000a;
+
+  --color-outline-np: #8d7168;
+  --color-outline-variant: #e1bfb5;
+
+  --color-on-surface: #1b1c17;
+  --color-on-surface-variant: #59413a;
+  --color-on-background: #1b1c17;
+  --color-inverse-surface: #30312c;
+  --color-inverse-on-surface: #f3f1e9;
+
+  --color-ink-black: #1A1512;
+  --color-ink-muted: #5C544E;
+  --color-clay-accent: #B36A5E;
+
+  --spacing-stack-gap-sm: 8px;
+  --spacing-stack-gap-md: 16px;
+  --spacing-stack-gap-lg: 32px;
+  --spacing-container-margin: 24px;
+  --spacing-section-padding: 40px;
+
+  --font-numeral-xl: 'Playfair Display', serif;
+  --font-headline-xl: 'Playfair Display', serif;
+  --font-headline-lg: 'Playfair Display', serif;
+  --font-headline-lg-mobile: 'Playfair Display', serif;
+  --font-headline-md: 'Playfair Display', serif;
+  --font-numeral-md: 'DM Sans', sans-serif;
+  --font-body-md: 'DM Sans', sans-serif;
+  --font-body-lg: 'DM Sans', sans-serif;
+  --font-label-md: 'DM Sans', sans-serif;
+}
+
+.nutriplan {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--color-surface-paper);
+  color: var(--color-on-surface);
+  min-height: 100dvh;
+}
+
+.nutriplan .font-headline-xl { font-family: 'Playfair Display', serif; font-size: 48px; line-height: 56px; letter-spacing: -0.02em; font-weight: 700; }
+.nutriplan .font-headline-lg { font-family: 'Playfair Display', serif; font-size: 32px; line-height: 40px; font-weight: 700; }
+.nutriplan .font-headline-lg-mobile { font-family: 'Playfair Display', serif; font-size: 28px; line-height: 36px; font-weight: 700; }
+.nutriplan .font-headline-md { font-family: 'Playfair Display', serif; font-size: 24px; line-height: 32px; font-weight: 600; }
+.nutriplan .font-numeral-xl { font-family: 'Playfair Display', serif; font-size: 56px; line-height: 64px; font-weight: 700; }
+.nutriplan .font-numeral-md { font-family: 'DM Sans', sans-serif; font-size: 20px; line-height: 24px; font-weight: 500; }
+.nutriplan .font-body-md { font-family: 'DM Sans', sans-serif; font-size: 16px; line-height: 24px; font-weight: 400; }
+.nutriplan .font-body-lg { font-family: 'DM Sans', sans-serif; font-size: 18px; line-height: 28px; font-weight: 400; }
+.nutriplan .font-label-md { font-family: 'DM Sans', sans-serif; font-size: 14px; line-height: 20px; letter-spacing: 0.05em; font-weight: 500; }
+
+.nutriplan .editorial-shadow {
+  box-shadow: 0px 4px 20px rgba(26, 21, 18, 0.04);
+}
+
+.nutriplan .no-scrollbar::-webkit-scrollbar { display: none; }
+.nutriplan .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+@keyframes np-pulse {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); }
+}
+.nutriplan .animate-np-pulse { animation: np-pulse 2s ease-in-out infinite; }

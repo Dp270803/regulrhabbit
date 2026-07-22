@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "./nutriplan/styles/nutriplan.css";
 
 @theme {
   /* === Obsidian Precision palette === */
