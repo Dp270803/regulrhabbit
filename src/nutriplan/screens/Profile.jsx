@@ -291,7 +291,7 @@ export default function Profile() {
 
         {/* Section 2 - Diet Preferences */}
         <section className="border-t border-outline-variant/30 mt-6">
-          <h2 className="font-label-md text-label-md text-primary uppercase tracking-widest mb-1 pt-6">
+          <h2 className="font-label-md text-label-md text-primary uppercase tracking-widest mb-1 pt-4">
             Diet Preferences
           </h2>
           <div className="divide-y divide-outline-variant/30">
@@ -338,7 +338,7 @@ export default function Profile() {
 
         {/* Section 3 - Plan Credits */}
         <section className="border-t border-outline-variant/30 mt-6">
-          <h2 className="font-label-md text-label-md text-primary uppercase tracking-widest mb-1 pt-6">
+          <h2 className="font-label-md text-label-md text-primary uppercase tracking-widest mb-1 pt-4">
             Plan Credits
           </h2>
           <div className="flex items-center justify-between py-4">
@@ -359,7 +359,7 @@ export default function Profile() {
 
         {/* Section 4 - Account */}
         <section className="border-t border-outline-variant/30 mt-6">
-          <h2 className="font-label-md text-label-md text-primary uppercase tracking-widest mb-1 pt-6">
+          <h2 className="font-label-md text-label-md text-primary uppercase tracking-widest mb-1 pt-4">
             Account
           </h2>
           <div className="divide-y divide-outline-variant/30">
@@ -403,8 +403,8 @@ export default function Profile() {
         </section>
 
         {/* Section 5 - Footer */}
-        <section className="border-t border-outline-variant/30 mt-6 pt-6 pb-8">
-          <p className="font-label-md text-label-md text-ink-muted text-center mb-6">
+        <section className="border-t border-outline-variant/30 mt-6 pt-4 pb-8">
+          <p className="font-label-md text-label-md text-ink-muted text-center mb-4">
             NutriPlan v1.0.0
           </p>
 
@@ -420,7 +420,7 @@ export default function Profile() {
               <p className="font-body-md text-body-md text-on-surface mb-3">
                 Type <strong>DELETE</strong> to confirm. This cannot be undone.
               </p>
-              <div className="flex gap-3">
+              <div className="flex gap-2">
                 <input
                   type="text"
                   value={resetInput}

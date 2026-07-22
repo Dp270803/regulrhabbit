@@ -68,7 +68,7 @@ export default function PlanView() {
       <div className="pointer-events-none absolute -top-24 -right-24 w-64 h-64 rounded-full bg-clay-accent/10 blur-3xl" />
 
       {/* Top bar */}
-      <header className="flex items-center justify-between max-w-xl mx-auto w-full px-container-margin pt-6 pb-4">
+      <header className="flex items-center justify-between max-w-xl mx-auto w-full px-container-margin pt-4 pb-2">
         <h1 className="font-display-lg text-display-lg text-primary">NutriPlan</h1>
         <button
           onClick={() => navigate('/nutriplan/profile')}
@@ -78,7 +78,7 @@ export default function PlanView() {
         </button>
       </header>
 
-      <main className="flex flex-col max-w-xl mx-auto w-full px-container-margin pb-32">
+      <main className="flex flex-col max-w-xl mx-auto w-full px-container-margin pb-24">
         {/* Context line */}
         {contextParts.length > 0 && (
           <p className="font-body-md text-body-md text-on-surface-variant mb-4">
@@ -87,7 +87,7 @@ export default function PlanView() {
         )}
 
         {/* Day selector */}
-        <div className="flex gap-2 overflow-x-auto pb-2 mb-6 -mx-1 px-1 scrollbar-hide">
+        <div className="flex gap-2 overflow-x-auto pb-2 mb-4 -mx-1 px-1 scrollbar-hide">
           {DAY_LABELS.map((label, i) => (
             <button
               key={label}
@@ -107,14 +107,14 @@ export default function PlanView() {
         </div>
 
         {/* Daily macro summary */}
-        <div className="bg-surface-cream rounded-xl p-5 mb-6">
+        <div className="bg-surface-cream rounded-xl p-5 mb-4">
           <div className="flex items-baseline justify-between mb-3">
             <span className="font-label-md text-label-md uppercase tracking-widest text-on-surface-variant">
               Day {selectedDay + 1} Total
             </span>
-            <span className="font-numeral-xl text-[24px] text-primary">{dayCalories} kcal</span>
+            <span className="font-numeral-xl text-[20px] text-primary">{dayCalories} kcal</span>
           </div>
-          <div className="flex gap-4">
+          <div className="flex gap-3">
             <span className="font-body-md text-body-md text-on-surface-variant">
               P: <span className="text-primary font-bold">{dayProtein}g</span>
             </span>
@@ -128,7 +128,7 @@ export default function PlanView() {
         </div>
 
         {/* Meal cards */}
-        <div className="flex flex-col gap-4 mb-8">
+        <div className="flex flex-col gap-3 mb-5">
           {meals.map((meal, index) => {
             const isExpanded = expandedMeals[index];
             return (
@@ -148,7 +148,7 @@ export default function PlanView() {
                       <h3 className="font-headline-md text-headline-md text-on-surface mb-2">
                         {meal.name || 'Untitled meal'}
                       </h3>
-                      <div className="flex flex-wrap gap-3 text-on-surface-variant">
+                      <div className="flex flex-wrap gap-2 text-on-surface-variant">
                         <span className="font-body-md text-body-md">
                           {meal.calories || 0} kcal
                         </span>
@@ -222,7 +222,7 @@ export default function PlanView() {
         </div>
 
         {/* Action buttons */}
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-2">
           <button
             onClick={() => setShowConfirm(true)}
             className="w-full py-4 rounded-xl bg-primary-container text-on-primary-container font-label-md text-label-md font-bold uppercase tracking-widest shadow-md hover:opacity-90 active:scale-[0.98] transition-all duration-200"
@@ -250,13 +250,13 @@ export default function PlanView() {
         <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/40 backdrop-blur-sm animate-fade-in">
           <div className="bg-surface-paper rounded-2xl p-6 mx-6 max-w-sm w-full shadow-xl animate-scale-in">
             <h3 className="font-headline-md text-headline-md text-on-surface mb-2">Regenerate plan?</h3>
-            <p className="font-body-md text-body-md text-on-surface-variant mb-6">
+            <p className="font-body-md text-body-md text-on-surface-variant mb-4">
               This will replace your current meal plan with a new one.
               {credits > 0
                 ? ` You have ${credits} credit${credits !== 1 ? 's' : ''} remaining.`
                 : ' You have no credits remaining.'}
             </p>
-            <div className="flex gap-3">
+            <div className="flex gap-2">
               <button
                 onClick={() => setShowConfirm(false)}
                 className="flex-1 py-3 rounded-xl border border-outline-variant/30 font-label-md text-label-md text-on-surface-variant hover:bg-surface-cream transition-colors"

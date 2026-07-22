@@ -108,19 +108,19 @@ export default function OnboardingStats() {
       <div className="pointer-events-none absolute -bottom-32 -left-32 w-80 h-80 rounded-full bg-primary-container/20 blur-3xl" />
       <div className="pointer-events-none absolute -top-24 -right-24 w-64 h-64 rounded-full bg-clay-accent/10 blur-3xl" />
 
-      <main className="flex-grow flex flex-col max-w-xl mx-auto w-full px-container-margin pb-section-padding pt-12">
+      <main className="flex-grow flex flex-col max-w-xl mx-auto w-full px-container-margin pb-section-padding pt-6">
         {/* Header */}
-        <div className="mb-10">
-          <h1 className="font-display-lg text-display-lg text-primary mb-1">About you</h1>
-          <p className="font-body-lg text-body-lg text-on-surface-variant">
+        <div className="mb-6">
+          <h1 className="font-headline-lg text-primary mb-0.5">About you</h1>
+          <p className="font-body-md text-on-surface-variant">
             We use this to calculate your daily metabolism.
           </p>
         </div>
 
-        <div className="flex flex-col gap-6 flex-grow">
+        <div className="flex flex-col gap-4 flex-grow">
           {/* Sex */}
           <div>
-            <h3 className="font-label-lg text-label-lg text-on-surface-variant uppercase tracking-wider mb-3">Sex</h3>
+            <h3 className="font-label-lg text-label-lg text-on-surface-variant uppercase tracking-wider mb-2">Sex</h3>
             <div className="grid grid-cols-2 gap-4">
               <SelectionCard
                 title="Male"
@@ -140,8 +140,8 @@ export default function OnboardingStats() {
           </div>
 
           {/* Age */}
-          <div className="bg-white border border-ink-muted/20 rounded-lg p-6">
-            <h3 className="font-label-lg text-label-lg text-on-surface-variant uppercase tracking-wider mb-3">Age</h3>
+          <div className="bg-white border border-ink-muted/20 rounded-lg p-4">
+            <h3 className="font-label-lg text-label-lg text-on-surface-variant uppercase tracking-wider mb-2">Age</h3>
             <input
               type="number"
               inputMode="numeric"
@@ -155,7 +155,7 @@ export default function OnboardingStats() {
           </div>
 
           {/* Height */}
-          <div className="bg-white border border-ink-muted/20 rounded-lg p-6">
+          <div className="bg-white border border-ink-muted/20 rounded-lg p-4">
             <div className="flex items-center justify-between mb-3">
               <h3 className="font-label-lg text-label-lg text-on-surface-variant uppercase tracking-wider">Height</h3>
               <button
@@ -181,7 +181,7 @@ export default function OnboardingStats() {
           </div>
 
           {/* Weight */}
-          <div className="bg-white border border-ink-muted/20 rounded-lg p-6">
+          <div className="bg-white border border-ink-muted/20 rounded-lg p-4">
             <div className="flex items-center justify-between mb-3">
               <h3 className="font-label-lg text-label-lg text-on-surface-variant uppercase tracking-wider">Weight</h3>
               <button
@@ -211,7 +211,7 @@ export default function OnboardingStats() {
         <button
           onClick={handleContinue}
           disabled={!isValid}
-          className={`w-full py-4 rounded-xl font-label-md text-label-md font-bold uppercase tracking-widest shadow-md transition-all duration-200 mt-8 ${
+          className={`w-full py-3.5 rounded-xl font-label-md font-bold uppercase tracking-widest shadow-md transition-all duration-200 mt-6 ${
             isValid
               ? 'bg-primary-container text-on-primary-container hover:opacity-90 active:scale-[0.98]'
               : 'bg-ink-muted text-white opacity-50 cursor-not-allowed'

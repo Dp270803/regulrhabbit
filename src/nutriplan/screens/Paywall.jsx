@@ -30,11 +30,11 @@ export default function Paywall() {
       <div className="pointer-events-none absolute -bottom-32 -left-32 w-80 h-80 rounded-full bg-primary-container/20 blur-3xl" />
       <div className="pointer-events-none absolute -top-24 -right-24 w-64 h-64 rounded-full bg-clay-accent/10 blur-3xl" />
 
-      <main className="flex flex-col max-w-xl mx-auto w-full px-container-margin pb-section-padding pt-6 min-h-screen">
+      <main className="flex flex-col max-w-xl mx-auto w-full px-container-margin pb-section-padding pt-4 min-h-screen">
         {/* Back button */}
         <button
           onClick={() => navigate(-1)}
-          className="flex items-center justify-center w-10 h-10 rounded-full bg-surface-cream text-on-surface-variant hover:bg-surface-container-high transition-colors active:scale-95 mb-6"
+          className="flex items-center justify-center w-10 h-10 rounded-full bg-surface-cream text-on-surface-variant hover:bg-surface-container-high transition-colors active:scale-95 mb-4"
         >
           <span className="material-symbols-outlined" style={{ fontSize: 20 }}>
             arrow_back
@@ -47,15 +47,15 @@ export default function Paywall() {
         </h1>
 
         {/* Explanation */}
-        <p className="font-body-md text-body-md text-on-surface-variant mb-8">
+        <p className="font-body-md text-body-md text-on-surface-variant mb-5">
           We'll generate a complete 7-day meal plan tailored to your body, goals,
           and food preferences. Every meal is calorie-counted and macro-balanced.
         </p>
 
         {/* Value props */}
-        <div className="flex flex-col gap-4 mb-10">
+        <div className="flex flex-col gap-3 mb-8">
           {VALUE_PROPS.map((prop) => (
-            <div key={prop} className="flex items-start gap-3">
+            <div key={prop} className="flex items-start gap-2">
               <span
                 className="material-symbols-outlined text-primary mt-0.5 shrink-0"
                 style={{ fontSize: 20, fontVariationSettings: "'FILL' 1" }}
@@ -86,7 +86,7 @@ export default function Paywall() {
         {/* Secondary CTA */}
         <button
           onClick={handleSecondary}
-          className="w-full py-4 rounded-xl font-label-md text-label-md font-bold uppercase tracking-widest border-2 border-primary-container text-primary transition-all duration-200 hover:bg-primary-container/10 active:scale-[0.98] mb-6"
+          className="w-full py-4 rounded-xl font-label-md text-label-md font-bold uppercase tracking-widest border-2 border-primary-container text-primary transition-all duration-200 hover:bg-primary-container/10 active:scale-[0.98] mb-4"
         >
           3 More Plans &mdash; $1.99
         </button>

@@ -278,7 +278,7 @@ export default function Loading() {
           <h2 className="font-headline-md text-headline-md text-on-surface mb-2">
             Something went wrong
           </h2>
-          <p className="font-body-md text-body-md text-on-surface-variant mb-8">
+          <p className="font-body-md text-body-md text-on-surface-variant mb-5">
             {error}
           </p>
           <button
@@ -302,7 +302,7 @@ export default function Loading() {
     <div className="min-h-screen bg-surface-paper flex items-center justify-center">
       <div className="max-w-sm mx-auto px-container-margin text-center">
         {/* Pulsing circle animation */}
-        <div className="flex items-center justify-center mb-8">
+        <div className="flex items-center justify-center mb-5">
           <div className="relative w-20 h-20">
             <div className="absolute inset-0 rounded-full bg-primary-container/30 animate-np-pulse" />
             <div

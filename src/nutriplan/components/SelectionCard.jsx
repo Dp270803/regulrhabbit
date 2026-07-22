@@ -2,7 +2,7 @@ export default function SelectionCard({ title, description, icon, selected, onCl
   return (
     <button
       onClick={onClick}
-      className={`w-full text-left p-6 border bg-white rounded-lg transition-all duration-200 active:scale-[0.98] ${
+      className={`w-full text-left p-4 border bg-white rounded-lg transition-all duration-200 active:scale-[0.98] ${
         selected
           ? 'border-primary shadow-md ring-2 ring-primary/10'
           : 'border-ink-muted/20 hover:border-primary/40'

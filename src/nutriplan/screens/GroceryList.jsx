@@ -122,7 +122,7 @@ export default function GroceryList() {
       <div className="pointer-events-none absolute -top-24 -right-24 w-64 h-64 rounded-full bg-clay-accent/10 blur-3xl" />
 
       {/* Top bar */}
-      <header className="flex items-center justify-between max-w-xl mx-auto w-full px-container-margin pt-6 pb-4">
+      <header className="flex items-center justify-between max-w-xl mx-auto w-full px-container-margin pt-4 pb-2">
         <h1 className="font-display-lg text-display-lg text-primary">NutriPlan</h1>
         <button
           onClick={() => navigate('/nutriplan/profile')}
@@ -132,18 +132,18 @@ export default function GroceryList() {
         </button>
       </header>
 
-      <main className="flex flex-col max-w-xl mx-auto w-full px-container-margin pb-32">
+      <main className="flex flex-col max-w-xl mx-auto w-full px-container-margin pb-24">
         {/* Headline */}
         <h2 className="font-headline-xl text-headline-xl text-on-surface mb-2">Grocery List</h2>
 
         {/* Summary */}
-        <div className="flex items-center gap-2 text-on-surface-variant mb-6">
+        <div className="flex items-center gap-2 text-on-surface-variant mb-4">
           <span className="material-symbols-outlined" style={{ fontSize: 18 }}>calendar_today</span>
           <span className="font-body-md text-body-md">7 days &middot; {totalMeals} meals</span>
         </div>
 
         {/* Action buttons */}
-        <div className="flex gap-3 mb-8">
+        <div className="flex gap-2 mb-5">
           <button
             onClick={handleCopy}
             className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl border border-outline-variant/30 font-label-md text-label-md text-on-surface-variant hover:bg-surface-cream transition-colors active:scale-[0.98]"
@@ -164,7 +164,7 @@ export default function GroceryList() {
 
         {/* Grouped sections */}
         {groups.map((group) => (
-          <div key={group.category} className="mb-6">
+          <div key={group.category} className="mb-4">
             <h3 className="font-headline-md text-headline-md text-on-surface mb-3">
               {group.category}
             </h3>
@@ -175,7 +175,7 @@ export default function GroceryList() {
                 return (
                   <label
                     key={key}
-                    className={`flex items-center gap-3 py-3 px-4 rounded-lg cursor-pointer transition-colors hover:bg-surface-cream/50 ${
+                    className={`flex items-center gap-2 py-3 px-4 rounded-lg cursor-pointer transition-colors hover:bg-surface-cream/50 ${
                       isChecked ? 'opacity-50' : ''
                     }`}
                   >
